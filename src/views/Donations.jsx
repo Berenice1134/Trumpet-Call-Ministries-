@@ -37,24 +37,24 @@ const bankAccounts = [
 ];
 
 const kermesWinterPhotos = [
-  { key: "kermes01", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-01.jpeg" },
-  { key: "kermes02", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-02.jpeg" },
-  { key: "kermes03", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-03.jpeg" },
-  { key: "kermes04", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-04.jpeg" },
-  { key: "kermes05", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-05.jpeg" },
-  { key: "kermes06", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-06.jpeg" },
-  { key: "kermes07", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-07.jpeg" },
-  { key: "kermes08", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-08.jpeg" },
-  { key: "kermes09", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-09.jpeg" },
-  { key: "kermes10", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-10.jpeg" },
-  { key: "kermes11", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-11.jpeg" },
-  { key: "kermes12", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-12.jpeg" },
-  { key: "kermes13", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-13.jpeg" },
-  { key: "kermes14", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-14.jpeg" },
-  { key: "kermes15", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-15.jpeg" },
-  { key: "kermes16", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-16.jpeg" },
-  { key: "kermes17", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-17.jpeg" },
-  { key: "kermes18", src: "/assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-18.jpeg" },
+  { key: "kermes01", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-01.jpeg` },
+  { key: "kermes02", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-02.jpeg` },
+  { key: "kermes03", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-03.jpeg` },
+  { key: "kermes04", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-04.jpeg` },
+  { key: "kermes05", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-05.jpeg` },
+  { key: "kermes06", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-06.jpeg` },
+  { key: "kermes07", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-07.jpeg` },
+  { key: "kermes08", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-08.jpeg` },
+  { key: "kermes09", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-09.jpeg` },
+  { key: "kermes10", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-10.jpeg` },
+  { key: "kermes11", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-11.jpeg` },
+  { key: "kermes12", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-12.jpeg` },
+  { key: "kermes13", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-13.jpeg` },
+  { key: "kermes14", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-14.jpeg` },
+  { key: "kermes15", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-15.jpeg` },
+  { key: "kermes16", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-16.jpeg` },
+  { key: "kermes17", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-17.jpeg` },
+  { key: "kermes18", src: `${import.meta.env.BASE_URL}assets/donaciones/kermes-invierno-magico/kermes-invierno-magico-18.jpeg` },
 ];
 
 const donationPageCopy = {
@@ -788,7 +788,7 @@ export default function Donations() {
                     <figure className="group relative overflow-hidden rounded-2xl border-2 border-amber-400/30 bg-amber-400/5 p-2 shadow-2xl">
                       <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-amber-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                       <img
-                        src="/assets/directora/andrea-byrn.png"
+                        src={`${import.meta.env.BASE_URL}assets/directora/andrea-byrn.png`}
                         alt={language === "en" ? "Andrea Byrn, Director of Trumpet Call Ministries" : "Andrea Byrn, Directora de Trumpet Call Ministries"}
                         className="h-[420px] w-full rounded-xl object-cover object-[50%_25%] transition-all duration-700 group-hover:scale-[1.02]"
                       />

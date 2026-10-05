@@ -166,7 +166,7 @@ export default function Navbar() {
         >
           <span className="grid h-12 w-16 place-items-center overflow-hidden rounded-md bg-white">
             <img
-              src="/assets/tcm-logo.jpeg"
+              src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
               className="h-full w-full object-contain"
             />

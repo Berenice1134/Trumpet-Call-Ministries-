@@ -642,7 +642,7 @@ export default function Home() {
         {/* Background Layers */}
         <div className="absolute inset-0">
           <img
-            src="/assets/home/home-hero-opening.jpeg"
+            src={`${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`}
             alt=""
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
@@ -715,7 +715,7 @@ export default function Home() {
               <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-2.5 shadow-2xl sm:row-span-2 hover:border-white/20 transition-all duration-500">
                 <div className="relative overflow-hidden rounded-xl">
                   <img
-                    src="/assets/home/home-pantry-display.png"
+                    src={`${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`}
                     alt="Despensa de Trumpet Call Ministries"
                     className="h-full min-h-72 w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -726,7 +726,7 @@ export default function Home() {
               <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-2.5 shadow-2xl hover:border-white/20 transition-all duration-500">
                 <div className="relative overflow-hidden rounded-xl">
                   <img
-                    src="/assets/home/home-hero-opening.jpeg"
+                    src={`${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`}
                     alt="Apertura del ministerio"
                     className="h-44 w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -738,7 +738,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative">
                   <img
-                    src="/assets/home/home-logo.jpeg"
+                    src={`${import.meta.env.BASE_URL}assets/home/home-logo.jpeg`}
                     alt={t("brand")}
                     className="image-pop mx-auto h-32 w-full object-contain transition-transform duration-500 group-hover:scale-110"
                   />
@@ -1157,7 +1157,7 @@ export default function Home() {
             <div className="grid gap-6 rounded-[2rem] border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-sm lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:p-6">
               <div className="overflow-hidden rounded-3xl bg-white p-3 shadow-xl">
                 <img
-                  src="/assets/servicio-domiciliar/mapa-area-servicio.png"
+                  src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/mapa-area-servicio.png`}
                   alt={language === "en" ? "Map of communities served in Tlaxcala" : "Mapa de comunidades atendidas en Tlaxcala"}
                   className="w-full rounded-2xl object-contain"
                 />

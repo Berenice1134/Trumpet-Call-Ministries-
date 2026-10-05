@@ -26,7 +26,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <img
-              src="/assets/tcm-logo.jpeg"
+              src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
               className="h-14 w-20 rounded-md object-contain"
             />

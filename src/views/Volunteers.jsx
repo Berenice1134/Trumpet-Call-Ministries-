@@ -33,47 +33,47 @@ import { useLanguage } from "../context/useLanguage.js";
 const volunteerPhotos = [
   {
     key: "teamBags",
-    src: "/assets/voluntarios/english-center/english-center-02.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`, // Ruta corregida
     alt: "Equipo de voluntarios con despensas",
   },
   {
     key: "youngTeam",
-    src: "/assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`, // Ruta corregida
     alt: "Jóvenes voluntarios",
   },
   {
     key: "ricePacking",
-    src: "/assets/voluntarios/leoncitas/leoncitas-01.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`, // Ruta corregida
     alt: "Empacando arroz",
   },
   {
     key: "tablePrep",
-    src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`, // Ruta corregida
     alt: "Preparando mesa de trabajo",
   },
   {
     key: "bagFilling",
-    src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`, // Ruta corregida
     alt: "Llenando bolsas",
   },
   {
     key: "supplies",
-    src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`, // Ruta corregida
     alt: "Organizando suministros",
   },
   {
     key: "familiesPacking",
-    src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`, // Ruta corregida
     alt: "Familias empacando",
   },
   {
     key: "waving",
-    src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`, // Ruta corregida
     alt: "Voluntarios saludando",
   },
   {
     key: "childrenBags",
-    src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg", // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`, // Ruta corregida
     alt: "Niños con bolsas",
   },
 ];
@@ -104,13 +104,13 @@ const volunteerGroups = [
     statsEn: ["Every six months", "Students", "Pantry packing"],
     color: "from-blue-500 to-indigo-600",
     photos: [
-      { key: "ec1", src: "/assets/voluntarios/english-center/english-center-02.jpeg" },
-      { key: "ec2", src: "/assets/voluntarios/english-center/english-center-01.jpeg" },
-      { key: "ec3", src: "/assets/voluntarios/english-center/english-center-03.jpeg" },
-      { key: "ec4", src: "/assets/voluntarios/english-center/english-center-04.jpeg" },
-      { key: "ec5", src: "/assets/voluntarios/english-center/english-center-05.jpeg" },
-      { key: "ec6", src: "/assets/voluntarios/english-center/english-center-06.jpeg" },
-      { key: "ec7", src: "/assets/voluntarios/english-center/english-center-07.jpeg" },
+      { key: "ec1", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg` },
+      { key: "ec2", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-01.jpeg` },
+      { key: "ec3", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-03.jpeg` },
+      { key: "ec4", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-04.jpeg` },
+      { key: "ec5", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-05.jpeg` },
+      { key: "ec6", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-06.jpeg` },
+      { key: "ec7", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-07.jpeg` },
     ],
   },
   {
@@ -128,14 +128,14 @@ const volunteerGroups = [
     statsEn: ["Faith in action", "Community support", "Prayer"],
     color: "from-emerald-500 to-teal-600",
     photos: [
-      { key: "sd1", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg" },
-      { key: "sd2", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-02.jpeg" },
-      { key: "sd3", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-03.jpeg" },
-      { key: "sd4", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-04.jpeg" },
-      { key: "sd5", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-05.jpeg" },
-      { key: "sd6", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-06.jpeg" },
-      { key: "sd7", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-07.jpeg" },
-      { key: "sd8", src: "/assets/voluntarios/senda-de-vida/senda-de-vida-08.jpeg" },
+      { key: "sd1", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg` },
+      { key: "sd2", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-02.jpeg` },
+      { key: "sd3", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-03.jpeg` },
+      { key: "sd4", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-04.jpeg` },
+      { key: "sd5", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-05.jpeg` },
+      { key: "sd6", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-06.jpeg` },
+      { key: "sd7", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-07.jpeg` },
+      { key: "sd8", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-08.jpeg` },
     ],
   },
   {
@@ -153,14 +153,14 @@ const volunteerGroups = [
     statsEn: ["Friendship", "Fellowship", "Official group"],
     color: "from-amber-400 to-orange-500",
     photos: [
-      { key: "l1", src: "/assets/voluntarios/leoncitas/leoncitas-01.jpeg" },
-      { key: "l2", src: "/assets/voluntarios/leoncitas/leoncitas-02.jpeg" },
-      { key: "l3", src: "/assets/voluntarios/leoncitas/leoncitas-03.jpeg" },
-      { key: "l4", src: "/assets/voluntarios/leoncitas/leoncitas-04.jpeg" },
-      { key: "l5", src: "/assets/voluntarios/leoncitas/leoncitas-05.jpeg" },
-      { key: "l6", src: "/assets/voluntarios/leoncitas/leoncitas-06.jpeg" },
-      { key: "l7", src: "/assets/voluntarios/leoncitas/leoncitas-07.jpeg" },
-      { key: "l8", src: "/assets/voluntarios/leoncitas/leoncitas-08.jpeg" },
+      { key: "l1", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg` },
+      { key: "l2", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-02.jpeg` },
+      { key: "l3", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-03.jpeg` },
+      { key: "l4", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-04.jpeg` },
+      { key: "l5", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-05.jpeg` },
+      { key: "l6", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-06.jpeg` },
+      { key: "l7", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-07.jpeg` },
+      { key: "l8", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-08.jpeg` },
     ],
   },
   {
@@ -178,12 +178,12 @@ const volunteerGroups = [
     statsEn: ["Gospel", "Encouragement", "Accompaniment"],
     color: "from-sky-500 to-indigo-600",
     photos: [
-      { key: "mv1", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg" },
-      { key: "mv2", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-02.jpeg" },
-      { key: "mv3", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-03.jpeg" },
-      { key: "mv4", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-04.jpeg" },
-      { key: "mv5", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-05.jpeg" },
-      { key: "mv6", src: "/assets/voluntarios/mensajes-de-vida/mensajes-de-vida-06.jpeg" },
+      { key: "mv1", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg` },
+      { key: "mv2", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-02.jpeg` },
+      { key: "mv3", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-03.jpeg` },
+      { key: "mv4", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-04.jpeg` },
+      { key: "mv5", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-05.jpeg` },
+      { key: "mv6", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-06.jpeg` },
     ],
   },
   {
@@ -201,21 +201,21 @@ const volunteerGroups = [
     statsEn: ["Reciprocity", "Community", "Shared hope"],
     color: "from-fuchsia-500 to-rose-600",
     photos: [
-      { key: "bv1", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg" },
-      { key: "bv2", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg" },
-      { key: "bv3", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg" },
-      { key: "bv4", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg" },
-      { key: "bv5", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg" },
-      { key: "bv6", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-06.jpeg" },
-      { key: "bv7", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-07.jpeg" },
-      { key: "bv8", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-08.jpeg" },
-      { key: "bv9", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-09.jpeg" },
-      { key: "bv10", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-10.jpeg" },
-      { key: "bv11", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-11.jpeg" },
-      { key: "bv12", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-12.jpeg" },
-      { key: "bv13", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-13.jpeg" },
-      { key: "bv14", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-14.jpeg" },
-      { key: "bv15", src: "/assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-15.jpeg" },
+      { key: "bv1", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg` },
+      { key: "bv2", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg` },
+      { key: "bv3", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg` },
+      { key: "bv4", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg` },
+      { key: "bv5", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg` },
+      { key: "bv6", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-06.jpeg` },
+      { key: "bv7", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-07.jpeg` },
+      { key: "bv8", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-08.jpeg` },
+      { key: "bv9", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-09.jpeg` },
+      { key: "bv10", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-10.jpeg` },
+      { key: "bv11", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-11.jpeg` },
+      { key: "bv12", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-12.jpeg` },
+      { key: "bv13", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-13.jpeg` },
+      { key: "bv14", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-14.jpeg` },
+      { key: "bv15", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-15.jpeg` },
     ],
   },
 ];
@@ -919,7 +919,7 @@ export default function Volunteers() {
       <section className="relative overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0">
           <img
-            src="/assets/voluntarios/english-center/english-center-02.jpeg"
+            src={`${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`}
             alt="Voluntarios"
             className="h-full w-full object-cover opacity-30"
           />

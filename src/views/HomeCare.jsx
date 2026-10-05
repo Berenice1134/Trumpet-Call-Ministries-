@@ -23,107 +23,107 @@ import { useLanguage } from "../context/useLanguage.js";
 const homeCarePhotos = [
   {
     key: "carTeam",
-    src: "/assets/servicio-domiciliar/domiciliar-01.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`,
     className: "sm:col-span-2 sm:row-span-2",
   },
   {
     key: "carBags",
-    src: "/assets/servicio-domiciliar/domiciliar-02.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-02.png`,
     className: "",
   },
   {
     key: "pantryDisplay",
-    src: "/assets/servicio-domiciliar/domiciliar-03.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-03.png`,
     className: "",
   },
   {
     key: "coupleVisit",
-    src: "/assets/servicio-domiciliar/domiciliar-04.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-04.png`,
     className: "",
   },
   {
     key: "familySupport",
-    src: "/assets/servicio-domiciliar/domiciliar-05.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-05.png`,
     className: "sm:col-span-2",
   },
   {
     key: "tablePantry",
-    src: "/assets/servicio-domiciliar/domiciliar-06.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-06.png`,
     className: "",
   },
   {
     key: "singlePantry",
-    src: "/assets/servicio-domiciliar/domiciliar-07.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-07.png`,
     className: "",
   },
   {
     key: "outdoorFamily",
-    src: "/assets/servicio-domiciliar/domiciliar-08.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-08.png`,
     className: "sm:row-span-2",
   },
   {
     key: "twoBags",
-    src: "/assets/servicio-domiciliar/domiciliar-09.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-09.png`,
     className: "",
   },
   {
     key: "personalDelivery",
-    src: "/assets/servicio-domiciliar/domiciliar-10.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-10.png`,
     className: "",
   },
   {
     key: "elderPantry",
-    src: "/assets/servicio-domiciliar/domiciliar-11.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-11.png`,
     className: "sm:col-span-2",
   },
   {
     key: "homeFamily",
-    src: "/assets/servicio-domiciliar/domiciliar-12.png",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-12.png`,
     className: "",
   },
   {
     key: "homeVisitElderlyWomanBag",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-01.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-01.jpeg`,
     className: "sm:col-span-2",
   },
   {
     key: "homeVisitTableSupport",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`,
     className: "",
   },
   {
     key: "homeVisitConversation",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-03.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-03.jpeg`,
     className: "",
   },
   {
     key: "homeVisitFamilyKitchen",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg`,
     className: "",
   },
   {
     key: "homeVisitPrayerCare",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg`,
     className: "sm:col-span-2",
   },
   {
     key: "homeVisitVolunteersBags",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg`,
     className: "",
   },
   {
     key: "homeVisitChildMilk",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-07.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-07.jpeg`,
     className: "",
   },
   {
     key: "homeVisitFamilyBag",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-08.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-08.jpeg`,
     className: "sm:col-span-2",
   },
   {
     key: "homeVisitFlorDelivery",
-    src: "/assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg`,
     className: "",
   },
 ];
@@ -331,7 +331,7 @@ export default function HomeCare() {
         {/* Background Layers */}
         <div className="absolute inset-0">
           <img
-            src="/assets/servicio-domiciliar/domiciliar-01.png"
+            src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`}
             alt=""
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
@@ -523,7 +523,7 @@ export default function HomeCare() {
               <div className="relative flex-1 min-h-[280px] sm:min-h-[320px] lg:min-h-[400px]">
                 <div className="absolute inset-4 rounded-3xl bg-ministry-teal/10 blur-2xl" />
                 <img
-                  src="/assets/servicio-domiciliar/mapa-area-servicio.png"
+                  src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/mapa-area-servicio.png`}
                   alt={copy.municipalityMapAlt}
                   className="relative w-full h-full object-contain rounded-3xl shadow-2xl ring-1 ring-white/70"
                 />

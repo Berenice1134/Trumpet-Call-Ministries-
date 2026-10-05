@@ -1003,7 +1003,7 @@ export default function Reports() {
                   {language === "en" ? "Fullscreen" : "Pantalla completa"}
                 </button>
                 <a
-                  href="/assets/reportes/infografia-mayo-agosto-2026.pdf"
+                  href={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
                   download
                   className="flex items-center gap-2 rounded-full bg-ministry-blue/90 backdrop-blur-sm px-4 py-2 text-sm font-bold text-white shadow-lg hover:bg-ministry-blue transition-all hover:scale-105"
                 >
@@ -1014,7 +1014,7 @@ export default function Reports() {
               <iframe
                 title={t("reports.viewerTitle")}
                 className="h-[600px] w-full bg-white"
-                src="/assets/reportes/infografia-mayo-agosto-2026.pdf"
+                src={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
               />
             </div>
 
@@ -1044,7 +1044,7 @@ export default function Reports() {
           <iframe
             title={t("reports.viewerTitle")}
             className="h-[95vh] w-full max-w-6xl rounded-lg"
-            src="/assets/reportes/infografia-mayo-agosto-2026.pdf"
+            src={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
           />
         </div>
       )}

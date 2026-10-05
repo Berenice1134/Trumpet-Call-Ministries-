@@ -18,20 +18,20 @@ import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 const hospitalPhotos = [
-  { key: "dreamsBoard", src: "/assets/hospital-infantil/hospital-01.jpeg" },
-  { key: "blueCostume", src: "/assets/hospital-infantil/hospital-02.jpeg" },
-  { key: "hospitalEntrance", src: "/assets/hospital-infantil/hospital-03.jpeg" },
-  { key: "micActivity", src: "/assets/hospital-infantil/hospital-04.jpeg" },
-  { key: "balloonArch", src: "/assets/hospital-infantil/hospital-05.jpeg" },
-  { key: "groupActivity", src: "/assets/hospital-infantil/hospital-06.jpeg" },
-  { key: "heartGraphic", src: "/assets/hospital-infantil/hospital-07.png" },
-  { key: "hospitalKermesTeam", src: "/assets/hospital-infantil/hospital-kermes-01.jpeg" },
-  { key: "hospitalKermesDelivery", src: "/assets/hospital-infantil/hospital-kermes-02.jpeg" },
-  { key: "hospitalKermesWelcome", src: "/assets/hospital-infantil/hospital-kermes-03.jpeg" },
-  { key: "hospitalKermesSupport", src: "/assets/hospital-infantil/hospital-kermes-04.jpeg" },
-  { key: "hospitalKermesFoodTable", src: "/assets/hospital-infantil/hospital-kermes-05.jpeg" },
-  { key: "hospitalKermesConversation", src: "/assets/hospital-infantil/hospital-kermes-06.jpeg" },
-  { key: "hospitalKermesService", src: "/assets/hospital-infantil/hospital-kermes-07.jpeg" },
+  { key: "dreamsBoard", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-01.jpeg` },
+  { key: "blueCostume", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-02.jpeg` },
+  { key: "hospitalEntrance", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-03.jpeg` },
+  { key: "micActivity", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-04.jpeg` },
+  { key: "balloonArch", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-05.jpeg` },
+  { key: "groupActivity", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-06.jpeg` },
+  { key: "heartGraphic", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-07.png` },
+  { key: "hospitalKermesTeam", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-01.jpeg` },
+  { key: "hospitalKermesDelivery", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-02.jpeg` },
+  { key: "hospitalKermesWelcome", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-03.jpeg` },
+  { key: "hospitalKermesSupport", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-04.jpeg` },
+  { key: "hospitalKermesFoodTable", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-05.jpeg` },
+  { key: "hospitalKermesConversation", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-06.jpeg` },
+  { key: "hospitalKermesService", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-07.jpeg` },
 ];
 
 const featuredHospitalPhotoKeys = [
@@ -66,22 +66,22 @@ const otherMissions = [
     placeholder: "[Insertar información de Cartolandia]",
     placeholderEn: "[Insert Cartolandia information]",
     photos: [
-      { src: "/assets/misiones/cartolandia-01.jpeg", label: "Condiciones de vivienda en Cartolandia" },
-      { src: "/assets/misiones/cartolandia-02.jpeg", label: "Entrega comunitaria junto al vehículo del ministerio" },
-      { src: "/assets/misiones/cartolandia-03.jpeg", label: "Entrega de alimento a familias" },
-      { src: "/assets/misiones/cartolandia-04.jpeg", label: "Oración y acompañamiento durante la visita" },
-      { src: "/assets/misiones/cartolandia-05.jpeg", label: "Familias recibiendo apoyo y seguimiento" },
-      { src: "/assets/misiones/cartolandia-06.jpeg", label: "Despensas entregadas desde la ruta de visita" },
-      { src: "/assets/misiones/cartolandia-07.jpeg", label: "Acompañamiento cercano a beneficiarios" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Condiciones de vivienda en Cartolandia" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Entrega comunitaria junto al vehículo del ministerio" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Entrega de alimento a familias" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Oración y acompañamiento durante la visita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Familias recibiendo apoyo y seguimiento" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Despensas entregadas desde la ruta de visita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Acompañamiento cercano a beneficiarios" },
     ],
     photosEn: [
-      { src: "/assets/misiones/cartolandia-01.jpeg", label: "Housing conditions in Cartolandia" },
-      { src: "/assets/misiones/cartolandia-02.jpeg", label: "Community delivery beside the ministry vehicle" },
-      { src: "/assets/misiones/cartolandia-03.jpeg", label: "Food delivery to families" },
-      { src: "/assets/misiones/cartolandia-04.jpeg", label: "Prayer and accompaniment during the visit" },
-      { src: "/assets/misiones/cartolandia-05.jpeg", label: "Families receiving support and follow-up" },
-      { src: "/assets/misiones/cartolandia-06.jpeg", label: "Pantries delivered during the visit route" },
-      { src: "/assets/misiones/cartolandia-07.jpeg", label: "Close accompaniment for beneficiaries" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Housing conditions in Cartolandia" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Community delivery beside the ministry vehicle" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Food delivery to families" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Prayer and accompaniment during the visit" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Families receiving support and follow-up" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Pantries delivered during the visit route" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Close accompaniment for beneficiaries" },
     ],
   },
   {
@@ -105,18 +105,18 @@ const otherMissions = [
     placeholder: "[Insertar información del Día de Caridad]",
     placeholderEn: "[Insert Charity Day information]",
     photos: [
-      { src: "/assets/misiones/dia-caridad-caritas-01.jpeg", label: "Despensas preparadas para el apoyo con Fundación Cáritas" },
-      { src: "/assets/misiones/dia-caridad-caritas-02.jpeg", label: "Preparación de alimentos para familias" },
-      { src: "/assets/misiones/dia-caridad-caritas-03.jpeg", label: "Entrega de despensa en la iglesia de San José" },
-      { src: "/assets/misiones/dia-caridad-caritas-04.jpeg", label: "Apoyo compartido durante el Día de Caridad 2023" },
-      { src: "/assets/misiones/dia-caridad-caritas-05.jpeg", label: "Servicio con Fundación Cáritas y la iglesia de San José" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-01.jpeg`, label: "Despensas preparadas para el apoyo con Fundación Cáritas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-02.jpeg`, label: "Preparación de alimentos para familias" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-03.jpeg`, label: "Entrega de despensa en la iglesia de San José" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-04.jpeg`, label: "Apoyo compartido durante el Día de Caridad 2023" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-05.jpeg`, label: "Servicio con Fundación Cáritas y la iglesia de San José" },
     ],
     photosEn: [
-      { src: "/assets/misiones/dia-caridad-caritas-01.jpeg", label: "Pantries prepared for the support with Fundación Cáritas" },
-      { src: "/assets/misiones/dia-caridad-caritas-02.jpeg", label: "Food preparation for families" },
-      { src: "/assets/misiones/dia-caridad-caritas-03.jpeg", label: "Pantry delivery at San José Church" },
-      { src: "/assets/misiones/dia-caridad-caritas-04.jpeg", label: "Support shared during Charity Day 2023" },
-      { src: "/assets/misiones/dia-caridad-caritas-05.jpeg", label: "Service with Fundación Cáritas and San José Church" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-01.jpeg`, label: "Pantries prepared for the support with Fundación Cáritas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-02.jpeg`, label: "Food preparation for families" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-03.jpeg`, label: "Pantry delivery at San José Church" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-04.jpeg`, label: "Support shared during Charity Day 2023" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-05.jpeg`, label: "Service with Fundación Cáritas and San José Church" },
     ],
   },
   {
@@ -140,16 +140,16 @@ const otherMissions = [
     placeholder: "[Insertar información de Españita]",
     placeholderEn: "[Insert Españita information]",
     photos: [
-      { src: "/assets/misiones/espanita-01.jpeg", label: "Preparación de alimentos y apoyos" },
-      { src: "/assets/misiones/espanita-02.jpeg", label: "Entrega cercana a beneficiarios" },
-      { src: "/assets/misiones/espanita-03.jpeg", label: "Equipo de servicio en Españita" },
-      { src: "/assets/misiones/espanita-04.jpeg", label: "Acompañamiento y apoyo comunitario" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-01.jpeg`, label: "Preparación de alimentos y apoyos" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Entrega cercana a beneficiarios" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-03.jpeg`, label: "Equipo de servicio en Españita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-04.jpeg`, label: "Acompañamiento y apoyo comunitario" },
     ],
     photosEn: [
-      { src: "/assets/misiones/espanita-01.jpeg", label: "Food and support preparation" },
-      { src: "/assets/misiones/espanita-02.jpeg", label: "Personal delivery to beneficiaries" },
-      { src: "/assets/misiones/espanita-03.jpeg", label: "Service team in Españita" },
-      { src: "/assets/misiones/espanita-04.jpeg", label: "Community accompaniment and support" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-01.jpeg`, label: "Food and support preparation" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Personal delivery to beneficiaries" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-03.jpeg`, label: "Service team in Españita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-04.jpeg`, label: "Community accompaniment and support" },
     ],
   },
 ];
@@ -317,7 +317,7 @@ export default function HospitalVisit() {
         {/* Background Layers */}
         <div className="absolute inset-0">
           <img
-            src="/assets/hospital-infantil/hospital-01.jpeg"
+            src={`${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-01.jpeg`}
             alt=""
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
@@ -473,7 +473,7 @@ export default function HospitalVisit() {
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-4 shadow-2xl">
             <img
-              src="/assets/hospital-infantil/hospital-02.jpeg"
+              src={`${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-02.jpeg`}
               alt={t("hospital.photoLabels.blueCostume")}
               className="h-full max-h-[520px] w-full rounded-[1.5rem] object-contain"
             />

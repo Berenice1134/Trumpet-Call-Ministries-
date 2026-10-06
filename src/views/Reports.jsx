@@ -104,7 +104,7 @@ const reportsCopy = {
     timelineText:
       "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
-    tenTons: "10 toneladas",
+    tenTons: "10 Toneladas",
     archiveText: "Consulta las tres ediciones bimestrales más recientes. Cada periodo tendrá una infografía en español y otra en inglés.",
     spanish: "Español",
     english: "Inglés",
@@ -150,7 +150,7 @@ const reportsCopy = {
     timelineText:
       "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
-    tenTons: "10 tons",
+    tenTons: "10 Tons",
     archiveText: "Browse the three most recent bimonthly editions. Each period will have one Spanish infographic and one English infographic.",
     spanish: "Spanish",
     english: "English",

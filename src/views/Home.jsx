@@ -676,14 +676,14 @@ export default function Home() {
                 </span>
               </div>
 
-              <h1 className="max-w-4xl text-3xl font-black leading-[1.1] sm:text-4xl lg:text-5xl">
+              <h1 className="max-w-5xl text-3xl font-black leading-[1.1] sm:text-4xl lg:text-5xl">
                 <span className="bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent">
-                  {t("home.heroTitle")}
+                  {t("home.heroText")}
                 </span>
               </h1>
 
-              <p className="max-w-4xl text-2xl leading-relaxed text-white/85 font-medium sm:text-3xl lg:text-4xl">
-                {t("home.heroText")}
+              <p className="mt-5 max-w-4xl text-xl leading-relaxed text-white/80 font-medium sm:text-2xl lg:text-3xl">
+                {t("home.heroTitle")}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">

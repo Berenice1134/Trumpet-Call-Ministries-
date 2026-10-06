@@ -1,4 +1,11 @@
-import { ChevronLeft, ChevronRight, Maximize2, Sparkles } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { createPortal } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 
 export default function FeaturedPhotoGallery({
@@ -8,16 +15,36 @@ export default function FeaturedPhotoGallery({
   onImageClick,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   useEffect(() => {
-    if (photos.length < 2) return undefined;
+    if (photos.length < 2 || isViewerOpen) return undefined;
 
     const timer = window.setInterval(() => {
       setActiveIndex((index) => (index + 1) % photos.length);
     }, 3600);
 
     return () => window.clearInterval(timer);
-  }, [photos.length]);
+  }, [isViewerOpen, photos.length]);
+
+  useEffect(() => {
+    if (!isViewerOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") setIsViewerOpen(false);
+      if (event.key === "ArrowLeft") previous();
+      if (event.key === "ArrowRight") next();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isViewerOpen, photos.length]);
 
   const visiblePhotos = useMemo(() => {
     if (!photos.length) return [];
@@ -78,6 +105,7 @@ export default function FeaturedPhotoGallery({
               onClick={() => {
                 if (isActive) {
                   onImageClick?.(index);
+                  setIsViewerOpen(true);
                   return;
                 }
                 setActiveIndex(index);
@@ -134,6 +162,68 @@ export default function FeaturedPhotoGallery({
           <ChevronRight size={28} />
         </button>
       </div>
+
+      {isViewerOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeLabel}
+            onClick={() => setIsViewerOpen(false)}
+          >
+            <button
+              type="button"
+              className="absolute right-4 top-4 z-10 grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              onClick={() => setIsViewerOpen(false)}
+              aria-label="Close image viewer"
+            >
+              <X size={26} />
+            </button>
+
+            <button
+              type="button"
+              className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:left-6"
+              onClick={(event) => {
+                event.stopPropagation();
+                previous();
+              }}
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={30} />
+            </button>
+
+            <figure
+              className="flex h-full max-h-full w-full max-w-6xl flex-col items-center justify-center gap-4"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <img
+                src={activePhoto.src}
+                alt={activeLabel}
+                className="max-h-[calc(100vh-9rem)] max-w-full object-contain"
+              />
+              <figcaption className="text-center text-sm font-semibold text-white sm:text-base">
+                {activeLabel}
+                <span className="ml-3 text-white/60">
+                  {activeIndex + 1} / {photos.length}
+                </span>
+              </figcaption>
+            </figure>
+
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:right-6"
+              onClick={(event) => {
+                event.stopPropagation();
+                next();
+              }}
+              aria-label="Next image"
+            >
+              <ChevronRight size={30} />
+            </button>
+          </div>,
+          document.body,
+        )}
 
       <div className="relative mx-auto mt-8 flex w-fit max-w-full items-center gap-2 overflow-x-auto rounded-full bg-white px-4 py-3 shadow-xl shadow-slate-200/70">
         {photos.map((photo, index) => (

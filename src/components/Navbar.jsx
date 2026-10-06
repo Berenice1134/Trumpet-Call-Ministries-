@@ -60,7 +60,7 @@ const menuGroupsByLanguage = {
       path: "/reportes",
       items: [
         { label: "Gráficos del ministerio", id: "graficos-ministerio" },
-        { label: "PDF institucional", id: "pdf-institucional" },
+        { label: "Infografías", id: "pdf-institucional" },
       ],
     },
   ],
@@ -120,7 +120,7 @@ const menuGroupsByLanguage = {
       path: "/reportes",
       items: [
         { label: "Ministry Charts", id: "graficos-ministerio" },
-        { label: "Institutional PDF", id: "pdf-institucional" },
+        { label: "Infographics", id: "pdf-institucional" },
       ],
     },
   ],

@@ -13,14 +13,13 @@ export const translations = {
     common: {
       learnMore: "Learn more",
       donateNow: "Donate now",
-      placeholder: "Institutional PDF content placeholder.",
+      placeholder: "Infographic files will appear here when available.",
       requestHelp: "Request help",
       fullName: "Full name",
       phone: "Phone",
       message: "Message",
       submit: "Submit request",
       amount: "Amount",
-      missionCount: "[Insert annual mission count]",
     },
     home: {
       heroEyebrow: "Faith in action",
@@ -41,7 +40,7 @@ export const translations = {
         "\"Bringing God's love to every home, sharing hope to transform lives.\"",
       historyTitle: "Ministry History",
       historyText:
-        "The ministry was founded in July 2021 with the purpose of supporting and blessing vulnerable people. It began by serving 12 families each month in Loma Bonita and has grown to serve more than 80 families across more than 10 communities in Tlaxcala.",
+        "The ministry began in Loma Bonita with monthly support for vulnerable families. Since then, its service has expanded to communities across Tlaxcala.",
       supportTitle: "How the Ministry Is Supported",
       supportText:
         "The ministry is supported by three important areas: private English classes, donors from Mexico and abroad, and wholehearted volunteers such as students, parents, neighbors, churches, and private groups who help pack and distribute food pantry packages.",
@@ -115,7 +114,7 @@ export const translations = {
       },
       reports: {
         title: "Infographic and Reports",
-        text: "PDF viewer and ministry infographic area updated every two months.",
+        text: "Browse ministry infographics by two-month period and language.",
       },
     },
     homeCare: {
@@ -277,15 +276,9 @@ export const translations = {
       groups: "Active Volunteer Groups",
       gallery: "Mission Photo Gallery",
       reciprocal: "Beneficiaries Who Also Volunteer",
-      church: "Partner Church / Base",
-      missions: "Missions Per Year",
       testimonies: "Volunteer Testimonies",
       placeholder:
         "Volunteers include students, parents, neighbors, churches, private groups, and beneficiaries. They help pack, weigh, bag, distribute food, share the Gospel, and pray with families.",
-      missionCount: "38 families in 8 communities",
-      growthText: "12 monthly families in 2021 -> 38 families today.",
-      communities:
-        "Loma Bonita, El Sabinal, Ocotlán, Texoloc, Tizatlan, Chiautempan, Tlaxco, Contla, and Zacatelco.",
       reciprocalText:
         "Some beneficiaries also serve as volunteers, turning received support into practical help for other families.",
       carouselLabel: "Volunteer mission gallery",
@@ -416,16 +409,14 @@ export const translations = {
       cardPayment: "Card payment",
       impactTitle: "The impact of your donation",
       impactNote:
-        "Current impact from the presentation: 38 families served across 8 communities. Home visit food support costs $250 per family per month for a 12-kilo pantry package. Mission pantry packages cost $125 for 6 kilos.",
+        "The ministry serves 38 families across 8 communities. Home-visit food support costs $250 per family each month for a 12-kilo pantry package; mission pantry packages cost $125 for 6 kilos.",
     },
     reports: {
-      title: "Infographic and Reports",
-      text: "A clean area prepared to show the ministry infographic, timeline, and current impact reports.",
-      viewerTitle: "May-August 2026 Infographic Viewer",
-      note:
-        "This section is updated every 2 months through the reading of the institutional PDF. Current edition: May-August 2026.",
-      placeholder:
-        "The May-August 2026 institutional infographic is loaded here as a reference for future updates.",
+      title: "Infographics and reports",
+      text: "Explore the latest ministry infographics by two-month period and language.",
+      viewerTitle: "Ministry infographic viewer",
+      note: "Reserved spaces for the three latest bimonthly editions, in Spanish and English.",
+      placeholder: "This space is reserved for an infographic that will be added when available.",
     },
   },
   es: {
@@ -442,18 +433,17 @@ export const translations = {
     common: {
       learnMore: "Ver más",
       donateNow: "Donar ahora",
-      placeholder: "Espacio para contenido del PDF institucional.",
+      placeholder: "Las infografías aparecerán aquí cuando estén disponibles.",
       requestHelp: "Solicitar ayuda",
       fullName: "Nombre completo",
       phone: "Teléfono",
       message: "Mensaje",
       submit: "Enviar solicitud",
       amount: "Monto",
-      missionCount: "[Insertar número anual de misiones]",
     },
     home: {
       heroEyebrow: "Fe en acción",
-      heroTitle: "5 años transformandó Tlaxcala con servicio y esperanza.",
+      heroTitle: "5 años transformando Tlaxcala con servicio y esperanza.",
       heroText:
         "Desde julio de 2021, Trumpet Call Ministries México comparte el amor de Dios por medio del Evangelio, oración, despensas mensuales y acompañamiento cercano a familias vulnerables.",
       heroCta: "Explorar ministerios",
@@ -465,15 +455,15 @@ export const translations = {
       missionText:
         "En Trumpet Call Ministries, nuestra misión es reflejar el amor de Cristo a través del servicio, llevando esperanza, consuelo y fe a quienes enfrentan momentos de necesidad. Creemos que cada familia merece ser escuchada, acompañada y animada, por lo que compartimos el mensaje transformador del Evangelio mientras brindamos apoyo alimentario y atención cercana a las comunidades más vulnerables. Nuestro propósito es ser instrumentos de Dios para recordar a cada persona que no está sola y que siempre hay esperanza en Él.",
       visionText:
-        "Anhelamos ver comunidades transformadas por el amor de Dios, donde las familias encuentren no solo ayuda para sus necesidades materiales, sino también restauración espiritual, fortaleza y propósito para sus vidas. Nuestra visión es expandir este ministerio de compasión y fe, alcanzando a más hogares, formandó una red de voluntarios comprometidos y siendo un reflejo constante de la gracia de Cristo. Soñamos con un futuro donde cada acto de servicio siembre esperanza, cada palabra de aliento fortalezca corazónes y cada vida alcanzada pueda experimentar el amor inagotable de Dios.",
+        "Anhelamos ver comunidades transformadas por el amor de Dios, donde las familias encuentren no solo ayuda para sus necesidades materiales, sino también restauración espiritual, fortaleza y propósito para sus vidas. Nuestra visión es expandir este ministerio de compasión y fe, alcanzar más hogares, formar una red de voluntarios comprometidos y ser un reflejo constante de la gracia de Cristo. Soñamos con un futuro donde cada acto de servicio siembre esperanza, cada palabra de aliento fortalezca corazones y cada vida alcanzada pueda experimentar el amor inagotable de Dios.",
       missionVisionTagline:
         "\"Llevando el amor de Dios a cada hogar, compartiendo esperanza para transformar vidas.\"",
       historyTitle: "Historia del Ministerio",
       historyText:
-        "El ministerio fue fundado en julio de 2021 con el objetivo de apoyar y bendecir a personas vulnerables. Inició favoreciendo a 12 familias cada mes en Loma Bonita y hoy ha logrado llevar esperanza a más de 80 familias en más de 10 comunidades de Tlaxcala.",
+        "El ministerio comenzó en Loma Bonita con apoyo mensual para familias vulnerables. Desde entonces, ha ampliado su labor a distintas comunidades de Tlaxcala.",
       supportTitle: "Cómo se sostiene el ministerio",
       supportText:
-        "El ministerio es apoyado por tres áreas importantes: clases particulares de inglés, donadores mexicanos y extranjeros, y voluntarios de corazón como estudiantes, padres de familia, vecinos, iglesias y grupos particulares que ayudan en el empacamiento y repartición de despensas.",
+        "El ministerio se sostiene gracias a tres áreas: las clases particulares de inglés, los donantes de México y otros países, y los voluntarios. Entre ellos hay estudiantes, madres y padres de familia, vecinos, iglesias y grupos privados que ayudan a preparar y repartir despensas.",
       needsTitle: "Cómo se identifican las necesidades",
       needsText:
         "El equipo se coordina con presidencias de comunidad, delegaciones, iglesias, organizaciones y referencias personales; después visita el domicilio para realizar una entrevista.",
@@ -527,7 +517,7 @@ export const translations = {
       },
       reports: {
         title: "Infografía y Reportes",
-        text: "Visor de PDF y área de infografía del ministerio actualizada cada dos meses.",
+        text: "Consulta las infografías del ministerio organizadas por periodo e idioma.",
       },
     },
     homeCare: {
@@ -538,7 +528,7 @@ export const translations = {
         "Visitas mensuales al hogar de cada familia beneficiaria",
         "Entrega de despensas de 12 kilos",
         "Mensaje del Evangelio, oración y seguimiento personal",
-        "Entrevistas para identificar viudez, huérfaños, discapacidades, adultos mayores abandonados, padecimientos crónicos, indigencia y familias en crisis",
+        "Entrevistas para identificar situaciones de viudez u orfandad, discapacidad, abandono de adultos mayores, enfermedades crónicas, indigencia y crisis familiares.",
       ],
       formTitle: "Formulario de solicitud de ayuda",
       carouselLabel: "Galería de servicio domiciliar",
@@ -622,12 +612,12 @@ export const translations = {
         groupActivity: "Niños reunidos durante una visita alegre",
         heartGraphic: "Identidad visual de cuidado y compasión",
         hospitalKermesTeam: "Kermés del hospital con voluntarios y personal médico",
-        hospitalKermesDelivery: "Apoyo entregado durante la kermes del hospital",
-        hospitalKermesWelcome: "Bienvenida a familias en la kermes del hospital",
+        hospitalKermesDelivery: "Apoyo entregado durante la kermés del hospital",
+        hospitalKermesWelcome: "Bienvenida a familias en la kermés del hospital",
         hospitalKermesSupport: "Apoyo práctico para familias durante la kermés",
         hospitalKermesFoodTable: "Mesa de alimentos y participación comunitaria",
         hospitalKermesConversation: "Conversación y cuidado durante la kermés",
-        hospitalKermesService: "Servicio a familias en la kermes del hospital",
+        hospitalKermesService: "Servicio a familias en la kermés del hospital",
       },
       carousel: [
         {
@@ -656,15 +646,9 @@ export const translations = {
       groups: "Grupos de voluntarios activos",
       gallery: "Galería de fotos de las misiones",
       reciprocal: "Beneficiarios que también son voluntarios",
-      church: "Iglesia aliada / sede",
-      missions: "Misiones por año",
       testimonies: "Testimonios de voluntarios",
       placeholder:
         "Los voluntarios incluyen estudiantes, padres, vecinos, iglesias, grupos privados y beneficiarios. Colaboran empacando, pesando, embolsando y distribuyendo alimentos; también comparten el Evangelio y oran con las familias.",
-      missionCount: "38 familias en 8 comunidades",
-      growthText: "12 familias mensuales en 2021 -> 38 familias actualmente.",
-      communities:
-        "Loma Bonita, El Sabinal, Ocotlán, Texoloc, Tizatlán, Chiautempan, Tlaxco, Contla y Zacatelco.",
       reciprocalText:
         "Algunos beneficiarios también sirven como voluntarios, convirtiendo el apoyo recibido en ayuda práctica para otras familias.",
       carouselLabel: "Galería de misiones voluntarias",
@@ -757,16 +741,14 @@ export const translations = {
       hospitalText: "Contribución mensual fija para visitas al hospital.",
       giftText: "Ingresa un monto voluntario.",
       impactNote:
-        "Impacto actual tomado de la presentación: 38 familias servidas en 8 comunidades. La despensa domiciliar cuesta $250 por familia al mes por un paquete de 12 kilos. Las despensas para misiones cuestan $125 por paquete de 6 kilos.",
+        "El ministerio atiende a 38 familias en 8 comunidades. La despensa domiciliaria cuesta $250 por familia al mes e incluye 12 kilos; cada despensa para misiones cuesta $125 e incluye 6 kilos.",
     },
     reports: {
-      title: "Infografía y Reportes",
-      text: "Área limpia preparada para mostrar la infografía del ministerio, la línea del tiempo y los reportes de impacto actual.",
-      viewerTitle: "Visor de infografía Mayo-Agosto 2026",
-      note:
-        "Esta sección se actualiza cada 2 meses mediante la lectura del PDF institucional. Edición actual: Mayo-Agosto 2026.",
-      placeholder:
-        "La infografía institucional Mayo-Agosto 2026 se carga aquí como referencia para futuras actualizaciones.",
+      title: "Infografías y reportes",
+      text: "Consulta las infografías más recientes del ministerio, organizadas por periodo e idioma.",
+      viewerTitle: "Visor de infografías del ministerio",
+      note: "Espacios reservados para las tres ediciones bimestrales más recientes, en español e inglés.",
+      placeholder: "Este espacio está reservado para una infografía que se agregará cuando esté disponible.",
     },
   },
 };

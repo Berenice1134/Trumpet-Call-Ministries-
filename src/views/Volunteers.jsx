@@ -937,23 +937,6 @@ export default function Volunteers() {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">
               {t("volunteers.text")}
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {[
-                { value: "38", label: t("volunteers.missionCount") },
-                { value: "8", label: t("volunteers.church") },
-                { value: "2021", label: t("volunteers.missions") },
-              ].map((item) => (
-                <div
-                  key={item.value}
-                  className="rounded-xl border border-white/15 bg-white/10 p-4 backdrop-blur"
-                >
-                  <p className="text-3xl font-black text-amber-400">{item.value}</p>
-                  <p className="mt-1 text-xs font-semibold leading-5 text-white/70">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Carrusel principal */}
@@ -1114,12 +1097,10 @@ export default function Volunteers() {
               {language === "en" ? "The ministry in figures" : "El ministerio en cifras"}
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {[
-              { value: "10+", label: language === "en" ? "Tons of food" : "Toneladas de alimentos", icon: TrendingUp },
-              { value: "80+", label: language === "en" ? "Families reached" : "Familias alcanzadas", icon: Users },
               { value: "48", label: language === "en" ? "Active volunteers" : "Voluntarios activos", icon: HeartHandshake },
-              { value: "12", label: language === "en" ? "Communities" : "Comunidades", icon: Church },
+              { value: "5", label: language === "en" ? "Volunteer groups" : "Grupos de voluntarios", icon: Church },
             ].map((stat) => {
               const Icon = stat.icon;
               return (

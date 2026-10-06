@@ -96,7 +96,7 @@ const donationPageCopy = {
       "Bienvenidos a nuestro sitio web y gracias por tu interés en Trumpet Call Ministries México.",
     founderLetterParagraphs: [
       "Esta pequeña organización basada en la fe es un proyecto del corazón, nacido del deseo de servir a los vulnerables en mi comunidad en Tlaxcala, México. El propósito es compartir el amor de Jesucristo con familias vulnerables en todo el estado de Tlaxcala mediante la distribución de suministros básicos de alimentos. Y al hacerlo, también compartimos la esperanza que tenemos en Jesús a través de las enseñanzas que se encuentran en la Santa Biblia.",
-      "Esta organización comenzó en 2021 apoyando a 12 familias con dinero ganado al impartir clases de inglés. Cinco años después, y con el apoyo de donantes en México y en Estados Unidos, el ministerio ha distribuido más de 10 toneladas de alimentos básicos a más de 80 familias en todo el estado.",
+      "Las clases de inglés y la generosidad de donantes en México y Estados Unidos han sostenido la entrega de alimentos básicos a familias de Tlaxcala.",
       "Trabajando con iglesias de la zona, Trumpet Call Ministries México también proporcionó alimentos y ropa en comunidades de todo el estado. Sin embargo, a partir de enero de 2026, iniciamos un nuevo proyecto para apoyar a los niños con insuficiencia renal y a sus familias en el Hospital Infantil de Tlaxcala. Cada mes, apoyamos a estas familias con suministros necesarios que les ayudan a manejar su cuidado, así como con actividades basadas en la fe para fortalecerlas en Jesucristo y que puedan enfrentar su enfermedad desde una posición de fortaleza espiritual y emocional.",
       "Eres bienvenido a visitarnos a nuestra oficina en Loma Bonita, Tlaxcala. Me encantaría tener la oportunidad de darte un recorrido por nuestras instalaciones, presentarte a nuestro personal y beneficiarios de nuestros servicios.",
       "Por favor, considera unirte a nosotros para atender a familias en dificultades en Tlaxcala. Según las Escrituras, servirles es servir al Señor mismo. Cuando lo hacemos, Dios Padre promete bendecirnos.",
@@ -106,11 +106,6 @@ const donationPageCopy = {
     founderLetterSignature: "A Su servicio,",
     founderLetterName: "Andrea Byrn",
     founderLetterRole: "Directora",
-    founderLetterStats: [
-      { value: "2021", label: "Inicio del ministerio" },
-      { value: "10+", label: "Toneladas distribuidas" },
-      { value: "80+", label: "Familias alcanzadas" },
-    ],
   },
   en: {
     badge: "Donations",
@@ -127,9 +122,9 @@ const donationPageCopy = {
     chooseAmount: "you choose the amount",
     transfers: "Transfers",
     impact: "Impact",
-    kermesNav: "Kermes",
+    kermesNav: "Kermés",
     kermesEyebrow: "Charity event",
-    kermesTitle: "Magical Winter Charity Kermes",
+    kermesTitle: "Magical Winter Charity Kermés",
     kermesIntro:
       "Moments of fellowship, support, and generosity that help sustain service to vulnerable families.",
     kermesCounter: "photo",
@@ -150,7 +145,7 @@ const donationPageCopy = {
       "Welcome to our website, and thank you for your interest in Trumpet Call Ministries Mexico.",
     founderLetterParagraphs: [
       "This small faith-based organization is a project of the heart, birthed from the desire to serve the vulnerable in my community in Tlaxcala, Mexico. The purpose is to share the love of Jesus Christ with vulnerable families around the state of Tlaxcala through the distribution of basic food supplies. And in so doing, we also share the hope we have in Jesus through the teachings found in the Holy Bible.",
-      "The ministry started in 2021 supporting 12 families in the Home Visit project with money earned from teaching English classes. Five years later, and with support from donors in Mexico and in the United States, the ministry has distributed over 10 tons of basic food supplies to over 80 families around the state.",
+      "English classes and the generosity of donors in Mexico and the United States have helped sustain food support for families across Tlaxcala.",
       "Working with area churches, Trumpet Call Ministries Mexico has provided food and clothes in communities around the state as well. Starting in January 2026, we began a new project to support children with renal failure and their families at the Children's Hospital of Tlaxcala. Each month, we support these families with needed supplies that help them manage their care, as well as faith-based activities to build them up in Jesus Christ so they are able to battle their illness from a position of spiritual and emotional strength.",
       "You are welcome to come visit us at our office in Loma Bonita, Tlaxcala. I would enjoy the opportunity to give you a tour of our facilities, introduce you to our staff, and introduce you to beneficiaries of our services.",
       "Please consider joining us to serve struggling families in Tlaxcala. According to the Scriptures, serving them is serving the Lord himself. When we do, God the Father promises to bless us.",
@@ -160,11 +155,6 @@ const donationPageCopy = {
     founderLetterSignature: "In His Service,",
     founderLetterName: "Andrea Byrn",
     founderLetterRole: "Director",
-    founderLetterStats: [
-      { value: "2021", label: "Ministry started" },
-      { value: "10+", label: "Tons distributed" },
-      { value: "80+", label: "Families reached" },
-    ],
   },
 };
 
@@ -820,24 +810,6 @@ export default function Donations() {
                         </span>
                       </h3>
                     </div>
-
-                    {/* Stats con diseño mejorado */}
-                    <div className="grid grid-cols-3 gap-3 mt-6">
-                      {copy.founderLetterStats.map((stat) => (
-                        <div key={stat.label} className="relative group/stat">
-                          <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-orange-400/10 rounded-xl blur-sm group-hover/stat:blur-md transition-all" />
-                          <div className="relative rounded-xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                            <p className="text-2xl font-black bg-gradient-to-r from-amber-200 to-orange-200 bg-clip-text text-transparent">
-                              {stat.value}
-                            </p>
-                            <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mt-0.5">
-                              {stat.label}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
                     {/* Cita inspiradora */}
                     <div className="mt-6 p-4 rounded-xl border border-amber-400/10 bg-amber-400/5">
                       <div className="flex gap-3">

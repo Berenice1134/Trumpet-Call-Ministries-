@@ -157,7 +157,7 @@ const otherMissions = [
 const hospitalPageCopy = {
   es: {
     mission: "Misión",
-    upcomingDates: "Próximás fechas",
+    upcomingDates: "Próximas fechas",
     viewGallery: "Ver galería",
     viewFullGallery: "Ver galería completa",
   

@@ -84,9 +84,9 @@ const homePageCopy = {
     serviceEyebrow: "Navegación interna",
     serviceTitle: "Área de servicio",
     serviceText:
-      "Actualmente el ministerio apoya comunidades de Tlaxcala mediante visitas domiciliares, despensas mensuales y acompañamiento espiritual.",
+      "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
     servicePlaceholder:
-      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tixatlan, Zacatelco, Texoloc y San Diego Metepec.",
+      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tizatlán, Zacatelco, Texoloc y San Diego Metepec.",
   },
   en: {
     mission: "Mission",
@@ -104,7 +104,7 @@ const homePageCopy = {
     serviceText:
       "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
     servicePlaceholder:
-      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tixatlan, Zacatelco, Texoloc, and San Diego Metepec.",
+      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tizatlán, Zacatelco, Texoloc, and San Diego Metepec.",
   },
 };
 
@@ -285,10 +285,10 @@ const ministryTimelineByLanguage = {
       text: "El ministerio celebró cinco años de servicio con nuevas recaudaciones y atención mensual a familias.",
       details: [
         "Se realizó una recaudación mediante venta de comida en Ocotlán.",
-        "El programa domiciliar atendió a 35 familias al mes.",
-        "El ministerio reportó más de 80 familias, 10 comunidades y 48 voluntarios.",
+        "El programa domiciliar mantuvo su atención mensual a las familias.",
+        "La celebración reconoció el esfuerzo de la comunidad y de quienes hacen posible el servicio.",
       ],
-      stat: "+80 familias",
+      stat: "5 años de servicio",
       icon: "🎉",
       color: "from-fuchsia-400 to-fuchsia-600",
     },
@@ -468,11 +468,11 @@ const ministryTimelineByLanguage = {
       title: "5 years transforming through service",
       text: "The ministry celebrated five years of service with new fundraisers and monthly family support.",
       details: [
-        "A food-sale fundraiser was held in Ocotlan.",
-        "The home visit program served 35 families per month.",
-        "The ministry reported more than 80 families, 10 communities, and 48 volunteers.",
+        "A food-sale fundraiser was held in Ocotlán.",
+        "The home visit program continued its monthly support for families.",
+        "The celebration recognized the community and everyone who makes the service possible.",
       ],
-      stat: "80+ families",
+      stat: "5 years of service",
       icon: "🎉",
       color: "from-fuchsia-400 to-fuchsia-600",
     },
@@ -952,7 +952,7 @@ export default function Home() {
                       
                       {/* Etiqueta del año */}
                       <span className={`
-                        text-[10px] sm:text-xs font-bold transition-all duration-300 text-center leading-tight
+                        text-xs sm:text-xs font-bold transition-all duration-300 text-center leading-tight
                         ${isActive ? 'text-amber-700' : 'text-slate-400 group-hover:text-slate-600'}
                       `}>
                         {item.year}
@@ -991,7 +991,7 @@ export default function Home() {
                       </div>
                       <div className={`
                         px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-br ${getActiveGradient()} 
-                        text-white text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-lg
+                        text-white text-xs sm:text-xs font-black uppercase tracking-wider shadow-lg
                       `}>
                         {activeTimelineItem.stat}
                       </div>

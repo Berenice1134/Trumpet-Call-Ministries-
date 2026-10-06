@@ -18,6 +18,19 @@ html {
 body {
   min-width: 320px;
   margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Keep secondary text readable across the site. */
+.text-xs {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-sm {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 button,

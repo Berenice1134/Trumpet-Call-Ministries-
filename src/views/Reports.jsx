@@ -3,9 +3,7 @@ import {
   CalendarDays,
   FileText,
   HandHeart,
-  MapPin,
   PackageCheck,
-  Phone,
   PieChart,
   Scale,
   TrendingUp,
@@ -39,11 +37,19 @@ const yearlySupport = [
   { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10096.68 },
 ];
 
+// Add each new bimonthly issue at the end. The interface displays only the
+// latest three periods (six language slots), so the oldest pair rolls off.
+const infographicPeriods = [
+  { id: "2026-jan-feb", months: { es: "Enero–febrero", en: "January–February" }, year: 2026, files: { es: null, en: null } },
+  { id: "2026-mar-apr", months: { es: "Marzo–abril", en: "March–April" }, year: 2026, files: { es: null, en: null } },
+  { id: "2026-may-jun", months: { es: "Mayo–junio", en: "May–June" }, year: 2026, files: { es: null, en: null } },
+];
+
 const donorSources2026 = [
   { key: "mexico", value: 37, color: "from-cyan-400 to-cyan-600", hex: "#06b6d4", icon: Globe, description: "Donaciones desde México" },
   { key: "englishCenter", value: 2, color: "from-emerald-400 to-emerald-600", hex: "#10b981", icon: GraduationCap, description: "Ingresos del English Center" },
   { key: "usd", value: 55, color: "from-amber-400 to-amber-600", hex: "#fbbf24", icon: Building2, description: "Donaciones en USD" },
-  { key: "kermes", value: 6, color: "from-rose-400 to-rose-600", hex: "#f43f5e", icon: Heart, description: "Recaudación por Kermes" },
+  { key: "kermes", value: 6, color: "from-rose-400 to-rose-600", hex: "#f43f5e", icon: Heart, description: "Recaudación por kermés" },
 ];
 
 const hospitalDonationMix = [
@@ -67,7 +73,7 @@ const infographicTimeline = {
     { date: "Agosto 2023", title: "Misión con Cáritas", text: "Se comparte apoyo con 53 familias en la sede parroquial de San José.", icon: HandHeart },
     { date: "Febrero 2025", title: "Misión a Cartolandia", text: "Se colaboró con la iglesia Mensaje de Vida para servir a esta comunidad.", icon: Church },
     { date: "Enero 2026", title: "Misión al Hospital Infantil", text: "Inicia el acompañamiento a niños con insuficiencia renal en el Hospital Infantil de Tlaxcala.", icon: Baby },
-    { date: "Julio 2026", title: "5 años de servicio", text: "El ministerio celebra más de 80 familias, 10 comunidades y 48 voluntarios.", icon: Award },
+    { date: "Julio 2026", title: "5 años de servicio", text: "El ministerio celebra cinco años de trabajo comunitario y acompañamiento a familias.", icon: Award },
   ],
   en: [
     { date: "June 2021", title: "English Center opens", text: "English Center Tlaxcala begins as the first support source for the ministry.", icon: GraduationCap },
@@ -76,7 +82,7 @@ const infographicTimeline = {
     { date: "August 2023", title: "Mission with Cáritas", text: "Support is shared with 53 families at San José parish.", icon: HandHeart },
     { date: "February 2025", title: "Mission to Cartolandia", text: "The ministry collaborates with Mensaje de Vida Church to serve this community.", icon: Church },
     { date: "January 2026", title: "Children's Hospital mission", text: "Support begins for children with kidney failure at the Children's Hospital of Tlaxcala.", icon: Baby },
-    { date: "July 2026", title: "5 years of service", text: "The ministry celebrates more than 80 families, 10 communities, and 48 volunteers.", icon: Award },
+    { date: "July 2026", title: "5 years of service", text: "The ministry celebrates five years of community service and support for families.", icon: Award },
   ],
 };
 
@@ -90,17 +96,21 @@ const reportsCopy = {
       topYear: "Año con más beneficiarios",
     },
     beneficiariesTitle: "Beneficiarios por año",
-    foodTitle: "Alimentos entregados por año",
+    foodTitle: "Toneladas acumuladas por año",
     pantriesTitle: "Despensas donadas y acumuladas",
     donorTitle: "Fuentes de apoyo 2026",
     hospitalTitle: "Distribución de apoyos hospitalarios",
     missionTitle: "Misiones con donaciones registradas",
-    timelineEyebrow: "Línea del tiempo de la infografía",
+    timelineEyebrow: "Hitos del ministerio",
     timelineTitle: "5 años transformando Tlaxcala",
     timelineText:
-      "La infografía Mayo-Agosto 2026 muestra cómo un comienzo pequeño se convirtió en una red de donadores, voluntarios, iglesias y familias sirviendo juntas.",
-    contactTitle: "Contacto oficial del ministerio",
-    contactText: "Para visitas, coordinación de apoyos o información del ministerio, usa los datos publicados en la infografía.",
+      "Conoce algunos momentos clave en la historia del ministerio.",
+    tonsDelivered: "toneladas de alimentos entregadas",
+    tenTons: "10 toneladas",
+    archiveText: "Consulta las tres ediciones bimestrales más recientes. Cada periodo tendrá una infografía en español y otra en inglés.",
+    spanish: "Español",
+    english: "Inglés",
+    pending: "Espacio reservado. La infografía se agregará cuando esté disponible.",
     kg: "kg",
     months: "meses",
     beneficiariesWord: "beneficiarios",
@@ -110,7 +120,7 @@ const reportsCopy = {
       mexico: "México",
       englishCenter: "English Center",
       usd: "USD",
-      kermes: "Kermes",
+      kermes: "Kermés",
     },
     hospitalLabels: {
       hygieneKits: "Kits de aseo",
@@ -118,13 +128,13 @@ const reportsCopy = {
       sandals: "Chanclas",
       activities: "Actividades",
     },
-    pdfTitle: "PDF institucional",
+    pdfTitle: "Infografías por periodo",
     clickToView: "Haz clic para ver detalles",
     total: "Total",
   },
   en: {
     eyebrow: "Ministry charts",
-    intro: "Data taken from Graficos Ministerio.xlsx to visualize the progress of the home food support program.",
+    intro: "Annual food support, pantry deliveries, and ministry outreach at a glance.",
     stats: {
       pantries: "Pantries donated",
       food: "Food donated",
@@ -132,17 +142,21 @@ const reportsCopy = {
       topYear: "Year with most beneficiaries",
     },
     beneficiariesTitle: "Beneficiaries by year",
-    foodTitle: "Food delivered by year",
+    foodTitle: "Cumulative tons delivered by year",
     pantriesTitle: "Donated and cumulative pantries",
     donorTitle: "2026 support sources",
     hospitalTitle: "Hospital support distribution",
     missionTitle: "Missions with recorded donations",
-    timelineEyebrow: "Infographic timeline",
+    timelineEyebrow: "Ministry milestones",
     timelineTitle: "Five years transforming Tlaxcala",
     timelineText:
-      "The May-August 2026 infographic shows how a small beginning became a network of donors, volunteers, churches, and families serving together.",
-    contactTitle: "Official ministry contact",
-    contactText: "For visits, support coordination, or ministry information, use the contact details published in the infographic.",
+      "Explore key moments in the ministry's history.",
+    tonsDelivered: "tons of food delivered",
+    tenTons: "10 tons",
+    archiveText: "Browse the three most recent bimonthly editions. Each period will have one Spanish infographic and one English infographic.",
+    spanish: "Spanish",
+    english: "English",
+    pending: "Reserved space. The infographic will be added when it is available.",
     kg: "kg",
     months: "months",
     beneficiariesWord: "beneficiaries",
@@ -152,7 +166,7 @@ const reportsCopy = {
       mexico: "México",
       englishCenter: "English Center",
       usd: "USD",
-      kermes: "Kermes",
+      kermes: "Kermés",
     },
     hospitalLabels: {
       hygieneKits: "Hygiene kits",
@@ -160,7 +174,7 @@ const reportsCopy = {
       sandals: "Sandals",
       activities: "Activities",
     },
-    pdfTitle: "Institutional PDF",
+    pdfTitle: "Infographics by period",
     clickToView: "Click to view details",
     total: "Total",
   },
@@ -340,20 +354,19 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
 }
 
 // ===== AREA LINE CHART CON INTERACCIÓN =====
-function AreaLineChartBlock({ title, data, valueKey, valueLabel }) {
+function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, targetLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const values = data.map((item) => item[valueKey]);
-  const maxValue = Math.max(...values);
-  const minValue = Math.min(...values);
-  const range = maxValue - minValue || 1;
+  const maxValue = Math.max(...values, targetValue) * 1.04;
   const points = data
     .map((item, index) => {
       const x = (index / (data.length - 1)) * 100;
-      const y = 86 - ((item[valueKey] - minValue) / range) * 66;
+      const y = 86 - (item[valueKey] / maxValue) * 66;
       return `${x},${y}`;
     })
     .join(" ");
   const areaPoints = `0,92 ${points} 100,92`;
+  const targetY = 86 - (targetValue / maxValue) * 66;
 
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
@@ -401,6 +414,26 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel }) {
           {[20, 40, 60, 80].map((line) => (
             <line key={line} x1="0" x2="100" y1={line} y2={line} stroke="#cbd5e1" strokeDasharray="1 3" strokeWidth="0.35" />
           ))}
+          <line
+            x1="0"
+            x2="100"
+            y1={targetY}
+            y2={targetY}
+            stroke="#d97706"
+            strokeDasharray="2 1.5"
+            strokeWidth="0.8"
+          />
+          <rect x="66" y={targetY - 4.5} width="32" height="5.5" rx="2" fill="#92400e" />
+          <text
+            x="82"
+            y={targetY - 0.7}
+            textAnchor="middle"
+            fill="#ffffff"
+            fontSize="3.1"
+            fontWeight="700"
+          >
+            {targetLabel}
+          </text>
           <polygon points={areaPoints} fill="url(#foodAreaGradient)" />
           <polyline 
             points={points} 
@@ -644,7 +677,7 @@ function DonutChart({ title, items, labels }) {
           <div className="absolute inset-0 grid place-items-center text-center">
             <div className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
               <p className="text-4xl font-black text-slate-900">{largest.value}%</p>
-              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <p className="mt-0.5 text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
                 {labels[largest.key]}
               </p>
             </div>
@@ -690,7 +723,12 @@ export default function Reports() {
   const copy = reportsCopy[language] ?? reportsCopy.es;
   const timelineItems = infographicTimeline[language] ?? infographicTimeline.es;
   const [showFullscreen, setShowFullscreen] = useState(false);
+  const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-jun");
+  const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(language === "en" ? "en" : "es");
   const [detailModal, setDetailModal] = useState(null);
+  const selectedPeriod = infographicPeriods.find((period) => period.id === selectedPeriodId) ?? infographicPeriods.at(-1);
+  const selectedInfographic = selectedPeriod.files[selectedDocumentLanguage];
+  const visibleInfographicPeriods = infographicPeriods.slice(-3).reverse();
 
   const totalPantries = yearlySupport.at(-1).cumulativePantries;
   const totalFoodKg = yearlySupport.at(-1).cumulativeFoodKg;
@@ -778,8 +816,8 @@ export default function Reports() {
             />
             <StatCard 
               icon={Scale} 
-              label={copy.stats.food} 
-              value={`${formatNumber(totalFoodKg / 1000, 2)} t`} 
+              value={formatNumber(totalFoodKg / 1000, 1)}
+              label={copy.tonsDelivered}
               detail={`${formatNumber(totalFoodKg, 2)} kg`} 
               color="bg-emerald-500" 
               gradient="from-emerald-400 to-emerald-600"
@@ -818,8 +856,10 @@ export default function Reports() {
             <AreaLineChartBlock
               title={copy.foodTitle}
               data={yearlySupport}
-              valueKey="foodKg"
+              valueKey="cumulativeFoodKg"
               valueLabel={copy.kg}
+              targetValue={10000}
+              targetLabel={copy.tenTons}
             />
             <ColumnChartBlock
               title={copy.pantriesTitle}
@@ -897,7 +937,7 @@ export default function Reports() {
       )}
 
       {/* Timeline Section */}
-      <section id="linea-tiempo-infografia" className="section-shell scroll-mt-28 bg-white">
+      <section id="linea-tiempo-ministerio" className="section-shell scroll-mt-28 bg-white">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-cyan-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue border border-cyan-200">
@@ -960,80 +1000,57 @@ export default function Reports() {
       {/* PDF Section */}
       <section id="pdf-institucional" className="section-shell scroll-mt-28 bg-gradient-to-b from-white to-slate-50">
         <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-10">
+          <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-violet-700 border border-violet-200">
-              <FileText size={15} />
-              {copy.pdfTitle}
+              <FileText size={15} />{copy.pdfTitle}
             </span>
+            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">{copy.archiveText}</p>
           </div>
 
-          <div className="rounded-3xl bg-white shadow-2xl border border-slate-100 overflow-hidden">
-            {/* Header con contacto */}
-            <div className="bg-gradient-to-r from-ministry-blue to-cyan-600 p-6 md:p-8">
-              <div className="grid gap-6 md:grid-cols-[1fr_1.2fr] md:items-center">
-                <div>
-                  <h3 className="text-2xl font-black text-white">{copy.contactTitle}</h3>
-                  <p className="mt-2 text-sm leading-6 text-white/80">{copy.contactText}</p>
-                </div>
-                <div className="grid gap-3 text-sm font-bold text-white/90">
-                  <span className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                    <Phone size={18} className="text-cyan-200" />
-                    <a href="tel:+522463307994" className="hover:text-white transition-colors">246 330 79 94</a>
-                    <span className="text-white/30">|</span>
-                    <a href="tel:+522464150417" className="hover:text-white transition-colors">246 415 04 17</a>
-                  </span>
-                  <span className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                    <MapPin size={18} className="text-cyan-200" />
-                    {language === "en"
-                      ? "Calle Herreros 53 corner with Pintores, Col. Loma Bonita, Tlaxcala"
-                      : "Calle Herreros 53 esq. con Pintores, Col. Loma Bonita, Tlaxcala"}
-                  </span>
-                </div>
-              </div>
+          <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="space-y-4" aria-label={copy.pdfTitle}>
+              {visibleInfographicPeriods.map((period) => (
+                <article key={period.id} className={`rounded-2xl border p-5 transition ${selectedPeriodId === period.id ? "border-ministry-blue bg-cyan-50 shadow-md" : "border-slate-200 bg-white"}`}>
+                  <button onClick={() => setSelectedPeriodId(period.id)} className="w-full text-left text-xl font-black text-slate-900">
+                    {period.months[language] ?? period.months.es} {period.year}
+                  </button>
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    {["es", "en"].map((docLanguage) => {
+                      const hasFile = Boolean(period.files[docLanguage]);
+                      const active = selectedPeriodId === period.id && selectedDocumentLanguage === docLanguage;
+                      return (
+                        <button key={docLanguage} onClick={() => { setSelectedPeriodId(period.id); setSelectedDocumentLanguage(docLanguage); }} className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${active ? "border-ministry-blue bg-ministry-blue text-white" : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500"}`}>
+                          {docLanguage === "es" ? copy.spanish : copy.english}{hasFile ? " · PDF" : " · …"}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </article>
+              ))}
             </div>
 
-            {/* Viewer PDF */}
-            <div className="relative">
-              <div className="absolute top-4 right-4 z-10 flex gap-2">
-                <button
-                  onClick={() => setShowFullscreen(true)}
-                  className="flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm px-4 py-2 text-sm font-bold text-slate-700 shadow-lg hover:bg-white transition-all hover:scale-105"
-                >
-                  <Eye size={16} />
-                  {language === "en" ? "Fullscreen" : "Pantalla completa"}
-                </button>
-                <a
-                  href={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
-                  download
-                  className="flex items-center gap-2 rounded-full bg-ministry-blue/90 backdrop-blur-sm px-4 py-2 text-sm font-bold text-white shadow-lg hover:bg-ministry-blue transition-all hover:scale-105"
-                >
-                  <Download size={16} />
-                  {language === "en" ? "Download" : "Descargar"}
-                </a>
-              </div>
-              <iframe
-                title={t("reports.viewerTitle")}
-                className="h-[600px] w-full bg-white"
-                src={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
-              />
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-amber-50 to-orange-50 border-t border-amber-100">
-              <div className="flex items-center gap-4">
-                <div className="rounded-full bg-amber-100 p-3">
-                  <Sparkles size={20} className="text-amber-600" />
+            <div className="relative min-h-[420px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+              {selectedInfographic ? (
+                <>
+                  <div className="absolute right-4 top-4 z-10 flex gap-2">
+                    <button onClick={() => setShowFullscreen(true)} className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-700 shadow-lg"><Eye size={16} />{language === "en" ? "Fullscreen" : "Pantalla completa"}</button>
+                    <a href={`${import.meta.env.BASE_URL}${selectedInfographic}`} download className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"><Download size={16} />{language === "en" ? "Download" : "Descargar"}</a>
+                  </div>
+                  <iframe title={`${selectedPeriod.months[language] ?? selectedPeriod.months.es} ${selectedPeriod.year} — ${selectedDocumentLanguage}`} className="h-[600px] w-full bg-white" src={`${import.meta.env.BASE_URL}${selectedInfographic}`} />
+                </>
+              ) : (
+                <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
+                  <FileText size={48} className="text-slate-300" />
+                  <h3 className="mt-5 text-2xl font-black text-slate-800">{selectedPeriod.months[language] ?? selectedPeriod.months.es} {selectedPeriod.year} · {selectedDocumentLanguage === "es" ? copy.spanish : copy.english}</h3>
+                  <p className="mt-3 max-w-md text-base leading-7 text-slate-500">{copy.pending}</p>
                 </div>
-                <p className="font-semibold text-slate-700">
-                  {t("reports.note")}
-                </p>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Fullscreen Modal */}
-      {showFullscreen && (
+      {showFullscreen && selectedInfographic && (
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4">
           <button
             onClick={() => setShowFullscreen(false)}
@@ -1042,9 +1059,9 @@ export default function Reports() {
             ×
           </button>
           <iframe
-            title={t("reports.viewerTitle")}
+            title={`${selectedPeriod.months[language] ?? selectedPeriod.months.es} ${selectedPeriod.year}`}
             className="h-[95vh] w-full max-w-6xl rounded-lg"
-            src={`${import.meta.env.BASE_URL}assets/reportes/infografia-mayo-agosto-2026.pdf`}
+            src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
           />
         </div>
       )}

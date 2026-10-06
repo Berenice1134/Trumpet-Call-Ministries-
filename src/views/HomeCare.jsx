@@ -186,7 +186,7 @@ const homeCarePageCopy = {
     serviceAreaText:
       "Home care coverage focuses on families in Tlaxcala who receive pantry support, accompaniment, prayer, and monthly follow-up.",
     serviceAreaLegend:
-      "Loma Bonita Tlax, El Sabinal Tlax, Tlacomulco Tlax, El Alto Chiautempan, Texcacoac Chiautempan, Contla de Juan Cuamatzi, Tlaxco, Tizostoc Ixtacuixtla de Mariaño Matamoros, Tixatlan Tlax, Zacatelco, Texoloc, and San Diego Metepec Tlax are the municipalities currently receiving home care support.",
+      "Loma Bonita Tlax, El Sabinal Tlax, Tlacomulco Tlax, El Alto Chiautempan, Texcacoac Chiautempan, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Ixtacuixtla de Mariano Matamoros, Tizatlán Tlax, Zacatelco, Texoloc, and San Diego Metepec Tlax are the municipalities currently receiving home care support.",
     historyEyebrow: "Our Journey",
     historyServiceTitle: "Home Care Service History",
     historyServiceText:
@@ -249,11 +249,11 @@ const homeCareTimelineByLanguage = {
       title: "Cobertura activa en Tlaxcala",
       text: "Actualmente el servicio domiciliar funciona como un programa mensual con comunidades identificadas, seguimiento constante y apoyo alimentario organizado.",
       details: [
-        "La cobertura activa incluye 12 comunidades y municipios de Tlaxcala.",
+        "La cobertura activa conecta comunidades y municipios de Tlaxcala.",
         "Cada familia recibe despensa mensual, oración y acompañamiento según sus necesidades.",
-        "El programa supera 1,165 despensas acumuladas y más de 10 toneladas de alimento.",
+        "El programa supera las 1,165 despensas acumuladas y mantiene la entrega mensual de alimentos.",
       ],
-      stat: "12 zonas activas",
+      stat: "Cobertura en Tlaxcala",
     },
   ],
   en: [
@@ -295,11 +295,11 @@ const homeCareTimelineByLanguage = {
       title: "Active coverage in Tlaxcala",
       text: "Today, home care operates as a monthly program with identified communities, consistent follow-up, and organized food support.",
       details: [
-        "Active coverage includes 12 communities and municipalities in Tlaxcala.",
+        "Active coverage connects communities and municipalities in Tlaxcala.",
         "Each family receives monthly pantry support, prayer, and accompaniment according to their needs.",
-        "The program has surpassed 1,165 cumulative pantry packages and more than 10 tons of food.",
+        "The program has surpassed 1,165 cumulative pantry packages and continues monthly food deliveries.",
       ],
-      stat: "12 active areas",
+      stat: "Coverage in Tlaxcala",
     },
   ],
 };
@@ -312,8 +312,8 @@ const serviceCommunities = [
   "Texcacoac, Chiautempan",
   "Contla de Juan Cuamatzi",
   "Tlaxco",
-  "Tizostoc, Ixtacuixtla de Mariaño Matamoros",
-  "Tixatlan, Tlax.",
+  "Tizostoc, Ixtacuixtla de Mariano Matamoros",
+  "Tizatlán, Tlax.",
   "Zacatelco",
   "Texoloc",
   "San Diego Metepec, Tlax.",
@@ -527,7 +527,7 @@ export default function HomeCare() {
                   alt={copy.municipalityMapAlt}
                   className="relative w-full h-full object-contain rounded-3xl shadow-2xl ring-1 ring-white/70"
                 />
-                <div className="absolute left-4 top-4 hidden rounded-full bg-slate-950/90 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-ministry-gold shadow-lg backdrop-blur sm:inline-flex">
+                <div className="absolute left-4 top-4 hidden rounded-full bg-slate-950/90 px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-ministry-gold shadow-lg backdrop-blur sm:inline-flex">
                   {copy.territoryEyebrow}
                 </div>
               </div>
@@ -546,7 +546,7 @@ export default function HomeCare() {
                       </span>
                       <span>
                         <span className="block text-xl font-black text-ink leading-tight">{stat.value}</span>
-                        <span className="block text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500 leading-tight">{stat.label}</span>
+                        <span className="block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 leading-tight">{stat.label}</span>
                       </span>
                     </div>
                   ))}

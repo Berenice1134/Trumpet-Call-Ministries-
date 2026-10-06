@@ -87,7 +87,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Ministry founded in July" },
         { value: "80+", label: "Families reached" },
-        { value: "10 t", label: "Food distributed" },
+        { value: "10 Toneladas", label: "Food distributed" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Ministry areas",
@@ -488,7 +488,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Fundación del ministerio en julio" },
         { value: "80+", label: "Familias alcanzadas" },
-        { value: "10 t", label: "Alimentos distribuidos" },
+        { value: "10 Toneladas", label: "Alimentos distribuidos" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Áreas del ministerio",

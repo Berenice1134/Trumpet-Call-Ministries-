@@ -85,8 +85,7 @@ const homePageCopy = {
     serviceTitle: "Área de servicio",
     serviceText:
       "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
-    servicePlaceholder:
-      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tizatlán, Zacatelco, Texoloc y San Diego Metepec.",
+   
   },
   en: {
     mission: "Mission",
@@ -103,8 +102,6 @@ const homePageCopy = {
     serviceTitle: "Service Area",
     serviceText:
       "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
-    servicePlaceholder:
-      "Loma Bonita, El Sabinal, Tlacomulco, El Alto, Texcacoac, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Tizatlán, Zacatelco, Texoloc, and San Diego Metepec.",
   },
 };
 
@@ -502,49 +499,13 @@ const beneficiariesByLanguage = {
   ],
 };
 
-const supportAreasByLanguage = {
-  es: [
-    {
-      title: "Clases particulares de inglés",
-      text: "English Center Tlaxcala ayuda a sostener el ministerio y fue parte del inicio de este proyecto de servicio.",
-      icon: BookOpen,
-    },
-    {
-      title: "Donadores mexicanos y extranjeros",
-      text: "Cada donación se transforma en despensa, kit, calzado, ropa adaptada o apoyo práctico para una familia.",
-      icon: HandHeart,
-    },
-    {
-      title: "Voluntarios de corazón",
-      text: "Estudiantes, padres, vecinos, iglesias, grupos particulares y beneficiarios ayudan a empacar y repartir.",
-      icon: Users,
-    },
-  ],
-  en: [
-    {
-      title: "Private English classes",
-      text: "English Center Tlaxcala helps sustain the ministry and was part of the beginning of this service project.",
-      icon: BookOpen,
-    },
-    {
-      title: "Mexican and international donors",
-      text: "Every donation becomes a pantry package, kit, footwear, adapted clothing, or practical support for a family.",
-      icon: HandHeart,
-    },
-    {
-      title: "Wholehearted volunteers",
-      text: "Students, parents, neighbors, churches, private groups, and beneficiaries help pack and distribute support.",
-      icon: Users,
-    },
-  ],
-};
 
 const ministryContextByLanguage = {
   es: [
     {
       title: "Organización y sostenimiento",
       text:
-        "Trumpet Call Ministries México comenzó en Tlaxcala bajo la dirección de Andrea Lee Byrn. Desde julio de 2021 inició la distribución mensual de despensas a familias necesitadas, uniendo apoyo alimentario con acompañamiento espiritual.",
+        "Trumpet Call Ministries México comenzó en Tlaxcala bajo la dirección de Lic.Andrea L. Byrn. Desde julio de 2021 inició la distribución mensual de despensas a familias necesitadas, uniendo apoyo alimentario con acompañamiento espiritual.",
       points: [
         "La primera distribución apoyó a 12 familias.",
         "English Center Tlaxcala ayuda a sostener la compra de alimentos.",
@@ -566,7 +527,7 @@ const ministryContextByLanguage = {
     {
       title: "La realidad de muchas familias",
       text:
-        "El material institucional describe una necesidad grande de alimento y esperanza en Tlaxcala. Muchas familias enfrentan enfermedades, abandono, pérdida de empleo, falta de apoyo familiar o crisis económicas que se han prolongado desde la pandemia.",
+        " Muchas familias enfrentan enfermedades, abandono, pérdida de empleo, falta de apoyo familiar o crisis económicas que se han prolongado desde la pandemia.",
       points: [
         "Adultos mayores, viudas y personas con enfermedades graves.",
         "Madres solteras y familias cuidando niños o familiares vulnerables.",
@@ -579,7 +540,7 @@ const ministryContextByLanguage = {
     {
       title: "Organization and support",
       text:
-        "Trumpet Call Ministries Mexico began in Tlaxcala under the direction of Andrea Lee Byrn. Since July 2021, it has distributed monthly food pantry support to families in need, combining food assistance with spiritual care.",
+        "Trumpet Call Ministries Mexico began in Tlaxcala under the direction of Lic. Andrea L. Byrn. Since July 2021, it has distributed monthly food pantry support to families in need, combining food assistance with spiritual care.",
       points: [
         "The first distribution supported 12 families.",
         "English Center Tlaxcala helps fund food purchases.",
@@ -843,8 +804,8 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
               {language === "en"
-                ? "This information comes from the institutional material and helps explain why the ministry combines food support, spiritual care, and personal follow-up."
-                : "Esta información viene del material institucional y ayuda a explicar por qué el ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal."}
+                ? "The ministry combines food support, spiritual care, and personal follow-up."
+                : "El ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal."}
             </p>
           </div>
 
@@ -1132,64 +1093,7 @@ export default function Home() {
         </div>
     </section>
 
-      {/* ========== SERVICE AREA ========== */}
-      <section id="area-servicio" className="bg-gradient-to-br from-slate-900 to-indigo-950 scroll-mt-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full" style={{ 
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: '30px 30px'
-          }} />
-        </div>
-        <div className="section-shell relative">
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-sm border border-white/10">
-              <MapPin size={14} />
-              {copy.serviceEyebrow}
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-4">
-              {copy.serviceTitle}
-            </h2>
-            <p className="text-white/60 max-w-2xl mx-auto text-lg">
-              {copy.serviceText}
-            </p>
-          </div>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid gap-6 rounded-[2rem] border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-sm lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:p-6">
-              <div className="overflow-hidden rounded-3xl bg-white p-3 shadow-xl">
-                <img
-                  src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/mapa-area-servicio.png`}
-                  alt={language === "en" ? "Map of communities served in Tlaxcala" : "Mapa de comunidades atendidas en Tlaxcala"}
-                  className="w-full rounded-2xl object-contain"
-                />
-              </div>
-              <div className="p-2 text-left lg:p-6">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-amber-400/15 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-amber-300">
-                  <MapPin size={15} />
-                  {language === "en" ? "Active coverage" : "Cobertura activa"}
-                </div>
-                <h3 className="text-3xl font-black text-white">
-                  {language === "en" ? "12 supported communities" : "12 comunidades atendidas"}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-white/70">
-                  {copy.servicePlaceholder}
-                </p>
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {[
-                    language === "en" ? "Monthly pantry support" : "Despensa mensual",
-                    language === "en" ? "Home visits" : "Visitas domiciliares",
-                    language === "en" ? "Prayer and accompaniment" : "Oración y acompañamiento",
-                    language === "en" ? "Tlaxcala communities" : "Comunidades de Tlaxcala",
-                  ].map((item) => (
-                    <span key={item} className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white/85">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ========== DASHBOARD GRID ========== */}
       <section id="dashboards" className="bg-gradient-to-b from-white via-slate-50 to-white">

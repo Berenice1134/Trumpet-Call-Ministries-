@@ -11,9 +11,7 @@ const menuGroupsByLanguage = {
       items: [
         { label: "Sobre nosotros", id: "sobre-nosotros" },
         { label: "Historia", id: "historia" },
-        { label: "Área de servicio", id: "area-servicio" },
         { label: "Objetivo", id: "objetivo" },
-        { label: "Cómo se sostiene el ministerio", id: "como-se-sostiene" },
       ],
     },
     {
@@ -159,22 +157,29 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        
+        {/* --- INICIO DE LA SECCIÓN MODIFICADA DEL LOGO --- */}
         <NavLink
           to="/"
           className="flex items-center gap-3"
           onClick={() => setIsOpen(false)}
         >
-          <span className="grid h-16 w-24 shrink-0 place-items-center overflow-hidden rounded-md bg-white sm:h-20 sm:w-32">
+          {/* Contenedor del logo: sin tamaño fijo, solo centrado */}
+          <span className="flex shrink-0 items-center justify-center">
             <img
               src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
-              className="h-full w-full object-cover"
+              /* h-16 en móvil, crece hasta h-28 en pantallas grandes. w-auto y object-contain evitan deformaciones y recortes */
+              className="h-16 w-auto object-contain sm:h-20 lg:h-24 xl:h-28"
             />
           </span>
-          <span className="hidden text-base font-bold leading-tight text-ink sm:block sm:text-lg">
+          
+          {/* Texto al lado del logo */}
+          <span className="hidden text-base font-bold leading-tight text-ink sm:block sm:text-lg lg:text-xl">
             {t("brand")}
           </span>
         </NavLink>
+        {/* --- FIN DE LA SECCIÓN MODIFICADA DEL LOGO --- */}
 
         <div className="hidden items-center gap-1 lg:flex">
           {menuGroups.map((group) => (

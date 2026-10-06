@@ -28,7 +28,6 @@ const bankAccounts = [
     bank: "INBURSA",
     accountNumber: "5007 2633 60",
     clabe: "0368 3050 0726 3336 01",
-    concept: "DESPENSA",
     color: "from-cyan-500 to-blue-700",
     bgLight: "bg-cyan-50",
     borderLight: "border-cyan-200",
@@ -81,7 +80,7 @@ const donationPageCopy = {
     kermesCounter: "foto",
     bankTransfer: "Transferencia Bancaria",
     bankDetails: "Datos bancarios",
-    bankText: "Este es el único medio autorizado para transferencias. Usa el concepto DESPENSA al realizar tu donación.",
+    bankText: "Este es el único medio autorizado para transferencias. Elige el área que quieres apoyar y usa el concepto indicado.",
     accountNumber: "Número de cuenta",
     clabe: "CLABE interbancaria",
     transferConcept: "Concepto",
@@ -90,6 +89,11 @@ const donationPageCopy = {
     shareBankDetails: "Compartir datos de transferencia",
     transferShared: "Datos de transferencia copiados",
     impactTitle: "Impacto de tu donación",
+    supportOptions: [
+      { value: "home", label: "Servicio domiciliar", concept: "SERVICIO DOMICILIAR" },
+      { value: "hospital", label: "Hospital Infantil de Tlaxcala", concept: "HOSPITAL INFANTIL DE TLAXCALA" },
+      { value: "general", label: "General / personalizado", concept: "GENERAL" },
+    ],
     founderLetterEyebrow: "Carta a visitantes",
     founderLetterTitle: "Una invitación desde el corazón del ministerio",
     founderLetterIntro:
@@ -130,7 +134,7 @@ const donationPageCopy = {
     kermesCounter: "photo",
     bankTransfer: "Bank Transfer",
     bankDetails: "Bank details",
-    bankText: "This is the only authorized method for bank transfers. Use DESPENSA as the transfer concept.",
+    bankText: "This is the only authorized method for bank transfers. Choose the area you want to support and use the matching concept.",
     accountNumber: "Account number",
     clabe: "Interbank CLABE",
     transferConcept: "Concept",
@@ -139,6 +143,11 @@ const donationPageCopy = {
     shareBankDetails: "Share transfer details",
     transferShared: "Transfer details copied",
     impactTitle: "The impact of your donation",
+    supportOptions: [
+      { value: "home", label: "Home care service", concept: "HOME CARE SERVICE" },
+      { value: "hospital", label: "Children's Hospital of Tlaxcala", concept: "CHILDREN'S HOSPITAL OF TLAXCALA" },
+      { value: "general", label: "General / custom", concept: "GENERAL" },
+    ],
     founderLetterEyebrow: "Letter to visitors",
     founderLetterTitle: "An invitation from the heart of the ministry",
     founderLetterIntro:
@@ -238,14 +247,17 @@ export default function Donations() {
   const { language, t } = useLanguage();
   const copy = donationPageCopy[language] ?? donationPageCopy.es;
   const [copiedField, setCopiedField] = useState(null);
+  const [selectedSupport, setSelectedSupport] = useState("general");
+  const selectedConcept = copy.supportOptions.find((option) => option.value === selectedSupport)?.concept ?? "GENERAL";
 
-  const scrollToTransfers = () => {
+  const scrollToTransfers = (support = selectedSupport) => {
+    setSelectedSupport(support);
     document.querySelector("#transferencias")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const copyToClipboard = async (text, field) => {
+  const copyToClipboard = async (text, field, removeSpaces = true) => {
     try {
-      await navigator.clipboard.writeText(text.replace(/\s/g, ""));
+      await navigator.clipboard.writeText(removeSpaces ? text.replace(/\s/g, "") : text);
       setCopiedField(field);
       setTimeout(() => setCopiedField(null), 2000);
     } catch (err) {
@@ -259,7 +271,7 @@ export default function Donations() {
       `Banco: ${account.bank}`,
       `${copy.accountNumber}: ${account.accountNumber}`,
       `${copy.clabe}: ${account.clabe}`,
-      `${copy.transferConcept}: ${account.concept}`,
+      `${copy.transferConcept}: ${selectedConcept}`,
     ].join("\n");
 
     try {
@@ -348,23 +360,6 @@ export default function Donations() {
               {t("donations.text")}
             </p>
 
-            {/* Quick Stats */}
-            <div className="grid gap-4 sm:grid-cols-3 max-w-2xl mx-auto mt-8">
-              {[
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-4 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                >
-                  <div className="relative space-y-2 text-center">
-                    <stat.icon size={20} className="text-amber-400 mx-auto" />
-                    <p className="text-2xl font-black text-white">{stat.value}</p>
-                    <p className="text-xs text-white/60">{stat.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
             {/* Navigation Pills */}
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               <a
@@ -444,7 +439,7 @@ export default function Donations() {
                 </div>
                 <button
                   type="button"
-                  onClick={scrollToTransfers}
+                  onClick={() => scrollToTransfers("home")}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold hover:shadow-lg hover:shadow-emerald-200 transition-all duration-300 hover:scale-[1.02]"
                 >
                   {copy.donateNow}
@@ -483,7 +478,7 @@ export default function Donations() {
                 </div>
                 <button
                   type="button"
-                  onClick={scrollToTransfers}
+                  onClick={() => scrollToTransfers("hospital")}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold hover:shadow-lg hover:shadow-amber-200 transition-all duration-300 hover:scale-[1.02]"
                 >
                   {copy.donateNow}
@@ -517,7 +512,7 @@ export default function Donations() {
                 </div>
                 <button
                   type="button"
-                  onClick={scrollToTransfers}
+                  onClick={() => scrollToTransfers("general")}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-bold hover:shadow-lg hover:shadow-violet-200 transition-all duration-300 hover:scale-[1.02]"
                 >
                   {copy.donateNow}
@@ -625,7 +620,7 @@ export default function Donations() {
                           {copy.transferConcept}
                         </span>
                         <button
-                          onClick={() => copyToClipboard(account.concept, `concept-${index}`)}
+                          onClick={() => copyToClipboard(selectedConcept, `concept-${index}`, false)}
                           className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
                         >
                           {copiedField === `concept-${index}` ? (
@@ -644,9 +639,20 @@ export default function Donations() {
                       <div className="flex items-center gap-3">
                         <Sparkles size={20} className="text-slate-400" />
                         <p className="text-lg font-black text-slate-900 tracking-wider">
-                          {account.concept}
+                          {selectedConcept}
                         </p>
                       </div>
+                      <label className="mt-4 block text-sm font-semibold text-slate-700" htmlFor={`support-${index}`}>
+                        {language === "en" ? "Choose what to support" : "Elige a qué quieres apoyar"}
+                      </label>
+                      <select
+                        id={`support-${index}`}
+                        value={selectedSupport}
+                        onChange={(event) => setSelectedSupport(event.target.value)}
+                        className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      >
+                        {copy.supportOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                      </select>
                     </div>
                   </div>
 

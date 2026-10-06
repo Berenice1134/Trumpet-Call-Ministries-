@@ -164,11 +164,11 @@ export default function Navbar() {
           className="flex items-center gap-3"
           onClick={() => setIsOpen(false)}
         >
-          <span className="grid h-16 w-24 place-items-center overflow-hidden rounded-md bg-white sm:h-[4.5rem] sm:w-32">
+          <span className="grid h-20 w-32 place-items-center overflow-hidden rounded-md bg-white sm:h-24 sm:w-40">
             <img
               src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
-              className="h-full w-full scale-110 object-contain"
+              className="h-full w-full scale-125 object-contain"
             />
           </span>
           <span className="hidden text-base font-bold leading-tight text-ink sm:block sm:text-lg">

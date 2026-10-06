@@ -9,13 +9,11 @@ import {
   Users,
   ArrowRight,
   ChevronDown,
-  Star,
   Heart,
   Home,
   Truck,
   Calendar,
 } from "lucide-react";
-import HelpRequestForm from "../components/HelpRequestForm.jsx";
 import FeaturedPhotoGallery from "../components/FeaturedPhotoGallery.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
@@ -741,7 +739,7 @@ export default function HomeCare() {
 <section className="section-shell bg-gradient-to-b from-slate-50 via-white to-slate-50/50 relative overflow-hidden">
   <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]" />
   
-  <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr] max-w-6xl mx-auto relative">
+  <div className="grid gap-8 max-w-4xl mx-auto relative">
     {/* Left Column - Activities */}
     <div className="grid gap-6">
       <div className="group relative bg-white rounded-2xl p-8 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
@@ -797,25 +795,6 @@ export default function HomeCare() {
       </div>
     </div>
 
-    {/* Right Column - Form */}
-    <div className="lg:sticky lg:top-28 h-fit">
-      <div className="relative bg-white rounded-2xl p-8 border border-slate-200 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-amber-100/20 to-orange-100/20 rounded-full -mr-24 -mt-24" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-amber-100/10 to-orange-100/10 rounded-full -ml-24 -mb-24" />
-        
-        <div className="relative flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-300/40">
-            <Star size={22} className="text-white" />
-          </div>
-          <h2 className="text-2xl font-bold text-slate-900">
-            {t("homeCare.formTitle")}
-          </h2>
-        </div>
-        <div className="relative">
-          <HelpRequestForm />
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 </>

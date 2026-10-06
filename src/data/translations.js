@@ -14,7 +14,6 @@ export const translations = {
       learnMore: "Learn more",
       donateNow: "Donate now",
       placeholder: "Infographic files will appear here when available.",
-      requestHelp: "Request help",
       fullName: "Full name",
       phone: "Phone",
       message: "Message",
@@ -127,7 +126,6 @@ export const translations = {
         "Gospel message, prayer, and personal follow-up",
         "Home interviews to identify widows, orphans, disabilities, abandoned older adults, chronic illness, homelessness, and families in crisis",
       ],
-      formTitle: "Help Request Form",
       carouselLabel: "Home care gallery",
       gallery: "Home Visit Gallery",
       galleryTitle: "Home visits, pantry support, and real families",
@@ -371,7 +369,7 @@ export const translations = {
     },
     donations: {
       title: "Donations and Impact",
-      text: "Interactive donation structure prepared for future payment integration.",
+      text: "Choose an area to support and use the matching concept when making your bank transfer.",
       monthlyHome: "Monthly Home Care",
       monthlyHospital: "Monthly Hospital",
       gift: "Gift Donation",
@@ -409,7 +407,7 @@ export const translations = {
       cardPayment: "Card payment",
       impactTitle: "The impact of your donation",
       impactNote:
-        "The ministry serves 38 families across 8 communities. Home-visit food support costs $250 per family each month for a 12-kilo pantry package; mission pantry packages cost $125 for 6 kilos.",
+        "Your support helps more than 80 families through monthly home visits and food pantries. At the Children's Hospital of Tlaxcala, children and their families receive personal hygiene kits, medical supplies, food pantries, and ongoing accompaniment.",
     },
     reports: {
       title: "Infographics and reports",
@@ -434,7 +432,6 @@ export const translations = {
       learnMore: "Ver más",
       donateNow: "Donar ahora",
       placeholder: "Las infografías aparecerán aquí cuando estén disponibles.",
-      requestHelp: "Solicitar ayuda",
       fullName: "Nombre completo",
       phone: "Teléfono",
       message: "Mensaje",
@@ -530,7 +527,6 @@ export const translations = {
         "Mensaje del Evangelio, oración y seguimiento personal",
         "Entrevistas para identificar situaciones de viudez u orfandad, discapacidad, abandono de adultos mayores, enfermedades crónicas, indigencia y crisis familiares.",
       ],
-      formTitle: "Formulario de solicitud de ayuda",
       carouselLabel: "Galería de servicio domiciliar",
       gallery: "Galería de visitas domiciliares",
       galleryTitle: "Visitas al hogar, despensas y familias reales",
@@ -733,7 +729,7 @@ export const translations = {
     },
     donations: {
       title: "Donaciones e Impacto",
-      text: "Estructura interactiva de donación preparada para una integración futura de pagos.",
+      text: "Elige el área que quieres apoyar y usa el concepto correspondiente al realizar tu transferencia.",
       monthlyHome: "Opción Mensual Domiciliaria",
       monthlyHospital: "Opción Mensual Hospital",
       gift: "Opción Regalo",
@@ -741,7 +737,7 @@ export const translations = {
       hospitalText: "Contribución mensual fija para visitas al hospital.",
       giftText: "Ingresa un monto voluntario.",
       impactNote:
-        "El ministerio atiende a 38 familias en 8 comunidades. La despensa domiciliaria cuesta $250 por familia al mes e incluye 12 kilos; cada despensa para misiones cuesta $125 e incluye 6 kilos.",
+        "Tu apoyo ayuda a más de 80 familias mediante visitas mensuales y entrega de despensas. En el Hospital Infantil de Tlaxcala, los niños y sus familias reciben kits de aseo personal, artículos médicos, despensas y acompañamiento continuo.",
     },
     reports: {
       title: "Infografías y reportes",

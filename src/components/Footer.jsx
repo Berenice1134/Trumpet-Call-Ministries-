@@ -28,7 +28,7 @@ export default function Footer() {
             <img
               src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
-              className="h-14 w-20 rounded-md object-contain"
+              className="h-20 w-28 rounded-md object-contain"
             />
             <p className="text-lg font-bold">{t("brand")}</p>
           </div>

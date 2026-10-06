@@ -9,8 +9,6 @@ import {
   TrendingUp,
   Users,
   Sparkles,
-  ArrowUp,
-  ArrowDown,
   Award,
   Globe,
   Church,
@@ -400,7 +398,7 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
       )}
 
       <div className="rounded-2xl bg-gradient-to-br from-emerald-50/50 to-cyan-50/50 p-4">
-        <svg viewBox="0 0 100 100" className="h-64 w-full overflow-visible cursor-pointer">
+        <svg viewBox="0 0 100 100" className="h-[26rem] w-full overflow-visible cursor-pointer sm:h-[34rem]">
           <defs>
             <linearGradient id="foodAreaGradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="#10b981" stopOpacity="0.34" />
@@ -733,10 +731,6 @@ export default function Reports() {
   const totalPantries = yearlySupport.at(-1).cumulativePantries;
   const totalFoodKg = yearlySupport.at(-1).cumulativeFoodKg;
   const totalBeneficiaries = yearlySupport.reduce((sum, item) => sum + item.beneficiaries, 0);
-  const topBeneficiaryYear = yearlySupport.reduce((top, item) =>
-    item.beneficiaries > top.beneficiaries ? item : top
-  );
-
   const handleStatClick = (stat) => {
     let title = '';
     let data = [];
@@ -804,7 +798,7 @@ export default function Reports() {
           </div>
 
           {/* Stats Grid - Clickables */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-3">
             <StatCard 
               icon={PackageCheck} 
               label={copy.stats.pantries} 
@@ -832,14 +826,6 @@ export default function Reports() {
               gradient="from-rose-400 to-rose-600"
               onClick={() => handleStatClick('beneficiaries')}
             />
-            <StatCard 
-              icon={TrendingUp} 
-              label={copy.stats.topYear} 
-              value={topBeneficiaryYear.year} 
-              detail={`${topBeneficiaryYear.beneficiaries} ${copy.beneficiariesWord}`} 
-              color="bg-amber-500" 
-              gradient="from-amber-400 to-orange-500"
-            />
           </div>
 
           {/* Charts Grid */}
@@ -853,14 +839,16 @@ export default function Reports() {
               secondaryLabel={copy.months}
               color="from-rose-400 to-pink-500"
             />
-            <AreaLineChartBlock
-              title={copy.foodTitle}
-              data={yearlySupport}
-              valueKey="cumulativeFoodKg"
-              valueLabel={copy.kg}
-              targetValue={10000}
-              targetLabel={copy.tenTons}
-            />
+            <div className="lg:col-span-2">
+              <AreaLineChartBlock
+                title={copy.foodTitle}
+                data={yearlySupport}
+                valueKey="cumulativeFoodKg"
+                valueLabel={copy.kg}
+                targetValue={10000}
+                targetLabel={copy.tenTons}
+              />
+            </div>
             <ColumnChartBlock
               title={copy.pantriesTitle}
               data={yearlySupport}

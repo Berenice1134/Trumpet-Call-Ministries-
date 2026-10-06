@@ -151,14 +151,14 @@ const ministryTimelineByLanguage = {
     },
     {
       year: "Agosto 2021",
-      title: "Inauguración oficial del primer English Center",
-      text: "La inauguración oficial del primer English Center fortaleció el soporte del ministerio y dio visibilidad al proyecto.",
+      title: "Inauguración oficial del English Center",
+      text: "La inauguración oficial del English Center fortaleció la base de apoyo al ministerio y dio mayor visibilidad al proyecto.",
       details: [
         "El trabajo educativo y el servicio social empezaron a caminar juntos.",
-        "La comunidad pudo ver que el ministerio no solo entregaba ayuda, sino que buscaba sostenerla.",
+        "La comunidad pudo ver que el ministerio no solo entregaba ayuda, sino que también buscaba sostenerla.",
         "Este paso preparó el camino para nuevas personas dispuestas a sumarse.",
       ],
-      stat: "Primer centro",
+      stat: "English Center",
       icon: "🎓",
       color: "from-indigo-400 to-indigo-600",
     },
@@ -176,8 +176,8 @@ const ministryTimelineByLanguage = {
       color: "from-purple-400 to-purple-600",
     },
     {
-      year: "Noviembre 2021",
-      title: "Primeras donaciones desde Estados Unidos",
+      year: "Enero 2022",
+      title: "Primeras donaciones de Estados Unidos",
       text: "Llegaron las primeras donaciones provenientes de Estados Unidos, abriendo una nueva etapa de apoyo internacional.",
       details: [
         "El ministerio comenzó a ser sostenido por personas de distintos lugares unidas por una misma misión.",
@@ -335,8 +335,8 @@ const ministryTimelineByLanguage = {
     },
     {
       year: "August 2021",
-      title: "Official opening of the first English Center",
-      text: "The official opening strengthened the ministry's support base and gave visibility to the service project.",
+      title: "Official opening of the English Center",
+      text: "The official opening of the English Center strengthened the ministry's support base and brought greater visibility to the project.",
       details: [
         "Education work and social service began walking together.",
         "The community could see that the ministry did not only give help; it wanted to sustain it.",
@@ -360,7 +360,7 @@ const ministryTimelineByLanguage = {
       color: "from-purple-400 to-purple-600",
     },
     {
-      year: "November 2021",
+      year: "January 2022",
       title: "First donations from the United States",
       text: "The first donations from the United States arrived, opening a new stage of international support.",
       details: [

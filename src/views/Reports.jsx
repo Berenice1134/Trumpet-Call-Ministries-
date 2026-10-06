@@ -62,8 +62,8 @@ const missionDonations = [
 const infographicTimeline = {
   es: [
     { date: "Junio 2021", title: "Apertura de English Center", text: "English Center Tlaxcala abre camino como primer soporte del ministerio.", icon: GraduationCap },
-    { date: "Julio 2021", title: "Inicio del programa domiciliar", text: "Comienzan las distribuciónes mensuales en Loma Bonita con 12 familias.", icon: PackageCheck },
-    { date: "Noviembre 2021", title: "Primeros donadores en Estados Unidos", text: "Llegan las primeras donaciones internacionales para sostener la misión.", icon: Globe },
+    { date: "Julio 2021", title: "Inicio del programa domiciliar", text: "Comienzan las distribuciones mensuales en Loma Bonita, atendiendo a 12 familias.", icon: PackageCheck },
+    { date: "Enero 2022", title: "Primeras donaciones de Estados Unidos", text: "Llegan las primeras donaciones internacionales para sostener la misión.", icon: Globe },
     { date: "Agosto 2023", title: "Misión con Cáritas", text: "Se comparte apoyo con 53 familias en la sede parroquial de San José.", icon: HandHeart },
     { date: "Febrero 2025", title: "Misión a Cartolandia", text: "Se colaboró con la iglesia Mensaje de Vida para servir a esta comunidad.", icon: Church },
     { date: "Enero 2026", title: "Misión al Hospital Infantil", text: "Inicia el acompañamiento a niños con insuficiencia renal en el Hospital Infantil de Tlaxcala.", icon: Baby },
@@ -71,8 +71,8 @@ const infographicTimeline = {
   ],
   en: [
     { date: "June 2021", title: "English Center opens", text: "English Center Tlaxcala begins as the first support source for the ministry.", icon: GraduationCap },
-    { date: "July 2021", title: "Home visit program begins", text: "Monthly distributions begin in Loma Bonita with 12 families.", icon: PackageCheck },
-    { date: "November 2021", title: "First donors in the United States", text: "The first international donations arrive to sustain the mission.", icon: Globe },
+    { date: "July 2021", title: "Home visit program begins", text: "Monthly distributions begin in Loma Bonita, serving 12 families.", icon: PackageCheck },
+    { date: "January 2022", title: "First donations from the United States", text: "The first international donations arrive to sustain the mission.", icon: Globe },
     { date: "August 2023", title: "Mission with Cáritas", text: "Support is shared with 53 families at San José parish.", icon: HandHeart },
     { date: "February 2025", title: "Mission to Cartolandia", text: "The ministry collaborates with Mensaje de Vida Church to serve this community.", icon: Church },
     { date: "January 2026", title: "Children's Hospital mission", text: "Support begins for children with kidney failure at the Children's Hospital of Tlaxcala.", icon: Baby },

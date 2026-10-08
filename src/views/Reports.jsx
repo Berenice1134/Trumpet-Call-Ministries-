@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import { createElement, useState } from "react";
 import InfoCard from "../components/InfoCard.jsx";
-import PageHeader from "../components/PageHeader.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 const yearlySupport = [
@@ -1060,8 +1059,6 @@ export default function Reports() {
 
   return (
     <>
-      <PageHeader title={t("reports.title")} text={t("reports.text")} />
-
       <section
         id="graficos-ministerio"
         className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-cyan-50/30 to-white"

@@ -500,6 +500,43 @@ const beneficiariesByLanguage = {
 };
 
 
+const supportAreasByLanguage = {
+  es: [
+    {
+      title: "Clases particulares de inglés",
+      text: "English Center Tlaxcala ayuda a sostener el ministerio y fue parte del inicio de este proyecto de servicio.",
+      icon: BookOpen,
+    },
+    {
+      title: "Donadores mexicanos y extranjeros",
+      text: "Cada donación se transforma en despensa, kit, calzado, ropa adaptada o apoyo práctico para una familia.",
+      icon: HandHeart,
+    },
+    {
+      title: "Voluntarios de corazón",
+      text: "Estudiantes, padres, vecinos, iglesias, grupos particulares y beneficiarios ayudan a empacar y repartir.",
+      icon: Users,
+    },
+  ],
+  en: [
+    {
+      title: "Private English classes",
+      text: "English Center Tlaxcala helps sustain the ministry and was part of the beginning of this service project.",
+      icon: BookOpen,
+    },
+    {
+      title: "Mexican and international donors",
+      text: "Every donation becomes a pantry package, kit, footwear, adapted clothing, or practical support for a family.",
+      icon: HandHeart,
+    },
+    {
+      title: "Wholehearted volunteers",
+      text: "Students, parents, neighbors, churches, private groups, and beneficiaries help pack and distribute support.",
+      icon: Users,
+    },
+  ],
+};
+
 const ministryContextByLanguage = {
   es: [
     {

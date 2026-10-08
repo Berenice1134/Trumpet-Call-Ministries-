@@ -26,7 +26,7 @@ import { useLanguage } from "../context/useLanguage.js";
 const bankAccounts = [
   {
     bank: "INBURSA",
-    accountNumber: "5007 2633 60",
+    accountNumber: "4658 2859 1470 0814",
     clabe: "0368 3050 0726 3336 01",
     color: "from-cyan-500 to-blue-700",
     bgLight: "bg-cyan-50",

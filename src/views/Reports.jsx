@@ -197,7 +197,6 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
         className="relative flex w-full max-w-sm max-h-[80vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header fijo */}
         <div className={`shrink-0 bg-gradient-to-r ${color} px-5 py-4 text-white`}>
           <div className="flex items-center justify-between gap-3">
             <h3 className="truncate text-base font-black leading-tight">{title}</h3>
@@ -216,7 +215,6 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           )}
         </div>
 
-        {/* Lista con scroll */}
         <div className="flex-1 space-y-1.5 overflow-y-auto p-3">
           {data.map((item, index) => (
             <div
@@ -241,7 +239,6 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           ))}
         </div>
 
-        {/* Footer fijo */}
         <div className="shrink-0 border-t border-slate-100 bg-slate-50 px-4 py-2">
           <p className="text-center text-[10px] font-medium text-slate-400">
             {reportsCopy.es.clickToView}
@@ -679,7 +676,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   );
 }
 
-// ===== COLUMN CHART (Despensas) =====
+// ===== COLUMN CHART (Despensas) — FIX: espacio reservado para la píldora =====
 function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
@@ -737,14 +734,16 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
           </div>
         )}
 
-        <div className="relative mt-6 h-72 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent p-4">
-          <div className="pointer-events-none absolute inset-x-4 top-4 bottom-12 flex flex-col justify-between">
+        {/* Contenedor con padding superior reservado para las píldoras */}
+        <div className="relative mt-6 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent px-4 pb-4 pt-14">
+          {/* Grid lines alineadas al área de barras */}
+          <div className="pointer-events-none absolute inset-x-4 top-14 bottom-12 flex flex-col justify-between">
             {[0, 1, 2, 3, 4].map((i) => (
               <div key={i} className="h-px bg-slate-100" />
             ))}
           </div>
 
-          <div className="relative flex h-full items-end gap-2 sm:gap-3">
+          <div className="relative flex h-64 items-end gap-2 sm:gap-3">
             {data.map((item, index) => {
               const h = Math.max(8, (item[valueKey] / maxValue) * 100);
               const isSelected = selectedIndex === index;
@@ -771,7 +770,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
                       <span className="absolute inset-x-1 top-1 h-1.5 rounded-full bg-white/40" />
                       {delta !== null && (
                         <span
-                          className={`absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
+                          className={`absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
                             isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
                           } ${
                             delta >= 0

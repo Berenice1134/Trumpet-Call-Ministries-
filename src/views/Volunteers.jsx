@@ -546,6 +546,14 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
   const currentPhoto = photos[currentIndex];
 
   useEffect(() => {
+    if (isFullscreen || totalSlides < 2) return undefined;
+    const timer = window.setInterval(() => {
+      setCurrentIndex((index) => (index + 1) % totalSlides);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isFullscreen, totalSlides]);
+
+  useEffect(() => {
     setCurrentIndex(0);
   }, [photos]);
 

@@ -48,11 +48,7 @@ export default function FeaturedPhotoGallery({
 
   const visiblePhotos = useMemo(() => {
     if (!photos.length) return [];
-
-    return [-2, -1, 0, 1, 2].map((offset) => {
-      const index = (activeIndex + offset + photos.length) % photos.length;
-      return { index, offset, photo: photos[index] };
-    });
+    return [{ index: activeIndex, offset: 0, photo: photos[activeIndex] }];
   }, [activeIndex, photos]);
 
   function previous() {
@@ -93,7 +89,7 @@ export default function FeaturedPhotoGallery({
                 "absolute left-1/2 top-1/2 overflow-hidden rounded-3xl border bg-white p-2 text-left shadow-2xl transition-all duration-700 ease-out",
                 "focus:outline-none focus:ring-4 focus:ring-ministry-gold/40",
                 isActive
-                  ? "z-30 h-[390px] w-[78%] max-w-[520px] -translate-x-1/2 -translate-y-1/2 scale-100 border-white shadow-ministry-blue/20 sm:h-[460px]"
+                  ? "z-30 h-[390px] w-[96%] max-w-5xl -translate-x-1/2 -translate-y-1/2 scale-100 border-white shadow-ministry-blue/20 sm:h-[460px]"
                   : "z-20 h-[315px] w-[52%] max-w-[340px] -translate-y-1/2 border-white/80 opacity-80 hover:opacity-100 sm:h-[380px]",
                 offset === -2 ? "-translate-x-[118%] scale-75 opacity-45" : "",
                 offset === -1 ? "-translate-x-[92%] scale-90" : "",
@@ -117,7 +113,7 @@ export default function FeaturedPhotoGallery({
                   src={photo.src}
                   alt={getLabel(photo)}
                   className={[
-                    "h-full w-full transition duration-700",
+                    "gallery-photo-enter h-full w-full transition duration-700",
                     isActive
                       ? "object-contain p-2 featured-photo-pulse"
                       : "object-cover scale-105",

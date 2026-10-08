@@ -20,7 +20,7 @@ import {
   Compass,
   Snowflake,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "../context/useLanguage.js";
 
 const bankAccounts = [
@@ -171,6 +171,14 @@ function KermesPhotoCarousel({ photos, copy, language }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = photos.length;
   const currentPhoto = photos[currentIndex];
+
+  useEffect(() => {
+    if (totalSlides < 2) return undefined;
+    const timer = window.setInterval(() => {
+      setCurrentIndex((index) => (index + 1) % totalSlides);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [totalSlides]);
 
   const goToSlide = (index) => {
     setCurrentIndex((index + totalSlides) % totalSlides);

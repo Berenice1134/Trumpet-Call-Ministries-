@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import FeaturedPhotoGallery from "../components/FeaturedPhotoGallery.jsx";
+import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -411,27 +412,13 @@ export default function HospitalVisit() {
             </div>
 
             {/* Right Gallery */}
-            <div className="motion-float grid gap-4 sm:grid-cols-2">
-              {featuredHospitalPhotos.map((photo, index) => (
-                <figure
-                  key={photo.src}
-                  className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-2.5 shadow-2xl hover:border-white/20 transition-all duration-500 ${
-                    index === 0 ? "sm:row-span-2" : ""
-                  }`}
-                >
-                  <div className="relative overflow-hidden rounded-xl h-full">
-                    <img
-                      src={photo.src}
-                      alt={t(`hospital.photoLabels.${photo.key}`)}
-                      className={`w-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-                        index === 0 ? "h-full min-h-[340px]" : "h-40 sm:h-44"
-                      }`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                </figure>
-              ))}
-            </div>
+            <AutoImageCarousel
+              className="motion-float"
+              photos={featuredHospitalPhotos}
+              getLabel={(photo) => t(`hospital.photoLabels.${photo.key}`)}
+              language={language}
+              heightClassName="h-[360px] sm:h-[440px] lg:h-[540px]"
+            />
           </div>
         </div>
 
@@ -733,16 +720,12 @@ export default function HospitalVisit() {
               <div className={`motion-float ${missionIndex % 2 === 1 ? 'lg:order-1' : ''}`}>
                 <div className="grid gap-4">
                   {mission.photos ? (
-                    <figure className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5 p-3 shadow-2xl backdrop-blur-sm transition duration-500 hover:-translate-y-1 hover:border-white/25">
-                      <div className="relative h-[460px] overflow-hidden rounded-2xl bg-slate-950/40">
-                        <img
-                          src={mission.photos[0].src}
-                          alt={(language === "en" ? mission.photosEn : mission.photos)[0].label}
-                          className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-slate-950/10 to-transparent" />
-                      </div>
-                    </figure>
+                    <AutoImageCarousel
+                      photos={photos}
+                      getLabel={(photo) => photo.label}
+                      language={language}
+                      heightClassName="h-[400px] sm:h-[460px]"
+                    />
                   ) : (
                     <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">
                       <div className="text-center space-y-4">

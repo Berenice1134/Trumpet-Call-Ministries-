@@ -22,6 +22,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DashboardCard from "../components/DashboardCard.jsx";
+import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
@@ -67,6 +68,11 @@ const dashboardItems = [
     bgLight: "bg-violet-50",
     borderLight: "border-violet-200",
   },
+];
+
+const homeHeroPhotos = [
+  { key: "pantry", src: `${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`, label: "Despensa del ministerio", labelEn: "Ministry food pantry" },
+  { key: "opening", src: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`, label: "Apertura del ministerio", labelEn: "Ministry opening" },
 ];
 
 const homePageCopy = {
@@ -709,41 +715,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="motion-float grid gap-4 sm:grid-cols-2">
-              <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-2.5 shadow-2xl sm:row-span-2 hover:border-white/20 transition-all duration-500">
-                <div className="relative overflow-hidden rounded-xl">
-                  <img
-                    src={`${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`}
-                    alt="Despensa de Trumpet Call Ministries"
-                    className="h-full min-h-72 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-              </figure>
-
-              <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-2.5 shadow-2xl hover:border-white/20 transition-all duration-500">
-                <div className="relative overflow-hidden rounded-xl">
-                  <img
-                    src={`${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`}
-                    alt="Apertura del ministerio"
-                    className="h-44 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-              </figure>
-
-              <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-amber-400/30 transition-all duration-500">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative">
-                  <img
-                    src={`${import.meta.env.BASE_URL}assets/home/home-logo.jpeg`}
-                    alt={t("brand")}
-                    className="image-pop mx-auto h-32 w-full object-contain transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="mx-auto mt-6 h-1.5 w-24 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-lg shadow-amber-400/20" />
-                </div>
-              </figure>
-            </div>
+            <AutoImageCarousel
+              className="motion-float"
+              photos={homeHeroPhotos}
+              getLabel={(photo) => language === "en" ? photo.labelEn : photo.label}
+              language={language}
+              heightClassName="h-[360px] sm:h-[440px] lg:h-[540px]"
+            />
           </div>
         </div>
 

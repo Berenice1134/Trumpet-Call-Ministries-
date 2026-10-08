@@ -35,8 +35,6 @@ const yearlySupport = [
   { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10096.68 },
 ];
 
-// Add each new bimonthly issue at the end. The interface displays only the
-// latest three periods (six language slots), so the oldest pair rolls off.
 const infographicPeriods = [
   { id: "2026-jan-feb", months: { es: "Enero–febrero", en: "January–February" }, year: 2026, files: { es: null, en: null } },
   { id: "2026-mar-apr", months: { es: "Marzo–abril", en: "March–April" }, year: 2026, files: { es: null, en: null } },
@@ -101,8 +99,7 @@ const reportsCopy = {
     missionTitle: "Misiones con donaciones registradas",
     timelineEyebrow: "Hitos del ministerio",
     timelineTitle: "5 años transformando Tlaxcala",
-    timelineText:
-      "Conoce algunos momentos clave en la historia del ministerio.",
+    timelineText: "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
     tenTons: "10 Toneladas",
     archiveText: "Consulta las tres ediciones bimestrales más recientes. Cada periodo tendrá una infografía en español y otra en inglés.",
@@ -149,8 +146,7 @@ const reportsCopy = {
     missionTitle: "Missions with recorded donations",
     timelineEyebrow: "Ministry milestones",
     timelineTitle: "Five years transforming Tlaxcala",
-    timelineText:
-      "Explore key moments in the ministry's history.",
+    timelineText: "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
     tenTons: "10 Tons",
     archiveText: "Browse the three most recent bimonthly editions. Each period will have one Spanish infographic and one English infographic.",
@@ -195,7 +191,6 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="relative max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header */}
         <div className={`bg-gradient-to-r ${color} p-6 text-white`}>
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-black">{title}</h3>
@@ -213,7 +208,6 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           )}
         </div>
 
-        {/* Content */}
         <div className="p-6 space-y-3 max-h-[60vh] overflow-y-auto">
           {data.map((item, index) => (
             <div
@@ -234,453 +228,667 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           ))}
         </div>
 
-        {/* Footer */}
         <div className="p-4 border-t border-slate-100 bg-slate-50">
-          <p className="text-xs text-slate-400 text-center">
-            {reportsCopy.es.clickToView}
-          </p>
+          <p className="text-xs text-slate-400 text-center">{reportsCopy.es.clickToView}</p>
         </div>
       </div>
     </div>
   );
 }
 
-// ===== STAT CARD MEJORADO =====
+// ===== STAT CARD =====
 function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
   return (
-    <article 
-      className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+    <article
       onClick={onClick}
+      className="group relative cursor-pointer overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-transparent hover:shadow-2xl"
     >
-      <div className={`absolute -right-10 -top-10 h-40 w-40 rounded-full ${color} opacity-10 transition duration-500 group-hover:scale-125 group-hover:opacity-20`} />
+      <div
+        className={`pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full ${color} opacity-[0.08] blur-2xl transition duration-700 group-hover:scale-125 group-hover:opacity-20`}
+      />
       <div className="relative flex items-start gap-4">
-        <span className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg`}>
+        <span
+          className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
+        >
           {createElement(icon, { size: 24 })}
         </span>
-        <span>
-          <span className="block text-3xl font-black text-slate-900">{value}</span>
+        <span className="min-w-0">
+          <span className="block text-3xl font-black tracking-tight text-slate-900">{value}</span>
           <span className="mt-1 block text-sm font-bold text-slate-700">{label}</span>
-          <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{detail}</span>
+          <span className="mt-1 block text-[11px] font-black uppercase tracking-[0.18em] text-slate-400">
+            {detail}
+          </span>
         </span>
       </div>
-      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient} scale-x-0 transition-transform duration-500 group-hover:scale-x-100`} />
-      <div className="absolute bottom-2 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <span className="text-xs font-bold text-ministry-blue">Ver detalles →</span>
+      <div className="mt-5 flex items-center justify-between">
+        <div
+          className={`h-1.5 w-16 rounded-full bg-gradient-to-r ${gradient} opacity-70 transition-all duration-500 group-hover:w-28 group-hover:opacity-100`}
+        />
+        <span className="translate-x-2 text-xs font-black text-ministry-blue opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
+          Ver detalles →
+        </span>
       </div>
     </article>
   );
 }
 
-// ===== BAR CHART CON INTERACCIÓN =====
+// ===== BAR CHART =====
 function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
-
+  const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   return (
-    <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <h3 className="text-2xl font-black text-slate-900">{title}</h3>
-        <div className="rounded-full bg-slate-100 p-2 text-slate-600 transition-colors group-hover:bg-slate-200">
-          <BarChart3 size={20} />
-        </div>
-      </div>
+    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
 
-      {/* Detalle del elemento seleccionado */}
-      {selectedData && (
-        <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center justify-between">
+      <div className="relative">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+            <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
+              {formatNumber(total)} {valueLabel}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 p-3 text-white shadow-lg shadow-rose-500/30">
+            <BarChart3 size={20} />
+          </div>
+        </div>
+
+        {selectedData && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 p-4 ring-1 ring-rose-100 animate-in slide-in-from-top-2 duration-300">
             <div>
-              <p className="text-sm font-bold text-slate-600">{selectedData.year}</p>
-              <p className="text-2xl font-black text-ministry-blue">
-                {formatNumber(selectedData[valueKey], selectedData[valueKey] % 1 ? 2 : 0)} {valueLabel}
+              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                {selectedData.year}
+              </p>
+              <p className="text-2xl font-black text-rose-600">
+                {formatNumber(selectedData[valueKey])} {valueLabel}
               </p>
             </div>
             {secondaryKey && (
               <div className="text-right">
-                <p className="text-xs text-slate-400">{secondaryLabel}</p>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  {secondaryLabel}
+                </p>
                 <p className="text-lg font-black text-slate-700">
-                  {formatNumber(selectedData[secondaryKey], selectedData[secondaryKey] % 1 ? 2 : 0)}
+                  {formatNumber(selectedData[secondaryKey])}
                 </p>
               </div>
             )}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="rounded-full bg-white/50 p-1 hover:bg-white transition-colors"
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
             >
-              <X size={16} className="text-slate-500" />
+              <X size={14} />
             </button>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="space-y-5">
-        {data.map((item, index) => {
-          const width = `${Math.max(8, (item[valueKey] / maxValue) * 100)}%`;
-          const isSelected = selectedIndex === index;
-
-          return (
-            <div 
-              key={item.year} 
-              className={`cursor-pointer transition-all duration-300 ${isSelected ? 'scale-[1.02]' : 'hover:scale-[1.01]'}`}
-              onClick={() => setSelectedIndex(isSelected ? null : index)}
-            >
-              <div className="mb-1 flex items-center justify-between text-sm">
-                <span className={`font-black ${isSelected ? 'text-ministry-blue' : 'text-slate-800'}`}>
-                  {item.year}
-                </span>
-                <span className={`font-bold ${isSelected ? 'text-ministry-blue' : 'text-slate-500'}`}>
-                  {formatNumber(item[valueKey], item[valueKey] % 1 ? 2 : 0)} {valueLabel}
-                </span>
-              </div>
-              <div className="relative h-5 overflow-hidden rounded-full bg-slate-100">
-                <div 
-                  className={`h-full rounded-full bg-gradient-to-r ${color} shadow-sm transition-all duration-700 ease-out ${isSelected ? 'ring-2 ring-ministry-blue ring-offset-2' : ''}`}
-                  style={{ width }}
-                >
-                  <div className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-white/30" />
-                </div>
-              </div>
-              {secondaryKey && (
-                <p className="mt-1 text-xs font-semibold text-slate-400">
-                  {formatNumber(item[secondaryKey], item[secondaryKey] % 1 ? 2 : 0)} {secondaryLabel}
-                </p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </article>
-  );
-}
-
-// ===== AREA LINE CHART CON INTERACCIÓN =====
-function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel }) {
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  const maxValue = 12000;
-  const points = data
-    .map((item, index) => {
-      const x = 10 + (index / (data.length - 1)) * 88;
-      const y = 86 - (item.cumulativeFoodKg / maxValue) * 66;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
-
-  return (
-    <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <h3 className="text-2xl font-black text-slate-900">{title}</h3>
-        <div className="rounded-full bg-emerald-50 p-2 text-emerald-600 transition-colors group-hover:bg-emerald-100">
-          <TrendingUp size={20} />
-        </div>
-      </div>
-
-      {/* Detalle del punto seleccionado */}
-      {selectedData && (
-        <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-cyan-50 border border-emerald-200 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-slate-600">{selectedData.year}</p>
-              <p className="text-lg font-black text-rose-600">{formatNumber(selectedData.foodKg, 2)} {kgLabel} · {annualLabel}</p>
-              <p className="text-lg font-black text-emerald-700">{formatNumber(selectedData.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}</p>
-            </div>
-            <button
-              onClick={() => setSelectedIndex(null)}
-              className="rounded-full bg-white/50 p-1 hover:bg-white transition-colors"
-            >
-              <X size={16} className="text-slate-500" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="rounded-2xl bg-gradient-to-br from-emerald-50/50 to-cyan-50/50 p-4">
-        <svg viewBox="0 0 100 100" className="h-[26rem] w-full overflow-visible cursor-pointer sm:h-[34rem]" role="img" aria-label={title}>
-          <defs>
-            <linearGradient id="annualFoodBars" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#d85d5d" />
-              <stop offset="100%" stopColor="#b93838" />
-            </linearGradient>
-          </defs>
-          {[0, 2000, 4000, 6000, 8000, 10000, 12000].map((tick) => {
-            const y = 86 - (tick / maxValue) * 66;
-            return (
-              <g key={tick}>
-                <line x1="10" x2="100" y1={y} y2={y} stroke="#cbd5e1" strokeWidth="0.35" />
-                <text x="8" y={y + 1.3} textAnchor="end" fill="#334155" fontSize="2.6">{formatNumber(tick)} kg</text>
-              </g>
-            );
-          })}
+        <div className="mt-6 space-y-4">
           {data.map((item, index) => {
-            const x = 10 + (index / (data.length - 1)) * 88;
-            const barY = 86 - (item.foodKg / maxValue) * 66;
-            return <rect key={`${item.year}-bar`} x={x - 3.2} y={barY} width="6.4" height={86 - barY} fill="url(#annualFoodBars)" rx="0.4" />;
-          })}
-          <polyline 
-            points={points} 
-            fill="none" 
-            stroke="#91b84b"
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth="1.2"
-          />
-          {data.map((item, index) => {
-            const [x, y] = points.split(" ")[index].split(",");
+            const pct = (item[valueKey] / maxValue) * 100;
             const isSelected = selectedIndex === index;
             return (
-              <g 
-                key={item.year} 
-                className="cursor-pointer" 
+              <button
+                key={item.year}
+                type="button"
                 onClick={() => setSelectedIndex(isSelected ? null : index)}
+                className="group/row block w-full text-left"
               >
-                <circle 
-                  cx={x} 
-                  cy={y} 
-                  r={isSelected ? "5" : "3.5"} 
-                  fill="#ffffff"
-                  stroke="#91b84b"
-                  strokeWidth={isSelected ? "2" : "1.3"}
-                />
-                <circle 
-                  cx={x} 
-                  cy={y} 
-                  r={isSelected ? "4" : "2.5"}
-                  fill="#91b84b"
-                  opacity={isSelected ? "0.3" : "0.18"}
-                />
-                <text x={x} y="95" textAnchor="middle" fill="#334155" fontSize="3.2" fontWeight="700">
-                  {item.year}
-                </text>
-                {isSelected && (
-                  <>
-                    <rect 
-                      x={parseFloat(x) - 15} 
-                      y={parseFloat(y) - 18} 
-                      width="30" 
-                      height="14" 
-                      rx="4" 
-                      fill="#166534"
-                      opacity="0.9"
-                    />
-                    <text 
-                      x={x} 
-                      y={parseFloat(y) - 8} 
-                      textAnchor="middle" 
-                      className="fill-white text-[3px] font-black"
-                    >
-                      {formatNumber(item.cumulativeFoodKg, 0)} kg
-                    </text>
-                  </>
-                )}
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      <div className="mt-4 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-semibold text-slate-700">
-        <span className="inline-flex items-center gap-2"><span className="h-3 w-8 rounded-sm bg-gradient-to-b from-[#d85d5d] to-[#b93838]" />{annualLabel} ({kgLabel})</span>
-        <span className="inline-flex items-center gap-2"><span className="h-1 w-8 rounded-full bg-[#91b84b]" />{totalDonated}</span>
-      </div>
-    </article>
-  );
-}
-
-// ===== COLUMN CHART CON INTERACCIÓN =====
-function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  const maxValue = Math.max(...data.map((item) => item[valueKey]));
-  const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
-
-  return (
-    <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <h3 className="text-2xl font-black text-slate-900">{title}</h3>
-        <div className="rounded-full bg-cyan-50 p-2 text-cyan-600 transition-colors group-hover:bg-cyan-100">
-          <BarChart3 size={20} />
-        </div>
-      </div>
-
-      {selectedData && (
-        <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-slate-600">{selectedData.year}</p>
-              <div className="flex gap-4 mt-1">
-                <div>
-                  <p className="text-xs text-slate-400">{valueLabel}</p>
-                  <p className="text-xl font-black text-cyan-600">{formatNumber(selectedData[valueKey])}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400">{secondaryLabel}</p>
-                  <p className="text-xl font-black text-slate-700">{formatNumber(selectedData[secondaryKey])}</p>
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={() => setSelectedIndex(null)}
-              className="rounded-full bg-white/50 p-1 hover:bg-white transition-colors"
-            >
-              <X size={16} className="text-slate-500" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="flex h-72 items-end gap-2 rounded-2xl bg-gradient-to-b from-cyan-50/50 to-white/50 p-4">
-        {data.map((item, index) => {
-          const height = `${Math.max(12, (item[valueKey] / maxValue) * 100)}%`;
-          const isSelected = selectedIndex === index;
-          return (
-            <div 
-              key={item.year} 
-              className="flex h-full flex-1 flex-col justify-end gap-2 cursor-pointer"
-              onClick={() => setSelectedIndex(isSelected ? null : index)}
-            >
-              <div className="flex flex-1 items-end">
-                <div
-                  className={`group/bar relative w-full rounded-t-2xl bg-gradient-to-t from-ministry-blue to-cyan-400 shadow-lg transition-all duration-500 ${isSelected ? 'ring-2 ring-ministry-blue ring-offset-2 scale-105' : 'hover:brightness-110'}`}
-                  style={{ height }}
-                >
-                  <span className={`absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-slate-900 px-2 py-1 text-xs font-black text-white shadow-lg transition ${isSelected ? 'opacity-100' : 'opacity-0 group-hover/bar:opacity-100'}`}>
+                <div className="mb-1.5 flex items-center justify-between text-sm">
+                  <span
+                    className={`font-black transition-colors ${
+                      isSelected ? "text-rose-600" : "text-slate-800"
+                    }`}
+                  >
+                    {item.year}
+                  </span>
+                  <span
+                    className={`font-black tabular-nums transition-colors ${
+                      isSelected ? "text-rose-600" : "text-slate-500"
+                    }`}
+                  >
                     {formatNumber(item[valueKey])} {valueLabel}
                   </span>
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white/30 blur-sm" />
                 </div>
-              </div>
-              <span className={`text-center text-xs font-black ${isSelected ? 'text-ministry-blue' : 'text-slate-500'}`}>
-                {item.year}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        {data.slice(-3).map((item) => (
-          <div key={item.year} className="rounded-2xl bg-slate-50 p-4 text-sm transition hover:bg-slate-100">
-            <p className="font-black text-slate-900">{item.year}</p>
-            <p className="mt-1 font-bold text-slate-500">
-              {formatNumber(item[secondaryKey])} {secondaryLabel}
-            </p>
-          </div>
-        ))}
+                <div className="relative h-2.5 overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
+                      isSelected
+                        ? "shadow-[0_0_0_3px_rgba(244,63,94,0.18)]"
+                        : "group-hover/row:brightness-110"
+                    }`}
+                    style={{ width: `${Math.max(6, pct)}%` }}
+                  />
+                </div>
+                {secondaryKey && (
+                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    {formatNumber(item[secondaryKey])} {secondaryLabel}
+                  </p>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </article>
   );
 }
 
-// ===== DONUT CHART CON INTERACCIÓN =====
-function DonutChart({ title, items, labels }) {
-  const [selectedKey, setSelectedKey] = useState(null);
-  const total = items.reduce((sum, item) => sum + item.value, 0);
-  let cumulative = 0;
-  const radius = 38;
-  const circumference = 2 * Math.PI * radius;
-  const largest = items.reduce((max, item) => (item.value > max.value ? item : max), items[0]);
+// ===== AREA LINE CHART (Toneladas de alimentos) =====
+function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel }) {
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  const selectedItem = items.find(item => item.key === selectedKey);
+  const W = 1000;
+  const H = 420;
+  const padL = 78;
+  const padR = 40;
+  const padT = 40;
+  const padB = 64;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+
+  const maxCum = 12000;
+  const maxAnnual = Math.max(...data.map((d) => d.foodKg));
+
+  const xFor = (i) => padL + (i / (data.length - 1)) * innerW;
+  const yCum = (v) => padT + innerH - (v / maxCum) * innerH;
+  const yAnnual = (v) => padT + innerH - (v / maxAnnual) * (innerH * 0.55);
+
+  const cumPts = data.map((d, i) => [xFor(i), yCum(d.cumulativeFoodKg)]);
+
+  // Suavizado tipo Catmull-Rom → Bézier
+  const smoothPath = (pts) => {
+    if (pts.length < 2) return "";
+    let d = `M ${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[i + 2] || p2;
+      const cp1x = p1[0] + (p2[0] - p0[0]) / 6;
+      const cp1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const cp2x = p2[0] - (p3[0] - p1[0]) / 6;
+      const cp2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  };
+
+  const linePath = smoothPath(cumPts);
+  const areaPath = `${linePath} L ${cumPts.at(-1)[0]} ${padT + innerH} L ${cumPts[0][0]} ${
+    padT + innerH
+  } Z`;
+
+  const ticks = [0, 2000, 4000, 6000, 8000, 10000, 12000];
+  const totalTons = (data.at(-1).cumulativeFoodKg / 1000).toFixed(1);
+  const latestAnnual = data.at(-1).foodKg;
+  const active = activeIndex !== null ? data[activeIndex] : null;
 
   return (
-    <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <h3 className="text-2xl font-black text-slate-900">{title}</h3>
-        <div className="rounded-full bg-slate-100 p-2 text-slate-600 transition-colors group-hover:bg-slate-200">
-          <PieChart size={20} />
-        </div>
-      </div>
+    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-emerald-200/50 to-cyan-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gradient-to-br from-rose-200/40 to-amber-200/40 blur-3xl" />
 
-      {selectedItem && (
-        <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200 animate-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-slate-600">{labels[selectedItem.key]}</p>
-              <p className="text-2xl font-black text-ministry-blue">{selectedItem.value}%</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-400">Descripción</p>
-              <p className="text-sm font-bold text-slate-700">{selectedItem.description || '-'}</p>
-            </div>
-            <button
-              onClick={() => setSelectedKey(null)}
-              className="rounded-full bg-white/50 p-1 hover:bg-white transition-colors"
-            >
-              <X size={16} className="text-slate-500" />
-            </button>
+      <div className="relative">
+        <div className="flex flex-wrap items-start justify-between gap-5">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700 ring-1 ring-emerald-200">
+              <TrendingUp size={12} /> 2021 – 2026
+            </span>
+            <h3 className="mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
+              {title}
+            </h3>
           </div>
-        </div>
-      )}
-
-      <div className="grid gap-6 sm:grid-cols-[220px_1fr] sm:items-center">
-        <div className="relative mx-auto h-56 w-56 cursor-pointer">
-          <svg viewBox="0 0 100 100" className="-rotate-90">
-            <circle cx="50" cy="50" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="12" />
-            {items.map((item) => {
-              const segment = (item.value / total) * circumference;
-              const gap = 2.4;
-              const dash = `${Math.max(0, segment - gap)} ${circumference}`;
-              const offset = -cumulative;
-              cumulative += segment;
-              const isSelected = selectedKey === item.key;
-              return (
-                <circle
-                  key={item.key}
-                  cx="50"
-                  cy="50"
-                  r={isSelected ? radius + 3 : radius}
-                  fill="none"
-                  stroke={item.hex}
-                  strokeDasharray={dash}
-                  strokeDashoffset={offset}
-                  strokeLinecap="round"
-                  strokeWidth={isSelected ? "15" : "12"}
-                  className="transition-all duration-300 cursor-pointer hover:brightness-110"
-                  onClick={() => setSelectedKey(isSelected ? null : item.key)}
-                >
-                  <animate attributeName="stroke-dashoffset" from={-cumulative} to={-cumulative + segment} dur="1.5s" fill="freeze" />
-                </circle>
-              );
-            })}
-          </svg>
-          <div className="absolute inset-0 grid place-items-center text-center">
-            <div className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-              <p className="text-4xl font-black text-slate-900">{largest.value}%</p>
-              <p className="mt-0.5 text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                {labels[largest.key]}
+          <div className="flex items-stretch gap-3">
+            <div className="rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 px-5 py-3 text-white shadow-lg shadow-emerald-500/30">
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-80">
+                {totalDonated}
+              </p>
+              <p className="text-2xl font-black leading-tight">{totalTons} t</p>
+            </div>
+            <div className="rounded-2xl bg-slate-900 px-5 py-3 text-white shadow-lg">
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-70">
+                2026 · {annualLabel}
+              </p>
+              <p className="text-2xl font-black leading-tight">
+                {formatNumber(latestAnnual)} {kgLabel}
               </p>
             </div>
           </div>
         </div>
-        <div className="space-y-3">
-        {items.map((item) => {
-          const Icon = item.icon;
-          const isSelected = selectedKey === item.key;
-          return (
-            <div 
-              key={item.key} 
-              className={`group/item rounded-xl p-3 transition-all cursor-pointer ${isSelected ? 'bg-slate-100 ring-2 ring-ministry-blue' : 'bg-slate-50 hover:bg-slate-100'}`}
-              onClick={() => setSelectedKey(isSelected ? null : item.key)}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <span className="flex items-center gap-3 text-sm font-black text-slate-800">
-                  <span className={`h-3 w-3 rounded-full bg-gradient-to-r ${item.color}`} />
-                  <Icon size={16} className="text-slate-400" />
-                  {labels[item.key]}
-                </span>
-                <span className={`text-sm font-black ${isSelected ? 'text-ministry-blue' : 'text-ministry-blue'}`}>
-                  {item.value}%
-                </span>
-              </div>
-              <div className="mt-1 h-1 overflow-hidden rounded-full bg-slate-200">
-                <div 
-                  className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700 ${isSelected ? 'ring-1 ring-ministry-blue' : ''}`}
-                  style={{ width: `${item.value}%` }}
+
+        <div className="mt-5 flex flex-wrap items-center gap-5 text-xs font-bold text-slate-600">
+          <span className="inline-flex items-center gap-2">
+            <span className="h-3 w-3 rounded-sm bg-gradient-to-b from-rose-400 to-rose-600" />
+            {annualLabel} ({kgLabel})
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500" />
+            {totalDonated}
+          </span>
+        </div>
+
+        <div className="relative mt-4">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            className="w-full"
+            onMouseLeave={() => setActiveIndex(null)}
+            role="img"
+            aria-label={title}
+          >
+            <defs>
+              <linearGradient id="barGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#fb7185" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#e11d48" stopOpacity="0.55" />
+              </linearGradient>
+              <linearGradient id="areaGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.38" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="lineGrad" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stopColor="#34d399" />
+                <stop offset="100%" stopColor="#0d9488" />
+              </linearGradient>
+            </defs>
+
+            {ticks.map((t) => {
+              const y = yCum(t);
+              return (
+                <g key={t}>
+                  <line
+                    x1={padL}
+                    x2={W - padR}
+                    y1={y}
+                    y2={y}
+                    stroke="#e2e8f0"
+                    strokeDasharray="3 6"
+                    strokeWidth="1"
+                  />
+                  <text
+                    x={padL - 14}
+                    y={y + 5}
+                    textAnchor="end"
+                    fill="#94a3b8"
+                    fontSize="13"
+                    fontWeight="700"
+                  >
+                    {formatNumber(t)}
+                  </text>
+                </g>
+              );
+            })}
+
+            {data.map((d, i) => {
+              const bw = (innerW / data.length) * 0.42;
+              const y = yAnnual(d.foodKg);
+              const h = padT + innerH - y;
+              const isActive = activeIndex === i;
+              return (
+                <rect
+                  key={`bar-${d.year}`}
+                  x={xFor(i) - bw / 2}
+                  y={y}
+                  width={bw}
+                  height={Math.max(2, h)}
+                  rx="8"
+                  fill="url(#barGrad)"
+                  className="transition-opacity duration-300"
+                  opacity={activeIndex === null || isActive ? 0.9 : 0.35}
                 />
+              );
+            })}
+
+            <path d={areaPath} fill="url(#areaGrad)" className="transition-all duration-500" />
+            <path
+              d={linePath}
+              fill="none"
+              stroke="url(#lineGrad)"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {activeIndex !== null && (
+              <line
+                x1={xFor(activeIndex)}
+                x2={xFor(activeIndex)}
+                y1={padT}
+                y2={padT + innerH}
+                stroke="#0d9488"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.55"
+              />
+            )}
+
+            {cumPts.map(([x, y], i) => {
+              const isActive = activeIndex === i;
+              return (
+                <g key={`pt-${i}`} className="pointer-events-none">
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={isActive ? 11 : 6}
+                    fill="#fff"
+                    stroke="#10b981"
+                    strokeWidth="3.5"
+                    className="transition-all duration-300"
+                  />
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={isActive ? 5 : 2.8}
+                    fill="#10b981"
+                    className="transition-all duration-300"
+                  />
+                </g>
+              );
+            })}
+
+            {data.map((d, i) => {
+              const x = xFor(i);
+              const isActive = activeIndex === i;
+              return (
+                <g key={`x-${d.year}`}>
+                  <text
+                    x={x}
+                    y={H - 26}
+                    textAnchor="middle"
+                    fill={isActive ? "#0f172a" : "#64748b"}
+                    fontSize="15"
+                    fontWeight="800"
+                    className="transition-colors"
+                  >
+                    {d.year}
+                  </text>
+                  <rect
+                    x={x - innerW / data.length / 2}
+                    y={padT}
+                    width={innerW / data.length}
+                    height={innerH}
+                    fill="transparent"
+                    onMouseEnter={() => setActiveIndex(i)}
+                  />
+                </g>
+              );
+            })}
+          </svg>
+
+          {active && (
+            <div
+              className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-2xl bg-slate-900/95 px-4 py-3 text-white shadow-2xl ring-1 ring-white/10 backdrop-blur"
+              style={{
+                left: `${(xFor(activeIndex) / W) * 100}%`,
+                top: `${(yCum(active.cumulativeFoodKg) / H) * 100}%`,
+                marginTop: "-16px",
+              }}
+            >
+              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-300">
+                {active.year}
+              </p>
+              <p className="mt-1 text-sm font-bold">
+                {formatNumber(active.foodKg, 2)} {kgLabel} · {annualLabel}
+              </p>
+              <p className="text-sm font-bold text-emerald-300">
+                {formatNumber(active.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}
+              </p>
+              <div className="mt-2 h-0.5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" />
+            </div>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+// ===== COLUMN CHART =====
+function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const maxValue = Math.max(...data.map((item) => item[valueKey]));
+  const total = data.reduce((sum, d) => sum + d[valueKey], 0);
+  const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
+
+  return (
+    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+      <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
+
+      <div className="relative">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+            <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
+              {formatNumber(total)} {valueLabel}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 p-3 text-white shadow-lg shadow-cyan-500/30">
+            <BarChart3 size={20} />
+          </div>
+        </div>
+
+        {selectedData && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-cyan-50 to-blue-50 p-4 ring-1 ring-cyan-100 animate-in slide-in-from-top-2 duration-300">
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                {selectedData.year}
+              </p>
+              <div className="mt-1 flex gap-6">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    {valueLabel}
+                  </p>
+                  <p className="text-xl font-black text-cyan-600">
+                    {formatNumber(selectedData[valueKey])}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    {secondaryLabel}
+                  </p>
+                  <p className="text-xl font-black text-slate-700">
+                    {formatNumber(selectedData[secondaryKey])}
+                  </p>
+                </div>
               </div>
             </div>
-          );
-        })}
+            <button
+              onClick={() => setSelectedIndex(null)}
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        <div className="mt-6 flex h-64 items-end gap-2 rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent p-4">
+          {data.map((item, index) => {
+            const h = Math.max(8, (item[valueKey] / maxValue) * 100);
+            const isSelected = selectedIndex === index;
+            return (
+              <button
+                key={item.year}
+                type="button"
+                onClick={() => setSelectedIndex(isSelected ? null : index)}
+                className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
+              >
+                <div className="relative flex flex-1 items-end">
+                  <div
+                    className={`relative w-full rounded-t-xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
+                      isSelected
+                        ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
+                        : "group-hover/bar:brightness-110"
+                    }`}
+                    style={{ height: `${h}%` }}
+                  >
+                    <span
+                      className={`absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-black text-white shadow-lg transition ${
+                        isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
+                      }`}
+                    >
+                      {formatNumber(item[valueKey])}
+                    </span>
+                    <span className="absolute -top-1 left-1/2 h-1.5 w-6 -translate-x-1/2 rounded-full bg-white/50 blur-[2px]" />
+                  </div>
+                </div>
+                <span
+                  className={`text-center text-xs font-black transition-colors ${
+                    isSelected ? "text-cyan-600" : "text-slate-500"
+                  }`}
+                >
+                  {item.year}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          {data.slice(-3).map((item) => (
+            <div
+              key={item.year}
+              className="rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
+            >
+              <p className="font-black text-slate-900">{item.year}</p>
+              <p className="mt-1 font-bold text-slate-500">
+                {formatNumber(item[secondaryKey])} {secondaryLabel}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+// ===== DONUT CHART =====
+function DonutChart({ title, items, labels }) {
+  const [selectedKey, setSelectedKey] = useState(null);
+  const total = items.reduce((sum, item) => sum + item.value, 0);
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const largest = items.reduce(
+    (max, item) => (item.value > max.value ? item : max),
+    items[0]
+  );
+  const selectedItem = items.find((item) => item.key === selectedKey);
+
+  let acc = 0;
+  const segments = items.map((item) => {
+    const seg = (item.value / total) * circumference;
+    const s = { ...item, seg, offset: acc };
+    acc += seg;
+    return s;
+  });
+
+  return (
+    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
+
+      <div className="relative">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+          <div className="rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 p-3 text-white shadow-lg">
+            <PieChart size={20} />
+          </div>
+        </div>
+
+        {selectedItem && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-4 ring-1 ring-slate-200 animate-in slide-in-from-top-2 duration-300">
+            <div>
+              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                {labels[selectedItem.key]}
+              </p>
+              <p className="text-2xl font-black text-ministry-blue">{selectedItem.value}%</p>
+            </div>
+            <div className="max-w-[55%] text-right">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Detalle
+              </p>
+              <p className="text-sm font-bold text-slate-700">
+                {selectedItem.description || "—"}
+              </p>
+            </div>
+            <button
+              onClick={() => setSelectedKey(null)}
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
+          <div className="relative mx-auto h-56 w-56">
+            <svg viewBox="0 0 100 100" className="-rotate-90">
+              <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef2f7" strokeWidth="12" />
+              {segments.map((s) => {
+                const gap = 2.5;
+                const isSelected = selectedKey === s.key;
+                return (
+                  <circle
+                    key={s.key}
+                    cx="50"
+                    cy="50"
+                    r={radius}
+                    fill="none"
+                    stroke={s.hex}
+                    strokeWidth={isSelected ? 16 : 12}
+                    strokeLinecap="round"
+                    strokeDasharray={`${Math.max(0, s.seg - gap)} ${circumference}`}
+                    strokeDashoffset={-s.offset}
+                    onClick={() => setSelectedKey(isSelected ? null : s.key)}
+                    className="cursor-pointer transition-all duration-500 hover:brightness-110"
+                    style={{ filter: isSelected ? `drop-shadow(0 0 6px ${s.hex})` : "none" }}
+                  />
+                );
+              })}
+            </svg>
+            <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div className="rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
+                <p className="text-4xl font-black leading-none text-slate-900">
+                  {largest.value}%
+                </p>
+                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                  {labels[largest.key]}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2.5">
+            {items.map((item) => {
+              const Icon = item.icon;
+              const isSelected = selectedKey === item.key;
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setSelectedKey(isSelected ? null : item.key)}
+                  className={`group/item w-full rounded-xl p-3 text-left transition-all ${
+                    isSelected
+                      ? "bg-slate-100 ring-2 ring-ministry-blue"
+                      : "bg-slate-50 hover:bg-slate-100"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="flex items-center gap-3 text-sm font-black text-slate-800">
+                      <span className={`h-3 w-3 rounded-full bg-gradient-to-r ${item.color}`} />
+                      <Icon size={16} className="text-slate-400" />
+                      {labels[item.key]}
+                    </span>
+                    <span className="text-sm font-black text-ministry-blue">{item.value}%</span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
+                    <div
+                      className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
+                      style={{ width: `${item.value}%` }}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </article>
@@ -693,54 +901,61 @@ export default function Reports() {
   const timelineItems = infographicTimeline[language] ?? infographicTimeline.es;
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-jun");
-  const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(language === "en" ? "en" : "es");
+  const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(
+    language === "en" ? "en" : "es"
+  );
   const [detailModal, setDetailModal] = useState(null);
-  const selectedPeriod = infographicPeriods.find((period) => period.id === selectedPeriodId) ?? infographicPeriods.at(-1);
+  const selectedPeriod =
+    infographicPeriods.find((period) => period.id === selectedPeriodId) ??
+    infographicPeriods.at(-1);
   const selectedInfographic = selectedPeriod.files[selectedDocumentLanguage];
   const visibleInfographicPeriods = infographicPeriods.slice(-3).reverse();
 
   const totalPantries = yearlySupport.at(-1).cumulativePantries;
   const totalFoodKg = yearlySupport.at(-1).cumulativeFoodKg;
-  const totalBeneficiaries = yearlySupport.reduce((sum, item) => sum + item.beneficiaries, 0);
+  const totalBeneficiaries = yearlySupport.reduce(
+    (sum, item) => sum + item.beneficiaries,
+    0
+  );
   const handleStatClick = (stat) => {
-    let title = '';
+    let title = "";
     let data = [];
-    let total = '';
-    let color = '';
+    let total = "";
+    let color = "";
 
-    switch(stat) {
-      case 'pantries':
+    switch (stat) {
+      case "pantries":
         title = copy.stats.pantries;
-        data = yearlySupport.map(item => ({
+        data = yearlySupport.map((item) => ({
           label: item.year,
           value: item.pantries,
-          color: 'from-cyan-400 to-cyan-600',
-          percentage: Math.round((item.pantries / totalPantries) * 100)
+          color: "from-cyan-400 to-cyan-600",
+          percentage: Math.round((item.pantries / totalPantries) * 100),
         }));
         total = formatNumber(totalPantries);
-        color = 'from-cyan-500 to-blue-600';
+        color = "from-cyan-500 to-blue-600";
         break;
-      case 'food':
+      case "food":
         title = copy.stats.food;
-        data = yearlySupport.map(item => ({
+        data = yearlySupport.map((item) => ({
           label: item.year,
           value: `${formatNumber(item.foodKg, 2)} kg`,
-          color: 'from-emerald-400 to-emerald-600',
-          percentage: Math.round((item.foodKg / totalFoodKg) * 100)
+          color: "from-emerald-400 to-emerald-600",
+          percentage: Math.round((item.foodKg / totalFoodKg) * 100),
         }));
         total = `${formatNumber(totalFoodKg, 2)} kg`;
-        color = 'from-emerald-500 to-teal-600';
+        color = "from-emerald-500 to-teal-600";
         break;
-      case 'beneficiaries':
+      case "beneficiaries":
         title = copy.stats.beneficiaries;
-        data = yearlySupport.map(item => ({
+        data = yearlySupport.map((item) => ({
           label: item.year,
           value: item.beneficiaries,
-          color: 'from-rose-400 to-rose-600',
-          percentage: Math.round((item.beneficiaries / totalBeneficiaries) * 100)
+          color: "from-rose-400 to-rose-600",
+          percentage: Math.round((item.beneficiaries / totalBeneficiaries) * 100),
         }));
         total = formatNumber(totalBeneficiaries);
-        color = 'from-rose-500 to-pink-600';
+        color = "from-rose-500 to-pink-600";
         break;
       default:
         return;
@@ -753,7 +968,10 @@ export default function Reports() {
     <>
       <PageHeader title={t("reports.title")} text={t("reports.text")} />
 
-      <section id="graficos-ministerio" className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-cyan-50/30 to-white">
+      <section
+        id="graficos-ministerio"
+        className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-cyan-50/30 to-white"
+      >
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-ministry-gold/20 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue border border-ministry-gold/20">
@@ -768,38 +986,36 @@ export default function Reports() {
             </p>
           </div>
 
-          {/* Stats Grid - Clickables */}
           <div className="grid gap-5 sm:grid-cols-3">
-            <StatCard 
-              icon={PackageCheck} 
-              label={copy.stats.pantries} 
-              value={formatNumber(totalPantries)} 
-              detail="2021-2026" 
-              color="bg-ministry-blue" 
+            <StatCard
+              icon={PackageCheck}
+              label={copy.stats.pantries}
+              value={formatNumber(totalPantries)}
+              detail="2021-2026"
+              color="bg-ministry-blue"
               gradient="from-ministry-blue to-cyan-500"
-              onClick={() => handleStatClick('pantries')}
+              onClick={() => handleStatClick("pantries")}
             />
-            <StatCard 
-              icon={Scale} 
+            <StatCard
+              icon={Scale}
               value={formatNumber(totalFoodKg / 1000, 1)}
               label={copy.tonsDelivered}
-              detail={`${formatNumber(totalFoodKg, 2)} kg`} 
-              color="bg-emerald-500" 
+              detail={`${formatNumber(totalFoodKg, 2)} kg`}
+              color="bg-emerald-500"
               gradient="from-emerald-400 to-emerald-600"
-              onClick={() => handleStatClick('food')}
+              onClick={() => handleStatClick("food")}
             />
-            <StatCard 
-              icon={Users} 
-              label={copy.stats.beneficiaries} 
-              value={formatNumber(totalBeneficiaries)} 
-              detail="2021-2026" 
-              color="bg-rose-500" 
+            <StatCard
+              icon={Users}
+              label={copy.stats.beneficiaries}
+              value={formatNumber(totalBeneficiaries)}
+              detail="2021-2026"
+              color="bg-rose-500"
               gradient="from-rose-400 to-rose-600"
-              onClick={() => handleStatClick('beneficiaries')}
+              onClick={() => handleStatClick("beneficiaries")}
             />
           </div>
 
-          {/* Charts Grid */}
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             <BarChartBlock
               title={copy.beneficiariesTitle}
@@ -827,19 +1043,18 @@ export default function Reports() {
               secondaryKey="cumulativePantries"
               secondaryLabel={copy.cumulative}
             />
-            <DonutChart 
-              title={copy.donorTitle} 
-              items={donorSources2026} 
-              labels={copy.sourceLabels} 
+            <DonutChart
+              title={copy.donorTitle}
+              items={donorSources2026}
+              labels={copy.sourceLabels}
             />
           </div>
 
-          {/* Bottom Row */}
           <div className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-            <DonutChart 
-              title={copy.hospitalTitle} 
-              items={hospitalDonationMix} 
-              labels={copy.hospitalLabels} 
+            <DonutChart
+              title={copy.hospitalTitle}
+              items={hospitalDonationMix}
+              labels={copy.hospitalLabels}
             />
             <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
               <div className="mb-6 flex items-center justify-between gap-4">
@@ -852,11 +1067,18 @@ export default function Reports() {
                 {missionDonations.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={`${item.year}-${item.place}`} className="group/item relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-white p-5 ring-1 ring-slate-100 transition-all hover:ring-2 hover:ring-amber-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                      <div className={`absolute -right-8 -top-8 h-20 w-20 rounded-full bg-gradient-to-br ${item.color} opacity-10 transition group-hover/item:scale-150`} />
+                    <div
+                      key={`${item.year}-${item.place}`}
+                      className="group/item relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-white p-5 ring-1 ring-slate-100 transition-all hover:ring-2 hover:ring-amber-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                    >
+                      <div
+                        className={`absolute -right-8 -top-8 h-20 w-20 rounded-full bg-gradient-to-br ${item.color} opacity-10 transition group-hover/item:scale-150`}
+                      />
                       <div className="relative">
                         <div className="flex items-center gap-2">
-                          <div className={`rounded-lg bg-gradient-to-br ${item.color} p-1.5 text-white`}>
+                          <div
+                            className={`rounded-lg bg-gradient-to-br ${item.color} p-1.5 text-white`}
+                          >
                             <Icon size={14} />
                           </div>
                           <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
@@ -865,9 +1087,11 @@ export default function Reports() {
                         </div>
                         <h4 className="mt-2 text-lg font-black text-slate-900">{item.place}</h4>
                         <p className="mt-1 text-xs text-slate-500">{item.description}</p>
-                        <p className="mt-3 text-3xl font-black text-ministry-blue">{item.value}%</p>
+                        <p className="mt-3 text-3xl font-black text-ministry-blue">
+                          {item.value}%
+                        </p>
                         <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-slate-100">
-                          <div 
+                          <div
                             className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
                             style={{ width: `${item.value}%` }}
                           />
@@ -882,7 +1106,6 @@ export default function Reports() {
         </div>
       </section>
 
-      {/* Detail Modal */}
       {detailModal && (
         <DetailModal
           isOpen={true}
@@ -894,8 +1117,10 @@ export default function Reports() {
         />
       )}
 
-      {/* Timeline Section */}
-      <section id="linea-tiempo-ministerio" className="section-shell scroll-mt-28 bg-white">
+      <section
+        id="linea-tiempo-ministerio"
+        className="section-shell scroll-mt-28 bg-white"
+      >
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-cyan-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue border border-cyan-200">
@@ -914,12 +1139,15 @@ export default function Reports() {
             <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
             <div className="absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-ministry-gold/20 blur-3xl" />
             <div className="absolute inset-0 opacity-[0.03]">
-              <div className="h-full w-full" style={{ 
-                backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                backgroundSize: '30px 30px'
-              }} />
+              <div
+                className="h-full w-full"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+                  backgroundSize: "30px 30px",
+                }}
+              />
             </div>
-            
+
             <div className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {timelineItems.map((item, index) => {
                 const Icon = item.icon;
@@ -944,7 +1172,9 @@ export default function Reports() {
                         </div>
                         <h3 className="text-lg font-black text-white/95">{item.title}</h3>
                       </div>
-                      <p className="text-sm leading-7 text-white/60 group-hover:text-white/80 transition-colors">{item.text}</p>
+                      <p className="text-sm leading-7 text-white/60 group-hover:text-white/80 transition-colors">
+                        {item.text}
+                      </p>
                       <div className="mt-4 h-0.5 w-0 bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-500 group-hover:w-full" />
                     </div>
                   </article>
@@ -955,30 +1185,59 @@ export default function Reports() {
         </div>
       </section>
 
-      {/* PDF Section */}
-      <section id="pdf-institucional" className="section-shell scroll-mt-28 bg-gradient-to-b from-white to-slate-50">
+      <section
+        id="pdf-institucional"
+        className="section-shell scroll-mt-28 bg-gradient-to-b from-white to-slate-50"
+      >
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-violet-700 border border-violet-200">
-              <FileText size={15} />{copy.pdfTitle}
+              <FileText size={15} />
+              {copy.pdfTitle}
             </span>
-            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">{copy.archiveText}</p>
+            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+              {copy.archiveText}
+            </p>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="space-y-4" aria-label={copy.pdfTitle}>
               {visibleInfographicPeriods.map((period) => (
-                <article key={period.id} className={`rounded-2xl border p-5 transition ${selectedPeriodId === period.id ? "border-ministry-blue bg-cyan-50 shadow-md" : "border-slate-200 bg-white"}`}>
-                  <button onClick={() => setSelectedPeriodId(period.id)} className="w-full text-left text-xl font-black text-slate-900">
+                <article
+                  key={period.id}
+                  className={`rounded-2xl border p-5 transition ${
+                    selectedPeriodId === period.id
+                      ? "border-ministry-blue bg-cyan-50 shadow-md"
+                      : "border-slate-200 bg-white"
+                  }`}
+                >
+                  <button
+                    onClick={() => setSelectedPeriodId(period.id)}
+                    className="w-full text-left text-xl font-black text-slate-900"
+                  >
                     {period.months[language] ?? period.months.es} {period.year}
                   </button>
                   <div className="mt-4 grid grid-cols-2 gap-3">
                     {["es", "en"].map((docLanguage) => {
                       const hasFile = Boolean(period.files[docLanguage]);
-                      const active = selectedPeriodId === period.id && selectedDocumentLanguage === docLanguage;
+                      const active =
+                        selectedPeriodId === period.id &&
+                        selectedDocumentLanguage === docLanguage;
                       return (
-                        <button key={docLanguage} onClick={() => { setSelectedPeriodId(period.id); setSelectedDocumentLanguage(docLanguage); }} className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${active ? "border-ministry-blue bg-ministry-blue text-white" : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500"}`}>
-                          {docLanguage === "es" ? copy.spanish : copy.english}{hasFile ? " · PDF" : " · …"}
+                        <button
+                          key={docLanguage}
+                          onClick={() => {
+                            setSelectedPeriodId(period.id);
+                            setSelectedDocumentLanguage(docLanguage);
+                          }}
+                          className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${
+                            active
+                              ? "border-ministry-blue bg-ministry-blue text-white"
+                              : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500"
+                          }`}
+                        >
+                          {docLanguage === "es" ? copy.spanish : copy.english}
+                          {hasFile ? " · PDF" : " · …"}
                         </button>
                       );
                     })}
@@ -991,16 +1250,41 @@ export default function Reports() {
               {selectedInfographic ? (
                 <>
                   <div className="absolute right-4 top-4 z-10 flex gap-2">
-                    <button onClick={() => setShowFullscreen(true)} className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-700 shadow-lg"><Eye size={16} />{language === "en" ? "Fullscreen" : "Pantalla completa"}</button>
-                    <a href={`${import.meta.env.BASE_URL}${selectedInfographic}`} download className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"><Download size={16} />{language === "en" ? "Download" : "Descargar"}</a>
+                    <button
+                      onClick={() => setShowFullscreen(true)}
+                      className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-700 shadow-lg"
+                    >
+                      <Eye size={16} />
+                      {language === "en" ? "Fullscreen" : "Pantalla completa"}
+                    </button>
+                    <a
+                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                      download
+                      className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"
+                    >
+                      <Download size={16} />
+                      {language === "en" ? "Download" : "Descargar"}
+                    </a>
                   </div>
-                  <iframe title={`${selectedPeriod.months[language] ?? selectedPeriod.months.es} ${selectedPeriod.year} — ${selectedDocumentLanguage}`} className="h-[600px] w-full bg-white" src={`${import.meta.env.BASE_URL}${selectedInfographic}`} />
+                  <iframe
+                    title={`${
+                      selectedPeriod.months[language] ?? selectedPeriod.months.es
+                    } ${selectedPeriod.year} — ${selectedDocumentLanguage}`}
+                    className="h-[600px] w-full bg-white"
+                    src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                  />
                 </>
               ) : (
                 <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
                   <FileText size={48} className="text-slate-300" />
-                  <h3 className="mt-5 text-2xl font-black text-slate-800">{selectedPeriod.months[language] ?? selectedPeriod.months.es} {selectedPeriod.year} · {selectedDocumentLanguage === "es" ? copy.spanish : copy.english}</h3>
-                  <p className="mt-3 max-w-md text-base leading-7 text-slate-500">{copy.pending}</p>
+                  <h3 className="mt-5 text-2xl font-black text-slate-800">
+                    {selectedPeriod.months[language] ?? selectedPeriod.months.es}{" "}
+                    {selectedPeriod.year} ·{" "}
+                    {selectedDocumentLanguage === "es" ? copy.spanish : copy.english}
+                  </h3>
+                  <p className="mt-3 max-w-md text-base leading-7 text-slate-500">
+                    {copy.pending}
+                  </p>
                 </div>
               )}
             </div>
@@ -1017,7 +1301,9 @@ export default function Reports() {
             ×
           </button>
           <iframe
-            title={`${selectedPeriod.months[language] ?? selectedPeriod.months.es} ${selectedPeriod.year}`}
+            title={`${
+              selectedPeriod.months[language] ?? selectedPeriod.months.es
+            } ${selectedPeriod.year}`}
             className="h-[95vh] w-full max-w-6xl rounded-lg"
             src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
           />

@@ -94,7 +94,7 @@ const reportsCopy = {
       topYear: "Año con más beneficiarios",
     },
     beneficiariesTitle: "Beneficiarios por año",
-    foodTitle: "Toneladas acumuladas por año",
+    foodTitle: "Toneladas de alimentos 2021–2026",
     pantriesTitle: "Despensas donadas y acumuladas",
     donorTitle: "Fuentes de apoyo 2026",
     hospitalTitle: "Distribución de apoyos hospitalarios",
@@ -127,6 +127,8 @@ const reportsCopy = {
       activities: "Actividades",
     },
     pdfTitle: "Infografías por periodo",
+    annualLabel: "Alimentos",
+    totalDonated: "Total de alimentos donados",
     clickToView: "Haz clic para ver detalles",
     total: "Total",
   },
@@ -140,7 +142,7 @@ const reportsCopy = {
       topYear: "Year with most beneficiaries",
     },
     beneficiariesTitle: "Beneficiaries by year",
-    foodTitle: "Cumulative tons delivered by year",
+    foodTitle: "Food delivered 2021–2026",
     pantriesTitle: "Donated and cumulative pantries",
     donorTitle: "2026 support sources",
     hospitalTitle: "Hospital support distribution",
@@ -173,6 +175,8 @@ const reportsCopy = {
       activities: "Activities",
     },
     pdfTitle: "Infographics by period",
+    annualLabel: "Food",
+    totalDonated: "Total food donated",
     clickToView: "Click to view details",
     total: "Total",
   },
@@ -352,19 +356,16 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
 }
 
 // ===== AREA LINE CHART CON INTERACCIÓN =====
-function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, targetLabel }) {
+function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const values = data.map((item) => item[valueKey]);
-  const maxValue = Math.max(...values, targetValue) * 1.04;
+  const maxValue = 12000;
   const points = data
     .map((item, index) => {
-      const x = (index / (data.length - 1)) * 100;
-      const y = 86 - (item[valueKey] / maxValue) * 66;
+      const x = 10 + (index / (data.length - 1)) * 88;
+      const y = 86 - (item.cumulativeFoodKg / maxValue) * 66;
       return `${x},${y}`;
     })
     .join(" ");
-  const areaPoints = `0,92 ${points} 100,92`;
-  const targetY = 86 - (targetValue / maxValue) * 66;
 
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
@@ -383,9 +384,8 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-bold text-slate-600">{selectedData.year}</p>
-              <p className="text-2xl font-black text-emerald-600">
-                {formatNumber(selectedData[valueKey], 2)} {valueLabel}
-              </p>
+              <p className="text-lg font-black text-rose-600">{formatNumber(selectedData.foodKg, 2)} {kgLabel} · {annualLabel}</p>
+              <p className="text-lg font-black text-emerald-700">{formatNumber(selectedData.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}</p>
             </div>
             <button
               onClick={() => setSelectedIndex(null)}
@@ -398,57 +398,34 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
       )}
 
       <div className="rounded-2xl bg-gradient-to-br from-emerald-50/50 to-cyan-50/50 p-4">
-        <svg viewBox="0 0 100 100" className="h-[26rem] w-full overflow-visible cursor-pointer sm:h-[34rem]">
+        <svg viewBox="0 0 100 100" className="h-[26rem] w-full overflow-visible cursor-pointer sm:h-[34rem]" role="img" aria-label={title}>
           <defs>
-            <linearGradient id="foodAreaGradient" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0.34" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.04" />
-            </linearGradient>
-            <linearGradient id="foodGlow" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.6" />
+            <linearGradient id="annualFoodBars" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#d85d5d" />
+              <stop offset="100%" stopColor="#b93838" />
             </linearGradient>
           </defs>
-          {[20, 40, 60, 80].map((line) => (
-            <line key={line} x1="0" x2="100" y1={line} y2={line} stroke="#cbd5e1" strokeDasharray="1 3" strokeWidth="0.35" />
-          ))}
-          <line
-            x1="0"
-            x2="100"
-            y1={targetY}
-            y2={targetY}
-            stroke="#d97706"
-            strokeDasharray="2 1.5"
-            strokeWidth="0.8"
-          />
-          <rect x="66" y={targetY - 4.5} width="32" height="5.5" rx="2" fill="#92400e" />
-          <text
-            x="82"
-            y={targetY - 0.7}
-            textAnchor="middle"
-            fill="#ffffff"
-            fontSize="3.1"
-            fontWeight="700"
-          >
-            {targetLabel}
-          </text>
-          <polygon points={areaPoints} fill="url(#foodAreaGradient)" />
+          {[0, 2000, 4000, 6000, 8000, 10000, 12000].map((tick) => {
+            const y = 86 - (tick / maxValue) * 66;
+            return (
+              <g key={tick}>
+                <line x1="10" x2="100" y1={y} y2={y} stroke="#cbd5e1" strokeWidth="0.35" />
+                <text x="8" y={y + 1.3} textAnchor="end" fill="#334155" fontSize="2.6">{formatNumber(tick)} kg</text>
+              </g>
+            );
+          })}
+          {data.map((item, index) => {
+            const x = 10 + (index / (data.length - 1)) * 88;
+            const barY = 86 - (item.foodKg / maxValue) * 66;
+            return <rect key={`${item.year}-bar`} x={x - 3.2} y={barY} width="6.4" height={86 - barY} fill="url(#annualFoodBars)" rx="0.4" />;
+          })}
           <polyline 
             points={points} 
             fill="none" 
-            stroke="#059669" 
+            stroke="#91b84b"
             strokeLinecap="round" 
             strokeLinejoin="round" 
-            strokeWidth="3" 
-          />
-          <polyline 
-            points={points} 
-            fill="none" 
-            stroke="url(#foodGlow)" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth="6" 
-            opacity="0.3" 
+            strokeWidth="1.2"
           />
           {data.map((item, index) => {
             const [x, y] = points.split(" ")[index].split(",");
@@ -463,18 +440,18 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
                   cx={x} 
                   cy={y} 
                   r={isSelected ? "5" : "3.5"} 
-                  fill={isSelected ? "#059669" : "#ffffff"} 
-                  stroke="#059669" 
-                  strokeWidth={isSelected ? "3" : "2"} 
+                  fill="#ffffff"
+                  stroke="#91b84b"
+                  strokeWidth={isSelected ? "2" : "1.3"}
                 />
                 <circle 
                   cx={x} 
                   cy={y} 
-                  r={isSelected ? "10" : "6"} 
-                  fill="#059669" 
-                  opacity={isSelected ? "0.25" : "0.15"} 
+                  r={isSelected ? "4" : "2.5"}
+                  fill="#91b84b"
+                  opacity={isSelected ? "0.3" : "0.18"}
                 />
-                <text x={x} y="98" textAnchor="middle" className={`fill-${isSelected ? 'emerald-600' : 'slate-500'} text-[4px] font-bold`}>
+                <text x={x} y="95" textAnchor="middle" fill="#334155" fontSize="3.2" fontWeight="700">
                   {item.year}
                 </text>
                 {isSelected && (
@@ -485,16 +462,16 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
                       width="30" 
                       height="14" 
                       rx="4" 
-                      fill="#059669" 
+                      fill="#166534"
                       opacity="0.9"
                     />
                     <text 
                       x={x} 
                       y={parseFloat(y) - 8} 
                       textAnchor="middle" 
-                      className="fill-white text-[3.5px] font-black"
+                      className="fill-white text-[3px] font-black"
                     >
-                      {formatNumber(item[valueKey], 0)} {valueLabel}
+                      {formatNumber(item.cumulativeFoodKg, 0)} kg
                     </text>
                   </>
                 )}
@@ -503,15 +480,9 @@ function AreaLineChartBlock({ title, data, valueKey, valueLabel, targetValue, ta
           })}
         </svg>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-        <div className="rounded-2xl bg-slate-50 p-4">
-          <p className="font-bold text-slate-500">2021</p>
-          <p className="text-xl font-black text-slate-900">{formatNumber(data[0][valueKey])} {valueLabel}</p>
-        </div>
-        <div className="rounded-2xl bg-gradient-to-br from-emerald-50 to-cyan-50 p-4 border border-emerald-100">
-          <p className="font-bold text-emerald-700">{data.at(-1).year}</p>
-          <p className="text-xl font-black text-emerald-700">{formatNumber(data.at(-1)[valueKey], 2)} {valueLabel}</p>
-        </div>
+      <div className="mt-4 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-semibold text-slate-700">
+        <span className="inline-flex items-center gap-2"><span className="h-3 w-8 rounded-sm bg-gradient-to-b from-[#d85d5d] to-[#b93838]" />{annualLabel} ({kgLabel})</span>
+        <span className="inline-flex items-center gap-2"><span className="h-1 w-8 rounded-full bg-[#91b84b]" />{totalDonated}</span>
       </div>
     </article>
   );
@@ -843,10 +814,9 @@ export default function Reports() {
               <AreaLineChartBlock
                 title={copy.foodTitle}
                 data={yearlySupport}
-                valueKey="cumulativeFoodKg"
-                valueLabel={copy.kg}
-                targetValue={10000}
-                targetLabel={copy.tenTons}
+                annualLabel={copy.annualLabel}
+                totalDonated={copy.totalDonated}
+                kgLabel={copy.kg}
               />
             </div>
             <ColumnChartBlock

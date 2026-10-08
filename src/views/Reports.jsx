@@ -184,7 +184,7 @@ const formatNumber = (value, decimals = 0) =>
     minimumFractionDigits: decimals,
   }).format(value);
 
-// ===== COMPONENTE DE DETALLE PARA GRÁFICAS =====
+// ===== MODAL DE DETALLE =====
 function DetailModal({ isOpen, onClose, title, data, total, color }) {
   if (!isOpen) return null;
 
@@ -272,7 +272,7 @@ function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
   );
 }
 
-// ===== BAR CHART =====
+// ===== BAR CHART (Beneficiarios) =====
 function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
@@ -288,7 +288,8 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
           <div>
             <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
             <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-              {formatNumber(total)} {valueLabel}
+              {formatNumber(total)}
+              {valueLabel ? ` ${valueLabel}` : ""}
             </p>
           </div>
           <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 p-3 text-white shadow-lg shadow-rose-500/30">
@@ -303,7 +304,8 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
                 {selectedData.year}
               </p>
               <p className="text-2xl font-black text-rose-600">
-                {formatNumber(selectedData[valueKey])} {valueLabel}
+                {formatNumber(selectedData[valueKey])}
+                {valueLabel ? ` ${valueLabel}` : ""}
               </p>
             </div>
             {secondaryKey && (
@@ -329,6 +331,9 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
           {data.map((item, index) => {
             const pct = (item[valueKey] / maxValue) * 100;
             const isSelected = selectedIndex === index;
+            const prev = index > 0 ? data[index - 1][valueKey] : null;
+            const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
+
             return (
               <button
                 key={item.year}
@@ -337,30 +342,46 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
                 className="group/row block w-full text-left"
               >
                 <div className="mb-1.5 flex items-center justify-between text-sm">
-                  <span
-                    className={`font-black transition-colors ${
-                      isSelected ? "text-rose-600" : "text-slate-800"
-                    }`}
-                  >
-                    {item.year}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`font-black transition-colors ${
+                        isSelected ? "text-rose-600" : "text-slate-800"
+                      }`}
+                    >
+                      {item.year}
+                    </span>
+                    {delta !== null && (
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] font-black tracking-tight ring-1 ring-inset ${
+                          delta >= 0
+                            ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+                            : "bg-rose-50 text-rose-700 ring-rose-200"
+                        }`}
+                      >
+                        {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
+                      </span>
+                    )}
+                  </div>
                   <span
                     className={`font-black tabular-nums transition-colors ${
                       isSelected ? "text-rose-600" : "text-slate-500"
                     }`}
                   >
-                    {formatNumber(item[valueKey])} {valueLabel}
+                    {formatNumber(item[valueKey])}
+                    {valueLabel ? ` ${valueLabel}` : ""}
                   </span>
                 </div>
-                <div className="relative h-2.5 overflow-hidden rounded-full bg-slate-100">
+                <div className="relative h-3 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/70">
                   <div
-                    className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
+                    className={`relative h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
                       isSelected
                         ? "shadow-[0_0_0_3px_rgba(244,63,94,0.18)]"
                         : "group-hover/row:brightness-110"
                     }`}
                     style={{ width: `${Math.max(6, pct)}%` }}
-                  />
+                  >
+                    <span className="absolute inset-x-1 top-0.5 h-1 rounded-full bg-white/35" />
+                  </div>
                 </div>
                 {secondaryKey && (
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
@@ -376,7 +397,7 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
   );
 }
 
-// ===== AREA LINE CHART (Toneladas de alimentos) =====
+// ===== AREA LINE CHART (HERO — Toneladas) =====
 function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -398,7 +419,6 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
 
   const cumPts = data.map((d, i) => [xFor(i), yCum(d.cumulativeFoodKg)]);
 
-  // Suavizado tipo Catmull-Rom → Bézier
   const smoothPath = (pts) => {
     if (pts.length < 2) return "";
     let d = `M ${pts[0][0]} ${pts[0][1]}`;
@@ -643,7 +663,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   );
 }
 
-// ===== COLUMN CHART =====
+// ===== COLUMN CHART (Despensas) =====
 function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
@@ -701,55 +721,80 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
           </div>
         )}
 
-        <div className="mt-6 flex h-64 items-end gap-2 rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent p-4">
-          {data.map((item, index) => {
-            const h = Math.max(8, (item[valueKey] / maxValue) * 100);
-            const isSelected = selectedIndex === index;
-            return (
-              <button
-                key={item.year}
-                type="button"
-                onClick={() => setSelectedIndex(isSelected ? null : index)}
-                className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
-              >
-                <div className="relative flex flex-1 items-end">
-                  <div
-                    className={`relative w-full rounded-t-xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
-                      isSelected
-                        ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
-                        : "group-hover/bar:brightness-110"
-                    }`}
-                    style={{ height: `${h}%` }}
-                  >
-                    <span
-                      className={`absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-black text-white shadow-lg transition ${
-                        isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
-                      }`}
-                    >
-                      {formatNumber(item[valueKey])}
-                    </span>
-                    <span className="absolute -top-1 left-1/2 h-1.5 w-6 -translate-x-1/2 rounded-full bg-white/50 blur-[2px]" />
-                  </div>
-                </div>
-                <span
-                  className={`text-center text-xs font-black transition-colors ${
-                    isSelected ? "text-cyan-600" : "text-slate-500"
-                  }`}
+        <div className="relative mt-6 h-72 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent p-4">
+          {/* Grid lines */}
+          <div className="pointer-events-none absolute inset-x-4 top-4 bottom-12 flex flex-col justify-between">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-px bg-slate-100" />
+            ))}
+          </div>
+
+          <div className="relative flex h-full items-end gap-2 sm:gap-3">
+            {data.map((item, index) => {
+              const h = Math.max(8, (item[valueKey] / maxValue) * 100);
+              const isSelected = selectedIndex === index;
+              const prev = index > 0 ? data[index - 1][valueKey] : null;
+              const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
+
+              return (
+                <button
+                  key={item.year}
+                  type="button"
+                  onClick={() => setSelectedIndex(isSelected ? null : index)}
+                  className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
                 >
-                  {item.year}
-                </span>
-              </button>
-            );
-          })}
+                  <div className="relative flex flex-1 items-end">
+                    <div
+                      className={`relative w-full rounded-t-2xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
+                        isSelected
+                          ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
+                          : "group-hover/bar:brightness-110"
+                      }`}
+                      style={{ height: `${h}%` }}
+                    >
+                      {/* Glow base */}
+                      <span className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-cyan-400/60 blur-md" />
+                      {/* Top shine */}
+                      <span className="absolute inset-x-1 top-1 h-1.5 rounded-full bg-white/40" />
+                      {/* Delta pill */}
+                      {delta !== null && (
+                        <span
+                          className={`absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
+                            isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
+                          } ${
+                            delta >= 0
+                              ? "bg-emerald-500 text-white"
+                              : "bg-rose-500 text-white"
+                          }`}
+                        >
+                          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <span
+                    className={`text-center text-xs font-black transition-colors ${
+                      isSelected ? "text-cyan-600" : "text-slate-500"
+                    }`}
+                  >
+                    {item.year}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {data.slice(-3).map((item) => (
             <div
               key={item.year}
-              className="rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
+              className="group/mini rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
             >
-              <p className="font-black text-slate-900">{item.year}</p>
+              <div className="flex items-center justify-between">
+                <p className="font-black text-slate-900">{item.year}</p>
+                <span className="h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" />
+              </div>
               <p className="mt-1 font-bold text-slate-500">
                 {formatNumber(item[secondaryKey])} {secondaryLabel}
               </p>
@@ -772,6 +817,7 @@ function DonutChart({ title, items, labels }) {
     items[0]
   );
   const selectedItem = items.find((item) => item.key === selectedKey);
+  const LargestIcon = largest.icon;
 
   let acc = 0;
   const segments = items.map((item) => {
@@ -820,6 +866,8 @@ function DonutChart({ title, items, labels }) {
 
         <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
           <div className="relative mx-auto h-56 w-56">
+            {/* Halo suave detrás de la dona */}
+            <div className="pointer-events-none absolute inset-4 rounded-full bg-gradient-to-br from-cyan-100/60 via-transparent to-rose-100/60 blur-2xl" />
             <svg viewBox="0 0 100 100" className="-rotate-90">
               <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef2f7" strokeWidth="12" />
               {segments.map((s) => {
@@ -845,11 +893,12 @@ function DonutChart({ title, items, labels }) {
               })}
             </svg>
             <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
-              <div className="rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
+              <div className="flex flex-col items-center gap-1 rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
+                <LargestIcon size={18} className="text-slate-400" />
                 <p className="text-4xl font-black leading-none text-slate-900">
                   {largest.value}%
                 </p>
-                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
                   {labels[largest.key]}
                 </p>
               </div>
@@ -865,15 +914,18 @@ function DonutChart({ title, items, labels }) {
                   key={item.key}
                   type="button"
                   onClick={() => setSelectedKey(isSelected ? null : item.key)}
-                  className={`group/item w-full rounded-xl p-3 text-left transition-all ${
+                  className={`group/item relative w-full overflow-hidden rounded-xl p-3 pl-4 text-left ring-1 transition-all ${
                     isSelected
                       ? "bg-slate-100 ring-2 ring-ministry-blue"
-                      : "bg-slate-50 hover:bg-slate-100"
+                      : "bg-slate-50 ring-slate-100 hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
                   }`}
                 >
+                  {/* Barra lateral color */}
+                  <span
+                    className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${item.color}`}
+                  />
                   <div className="flex items-center justify-between gap-4">
                     <span className="flex items-center gap-3 text-sm font-black text-slate-800">
-                      <span className={`h-3 w-3 rounded-full bg-gradient-to-r ${item.color}`} />
                       <Icon size={16} className="text-slate-400" />
                       {labels[item.key]}
                     </span>
@@ -892,6 +944,39 @@ function DonutChart({ title, items, labels }) {
         </div>
       </div>
     </article>
+  );
+}
+
+// ===== MISSION CARDS =====
+function MissionCard({ item }) {
+  const Icon = item.icon;
+  return (
+    <div className="group/item relative overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5 transition-all hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-amber-200">
+      <div
+        className={`absolute -right-10 -top-10 h-24 w-24 rounded-full bg-gradient-to-br ${item.color} opacity-10 blur-xl transition group-hover/item:scale-150`}
+      />
+      <div className="relative">
+        <div className="flex items-center gap-2">
+          <div
+            className={`grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br ${item.color} text-white shadow`}
+          >
+            <Icon size={14} />
+          </div>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+            {item.month} {item.year}
+          </p>
+        </div>
+        <h4 className="mt-3 text-lg font-black text-slate-900">{item.place}</h4>
+        <p className="mt-1 text-xs text-slate-500">{item.description}</p>
+        <p className="mt-4 text-3xl font-black text-ministry-blue">{item.value}%</p>
+        <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-slate-100">
+          <div
+            className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
+            style={{ width: `${item.value}%` }}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -986,6 +1071,7 @@ export default function Reports() {
             </p>
           </div>
 
+          {/* Stats */}
           <div className="grid gap-5 sm:grid-cols-3">
             <StatCard
               icon={PackageCheck}
@@ -1016,7 +1102,19 @@ export default function Reports() {
             />
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          {/* HERO: Food chart full width */}
+          <div className="mt-8">
+            <AreaLineChartBlock
+              title={copy.foodTitle}
+              data={yearlySupport}
+              annualLabel={copy.annualLabel}
+              totalDonated={copy.totalDonated}
+              kgLabel={copy.kg}
+            />
+          </div>
+
+          {/* Row 2: Beneficiarios + Donut fuentes */}
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
             <BarChartBlock
               title={copy.beneficiariesTitle}
               data={yearlySupport}
@@ -1026,15 +1124,15 @@ export default function Reports() {
               secondaryLabel={copy.months}
               color="from-rose-400 to-pink-500"
             />
-            <div className="lg:col-span-2">
-              <AreaLineChartBlock
-                title={copy.foodTitle}
-                data={yearlySupport}
-                annualLabel={copy.annualLabel}
-                totalDonated={copy.totalDonated}
-                kgLabel={copy.kg}
-              />
-            </div>
+            <DonutChart
+              title={copy.donorTitle}
+              items={donorSources2026}
+              labels={copy.sourceLabels}
+            />
+          </div>
+
+          {/* Row 3: Despensas + Donut hospital */}
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
             <ColumnChartBlock
               title={copy.pantriesTitle}
               data={yearlySupport}
@@ -1044,65 +1142,36 @@ export default function Reports() {
               secondaryLabel={copy.cumulative}
             />
             <DonutChart
-              title={copy.donorTitle}
-              items={donorSources2026}
-              labels={copy.sourceLabels}
-            />
-          </div>
-
-          <div className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-            <DonutChart
               title={copy.hospitalTitle}
               items={hospitalDonationMix}
               labels={copy.hospitalLabels}
             />
-            <article className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-1">
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <h3 className="text-2xl font-black text-slate-900">{copy.missionTitle}</h3>
-                <div className="rounded-full bg-rose-50 p-2 text-rose-600 transition-colors group-hover:bg-rose-100">
+          </div>
+
+          {/* Row 4: Misiones full width */}
+          <article className="mt-6 group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-amber-200/40 blur-3xl" />
+            <div className="relative">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+                    {copy.missionTitle}
+                  </h3>
+                  <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
+                    2023 – 2025
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 p-3 text-white shadow-lg shadow-rose-500/30">
                   <HandHeart size={20} />
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
-                {missionDonations.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <div
-                      key={`${item.year}-${item.place}`}
-                      className="group/item relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-white p-5 ring-1 ring-slate-100 transition-all hover:ring-2 hover:ring-amber-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-                    >
-                      <div
-                        className={`absolute -right-8 -top-8 h-20 w-20 rounded-full bg-gradient-to-br ${item.color} opacity-10 transition group-hover/item:scale-150`}
-                      />
-                      <div className="relative">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`rounded-lg bg-gradient-to-br ${item.color} p-1.5 text-white`}
-                          >
-                            <Icon size={14} />
-                          </div>
-                          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
-                            {item.month} {item.year}
-                          </p>
-                        </div>
-                        <h4 className="mt-2 text-lg font-black text-slate-900">{item.place}</h4>
-                        <p className="mt-1 text-xs text-slate-500">{item.description}</p>
-                        <p className="mt-3 text-3xl font-black text-ministry-blue">
-                          {item.value}%
-                        </p>
-                        <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-slate-100">
-                          <div
-                            className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
-                            style={{ width: `${item.value}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                {missionDonations.map((item) => (
+                  <MissionCard key={`${item.year}-${item.place}`} item={item} />
+                ))}
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
       </section>
 

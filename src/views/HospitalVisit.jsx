@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react";
 import {
   CalendarDays,
   Camera,
+  ChevronLeft,
+  ChevronRight,
   HandHeart,
   HeartPulse,
   MapPinned,
+  Maximize2,
   Sparkles,
   Target,
   ChevronDown,
@@ -12,10 +16,10 @@ import {
   Clock,
   Gift,
   Users,
+  X,
 } from "lucide-react";
 import FeaturedPhotoGallery from "../components/FeaturedPhotoGallery.jsx";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
-import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 const hospitalPhotos = [
@@ -35,13 +39,16 @@ const hospitalPhotos = [
   { key: "hospitalKermesService", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-07.jpeg` },
 ];
 
-const featuredHospitalPhotoKeys = [
+// Claves que se muestran en el mosaico del hero (5 fotos visibles)
+const mosaicPhotoKeys = [
   "dreamsBoard",
   "groupActivity",
   "hospitalKermesWelcome",
+  "hospitalKermesDelivery",
+  "balloonArch",
 ];
 
-const featuredHospitalPhotos = featuredHospitalPhotoKeys
+const mosaicPhotos = mosaicPhotoKeys
   .map((key) => hospitalPhotos.find((photo) => photo.key === key))
   .filter(Boolean);
 
@@ -161,15 +168,16 @@ const hospitalPageCopy = {
     upcomingDates: "Próximas fechas",
     viewGallery: "Ver galería",
     viewFullGallery: "Ver galería completa",
-  
+    viewPhotos: "Explorar fotos",
+    photosCount: "fotos",
   },
   en: {
     mission: "Mission",
     upcomingDates: "Upcoming dates",
-    
     viewGallery: "View gallery",
     viewFullGallery: "View full gallery",
-    
+    viewPhotos: "Explore photos",
+    photosCount: "photos",
   },
 };
 
@@ -302,11 +310,138 @@ const hospitalStoryByLanguage = {
   },
 };
 
+/* ============================================================
+   PhotoLightbox — modal a pantalla completa con navegación
+   ============================================================ */
+function PhotoLightbox({ photos, index, onIndexChange, onClose, getLabel }) {
+  useEffect(() => {
+    const handleKey = (event) => {
+      if (event.key === "Escape") onClose();
+      if (event.key === "ArrowRight") onIndexChange((index + 1) % photos.length);
+      if (event.key === "ArrowLeft") onIndexChange((index - 1 + photos.length) % photos.length);
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [index, photos.length, onClose, onIndexChange]);
+
+  const photo = photos[index];
+  if (!photo) return null;
+
+  const goPrev = () => onIndexChange((index - 1 + photos.length) % photos.length);
+  const goNext = () => onIndexChange((index + 1) % photos.length);
+
+  return (
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/95 backdrop-blur-md px-3 py-6 sm:px-8 sm:py-10"
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20"
+        aria-label="Cerrar"
+      >
+        <X size={20} />
+      </button>
+
+      {/* Prev */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          goPrev();
+        }}
+        className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:left-6 sm:h-14 sm:w-14"
+        aria-label="Anterior"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      {/* Next */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          goNext();
+        }}
+        className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-6 sm:h-14 sm:w-14"
+        aria-label="Siguiente"
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      <div
+        className="relative w-full max-w-6xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-[0_25px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={getLabel(photo)}
+            className="mx-auto max-h-[74vh] w-full object-contain"
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent p-5 sm:p-6">
+            <div className="flex items-end justify-between gap-4">
+              <p className="max-w-2xl text-sm font-black text-white drop-shadow sm:text-lg">
+                {getLabel(photo)}
+              </p>
+              <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-black tracking-widest text-white/80 backdrop-blur">
+                {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnails */}
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+          {photos.map((p, i) => (
+            <button
+              key={p.key || i}
+              type="button"
+              onClick={() => onIndexChange(i)}
+              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 transition ${
+                i === index
+                  ? "border-rose-400 shadow-lg shadow-rose-500/30"
+                  : "border-white/10 opacity-50 hover:opacity-100"
+              }`}
+            >
+              <img src={p.src} alt="" className="h-full w-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   HospitalVisit — página
+   ============================================================ */
 export default function HospitalVisit() {
   const { dictionary, language, t } = useLanguage();
   const copy = hospitalPageCopy[language] ?? hospitalPageCopy.es;
   const timelineCopy = hospitalTimelineCopy[language] ?? hospitalTimelineCopy.es;
   const hospitalStory = hospitalStoryByLanguage[language] ?? hospitalStoryByLanguage.es;
+
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const getPhotoLabel = (photo) => t(`hospital.photoLabels.${photo.key}`);
+
+  const openLightboxByKey = (key) => {
+    const idx = hospitalPhotos.findIndex((p) => p.key === key);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+  };
+
+  const remainingCount = Math.max(hospitalPhotos.length - (mosaicPhotos.length - 1), 0);
 
   return (
     <>
@@ -323,23 +458,26 @@ export default function HospitalVisit() {
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-rose-950/80 to-pink-950/90" />
-          
+
           {/* Animated gradient orbs */}
           <div className="absolute top-1/4 -left-20 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000" />
           <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-          
+
           {/* Pattern overlay */}
           <div className="absolute inset-0 opacity-[0.03]">
-            <div className="h-full w-full" style={{ 
-              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }} />
+            <div
+              className="h-full w-full"
+              style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+                backgroundSize: "40px 40px",
+              }}
+            />
           </div>
         </div>
 
-        <div className="section-shell relative w-full">
-          <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+        <div className="section-shell relative w-full py-20">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center">
             {/* Left Content */}
             <div className="motion-rise space-y-8">
               {/* Badge */}
@@ -375,10 +513,10 @@ export default function HospitalVisit() {
                   const colors = [
                     "from-rose-400 to-pink-500",
                     "from-blue-400 to-indigo-500",
-                    "from-amber-400 to-orange-500"
+                    "from-amber-400 to-orange-500",
                   ];
                   const IconComponent = icons[index] || Heart;
-                  
+
                   return (
                     <div
                       key={item.value}
@@ -401,24 +539,119 @@ export default function HospitalVisit() {
                 })}
               </div>
 
-              {/* CTA */}
-              <a
-                href="#galeria-hospital"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+              {/* CTA — abre lightbox */}
+              <button
+                type="button"
+                onClick={() => setLightboxIndex(0)}
+                className="group inline-flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm px-6 py-3.5 text-white font-semibold text-sm transition-all duration-300 hover:bg-white/10 hover:border-white/30"
               >
+                <Camera size={18} className="text-rose-300" />
                 {copy.viewFullGallery}
+                <span className="ml-1 rounded-full bg-rose-500/25 px-2.5 py-0.5 text-[11px] font-black tracking-widest text-rose-200">
+                  {hospitalPhotos.length} {copy.photosCount}
+                </span>
                 <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
-              </a>
+              </button>
             </div>
 
-            {/* Right Gallery */}
-            <AutoImageCarousel
-              className="motion-float"
-              photos={featuredHospitalPhotos}
-              getLabel={(photo) => t(`hospital.photoLabels.${photo.key}`)}
-              language={language}
-              heightClassName="h-[360px] sm:h-[440px] lg:h-[540px]"
-            />
+            {/* Right — Mosaico tipo bento */}
+            <div className="motion-float">
+              <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
+                {/* Foto principal (2x2) */}
+                <button
+                  type="button"
+                  onClick={() => openLightboxByKey(mosaicPhotos[0].key)}
+                  className="group relative col-span-2 row-span-2 overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-rose-950/50 ring-1 ring-white/5"
+                >
+                  <img
+                    src={mosaicPhotos[0].src}
+                    alt={getPhotoLabel(mosaicPhotos[0])}
+                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4 text-left sm:p-5">
+                    <p className="text-sm font-black text-white drop-shadow sm:text-base">
+                      {getPhotoLabel(mosaicPhotos[0])}
+                    </p>
+                  </div>
+                  <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
+                    <Maximize2 size={15} />
+                  </span>
+                </button>
+
+                {/* Foto 2 (1x1) */}
+                <button
+                  type="button"
+                  onClick={() => openLightboxByKey(mosaicPhotos[1].key)}
+                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
+                >
+                  <img
+                    src={mosaicPhotos[1].src}
+                    alt={getPhotoLabel(mosaicPhotos[1])}
+                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
+                </button>
+
+                {/* Foto 3 (1x1) */}
+                <button
+                  type="button"
+                  onClick={() => openLightboxByKey(mosaicPhotos[2].key)}
+                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
+                >
+                  <img
+                    src={mosaicPhotos[2].src}
+                    alt={getPhotoLabel(mosaicPhotos[2])}
+                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
+                </button>
+
+                {/* Foto 4 (1x1) */}
+                <button
+                  type="button"
+                  onClick={() => openLightboxByKey(mosaicPhotos[3].key)}
+                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
+                >
+                  <img
+                    src={mosaicPhotos[3].src}
+                    alt={getPhotoLabel(mosaicPhotos[3])}
+                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
+                </button>
+
+                {/* Foto 5 (2x1) con overlay "+N más" */}
+                <button
+                  type="button"
+                  onClick={() => openLightboxByKey(mosaicPhotos[4].key)}
+                  className="group relative col-span-2 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
+                >
+                  <img
+                    src={mosaicPhotos[4].src}
+                    alt={getPhotoLabel(mosaicPhotos[4])}
+                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-slate-950/65 transition group-hover:bg-slate-950/45" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white backdrop-blur-md shadow-lg transition group-hover:scale-105">
+                      <Camera size={16} />
+                      <span className="text-sm font-black tracking-wide">
+                        +{remainingCount} {copy.photosCount}
+                      </span>
+                    </span>
+                  </div>
+                </button>
+              </div>
+
+              {/* Pequeña leyenda / contador debajo del mosaico */}
+              <div className="mt-4 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
+                <span>{language === "en" ? "Tap a photo to enlarge" : "Toca una foto para ampliar"}</span>
+                <span>
+                  {String(1).padStart(2, "0")} — {String(hospitalPhotos.length).padStart(2, "0")}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -430,32 +663,7 @@ export default function HospitalVisit() {
         </div>
       </section>
 
-      {/* ========== GALLERY SECTION ========== */}
-      <section id="galeria-hospital" className="section-shell scroll-mt-28 bg-white">
-        <div className="mb-12">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">
-                <Camera size={17} />
-                {t("hospital.gallery")}
-              </div>
-              <h2 className="mt-4 max-w-3xl text-4xl font-black bg-gradient-to-r from-slate-900 to-rose-900 bg-clip-text text-transparent sm:text-5xl">
-                {t("hospital.galleryTitle")}
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-slate-500">
-              {t("hospital.galleryIntro")}
-            </p>
-          </div>
-        </div>
-
-        <FeaturedPhotoGallery
-          photos={hospitalPhotos}
-          badge={t("hospital.gallery")}
-          getLabel={(photo) => t(`hospital.photoLabels.${photo.key}`)}
-        />
-      </section>
-
+      {/* ========== STORY SECTION ========== */}
       <section className="section-shell bg-gradient-to-b from-white via-rose-50/40 to-white">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-4 shadow-2xl">
@@ -529,8 +737,7 @@ export default function HospitalVisit() {
               </p>
             </div>
           </div>
-          </div>
-       
+        </div>
       </section>
 
       {/* ========== IMPORTANT HOSPITAL DATES SECTION ========== */}
@@ -624,160 +831,164 @@ export default function HospitalVisit() {
         const photos = language === "en" ? mission.photosEn : mission.photos;
 
         return [
-        <section
-          key={mission.id}
-          id={mission.id}
-          className={`relative min-h-screen flex items-center scroll-mt-28 overflow-hidden bg-gradient-to-br ${mission.bgGradient}`}
-        >
-          {/* Background Layers */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-transparent to-slate-900/90" />
-            
-            {/* Animated gradient orbs */}
-            <div className={`absolute top-1/4 -left-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse`} />
-            <div className={`absolute bottom-1/4 -right-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse animation-delay-2000`} />
-            <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-            
-            {/* Pattern overlay */}
-            <div className="absolute inset-0 opacity-[0.03]">
-              <div className="h-full w-full" style={{ 
-                backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                backgroundSize: '40px 40px'
-              }} />
-            </div>
-          </div>
+          <section
+            key={mission.id}
+            id={mission.id}
+            className={`relative min-h-screen flex items-center scroll-mt-28 overflow-hidden bg-gradient-to-br ${mission.bgGradient}`}
+          >
+            {/* Background Layers */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-transparent to-slate-900/90" />
 
-          <div className="section-shell relative w-full">
-            <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-              {/* Left Content */}
-              <div className={`motion-rise space-y-8 ${missionIndex % 2 === 1 ? 'lg:order-2' : ''}`}>
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                      <span className={`relative inline-flex rounded-full h-3 w-3 bg-${mission.accentColor}-400`} />
+              <div className={`absolute top-1/4 -left-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse`} />
+              <div className={`absolute bottom-1/4 -right-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse animation-delay-2000`} />
+              <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
+
+              <div className="absolute inset-0 opacity-[0.03]">
+                <div
+                  className="h-full w-full"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+                    backgroundSize: "40px 40px",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="section-shell relative w-full">
+              <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+                <div className={`motion-rise space-y-8 ${missionIndex % 2 === 1 ? "lg:order-2" : ""}`}>
+                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
+                    <div className="flex items-center gap-2">
+                      <span className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                        <span className={`relative inline-flex rounded-full h-3 w-3 bg-${mission.accentColor}-400`} />
+                      </span>
+                      <Sparkles size={14} className={mission.badgeColor} />
+                    </div>
+                    <span className={`text-xs font-bold uppercase tracking-[0.2em] ${mission.badgeColor}`}>
+                      {copy.mission}
                     </span>
-                    <Sparkles size={14} className={mission.badgeColor} />
                   </div>
-                  <span className={`text-xs font-bold uppercase tracking-[0.2em] ${mission.badgeColor}`}>
-                    {copy.mission}
-                  </span>
-                </div>
 
-                {/* Title */}
-                <h2 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
-                  <span className="bg-gradient-to-r from-white via-white to-slate-300 bg-clip-text text-transparent">
-                    {language === "en" ? mission.titleEn : mission.title}
-                  </span>
-                </h2>
+                  <h2 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
+                    <span className="bg-gradient-to-r from-white via-white to-slate-300 bg-clip-text text-transparent">
+                      {language === "en" ? mission.titleEn : mission.title}
+                    </span>
+                  </h2>
 
-                {/* Description */}
-                <p className="max-w-2xl text-lg leading-relaxed text-white/70 font-light">
-                  {language === "en" ? mission.descriptionEn : mission.description}
-                </p>
+                  <p className="max-w-2xl text-lg leading-relaxed text-white/70 font-light">
+                    {language === "en" ? mission.descriptionEn : mission.description}
+                  </p>
 
-                {/* Stats Grid */}
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {mission.stats.map((stat, index) => {
-                    const statIcons = [Users, CalendarDays, Gift];
-                    const StatIcon = statIcons[index] || Star;
-                    
-                    return (
-                      <div
-                        key={stat.label}
-                        className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                      >
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br opacity-10 rounded-bl-full group-hover:opacity-20 transition-opacity" />
-                        <div className="relative space-y-2">
-                          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
-                            <StatIcon size={18} className="text-white" />
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    {mission.stats.map((stat, index) => {
+                      const statIcons = [Users, CalendarDays, Gift];
+                      const StatIcon = statIcons[index] || Star;
+
+                      return (
+                        <div
+                          key={stat.label}
+                          className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                        >
+                          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br opacity-10 rounded-bl-full group-hover:opacity-20 transition-opacity" />
+                          <div className="relative space-y-2">
+                            <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
+                              <StatIcon size={18} className="text-white" />
+                            </div>
+                            <p className={`text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r ${mission.statColor}`}>
+                              {stat.value}
+                            </p>
+                            <p className="text-xs font-semibold leading-5 text-white/60">
+                              {language === "en" ? stat.labelEn : stat.label}
+                            </p>
                           </div>
-                          <p className={`text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r ${mission.statColor}`}>
-                            {stat.value}
-                          </p>
-                          <p className="text-xs font-semibold leading-5 text-white/60">
-                            {language === "en" ? stat.labelEn : stat.label}
-                          </p>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <a
+                      href={`#galeria-${mission.id}`}
+                      className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+                    >
+                      {copy.viewGallery}
+                    </a>
+                  </div>
                 </div>
 
-                {/* CTA */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href={`#galeria-${mission.id}`}
-                    className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
-                  >
-                    {copy.viewGallery}
-                  </a>
-                </div>
-              </div>
-
-              {/* Right Preview */}
-              <div className={`motion-float ${missionIndex % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <div className="grid gap-4">
-                  {mission.photos ? (
-                    <AutoImageCarousel
-                      photos={photos}
-                      getLabel={(photo) => photo.label}
-                      language={language}
-                      heightClassName="h-[400px] sm:h-[460px]"
-                    />
-                  ) : (
-                    <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
-                          <mission.icon size={36} className="text-white" />
+                <div className={`motion-float ${missionIndex % 2 === 1 ? "lg:order-1" : ""}`}>
+                  <div className="grid gap-4">
+                    {mission.photos ? (
+                      <AutoImageCarousel
+                        photos={photos}
+                        getLabel={(photo) => photo.label}
+                        language={language}
+                        heightClassName="h-[400px] sm:h-[460px]"
+                      />
+                    ) : (
+                      <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">
+                        <div className="text-center space-y-4">
+                          <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
+                            <mission.icon size={36} className="text-white" />
+                          </div>
+                          <p className="text-white/50 font-medium">
+                            {language === "en" ? mission.placeholderEn : mission.placeholder}
+                          </p>
+                          <div className="mx-auto h-1.5 w-24 rounded-full bg-gradient-to-r from-white/20 to-white/40" />
                         </div>
-                        <p className="text-white/50 font-medium">
-                          {language === "en" ? mission.placeholderEn : mission.placeholder}
-                        </p>
-                        <div className="mx-auto h-1.5 w-24 rounded-full bg-gradient-to-r from-white/20 to-white/40" />
-                      </div>
-                    </figure>
-                  )}
+                      </figure>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
-              <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
-            </div>
-          </div>
-        </section>,
-        photos ? (
-          <section key={`${mission.id}-gallery`} id={`galeria-${mission.id}`} className="section-shell scroll-mt-28 bg-white">
-            <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-ministry-gold/25 px-4 py-2 text-sm font-bold text-ministry-blue">
-                  <Camera size={17} />
-                  {language === "en" ? `${mission.titleEn} gallery` : `Galeria de ${mission.title}`}
-                </div>
-                <h2 className="mt-4 max-w-3xl text-4xl font-black bg-gradient-to-r from-slate-900 to-ministry-blue bg-clip-text text-transparent sm:text-5xl">
-                  {language === "en" ? `Moments from ${mission.titleEn}` : `Momentos de ${mission.title}`}
-                </h2>
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+              <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
+                <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
               </div>
-              <p className="max-w-md text-sm leading-6 text-slate-500">
-                {language === "en"
-                  ? "A visual record of the service, teamwork, and community support shared during this mission."
-                  : "Registro visual del servicio, trabajo en equipo y apoyo comunitario compartido durante esta misión."}
-              </p>
             </div>
-            <FeaturedPhotoGallery
-              photos={photos}
-              badge={language === "en" ? mission.titleEn : mission.title}
-              getLabel={(photo) => photo.label}
-            />
-          </section>
-        ) : null,
+          </section>,
+          photos ? (
+            <section key={`${mission.id}-gallery`} id={`galeria-${mission.id}`} className="section-shell scroll-mt-28 bg-white">
+              <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-ministry-gold/25 px-4 py-2 text-sm font-bold text-ministry-blue">
+                    <Camera size={17} />
+                    {language === "en" ? `${mission.titleEn} gallery` : `Galeria de ${mission.title}`}
+                  </div>
+                  <h2 className="mt-4 max-w-3xl text-4xl font-black bg-gradient-to-r from-slate-900 to-ministry-blue bg-clip-text text-transparent sm:text-5xl">
+                    {language === "en" ? `Moments from ${mission.titleEn}` : `Momentos de ${mission.title}`}
+                  </h2>
+                </div>
+                <p className="max-w-md text-sm leading-6 text-slate-500">
+                  {language === "en"
+                    ? "A visual record of the service, teamwork, and community support shared during this mission."
+                    : "Registro visual del servicio, trabajo en equipo y apoyo comunitario compartido durante esta misión."}
+                </p>
+              </div>
+              <FeaturedPhotoGallery
+                photos={photos}
+                badge={language === "en" ? mission.titleEn : mission.title}
+                getLabel={(photo) => photo.label}
+              />
+            </section>
+          ) : null,
         ].filter(Boolean);
       })}
+
+      {/* ========== LIGHTBOX ========== */}
+      {lightboxIndex !== null && (
+        <PhotoLightbox
+          photos={hospitalPhotos}
+          index={lightboxIndex}
+          onIndexChange={setLightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          getLabel={getPhotoLabel}
+        />
+      )}
     </>
   );
 }

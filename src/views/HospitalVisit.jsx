@@ -58,24 +58,14 @@ const otherMissions = [
     statColor: "from-emerald-400 to-teal-400",
     placeholder: "[Insertar información de Cartolandia]",
     placeholderEn: "[Insert Cartolandia information]",
-    photos: [
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Condiciones de vivienda en Cartolandia" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Entrega comunitaria junto al vehículo del ministerio" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Entrega de alimento a familias" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Oración y acompañamiento durante la visita" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Familias recibiendo apoyo y seguimiento" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Despensas entregadas desde la ruta de visita" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Acompañamiento cercano a beneficiarios" },
-    ],
-    photosEn: [
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Housing conditions in Cartolandia" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Community delivery beside the ministry vehicle" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Food delivery to families" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Prayer and accompaniment during the visit" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Families receiving support and follow-up" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Pantries delivered during the visit route" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Close accompaniment for beneficiaries" },
-    ],
+    photos: Array.from({ length: 17 }, (_, index) => ({
+      src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-${String(index + 1).padStart(2, "0")}.jpeg`,
+      label: `Misión en Cartolandia, fotografía ${index + 1}`,
+    })),
+    photosEn: Array.from({ length: 17 }, (_, index) => ({
+      src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-${String(index + 1).padStart(2, "0")}.jpeg`,
+      label: `Cartolandia mission, photo ${index + 1}`,
+    })),
   },
   {
     id: "dia-caridad",

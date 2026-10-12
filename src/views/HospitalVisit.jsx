@@ -38,14 +38,23 @@ const hospitalPhotos = [
   { key: "hospitalKermesService", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-07.jpeg` },
 ];
 
+const cartolandiaFirstVisitPhotos = Array.from({ length: 21 }, (_, index) => ({
+  src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-primera-${String(index + 1).padStart(2, "0")}.jpeg`,
+  label: `Primera visita a Cartolandia, foto ${index + 1}`,
+}));
+const cartolandiaFirstVisitPhotosEn = cartolandiaFirstVisitPhotos.map((photo, index) => ({
+  ...photo,
+  label: `First Cartolandia visit, photo ${index + 1}`,
+}));
+
 const otherMissions = [
   {
     id: "cartolandia",
     title: "Cartolandia",
     titleEn: "Cartolandia",
     icon: MapPinned,
-    description: "Espacio para documentar la misión en Cartolandia, familias atendidas y evidencia visual.",
-    descriptionEn: "Space to document the Cartolandia mission, families served, and visual evidence.",
+    description: "Dos visitas que marcaron el inicio del servicio en Cartolandia: la primera en 2023 y la segunda en febrero de 2025.",
+    descriptionEn: "Two visits that marked the beginning of service in Cartolandia: the first in 2023 and the second in February 2025.",
     stats: [
       { value: "150+", label: "Familias", labelEn: "Families" },
       { value: "2", label: "Visitas", labelEn: "Visits" },
@@ -59,6 +68,10 @@ const otherMissions = [
     statColor: "from-emerald-400 to-teal-400",
     placeholder: "[Insertar información de Cartolandia]",
     placeholderEn: "[Insert Cartolandia information]",
+    firstVisitTitle: "Primera visita · 2023",
+    firstVisitTitleEn: "First visit · 2023",
+    secondVisitTitle: "Segunda visita · febrero de 2025",
+    secondVisitTitleEn: "Second visit · February 2025",
     photos: [
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Condiciones de vivienda en Cartolandia" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Entrega comunitaria junto al vehículo del ministerio" },
@@ -579,6 +592,32 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
   );
 }
 
+function MissionPhotoGrid({ photos, onOpen }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+      {photos.map((photo, index) => (
+        <button
+          key={photo.src}
+          type="button"
+          onClick={() => onOpen(index)}
+          className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl"
+          aria-label={photo.label}
+        >
+          <img
+            src={photo.src}
+            alt={photo.label}
+            loading="lazy"
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+          <span className="absolute bottom-2 right-2 rounded-full bg-slate-950/75 px-2.5 py-1 text-xs font-bold text-white">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 /* ============================================================
    HospitalVisit — página
    ============================================================ */
@@ -961,7 +1000,7 @@ export default function HospitalVisit() {
                     })}
                   </div>
 
-                  {photos.length > 0 && (
+                  {photos.length > 0 && mission.id !== "cartolandia" && (
                     <button
                       type="button"
                       onClick={() => openLightbox(photos, 0)}
@@ -977,8 +1016,40 @@ export default function HospitalVisit() {
                   )}
                 </div>
 
-                <div className={`motion-float ${isReversed ? "lg:order-1" : ""}`}>
-                  {photos.length > 0 ? (
+                <div className={`motion-float ${mission.id === "cartolandia" ? "lg:col-span-2" : ""} ${isReversed ? "lg:order-1" : ""}`}>
+                  {mission.id === "cartolandia" ? (
+                    <div className="space-y-10">
+                      <section aria-labelledby="cartolandia-first-visit-heading" className="space-y-4">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <h3 id="cartolandia-first-visit-heading" className="text-2xl font-black text-white sm:text-3xl">
+                            {language === "en" ? mission.firstVisitTitleEn : mission.firstVisitTitle}
+                          </h3>
+                          <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white/70">
+                            2023 · {cartolandiaFirstVisitPhotos.length} {copy.photosCount}
+                          </span>
+                        </div>
+                        <MissionPhotoGrid
+                          photos={language === "en" ? cartolandiaFirstVisitPhotosEn : cartolandiaFirstVisitPhotos}
+                          onOpen={(idx) => openLightbox(language === "en" ? cartolandiaFirstVisitPhotosEn : cartolandiaFirstVisitPhotos, idx)}
+                        />
+                      </section>
+
+                      <section aria-labelledby="cartolandia-second-visit-heading" className="space-y-4 border-t border-white/10 pt-8">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <h3 id="cartolandia-second-visit-heading" className="text-2xl font-black text-white sm:text-3xl">
+                            {language === "en" ? mission.secondVisitTitleEn : mission.secondVisitTitle}
+                          </h3>
+                          <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white/70">
+                            {photos.length} {copy.photosCount}
+                          </span>
+                        </div>
+                        <MissionPhotoGrid
+                          photos={photos}
+                          onOpen={(idx) => openLightbox(photos, idx)}
+                        />
+                      </section>
+                    </div>
+                  ) : photos.length > 0 ? (
                     <>
                       <MissionMosaic
                         photos={photos}

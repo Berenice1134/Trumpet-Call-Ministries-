@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   CalendarDays,
   Camera,
@@ -58,14 +59,24 @@ const otherMissions = [
     statColor: "from-emerald-400 to-teal-400",
     placeholder: "[Insertar información de Cartolandia]",
     placeholderEn: "[Insert Cartolandia information]",
-    photos: Array.from({ length: 17 }, (_, index) => ({
-      src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-${String(index + 1).padStart(2, "0")}.jpeg`,
-      label: `Misión en Cartolandia, fotografía ${index + 1}`,
-    })),
-    photosEn: Array.from({ length: 17 }, (_, index) => ({
-      src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-${String(index + 1).padStart(2, "0")}.jpeg`,
-      label: `Cartolandia mission, photo ${index + 1}`,
-    })),
+    photos: [
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Condiciones de vivienda en Cartolandia" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Entrega comunitaria junto al vehículo del ministerio" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Entrega de alimento a familias" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Oración y acompañamiento durante la visita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Familias recibiendo apoyo y seguimiento" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Despensas entregadas desde la ruta de visita" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Acompañamiento cercano a beneficiarios" },
+    ],
+    photosEn: [
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Housing conditions in Cartolandia" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-02.jpeg`, label: "Community delivery beside the ministry vehicle" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-03.jpeg`, label: "Food delivery to families" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Prayer and accompaniment during the visit" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Families receiving support and follow-up" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Pantries delivered during the visit route" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Close accompaniment for beneficiaries" },
+    ],
   },
   {
     id: "dia-caridad",
@@ -290,10 +301,12 @@ const hospitalStoryByLanguage = {
 };
 
 /* ============================================================
-   PhotoLightbox — modal a pantalla completa con navegación
-   - z-index alto para quedar por encima del navbar
-   - Barra superior fija con botón "Cerrar" siempre visible
-   - Layout flex-column: top bar / imagen / thumbnails
+   PhotoLightbox — modal con React Portal
+   - Se renderiza en document.body para escapar de cualquier
+     stacking context (navbar, contenedores con transform, etc.)
+   - z-index máximo para quedar siempre encima
+   - Botón de cerrar visible en la esquina SUPERIOR DERECHA
+     y también en la barra inferior (por si acaso)
    ============================================================ */
 function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Cerrar" }) {
   useEffect(() => {
@@ -303,10 +316,11 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
       if (event.key === "ArrowLeft") onIndexChange((index - 1 + photos.length) % photos.length);
     };
     document.addEventListener("keydown", handleKey);
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = prevOverflow;
     };
   }, [index, photos.length, onClose, onIndexChange]);
 
@@ -316,34 +330,33 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
   const goPrev = () => onIndexChange((index - 1 + photos.length) % photos.length);
   const goNext = () => onIndexChange((index + 1) % photos.length);
 
-  return (
+  const modal = (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col bg-slate-950/95 backdrop-blur-md"
+      className="fixed inset-0 flex flex-col bg-slate-950/95 backdrop-blur-md"
+      style={{ zIndex: 2147483647 }}
       onClick={onClose}
     >
-      {/* Barra superior con botón de cerrar SIEMPRE visible */}
-      <div
-        className="relative z-20 flex items-center justify-between gap-3 border-b border-white/10 bg-slate-950/80 px-4 py-3 backdrop-blur sm:px-6"
-        onClick={(e) => e.stopPropagation()}
+      {/* Botón de cerrar flotante — esquina superior derecha */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="absolute right-4 top-4 z-50 grid h-12 w-12 place-items-center rounded-full bg-white text-slate-900 shadow-2xl ring-2 ring-white/50 transition hover:scale-105 hover:bg-rose-500 hover:text-white sm:right-6 sm:top-6 sm:h-14 sm:w-14"
+        aria-label="Cerrar galería"
       >
-        <span className="truncate text-xs font-black uppercase tracking-[0.2em] text-white/60">
-          {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
-        </span>
+        <X size={24} strokeWidth={3} />
+      </button>
 
-        <button
-          type="button"
-          onClick={onClose}
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20"
-          aria-label="Cerrar galería"
-        >
-          <X size={18} />
-          <span className="hidden sm:inline">{closeLabel}</span>
-        </button>
-      </div>
+      {/* Contador flotante — esquina superior izquierda */}
+      <span className="absolute left-4 top-4 z-50 rounded-full border border-white/20 bg-slate-950/80 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white backdrop-blur sm:left-6 sm:top-6">
+        {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+      </span>
 
       {/* Zona de imagen */}
       <div
-        className="relative flex flex-1 items-center justify-center overflow-hidden px-3 py-4 sm:px-16 sm:py-6"
+        className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-16 sm:px-20 sm:py-20"
         onClick={onClose}
       >
         {/* Prev */}
@@ -353,10 +366,10 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             e.stopPropagation();
             goPrev();
           }}
-          className="absolute left-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:left-4 sm:h-14 sm:w-14"
+          className="absolute left-2 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:left-6 sm:h-14 sm:w-14"
           aria-label="Anterior"
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={24} />
         </button>
 
         {/* Next */}
@@ -366,43 +379,41 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             e.stopPropagation();
             goNext();
           }}
-          className="absolute right-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-4 sm:h-14 sm:w-14"
+          className="absolute right-2 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-6 sm:h-14 sm:w-14"
           aria-label="Siguiente"
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={24} />
         </button>
 
         <figure
-          className="relative flex h-full w-full max-w-6xl items-center justify-center"
+          className="relative flex h-full w-full max-w-5xl items-center justify-center"
           onClick={(e) => e.stopPropagation()}
         >
           <img
             key={photo.src}
             src={photo.src}
             alt={photo.label}
-            className="max-h-full max-w-full rounded-2xl object-contain shadow-[0_25px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10"
+            className="max-h-full max-w-full rounded-xl object-contain shadow-[0_25px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10"
           />
-
-          <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto max-w-4xl rounded-b-2xl bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent p-5 text-center sm:p-6">
-            <p className="text-sm font-black text-white drop-shadow sm:text-base">
-              {photo.label}
-            </p>
-          </figcaption>
         </figure>
       </div>
 
-      {/* Miniaturas */}
+      {/* Caption + Miniaturas */}
       <div
-        className="relative z-20 border-t border-white/10 bg-slate-950/80 px-3 py-3 backdrop-blur sm:px-6"
+        className="relative z-20 border-t border-white/10 bg-slate-950/90 px-4 py-3 backdrop-blur sm:px-6"
         onClick={(e) => e.stopPropagation()}
       >
+        <p className="mb-3 text-center text-sm font-black text-white sm:text-base">
+          {photo.label}
+        </p>
+
         <div className="flex gap-2 overflow-x-auto pb-1">
           {photos.map((p, i) => (
             <button
               key={p.src + i}
               type="button"
               onClick={() => onIndexChange(i)}
-              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-16 sm:w-16 ${
+              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-16 sm:w-16 ${
                 i === index
                   ? "border-rose-400 shadow-lg shadow-rose-500/30"
                   : "border-white/10 opacity-50 hover:opacity-100"
@@ -415,6 +426,9 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
       </div>
     </div>
   );
+
+  // Renderizamos el modal directo en document.body
+  return createPortal(modal, document.body);
 }
 
 /* ============================================================
@@ -550,7 +564,6 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
     );
   }
 
-  // Fallback (1–3 fotos): grid simple
   return (
     <div className="grid h-[440px] grid-cols-2 grid-rows-2 gap-3 sm:h-[540px] lg:h-[600px]">
       {displayed.map((photo, i) => (
@@ -575,12 +588,10 @@ export default function HospitalVisit() {
   const timelineCopy = hospitalTimelineCopy[language] ?? hospitalTimelineCopy.es;
   const hospitalStory = hospitalStoryByLanguage[language] ?? hospitalStoryByLanguage.es;
 
-  // Estado global del lightbox: { photos: [{src, label}], index: number } | null
   const [lightbox, setLightbox] = useState(null);
 
   const openLightbox = (photos, index = 0) => setLightbox({ photos, index });
 
-  // Hospital: normalizamos a { src, label } para reusar MosaicTile/PhotoLightbox
   const hospitalPhotosDisplay = hospitalPhotos.map((p) => ({
     src: p.src,
     label: t(`hospital.photoLabels.${p.key}`),
@@ -881,7 +892,6 @@ export default function HospitalVisit() {
             id={mission.id}
             className={`relative min-h-screen flex items-center scroll-mt-28 overflow-hidden bg-gradient-to-br ${mission.bgGradient}`}
           >
-            {/* Background Layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-transparent to-slate-900/90" />
               <div className={`absolute top-1/4 -left-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse`} />
@@ -900,7 +910,6 @@ export default function HospitalVisit() {
 
             <div className="section-shell relative w-full py-20">
               <div className="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center">
-                {/* Left Content */}
                 <div className={`motion-rise space-y-8 ${isReversed ? "lg:order-2" : ""}`}>
                   <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
                     <div className="flex items-center gap-2">
@@ -968,7 +977,6 @@ export default function HospitalVisit() {
                   )}
                 </div>
 
-                {/* Right Mosaic */}
                 <div className={`motion-float ${isReversed ? "lg:order-1" : ""}`}>
                   {photos.length > 0 ? (
                     <>
@@ -1001,7 +1009,6 @@ export default function HospitalVisit() {
               </div>
             </div>
 
-            {/* Scroll indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
               <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
                 <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />

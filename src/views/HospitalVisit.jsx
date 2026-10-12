@@ -18,8 +18,6 @@ import {
   Users,
   X,
 } from "lucide-react";
-import FeaturedPhotoGallery from "../components/FeaturedPhotoGallery.jsx";
-import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 const hospitalPhotos = [
@@ -38,19 +36,6 @@ const hospitalPhotos = [
   { key: "hospitalKermesConversation", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-06.jpeg` },
   { key: "hospitalKermesService", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-07.jpeg` },
 ];
-
-// Claves que se muestran en el mosaico del hero (5 fotos visibles)
-const mosaicPhotoKeys = [
-  "dreamsBoard",
-  "groupActivity",
-  "hospitalKermesWelcome",
-  "hospitalKermesDelivery",
-  "balloonArch",
-];
-
-const mosaicPhotos = mosaicPhotoKeys
-  .map((key) => hospitalPhotos.find((photo) => photo.key === key))
-  .filter(Boolean);
 
 const otherMissions = [
   {
@@ -170,6 +155,8 @@ const hospitalPageCopy = {
     viewFullGallery: "Ver galería completa",
     viewPhotos: "Explorar fotos",
     photosCount: "fotos",
+    tapToEnlarge: "Toca una foto para ampliar",
+    close: "Cerrar",
   },
   en: {
     mission: "Mission",
@@ -178,6 +165,8 @@ const hospitalPageCopy = {
     viewFullGallery: "View full gallery",
     viewPhotos: "Explore photos",
     photosCount: "photos",
+    tapToEnlarge: "Tap a photo to enlarge",
+    close: "Close",
   },
 };
 
@@ -312,8 +301,11 @@ const hospitalStoryByLanguage = {
 
 /* ============================================================
    PhotoLightbox — modal a pantalla completa con navegación
+   - z-index alto para quedar por encima del navbar
+   - Barra superior fija con botón "Cerrar" siempre visible
+   - Layout flex-column: top bar / imagen / thumbnails
    ============================================================ */
-function PhotoLightbox({ photos, index, onIndexChange, onClose, getLabel }) {
+function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Cerrar" }) {
   useEffect(() => {
     const handleKey = (event) => {
       if (event.key === "Escape") onClose();
@@ -336,79 +328,91 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, getLabel }) {
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/95 backdrop-blur-md px-3 py-6 sm:px-8 sm:py-10"
+      className="fixed inset-0 z-[9999] flex flex-col bg-slate-950/95 backdrop-blur-md"
       onClick={onClose}
     >
-      {/* Close */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-        className="absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20"
-        aria-label="Cerrar"
-      >
-        <X size={20} />
-      </button>
-
-      {/* Prev */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          goPrev();
-        }}
-        className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:left-6 sm:h-14 sm:w-14"
-        aria-label="Anterior"
-      >
-        <ChevronLeft size={24} />
-      </button>
-
-      {/* Next */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          goNext();
-        }}
-        className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-6 sm:h-14 sm:w-14"
-        aria-label="Siguiente"
-      >
-        <ChevronRight size={24} />
-      </button>
-
+      {/* Barra superior con botón de cerrar SIEMPRE visible */}
       <div
-        className="relative w-full max-w-6xl"
+        className="relative z-20 flex items-center justify-between gap-3 border-b border-white/10 bg-slate-950/80 px-4 py-3 backdrop-blur sm:px-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-[0_25px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
+        <span className="truncate text-xs font-black uppercase tracking-[0.2em] text-white/60">
+          {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+        </span>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20"
+          aria-label="Cerrar galería"
+        >
+          <X size={18} />
+          <span className="hidden sm:inline">{closeLabel}</span>
+        </button>
+      </div>
+
+      {/* Zona de imagen */}
+      <div
+        className="relative flex flex-1 items-center justify-center overflow-hidden px-3 py-4 sm:px-16 sm:py-6"
+        onClick={onClose}
+      >
+        {/* Prev */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            goPrev();
+          }}
+          className="absolute left-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:left-4 sm:h-14 sm:w-14"
+          aria-label="Anterior"
+        >
+          <ChevronLeft size={22} />
+        </button>
+
+        {/* Next */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            goNext();
+          }}
+          className="absolute right-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-4 sm:h-14 sm:w-14"
+          aria-label="Siguiente"
+        >
+          <ChevronRight size={22} />
+        </button>
+
+        <figure
+          className="relative flex h-full w-full max-w-6xl items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
           <img
             key={photo.src}
             src={photo.src}
-            alt={getLabel(photo)}
-            className="mx-auto max-h-[74vh] w-full object-contain"
+            alt={photo.label}
+            className="max-h-full max-w-full rounded-2xl object-contain shadow-[0_25px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-white/10"
           />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent p-5 sm:p-6">
-            <div className="flex items-end justify-between gap-4">
-              <p className="max-w-2xl text-sm font-black text-white drop-shadow sm:text-lg">
-                {getLabel(photo)}
-              </p>
-              <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-black tracking-widest text-white/80 backdrop-blur">
-                {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
-              </span>
-            </div>
-          </div>
-        </div>
 
-        {/* Thumbnails */}
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+          <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto max-w-4xl rounded-b-2xl bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent p-5 text-center sm:p-6">
+            <p className="text-sm font-black text-white drop-shadow sm:text-base">
+              {photo.label}
+            </p>
+          </figcaption>
+        </figure>
+      </div>
+
+      {/* Miniaturas */}
+      <div
+        className="relative z-20 border-t border-white/10 bg-slate-950/80 px-3 py-3 backdrop-blur sm:px-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex gap-2 overflow-x-auto pb-1">
           {photos.map((p, i) => (
             <button
-              key={p.key || i}
+              key={p.src + i}
               type="button"
               onClick={() => onIndexChange(i)}
-              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 transition ${
+              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-16 sm:w-16 ${
                 i === index
                   ? "border-rose-400 shadow-lg shadow-rose-500/30"
                   : "border-white/10 opacity-50 hover:opacity-100"
@@ -424,6 +428,155 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, getLabel }) {
 }
 
 /* ============================================================
+   MosaicTile — una celda del mosaico
+   ============================================================ */
+function MosaicTile({
+  photo,
+  onClick,
+  className = "",
+  showLabel = false,
+  showOverlay = false,
+  overlayCount = 0,
+  photosCountLabel = "fotos",
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-slate-950/40 ring-1 ring-white/5 ${className}`}
+    >
+      <img
+        src={photo.src}
+        alt={photo.label}
+        className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+      />
+
+      {showLabel && (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-4 text-left sm:p-5">
+            <p className="text-sm font-black text-white drop-shadow sm:text-base">
+              {photo.label}
+            </p>
+          </div>
+          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
+            <Maximize2 size={15} />
+          </span>
+        </>
+      )}
+
+      {!showLabel && !showOverlay && (
+        <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
+      )}
+
+      {showOverlay && (
+        <>
+          <div className="absolute inset-0 bg-slate-950/65 transition group-hover:bg-slate-950/45" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white backdrop-blur-md shadow-lg transition group-hover:scale-105">
+              <Camera size={16} />
+              <span className="text-sm font-black tracking-wide">
+                +{overlayCount} {photosCountLabel}
+              </span>
+            </span>
+          </div>
+        </>
+      )}
+    </button>
+  );
+}
+
+/* ============================================================
+   MissionMosaic — mosaico bento adaptable (5 o 4 fotos)
+   ============================================================ */
+function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
+  const displayed = photos.slice(0, 5);
+  const remaining = photos.length - displayed.length;
+
+  if (displayed.length >= 5) {
+    return (
+      <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
+        <MosaicTile
+          photo={displayed[0]}
+          onClick={() => onOpen(0)}
+          className="col-span-2 row-span-2"
+          showLabel
+        />
+        <MosaicTile
+          photo={displayed[1]}
+          onClick={() => onOpen(1)}
+          className="col-span-1 row-span-1"
+        />
+        <MosaicTile
+          photo={displayed[2]}
+          onClick={() => onOpen(2)}
+          className="col-span-1 row-span-1"
+        />
+        <MosaicTile
+          photo={displayed[3]}
+          onClick={() => onOpen(3)}
+          className="col-span-1 row-span-1"
+        />
+        <MosaicTile
+          photo={displayed[4]}
+          onClick={() => onOpen(4)}
+          className="col-span-2 row-span-1"
+          showOverlay={remaining > 0}
+          overlayCount={remaining}
+          photosCountLabel={photosCountLabel}
+        />
+      </div>
+    );
+  }
+
+  if (displayed.length === 4) {
+    return (
+      <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
+        <MosaicTile
+          photo={displayed[0]}
+          onClick={() => onOpen(0)}
+          className="col-span-2 row-span-2"
+          showLabel
+        />
+        <MosaicTile
+          photo={displayed[1]}
+          onClick={() => onOpen(1)}
+          className="col-span-1 row-span-1"
+        />
+        <MosaicTile
+          photo={displayed[2]}
+          onClick={() => onOpen(2)}
+          className="col-span-1 row-span-1"
+        />
+        <MosaicTile
+          photo={displayed[3]}
+          onClick={() => onOpen(3)}
+          className="col-span-3 row-span-1"
+          showOverlay={remaining > 0}
+          overlayCount={remaining}
+          photosCountLabel={photosCountLabel}
+        />
+      </div>
+    );
+  }
+
+  // Fallback (1–3 fotos): grid simple
+  return (
+    <div className="grid h-[440px] grid-cols-2 grid-rows-2 gap-3 sm:h-[540px] lg:h-[600px]">
+      {displayed.map((photo, i) => (
+        <MosaicTile
+          key={photo.src + i}
+          photo={photo}
+          onClick={() => onOpen(i)}
+          className="col-span-1 row-span-1"
+          showLabel={i === 0}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ============================================================
    HospitalVisit — página
    ============================================================ */
 export default function HospitalVisit() {
@@ -432,16 +585,16 @@ export default function HospitalVisit() {
   const timelineCopy = hospitalTimelineCopy[language] ?? hospitalTimelineCopy.es;
   const hospitalStory = hospitalStoryByLanguage[language] ?? hospitalStoryByLanguage.es;
 
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  // Estado global del lightbox: { photos: [{src, label}], index: number } | null
+  const [lightbox, setLightbox] = useState(null);
 
-  const getPhotoLabel = (photo) => t(`hospital.photoLabels.${photo.key}`);
+  const openLightbox = (photos, index = 0) => setLightbox({ photos, index });
 
-  const openLightboxByKey = (key) => {
-    const idx = hospitalPhotos.findIndex((p) => p.key === key);
-    setLightboxIndex(idx >= 0 ? idx : 0);
-  };
-
-  const remainingCount = Math.max(hospitalPhotos.length - (mosaicPhotos.length - 1), 0);
+  // Hospital: normalizamos a { src, label } para reusar MosaicTile/PhotoLightbox
+  const hospitalPhotosDisplay = hospitalPhotos.map((p) => ({
+    src: p.src,
+    label: t(`hospital.photoLabels.${p.key}`),
+  }));
 
   return (
     <>
@@ -450,7 +603,6 @@ export default function HospitalVisit() {
         id="hospital-infantil-tlaxcala"
         className="relative min-h-screen flex items-center scroll-mt-28 overflow-hidden bg-gradient-to-br from-slate-900 via-rose-950 to-pink-950"
       >
-        {/* Background Layers */}
         <div className="absolute inset-0">
           <img
             src={`${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-01.jpeg`}
@@ -458,13 +610,9 @@ export default function HospitalVisit() {
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-rose-950/80 to-pink-950/90" />
-
-          {/* Animated gradient orbs */}
           <div className="absolute top-1/4 -left-20 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000" />
           <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-
-          {/* Pattern overlay */}
           <div className="absolute inset-0 opacity-[0.03]">
             <div
               className="h-full w-full"
@@ -478,9 +626,7 @@ export default function HospitalVisit() {
 
         <div className="section-shell relative w-full py-20">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center">
-            {/* Left Content */}
             <div className="motion-rise space-y-8">
-              {/* Badge */}
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-3 w-3">
@@ -494,19 +640,16 @@ export default function HospitalVisit() {
                 </span>
               </div>
 
-              {/* Title */}
               <h1 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
                 <span className="bg-gradient-to-r from-white via-white to-rose-100 bg-clip-text text-transparent">
                   {t("hospital.title")}
                 </span>
               </h1>
 
-              {/* Description */}
               <p className="max-w-2xl text-lg leading-relaxed text-white/70 font-light">
                 {t("hospital.text")}
               </p>
 
-              {/* Stats Grid */}
               <div className="grid gap-4 sm:grid-cols-3">
                 {dictionary.hospital.stats.map((item, index) => {
                   const icons = [Heart, Users, Gift];
@@ -539,123 +682,36 @@ export default function HospitalVisit() {
                 })}
               </div>
 
-              {/* CTA — abre lightbox */}
               <button
                 type="button"
-                onClick={() => setLightboxIndex(0)}
+                onClick={() => openLightbox(hospitalPhotosDisplay, 0)}
                 className="group inline-flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm px-6 py-3.5 text-white font-semibold text-sm transition-all duration-300 hover:bg-white/10 hover:border-white/30"
               >
                 <Camera size={18} className="text-rose-300" />
                 {copy.viewFullGallery}
                 <span className="ml-1 rounded-full bg-rose-500/25 px-2.5 py-0.5 text-[11px] font-black tracking-widest text-rose-200">
-                  {hospitalPhotos.length} {copy.photosCount}
+                  {hospitalPhotosDisplay.length} {copy.photosCount}
                 </span>
                 <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
               </button>
             </div>
 
-            {/* Right — Mosaico tipo bento */}
             <div className="motion-float">
-              <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
-                {/* Foto principal (2x2) */}
-                <button
-                  type="button"
-                  onClick={() => openLightboxByKey(mosaicPhotos[0].key)}
-                  className="group relative col-span-2 row-span-2 overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-rose-950/50 ring-1 ring-white/5"
-                >
-                  <img
-                    src={mosaicPhotos[0].src}
-                    alt={getPhotoLabel(mosaicPhotos[0])}
-                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-4 text-left sm:p-5">
-                    <p className="text-sm font-black text-white drop-shadow sm:text-base">
-                      {getPhotoLabel(mosaicPhotos[0])}
-                    </p>
-                  </div>
-                  <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
-                    <Maximize2 size={15} />
-                  </span>
-                </button>
-
-                {/* Foto 2 (1x1) */}
-                <button
-                  type="button"
-                  onClick={() => openLightboxByKey(mosaicPhotos[1].key)}
-                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
-                >
-                  <img
-                    src={mosaicPhotos[1].src}
-                    alt={getPhotoLabel(mosaicPhotos[1])}
-                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
-                </button>
-
-                {/* Foto 3 (1x1) */}
-                <button
-                  type="button"
-                  onClick={() => openLightboxByKey(mosaicPhotos[2].key)}
-                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
-                >
-                  <img
-                    src={mosaicPhotos[2].src}
-                    alt={getPhotoLabel(mosaicPhotos[2])}
-                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
-                </button>
-
-                {/* Foto 4 (1x1) */}
-                <button
-                  type="button"
-                  onClick={() => openLightboxByKey(mosaicPhotos[3].key)}
-                  className="group relative col-span-1 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
-                >
-                  <img
-                    src={mosaicPhotos[3].src}
-                    alt={getPhotoLabel(mosaicPhotos[3])}
-                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
-                </button>
-
-                {/* Foto 5 (2x1) con overlay "+N más" */}
-                <button
-                  type="button"
-                  onClick={() => openLightboxByKey(mosaicPhotos[4].key)}
-                  className="group relative col-span-2 row-span-1 overflow-hidden rounded-3xl border border-white/10 shadow-xl ring-1 ring-white/5"
-                >
-                  <img
-                    src={mosaicPhotos[4].src}
-                    alt={getPhotoLabel(mosaicPhotos[4])}
-                    className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/65 transition group-hover:bg-slate-950/45" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white backdrop-blur-md shadow-lg transition group-hover:scale-105">
-                      <Camera size={16} />
-                      <span className="text-sm font-black tracking-wide">
-                        +{remainingCount} {copy.photosCount}
-                      </span>
-                    </span>
-                  </div>
-                </button>
-              </div>
-
-              {/* Pequeña leyenda / contador debajo del mosaico */}
+              <MissionMosaic
+                photos={hospitalPhotosDisplay}
+                onOpen={(idx) => openLightbox(hospitalPhotosDisplay, idx)}
+                photosCountLabel={copy.photosCount}
+              />
               <div className="mt-4 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
-                <span>{language === "en" ? "Tap a photo to enlarge" : "Toca una foto para ampliar"}</span>
+                <span>{copy.tapToEnlarge}</span>
                 <span>
-                  {String(1).padStart(2, "0")} — {String(hospitalPhotos.length).padStart(2, "0")}
+                  {String(1).padStart(2, "0")} — {String(hospitalPhotosDisplay.length).padStart(2, "0")}
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
             <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
@@ -702,7 +758,6 @@ export default function HospitalVisit() {
       {/* ========== INFO SECTION ========== */}
       <section className="section-shell bg-gradient-to-b from-slate-50 to-white">
         <div className="grid gap-6 md:grid-cols-2 max-w-5xl mx-auto">
-          {/* Calendar Card */}
           <div className="group relative overflow-hidden rounded-2xl border border-blue-100 bg-white p-8 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity" />
             <div className="relative space-y-4">
@@ -722,7 +777,6 @@ export default function HospitalVisit() {
             </div>
           </div>
 
-          {/* Needs Card */}
           <div className="group relative overflow-hidden rounded-2xl border border-amber-100 bg-white p-8 shadow-lg hover:shadow-xl transition-all duration-500">
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity" />
             <div className="relative space-y-4">
@@ -827,10 +881,11 @@ export default function HospitalVisit() {
       </section>
 
       {/* ========== OTHER MISSIONS SECTION ========== */}
-      {otherMissions.flatMap((mission, missionIndex) => {
-        const photos = language === "en" ? mission.photosEn : mission.photos;
+      {otherMissions.map((mission, missionIndex) => {
+        const photos = (language === "en" ? mission.photosEn : mission.photos) || [];
+        const isReversed = missionIndex % 2 === 1;
 
-        return [
+        return (
           <section
             key={mission.id}
             id={mission.id}
@@ -839,11 +894,9 @@ export default function HospitalVisit() {
             {/* Background Layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-transparent to-slate-900/90" />
-
               <div className={`absolute top-1/4 -left-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse`} />
               <div className={`absolute bottom-1/4 -right-20 w-96 h-96 ${mission.orbColor} rounded-full blur-3xl animate-pulse animation-delay-2000`} />
               <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-
               <div className="absolute inset-0 opacity-[0.03]">
                 <div
                   className="h-full w-full"
@@ -855,9 +908,10 @@ export default function HospitalVisit() {
               </div>
             </div>
 
-            <div className="section-shell relative w-full">
-              <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-                <div className={`motion-rise space-y-8 ${missionIndex % 2 === 1 ? "lg:order-2" : ""}`}>
+            <div className="section-shell relative w-full py-20">
+              <div className="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+                {/* Left Content */}
+                <div className={`motion-rise space-y-8 ${isReversed ? "lg:order-2" : ""}`}>
                   <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
                     <div className="flex items-center gap-2">
                       <span className="relative flex h-3 w-3">
@@ -908,85 +962,73 @@ export default function HospitalVisit() {
                     })}
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <a
-                      href={`#galeria-${mission.id}`}
-                      className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+                  {photos.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => openLightbox(photos, 0)}
+                      className="group inline-flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm px-6 py-3.5 text-white font-semibold text-sm transition-all duration-300 hover:bg-white/10 hover:border-white/30"
                     >
+                      <Camera size={18} />
                       {copy.viewGallery}
-                    </a>
-                  </div>
+                      <span className="ml-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-black tracking-widest text-white/80">
+                        {photos.length} {copy.photosCount}
+                      </span>
+                      <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
+                    </button>
+                  )}
                 </div>
 
-                <div className={`motion-float ${missionIndex % 2 === 1 ? "lg:order-1" : ""}`}>
-                  <div className="grid gap-4">
-                    {mission.photos ? (
-                      <AutoImageCarousel
+                {/* Right Mosaic */}
+                <div className={`motion-float ${isReversed ? "lg:order-1" : ""}`}>
+                  {photos.length > 0 ? (
+                    <>
+                      <MissionMosaic
                         photos={photos}
-                        getLabel={(photo) => photo.label}
-                        language={language}
-                        heightClassName="h-[400px] sm:h-[460px]"
+                        onOpen={(idx) => openLightbox(photos, idx)}
+                        photosCountLabel={copy.photosCount}
                       />
-                    ) : (
-                      <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">
-                        <div className="text-center space-y-4">
-                          <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
-                            <mission.icon size={36} className="text-white" />
-                          </div>
-                          <p className="text-white/50 font-medium">
-                            {language === "en" ? mission.placeholderEn : mission.placeholder}
-                          </p>
-                          <div className="mx-auto h-1.5 w-24 rounded-full bg-gradient-to-r from-white/20 to-white/40" />
+                      <div className="mt-4 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
+                        <span>{copy.tapToEnlarge}</span>
+                        <span>
+                          {String(1).padStart(2, "0")} — {String(photos.length).padStart(2, "0")}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">
+                      <div className="text-center space-y-4">
+                        <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${mission.gradient} flex items-center justify-center shadow-lg`}>
+                          <mission.icon size={36} className="text-white" />
                         </div>
-                      </figure>
-                    )}
-                  </div>
+                        <p className="text-white/50 font-medium">
+                          {language === "en" ? mission.placeholderEn : mission.placeholder}
+                        </p>
+                        <div className="mx-auto h-1.5 w-24 rounded-full bg-gradient-to-r from-white/20 to-white/40" />
+                      </div>
+                    </figure>
+                  )}
                 </div>
               </div>
             </div>
 
+            {/* Scroll indicator */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
               <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
                 <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
               </div>
             </div>
-          </section>,
-          photos ? (
-            <section key={`${mission.id}-gallery`} id={`galeria-${mission.id}`} className="section-shell scroll-mt-28 bg-white">
-              <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full bg-ministry-gold/25 px-4 py-2 text-sm font-bold text-ministry-blue">
-                    <Camera size={17} />
-                    {language === "en" ? `${mission.titleEn} gallery` : `Galeria de ${mission.title}`}
-                  </div>
-                  <h2 className="mt-4 max-w-3xl text-4xl font-black bg-gradient-to-r from-slate-900 to-ministry-blue bg-clip-text text-transparent sm:text-5xl">
-                    {language === "en" ? `Moments from ${mission.titleEn}` : `Momentos de ${mission.title}`}
-                  </h2>
-                </div>
-                <p className="max-w-md text-sm leading-6 text-slate-500">
-                  {language === "en"
-                    ? "A visual record of the service, teamwork, and community support shared during this mission."
-                    : "Registro visual del servicio, trabajo en equipo y apoyo comunitario compartido durante esta misión."}
-                </p>
-              </div>
-              <FeaturedPhotoGallery
-                photos={photos}
-                badge={language === "en" ? mission.titleEn : mission.title}
-                getLabel={(photo) => photo.label}
-              />
-            </section>
-          ) : null,
-        ].filter(Boolean);
+          </section>
+        );
       })}
 
-      {/* ========== LIGHTBOX ========== */}
-      {lightboxIndex !== null && (
+      {/* ========== LIGHTBOX GLOBAL ========== */}
+      {lightbox && (
         <PhotoLightbox
-          photos={hospitalPhotos}
-          index={lightboxIndex}
-          onIndexChange={setLightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          getLabel={getPhotoLabel}
+          photos={lightbox.photos}
+          index={lightbox.index}
+          onIndexChange={(i) => setLightbox((prev) => (prev ? { ...prev, index: i } : prev))}
+          onClose={() => setLightbox(null)}
+          closeLabel={copy.close}
         />
       )}
     </>

@@ -451,7 +451,7 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
 }
 
 /* ============================================================
-   MosaicTile — una celda del mosaico
+   MosaicTile — celda del mosaico (estilo premium)
    ============================================================ */
 function MosaicTile({
   photo,
@@ -466,37 +466,46 @@ function MosaicTile({
     <button
       type="button"
       onClick={onClick}
-      className={`group relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-slate-950/40 ring-1 ring-white/5 ${className}`}
+      className={`group relative isolate overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-900/40 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.9)] ring-1 ring-white/5 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-white/25 hover:shadow-[0_35px_90px_-25px_rgba(244,63,94,0.55)] hover:ring-white/20 ${className}`}
     >
       <img
         src={photo.src}
         alt={photo.label}
-        className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-110"
+        loading="lazy"
+        className="h-full w-full object-cover transition duration-[1400ms] ease-out will-change-transform group-hover:scale-[1.14]"
       />
+
+      {/* Gradiente base para legibilidad */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/5 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
+
+      {/* Barrido de luz al hover */}
+      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-full" />
+
+      {/* Anillo interno suave */}
+      <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-white/10 transition group-hover:ring-white/30" />
 
       {showLabel && (
         <>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
+          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:opacity-100">
+            <Maximize2 size={15} />
+          </span>
           <div className="absolute inset-x-0 bottom-0 p-4 text-left sm:p-5">
-            <p className="text-sm font-black text-white drop-shadow sm:text-base">
+            <p className="translate-y-2 text-sm font-black text-white drop-shadow-lg transition-transform duration-500 group-hover:translate-y-0 sm:text-base">
               {photo.label}
             </p>
           </div>
-          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
-            <Maximize2 size={15} />
-          </span>
         </>
       )}
 
       {!showLabel && !showOverlay && (
-        <div className="absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/10" />
+        <div className="absolute inset-0 bg-slate-950/25 transition duration-500 group-hover:bg-slate-950/5" />
       )}
 
       {showOverlay && (
         <>
-          <div className="absolute inset-0 bg-slate-950/65 transition group-hover:bg-slate-950/45" />
+          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px] transition duration-500 group-hover:bg-slate-950/45" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white backdrop-blur-md shadow-lg transition group-hover:scale-105">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white shadow-lg backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-white/40 group-hover:bg-white/25">
               <Camera size={16} />
               <span className="text-sm font-black tracking-wide">
                 +{overlayCount} {photosCountLabel}
@@ -518,7 +527,7 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
 
   if (displayed.length >= 5) {
     return (
-      <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
+      <div className="grid h-[460px] grid-cols-3 grid-rows-3 gap-3 sm:h-[560px] sm:gap-4 lg:h-[620px]">
         <MosaicTile
           photo={displayed[0]}
           onClick={() => onOpen(0)}
@@ -554,7 +563,7 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
 
   if (displayed.length === 4) {
     return (
-      <div className="grid h-[440px] grid-cols-3 grid-rows-3 gap-3 sm:h-[540px] lg:h-[600px]">
+      <div className="grid h-[460px] grid-cols-3 grid-rows-3 gap-3 sm:h-[560px] sm:gap-4 lg:h-[620px]">
         <MosaicTile
           photo={displayed[0]}
           onClick={() => onOpen(0)}
@@ -584,7 +593,7 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
   }
 
   return (
-    <div className="grid h-[440px] grid-cols-2 grid-rows-2 gap-3 sm:h-[540px] lg:h-[600px]">
+    <div className="grid h-[460px] grid-cols-2 grid-rows-2 gap-3 sm:h-[560px] sm:gap-4 lg:h-[620px]">
       {displayed.map((photo, i) => (
         <MosaicTile
           key={photo.src + i}
@@ -598,28 +607,52 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
   );
 }
 
+/* ============================================================
+   MissionPhotoGrid — grid para misiones con muchas fotos
+   (ej. Cartolandia: 21 fotos). La primera se destaca.
+   ============================================================ */
 function MissionPhotoGrid({ photos, onOpen }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
-      {photos.map((photo, index) => (
-        <button
-          key={photo.src}
-          type="button"
-          onClick={() => onOpen(index)}
-          className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl"
-          aria-label={photo.label}
-        >
-          <img
-            src={photo.src}
-            alt={photo.label}
-            loading="lazy"
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          />
-          <span className="absolute bottom-2 right-2 rounded-full bg-slate-950/75 px-2.5 py-1 text-xs font-bold text-white">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </button>
-      ))}
+    <div className="grid auto-rows-[130px] grid-cols-2 gap-3 sm:auto-rows-[150px] sm:grid-cols-3 sm:gap-4 lg:auto-rows-[170px] xl:grid-cols-4">
+      {photos.map((photo, index) => {
+        const featured = index === 0;
+        return (
+          <button
+            key={photo.src + index}
+            type="button"
+            onClick={() => onOpen(index)}
+            aria-label={photo.label}
+            className={`group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-xl shadow-slate-950/50 ring-1 ring-white/5 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-white/30 hover:shadow-[0_25px_70px_-20px_rgba(16,185,129,0.5)] hover:ring-white/20 ${
+              featured ? "col-span-2 row-span-2" : "col-span-1 row-span-1"
+            }`}
+          >
+            <img
+              src={photo.src}
+              alt={photo.label}
+              loading="lazy"
+              className="h-full w-full object-cover transition duration-[1200ms] ease-out will-change-transform group-hover:scale-110"
+            />
+
+            {/* Gradiente inferior */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/0 to-transparent opacity-90" />
+
+            {/* Barrido de luz al hover */}
+            <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-full" />
+
+            {/* Etiqueta deslizante */}
+            <div className="absolute inset-x-0 bottom-0 p-3 text-left">
+              <p className="line-clamp-2 translate-y-3 text-xs font-bold text-white opacity-0 drop-shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:text-sm">
+                {photo.label}
+              </p>
+            </div>
+
+            {/* Número */}
+            <span className="absolute right-2 top-2 rounded-full border border-white/20 bg-slate-950/70 px-2.5 py-1 text-[10px] font-black tracking-wider text-white backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-white/40 group-hover:bg-white/25 sm:text-[11px]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -321,11 +321,6 @@ const hospitalStoryByLanguage = {
 
 /* ============================================================
    PhotoLightbox — modal con React Portal
-   - Se renderiza en document.body para escapar de cualquier
-     stacking context (navbar, contenedores con transform, etc.)
-   - z-index máximo para quedar siempre encima
-   - Botón de cerrar visible en la esquina SUPERIOR DERECHA
-     y también en la barra inferior (por si acaso)
    ============================================================ */
 function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Cerrar" }) {
   useEffect(() => {
@@ -355,7 +350,6 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
       style={{ zIndex: 2147483647 }}
       onClick={onClose}
     >
-      {/* Botón de cerrar flotante — esquina superior derecha */}
       <button
         type="button"
         onClick={(e) => {
@@ -368,17 +362,14 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
         <X size={24} strokeWidth={3} />
       </button>
 
-      {/* Contador flotante — esquina superior izquierda */}
       <span className="absolute left-4 top-4 z-50 rounded-full border border-white/20 bg-slate-950/80 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white backdrop-blur sm:left-6 sm:top-6">
         {String(index + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
       </span>
 
-      {/* Zona de imagen */}
       <div
         className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-16 sm:px-20 sm:py-20"
         onClick={onClose}
       >
-        {/* Prev */}
         <button
           type="button"
           onClick={(e) => {
@@ -391,7 +382,6 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
           <ChevronLeft size={24} />
         </button>
 
-        {/* Next */}
         <button
           type="button"
           onClick={(e) => {
@@ -417,7 +407,6 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
         </figure>
       </div>
 
-      {/* Caption + Miniaturas */}
       <div
         className="relative z-20 border-t border-white/10 bg-slate-950/90 px-4 py-3 backdrop-blur sm:px-6"
         onClick={(e) => e.stopPropagation()}
@@ -446,7 +435,6 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
     </div>
   );
 
-  // Renderizamos el modal directo en document.body
   return createPortal(modal, document.body);
 }
 
@@ -475,13 +463,8 @@ function MosaicTile({
         className="h-full w-full object-cover transition duration-[1400ms] ease-out will-change-transform group-hover:scale-[1.14]"
       />
 
-      {/* Gradiente base para legibilidad */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/5 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
-
-      {/* Barrido de luz al hover */}
       <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-full" />
-
-      {/* Anillo interno suave */}
       <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-white/10 transition group-hover:ring-white/30" />
 
       {showLabel && (
@@ -608,51 +591,175 @@ function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
 }
 
 /* ============================================================
-   MissionPhotoGrid — grid para misiones con muchas fotos
-   (ej. Cartolandia: 21 fotos). La primera se destaca.
+   CartolandiaVisitBlock — una visita de Cartolandia
+   con timeline vertical + layout bento:
+   [  HERO (2x2) ] [ side 1 ]
+   [  HERO (2x2) ] [ side 2 ]
+   [ grid de miniaturas debajo ]
    ============================================================ */
-function MissionPhotoGrid({ photos, onOpen }) {
+function CartolandiaVisitBlock({
+  year,
+  label,
+  title,
+  description,
+  photos,
+  onOpen,
+  accent = "emerald",
+  isLast = false,
+  photosCountLabel = "fotos",
+}) {
+  const themeMap = {
+    emerald: {
+      dot: "from-emerald-400 to-teal-600 shadow-emerald-500/50 ring-emerald-400/30",
+      label: "text-emerald-300",
+      line: "from-emerald-400/60 via-emerald-400/20",
+      badge: "text-emerald-100 bg-emerald-500/15 border-emerald-400/30",
+    },
+    teal: {
+      dot: "from-teal-400 to-cyan-600 shadow-teal-500/50 ring-teal-400/30",
+      label: "text-teal-300",
+      line: "from-teal-400/60 via-teal-400/20",
+      badge: "text-teal-100 bg-teal-500/15 border-teal-400/30",
+    },
+  };
+  const theme = themeMap[accent] ?? themeMap.emerald;
+
+  const safePhotos = photos || [];
+  if (safePhotos.length === 0) return null;
+
+  const [hero, ...rest] = safePhotos;
+  const sides = rest.slice(0, 2);
+  const gridPhotos = rest.slice(2);
+  const gridStartIndex = 3;
+
   return (
-    <div className="grid auto-rows-[130px] grid-cols-2 gap-3 sm:auto-rows-[150px] sm:grid-cols-3 sm:gap-4 lg:auto-rows-[170px] xl:grid-cols-4">
-      {photos.map((photo, index) => {
-        const featured = index === 0;
-        return (
+    <div className="relative grid gap-6 sm:grid-cols-[auto_1fr] sm:gap-8">
+      {/* Columna del timeline */}
+      <div className="relative hidden flex-col items-center sm:flex">
+        <span
+          className={`relative z-10 grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${theme.dot} text-white shadow-xl ring-4 ring-white/5`}
+        >
+          <span className="text-[10px] font-black uppercase tracking-widest opacity-90">
+            {year}
+          </span>
+          <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/20" />
+        </span>
+        {!isLast && (
+          <span
+            className={`mt-3 w-px flex-1 bg-gradient-to-b ${theme.line} to-transparent`}
+          />
+        )}
+      </div>
+
+      {/* Contenido de la visita */}
+      <div className="space-y-5">
+        {/* Encabezado */}
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-3 sm:hidden">
+              <span
+                className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] ${theme.badge}`}
+              >
+                {year}
+              </span>
+            </div>
+            <p className={`text-xs font-black uppercase tracking-[0.24em] ${theme.label}`}>
+              {label}
+            </p>
+            <h3 className="text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">
+              {title}
+            </h3>
+            {description && (
+              <p className="max-w-2xl pt-1 text-sm leading-relaxed text-white/60">
+                {description}
+              </p>
+            )}
+          </div>
+          <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-wider text-white/80 backdrop-blur">
+            {safePhotos.length} {photosCountLabel}
+          </span>
+        </div>
+
+        {/* Hero + 2 laterales */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 sm:min-h-[380px] lg:min-h-[440px]">
           <button
-            key={photo.src + index}
             type="button"
-            onClick={() => onOpen(index)}
-            aria-label={photo.label}
-            className={`group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-xl shadow-slate-950/50 ring-1 ring-white/5 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-white/30 hover:shadow-[0_25px_70px_-20px_rgba(16,185,129,0.5)] hover:ring-white/20 ${
-              featured ? "col-span-2 row-span-2" : "col-span-1 row-span-1"
-            }`}
+            onClick={() => onOpen(0)}
+            className="group relative col-span-2 row-span-2 aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-white/10 bg-slate-900/40 shadow-[0_25px_70px_-25px_rgba(0,0,0,0.95)] ring-1 ring-white/5 transition-all duration-500 hover:-translate-y-1 hover:border-white/25 hover:ring-white/20 sm:aspect-auto"
           >
             <img
-              src={photo.src}
-              alt={photo.label}
+              src={hero.src}
+              alt={hero.label}
               loading="lazy"
-              className="h-full w-full object-cover transition duration-[1200ms] ease-out will-change-transform group-hover:scale-110"
+              className="h-full w-full object-cover transition duration-[1400ms] ease-out will-change-transform group-hover:scale-[1.08]"
             />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/10 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[1300ms] ease-out group-hover:translate-x-full" />
+            <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] ring-1 ring-inset ring-white/10 transition group-hover:ring-white/25" />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 text-left sm:p-5">
+              <p className="max-w-[80%] text-sm font-black leading-snug text-white drop-shadow-lg sm:text-base">
+                {hero.label}
+              </p>
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/25 bg-white/15 text-white backdrop-blur-md transition group-hover:scale-110 group-hover:bg-white/25">
+                <Maximize2 size={15} />
+              </span>
+            </div>
+          </button>
 
-            {/* Gradiente inferior */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/0 to-transparent opacity-90" />
-
-            {/* Barrido de luz al hover */}
-            <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-full" />
-
-            {/* Etiqueta deslizante */}
-            <div className="absolute inset-x-0 bottom-0 p-3 text-left">
-              <p className="line-clamp-2 translate-y-3 text-xs font-bold text-white opacity-0 drop-shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:text-sm">
+          {sides.map((photo, i) => (
+            <button
+              key={photo.src + i}
+              type="button"
+              onClick={() => onOpen(i + 1)}
+              className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-white/10 bg-slate-900/40 shadow-lg shadow-slate-950/40 ring-1 ring-white/5 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/25 hover:ring-white/20 sm:aspect-auto"
+            >
+              <img
+                src={photo.src}
+                alt={photo.label}
+                loading="lazy"
+                className="h-full w-full object-cover transition duration-[1200ms] ease-out will-change-transform group-hover:scale-110"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[1000ms] ease-out group-hover:translate-x-full" />
+              <p className="absolute inset-x-0 bottom-0 line-clamp-2 p-3 text-left text-xs font-bold text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 {photo.label}
               </p>
-            </div>
+            </button>
+          ))}
+        </div>
 
-            {/* Número */}
-            <span className="absolute right-2 top-2 rounded-full border border-white/20 bg-slate-950/70 px-2.5 py-1 text-[10px] font-black tracking-wider text-white backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-white/40 group-hover:bg-white/25 sm:text-[11px]">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-          </button>
-        );
-      })}
+        {/* Grid de miniaturas restantes */}
+        {gridPhotos.length > 0 && (
+          <div
+            className={`grid gap-3 ${
+              gridPhotos.length <= 4
+                ? "grid-cols-2 sm:grid-cols-4"
+                : "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
+            }`}
+          >
+            {gridPhotos.map((photo, i) => (
+              <button
+                key={photo.src + i}
+                type="button"
+                onClick={() => onOpen(gridStartIndex + i)}
+                className="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-slate-900/40 shadow-lg shadow-slate-950/40 ring-1 ring-white/5 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/25 hover:ring-white/20"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.label}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition duration-[1000ms] ease-out will-change-transform group-hover:scale-110"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-slate-950/25 transition group-hover:bg-slate-950/0" />
+                <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1000ms] ease-out group-hover:translate-x-full" />
+                <span className="absolute left-2 top-2 rounded-full border border-white/20 bg-slate-950/70 px-2 py-0.5 text-[10px] font-black tracking-wider text-white backdrop-blur-md transition group-hover:border-white/40 group-hover:bg-white/25">
+                  {String(gridStartIndex + i + 1).padStart(2, "0")}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -963,6 +1070,8 @@ export default function HospitalVisit() {
       {otherMissions.map((mission, missionIndex) => {
         const photos = (language === "en" ? mission.photosEn : mission.photos) || [];
         const isReversed = missionIndex % 2 === 1;
+        const firstVisitPhotos =
+          language === "en" ? cartolandiaFirstVisitPhotosEn : cartolandiaFirstVisitPhotos;
 
         return (
           <section
@@ -1057,36 +1166,49 @@ export default function HospitalVisit() {
 
                 <div className={`motion-float ${mission.id === "cartolandia" ? "lg:col-span-2" : ""} ${isReversed ? "lg:order-1" : ""}`}>
                   {mission.id === "cartolandia" ? (
-                    <div className="space-y-10">
-                      <section aria-labelledby="cartolandia-first-visit-heading" className="space-y-4">
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                          <h3 id="cartolandia-first-visit-heading" className="text-2xl font-black text-white sm:text-3xl">
-                            {language === "en" ? mission.firstVisitTitleEn : mission.firstVisitTitle}
-                          </h3>
-                          <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white/70">
-                            2023 · {cartolandiaFirstVisitPhotos.length} {copy.photosCount}
-                          </span>
-                        </div>
-                        <MissionPhotoGrid
-                          photos={language === "en" ? cartolandiaFirstVisitPhotosEn : cartolandiaFirstVisitPhotos}
-                          onOpen={(idx) => openLightbox(language === "en" ? cartolandiaFirstVisitPhotosEn : cartolandiaFirstVisitPhotos, idx)}
-                        />
-                      </section>
+                    <div className="space-y-14">
+                      {/* Primera visita */}
+                      <CartolandiaVisitBlock
+                        year="2023"
+                        label={language === "en" ? "First visit" : "Primera visita"}
+                        title={language === "en" ? "Where it all began" : "Donde todo comenzó"}
+                        description={
+                          language === "en"
+                            ? "The first approach to Cartolandia, where the ministry shared food, prayer, and hope with the families of the community."
+                            : "El primer acercamiento a Cartolandia, donde el ministerio compartió alimento, oración y esperanza con las familias de la comunidad."
+                        }
+                        photos={firstVisitPhotos}
+                        onOpen={(idx) => openLightbox(firstVisitPhotos, idx)}
+                        accent="emerald"
+                        photosCountLabel={copy.photosCount}
+                      />
 
-                      <section aria-labelledby="cartolandia-second-visit-heading" className="space-y-4 border-t border-white/10 pt-8">
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                          <h3 id="cartolandia-second-visit-heading" className="text-2xl font-black text-white sm:text-3xl">
-                            {language === "en" ? mission.secondVisitTitleEn : mission.secondVisitTitle}
-                          </h3>
-                          <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white/70">
-                            {photos.length} {copy.photosCount}
-                          </span>
-                        </div>
-                        <MissionPhotoGrid
-                          photos={photos}
-                          onOpen={(idx) => openLightbox(photos, idx)}
-                        />
-                      </section>
+                      {/* Conector entre visitas */}
+                      <div className="flex items-center gap-4">
+                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/45 backdrop-blur">
+                          <Sparkles size={12} />
+                          {language === "en" ? "Two years later" : "Dos años después"}
+                        </span>
+                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                      </div>
+
+                      {/* Segunda visita */}
+                      <CartolandiaVisitBlock
+                        year="2025"
+                        label={language === "en" ? "Second visit · February" : "Segunda visita · Febrero"}
+                        title={language === "en" ? "The return" : "El regreso"}
+                        description={
+                          language === "en"
+                            ? "The ministry returned to Cartolandia in February 2025, continuing the work with new families and renewed hope."
+                            : "El ministerio regresó a Cartolandia en febrero de 2025, continuando la labor con nuevas familias y esperanza renovada."
+                        }
+                        photos={photos}
+                        onOpen={(idx) => openLightbox(photos, idx)}
+                        accent="teal"
+                        isLast
+                        photosCountLabel={copy.photosCount}
+                      />
                     </div>
                   ) : photos.length > 0 ? (
                     <>

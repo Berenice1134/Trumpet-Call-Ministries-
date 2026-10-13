@@ -5,13 +5,13 @@ const footerCopy = {
   es: {
     summary:
       "Ministerio de Jesucristo que reparte despensas a familias en situaciones vulnerables y acompaña con oración, esperanza y cuidado práctico.",
-    location: "Calle Herreros 53 esq. con Pintores, Col. Loma Bonita, Tlaxcala",
+    location: "Calle Herreros 53 esq. con Pintores, Col. Loma Bonita, Tlaxcala, México C.P 90090",
     email: "MxTCMinistries@gmail.com",
   },
   en: {
     summary:
       "A ministry of Jesus Christ that delivers food pantry support to vulnerable families and accompanies them with prayer, hope, and practical care.",
-    location: "Calle Herreros 53 corner with Pintores, Col. Loma Bonita, Tlaxcala",
+    location: "Calle Herreros 53 corner with Pintores, Col. Loma Bonita, Tlaxcala, México C.P 90090",
     email: "MxTCMinistries@gmail.com",
   },
 };

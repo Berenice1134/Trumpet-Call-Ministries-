@@ -18,6 +18,8 @@ import {
   Gift,
   Users,
   X,
+  Pause,
+  Play,
 } from "lucide-react";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -439,93 +441,194 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
 }
 
 /* ============================================================
-   MosaicTile — celda del mosaico (estilo premium)
+   InteractiveGallery — carrusel interactivo y adaptable
+   Una foto principal, miniaturas limitadas, navegación,
+   progreso y acceso al visor ampliado.
    ============================================================ */
-function MosaicTile({
-  photo,
-  onClick,
-  className = "",
-  showLabel = false,
-  showOverlay = false,
-  overlayCount = 0,
+function InteractiveGallery({
+  photos,
+  onOpen,
   photosCountLabel = "fotos",
+  language = "es",
 }) {
+  const safePhotos = photos || [];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPausedByUser, setIsPausedByUser] = useState(false);
+  const isEnglish = language === "en";
+
+  useEffect(() => {
+    if (safePhotos.length <= 1 || isHovered || isPausedByUser) return undefined;
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % safePhotos.length);
+    }, 5200);
+    return () => window.clearInterval(intervalId);
+  }, [safePhotos.length, isHovered, isPausedByUser]);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [safePhotos.length]);
+
+  if (safePhotos.length === 0) return null;
+
+  const activePhoto = safePhotos[activeIndex] || safePhotos[0];
+  const visibleCount = Math.min(5, safePhotos.length);
+  const thumbnailIndices = Array.from({ length: visibleCount }, (_, offset) =>
+    (activeIndex + offset - Math.floor(visibleCount / 2) + safePhotos.length) % safePhotos.length
+  );
+  const progress = ((activeIndex + 1) / safePhotos.length) * 100;
+
+  const goTo = (index) => setActiveIndex((index + safePhotos.length) % safePhotos.length);
+  const goPrev = () => goTo(activeIndex - 1);
+  const goNext = () => goTo(activeIndex + 1);
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`group relative isolate overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-900/40 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.9)] ring-1 ring-white/5 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-white/25 hover:shadow-[0_35px_90px_-25px_rgba(244,63,94,0.55)] hover:ring-white/20 ${className}`}
+    <div
+      className="group/gallery w-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        src={photo.src}
-        alt={photo.label}
-        loading="lazy"
-        className="h-full w-full object-cover transition duration-[1400ms] ease-out will-change-transform group-hover:scale-[1.14]"
-      />
+      <div className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-slate-950/60 p-2 shadow-[0_30px_90px_-35px_rgba(0,0,0,0.9)] ring-1 ring-white/5 sm:p-3">
+        <div className="relative isolate aspect-[4/3] overflow-hidden rounded-[1.35rem] bg-slate-900 sm:aspect-[5/4] lg:aspect-[4/3]">
+          <button
+            type="button"
+            onClick={() => onOpen(activeIndex)}
+            className="absolute inset-0 z-0 block h-full w-full cursor-zoom-in text-left"
+            aria-label={isEnglish ? `Open photo ${activeIndex + 1} in full-screen gallery` : `Abrir foto ${activeIndex + 1} en la galería ampliada`}
+          >
+            <img
+              key={activePhoto.src}
+              src={activePhoto.src}
+              alt={activePhoto.label || ""}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover/gallery:scale-[1.025]"
+            />
+          </button>
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/5 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[1100ms] ease-out group-hover:translate-x-full" />
-      <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-white/10 transition group-hover:ring-white/30" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/5 to-slate-950/30" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-950/55 to-transparent" />
 
-      {showLabel && (
-        <>
-          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-white/15 text-white opacity-0 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:opacity-100">
-            <Maximize2 size={15} />
-          </span>
-          <div className="absolute inset-x-0 bottom-0 p-4 text-left sm:p-5">
-            <p className="translate-y-2 text-sm font-black text-white drop-shadow-lg transition-transform duration-500 group-hover:translate-y-0 sm:text-base">
-              {photo.label}
+          <div className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/55 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:text-xs">
+            <Camera size={14} className="text-rose-300" />
+            <span>{String(activeIndex + 1).padStart(2, "0")} <span className="text-white/45">/</span> {String(safePhotos.length).padStart(2, "0")}</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onOpen(activeIndex)}
+            className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-slate-950/55 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-white hover:text-slate-950 sm:right-5 sm:top-5 sm:h-11 sm:w-11"
+            aria-label={isEnglish ? "Enlarge photo" : "Ampliar fotografía"}
+            title={isEnglish ? "Enlarge photo" : "Ampliar fotografía"}
+          >
+            <Maximize2 size={18} />
+          </button>
+
+          {safePhotos.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={goPrev}
+                className="absolute left-2 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-slate-950/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-white hover:text-slate-950 sm:left-4 sm:h-12 sm:w-12"
+                aria-label={isEnglish ? "Previous photo" : "Foto anterior"}
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="absolute right-2 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-slate-950/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-white hover:text-slate-950 sm:right-4 sm:h-12 sm:w-12"
+                aria-label={isEnglish ? "Next photo" : "Foto siguiente"}
+              >
+                <ChevronRight size={24} />
+              </button>
+            </>
+          )}
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 sm:p-6">
+            <div className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-rose-200 sm:text-xs">
+              <span className="h-px w-6 bg-rose-300 sm:w-8" />
+              {isEnglish ? "Moments captured" : "Momentos capturados"}
+            </div>
+            <p className="line-clamp-2 max-w-2xl text-base font-black leading-snug text-white drop-shadow-lg sm:text-xl lg:text-2xl">
+              {activePhoto.label || (isEnglish ? `Photo ${activeIndex + 1}` : `Foto ${activeIndex + 1}`)}
+            </p>
+            <p className="mt-2 text-[11px] font-semibold text-white/65 sm:text-xs">
+              {isEnglish ? "Click the photo to view it larger" : "Haz clic en la foto para verla ampliada"}
             </p>
           </div>
-        </>
-      )}
+        </div>
 
-      {!showLabel && !showOverlay && (
-        <div className="absolute inset-0 bg-slate-950/25 transition duration-500 group-hover:bg-slate-950/5" />
-      )}
-
-      {showOverlay && (
-        <>
-          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-[2px] transition duration-500 group-hover:bg-slate-950/45" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-white shadow-lg backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-white/40 group-hover:bg-white/25">
-              <Camera size={16} />
-              <span className="text-sm font-black tracking-wide">
-                +{overlayCount} {photosCountLabel}
-              </span>
-            </span>
+        <div className="px-2 pb-1 pt-4 sm:px-3 sm:pt-5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-black text-white sm:text-base">
+                {isEnglish ? "Explore the gallery" : "Explora la galería"}
+              </p>
+              <p className="mt-0.5 text-xs font-medium text-white/45">
+                {safePhotos.length} {photosCountLabel}
+              </p>
+            </div>
+            {safePhotos.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setIsPausedByUser((paused) => !paused)}
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-2 text-[11px] font-bold text-white/75 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
+                aria-pressed={isPausedByUser}
+                title={isPausedByUser ? (isEnglish ? "Resume automatic slideshow" : "Reanudar cambio automático") : (isEnglish ? "Pause automatic slideshow" : "Pausar cambio automático")}
+              >
+                {isPausedByUser ? <Play size={13} /> : <Pause size={13} />}
+                <span>{isPausedByUser ? (isEnglish ? "Play" : "Reanudar") : (isEnglish ? "Pause" : "Pausar")}</span>
+              </button>
+            )}
           </div>
-        </>
-      )}
-    </button>
-  );
-}
 
-/* ============================================================
-   MissionMosaic — mosaico bento adaptable (5 o 4 fotos)
-   ============================================================ */
-function MissionMosaic({ photos, onOpen, photosCountLabel = "fotos" }) {
-  return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-      {photos.map((photo, index) => (
-        <MosaicTile
-          key={photo.src + index}
-          photo={photo}
-          onClick={() => onOpen(index)}
-          className="aspect-[4/3] w-full"
-          showLabel={false}
-        />
-      ))}
+          <div className="mb-4 h-1 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-rose-400 via-pink-400 to-amber-300 transition-[width] duration-500 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {safePhotos.length > 1 && (
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
+              {thumbnailIndices.map((photoIndex, offset) => {
+                const photo = safePhotos[photoIndex];
+                const isActive = photoIndex === activeIndex;
+                const hideOnSmallScreen = visibleCount === 5 && (offset === 0 || offset === 4);
+                return (
+                  <button
+                    key={`${photo.src}-${photoIndex}-${offset}`}
+                    type="button"
+                    onClick={() => goTo(photoIndex)}
+                    className={`${hideOnSmallScreen ? "hidden md:block" : "block"} relative h-12 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition-all duration-300 sm:h-14 sm:w-20 ${isActive ? "scale-105 border-rose-300 opacity-100 shadow-[0_5px_25px_-7px_rgba(251,113,133,0.7)]" : "border-white/10 opacity-45 hover:border-white/40 hover:opacity-90"}`}
+                    aria-label={isEnglish ? `Go to photo ${photoIndex + 1}` : `Ir a la foto ${photoIndex + 1}`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    <img src={photo.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    {isActive && <span className="absolute inset-0 rounded-xl border-2 border-rose-200/30" />}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() => onOpen(activeIndex)}
+                className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-dashed border-white/20 text-[10px] font-black text-white/65 transition hover:border-rose-300 hover:text-white sm:h-14 sm:w-14"
+                aria-label={isEnglish ? "Open full gallery" : "Abrir galería completa"}
+                title={isEnglish ? "Open full gallery" : "Abrir galería completa"}
+              >
+                <span className="text-base leading-none">＋</span>
+                <span>{isEnglish ? "ALL" : "VER"}</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
 
 /* ============================================================
-   CartolandiaVisitBlock — una visita de Cartolandia
-   con timeline vertical + layout bento:
-   [  HERO (2x2) ] [ side 1 ]
-   [  HERO (2x2) ] [ side 2 ]
-   [ grid de miniaturas debajo ]
+   CartolandiaVisitBlock — encabezado de visita + carrusel
    ============================================================ */
 function CartolandiaVisitBlock({
   year,
@@ -537,23 +640,23 @@ function CartolandiaVisitBlock({
   accent = "emerald",
   isLast = false,
   photosCountLabel = "fotos",
+  language = "es",
 }) {
-  const themeMap = {
-    emerald: {
-      dot: "from-emerald-400 to-teal-600 shadow-emerald-500/50 ring-emerald-400/30",
-      label: "text-emerald-300",
-      line: "from-emerald-400/60 via-emerald-400/20",
-      badge: "text-emerald-100 bg-emerald-500/15 border-emerald-400/30",
-    },
-    teal: {
-      dot: "from-teal-400 to-cyan-600 shadow-teal-500/50 ring-teal-400/30",
-      label: "text-teal-300",
-      line: "from-teal-400/60 via-teal-400/20",
-      badge: "text-teal-100 bg-teal-500/15 border-teal-400/30",
-    },
-  };
-  const theme = themeMap[accent] ?? themeMap.emerald;
   const safePhotos = photos || [];
+  const theme = accent === "teal"
+    ? {
+        dot: "from-teal-400 to-cyan-600 shadow-teal-500/50 ring-teal-400/30",
+        label: "text-teal-300",
+        line: "from-teal-400/60 via-teal-400/20",
+        badge: "text-teal-100 bg-teal-500/15 border-teal-400/30",
+      }
+    : {
+        dot: "from-emerald-400 to-teal-600 shadow-emerald-500/50 ring-emerald-400/30",
+        label: "text-emerald-300",
+        line: "from-emerald-400/60 via-emerald-400/20",
+        badge: "text-emerald-100 bg-emerald-500/15 border-emerald-400/30",
+      };
+
   if (safePhotos.length === 0) return null;
 
   return (
@@ -566,9 +669,9 @@ function CartolandiaVisitBlock({
         {!isLast && <span className={`mt-3 w-px flex-1 bg-gradient-to-b ${theme.line} to-transparent`} />}
       </div>
 
-      <div className="space-y-5">
+      <div className="min-w-0 space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <div className="space-y-1.5">
+          <div className="min-w-0 space-y-1.5">
             <div className="flex items-center gap-3 sm:hidden">
               <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] ${theme.badge}`}>
                 {year}
@@ -578,22 +681,17 @@ function CartolandiaVisitBlock({
             <h3 className="text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">{title}</h3>
             {description && <p className="max-w-2xl pt-1 text-sm leading-relaxed text-white/60">{description}</p>}
           </div>
-          <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-wider text-white/80 backdrop-blur">
+          <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-wider text-white/80 backdrop-blur">
             {safePhotos.length} {photosCountLabel}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-          {safePhotos.map((photo, index) => (
-            <MosaicTile
-              key={photo.src + index}
-              photo={photo}
-              onClick={() => onOpen(index)}
-              className="aspect-[4/3] w-full"
-              showLabel={false}
-            />
-          ))}
-        </div>
+        <InteractiveGallery
+          photos={safePhotos}
+          onOpen={onOpen}
+          photosCountLabel={photosCountLabel}
+          language={language}
+        />
       </div>
     </div>
   );
@@ -718,17 +816,13 @@ export default function HospitalVisit() {
             </div>
 
             <div className="motion-float">
-              <MissionMosaic
+              <InteractiveGallery
                 photos={hospitalPhotosDisplay}
                 onOpen={(idx) => openLightbox(hospitalPhotosDisplay, idx)}
                 photosCountLabel={copy.photosCount}
+                language={language}
               />
-              <div className="mt-4 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
-                <span>{copy.tapToEnlarge}</span>
-                <span>
-                  {String(1).padStart(2, "0")} — {String(hospitalPhotosDisplay.length).padStart(2, "0")}
-                </span>
-              </div>
+
             </div>
           </div>
         </div>
@@ -1016,6 +1110,7 @@ export default function HospitalVisit() {
                         onOpen={(idx) => openLightbox(firstVisitPhotos, idx)}
                         accent="emerald"
                         photosCountLabel={copy.photosCount}
+                        language={language}
                       />
 
                       {/* Conector entre visitas */}
@@ -1043,21 +1138,18 @@ export default function HospitalVisit() {
                         accent="teal"
                         isLast
                         photosCountLabel={copy.photosCount}
+                        language={language}
                       />
                     </div>
                   ) : photos.length > 0 ? (
                     <>
-                      <MissionMosaic
+                      <InteractiveGallery
                         photos={photos}
                         onOpen={(idx) => openLightbox(photos, idx)}
                         photosCountLabel={copy.photosCount}
+                        language={language}
                       />
-                      <div className="mt-4 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
-                        <span>{copy.tapToEnlarge}</span>
-                        <span>
-                          {String(1).padStart(2, "0")} — {String(photos.length).padStart(2, "0")}
-                        </span>
-                      </div>
+
                     </>
                   ) : (
                     <figure className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-2xl hover:border-white/20 transition-all duration-500 min-h-[400px] flex items-center justify-center">

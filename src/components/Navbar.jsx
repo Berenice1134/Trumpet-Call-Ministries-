@@ -29,10 +29,10 @@ const menuGroupsByLanguage = {
       label: "Misiones",
       path: "/misiones",
       items: [
-        { label: "HIT", id: "hospital-infantil-tlaxcala" },
+        { label: "Hospital Infantil de Tlaxcala HIT", id: "hospital-infantil-tlaxcala" },
         { label: "Cartolandia", id: "cartolandia" },
         { label: "Día de Caridad", id: "dia-caridad" },
-        { label: "Españita", id: "espanita" },
+        { label: "Asilo de San Judas", id: "espanita" },
       ],
     },
     {

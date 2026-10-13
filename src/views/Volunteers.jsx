@@ -230,12 +230,12 @@ const testimonialGroups = [
     icon: HeartHandshake,
     quotes: [
       {
-        name: "Dra. Judith",
+        name: "Judith M.",
         fullText:
           "Me he unido al ministerio por el amor a los principios que anhela y realiza, me enorgullece ser parte de: servir y ayudar bajo la palabra de Dios nuestro Señor. Dicho así me hace una sierva más del Señor para demostrar que Dios nuestro Señor está presente. Asimismo, que a través del ministerio el objetivo sea cumplido y multiplicado, lo que hace que uno se sienta comprometido y entregado. En hora buena, que esto llegue a más personas que verdaderamente lo necesitan.",
       },
       {
-        name: "Xochil",
+        name: "Xochil X.",
         fullText:
           "Cuando conocí a mi amiga Andy y me di cuenta de la obra que está realizando, apoyando con víveres a familias de bajos recursos, de inmediato me conmovió y recordé la gran misericordia de Dios para con nosotros, y me he marcado en apoyarla. Haciendo una pregunta: ella aquí en este estado realizando esto. Y me dije: yo también lo puedo hacer, ya que con mucha razón yo soy originaria de aquí de Tlaxcala. Por tal ejemplo que vi, me encuentro apoyando hasta que Dios me lo permita. Cada vez que acudo a apoyar, mi corazón crece de amor para los necesitados y me siento feliz de poder ayudar de esta manera. Dios la bendiga siempre en su ardua labor y seguirá contando conmigo. Dios quede con ella siempre.",
       },
@@ -250,42 +250,42 @@ const testimonialGroups = [
     icon: Users,
     quotes: [
       {
-        name: "Sra. Lidia",
+        name: "Claudia V.",
         fullText:
           "Desde que recibimos ayuda hasta ahorita no nos vamos a la cama sin comer. En hora buena, que Dios bendiga a los fundadores de esta noble causa.",
       },
       {
-        name: "Arturo",
+        name: "Arturo I.",
         fullText:
           "Estoy agradecido por recibir la ayuda y gracias a ustedes mi economía ha mejorado un poco. Mi estilo de vida, sin duda alguna, ha tomado un respiro y gracias al ministerio tengo más para proporcionar a mi familia. También, pero no menos importante, la ropa: muchas gracias por ello, porque gracias a eso le he podido llevar algunas prendas a mi familia con todo el amor de mi corazón. Muchas gracias, se los agradezco de corazón.",
       },
       {
-        name: "Araceli Cuadros",
+        name: "Araceli C.",
         fullText:
           "Buenas tardes, Sra. María de Lourdes. Mi testimonio es que Dios mandó sus ángeles hacia mi familia cuando estábamos careciendo alimento por muchas situaciones, pero la doctora Mónica y usted estaban aquí para apoyarnos. Nos han ayudado demasiado y la pancita ahora sí tiene alimento. Cada reflexión es sentir a Dios con nosotras y que está siempre a nuestro lado. Dios la bendiga siempre y a todos esos ángeles que nos están apoyando. Gracias.",
       },
       {
-        name: "María Bertha",
+        name: "María Benita R.",
         fullText:
           "Recibir la despensa cada mes es como un abrazo al corazón. Saber que hay gente que piensa en nosotros y se preocupa por que tengamos lo básico en casa, no tiene precio. Es un gesto que nos llena de esperanza y nos da fuerzas para seguir adelante. Me siento muy afortunada de ser parte de esta familia del ministerio, donde todos nos apoyamos y nos queremos. Es un lugar donde encontramos comprensión y cariño, y donde sabemos que podemos contar con los demás en momentos difíciles. Es una bendición enorme. Saber que formamos parte de algo más grande y que no estamos solos en este camino es algo que agradezco profundamente.",
       },
       {
-        name: "Conchita",
+        name: "Concepción O.",
         fullText:
           "El recibir la despensa, la verdad es que me ha ayudado demasiado. He tenido días muy difíciles y gracias a la bendición de Dios, que a través de ustedes me bendice con los sagrados alimentos, he visto la gracia de Dios a través de ustedes. Sobre todo he tenido mucho tiempo para leer las reflexiones que me dan con la despensa y he concluido que la gracia de Dios viene de personas ajenas a mi familia y que aún existen personas buenas que buscan ayudar al prójimo. Le mando un caluroso abrazo y que Dios la bendiga a usted y a todo el ministerio. Ojalá su recompensa sea mayor al apoyo que da.",
       },
       {
-        name: "Marco Antonio",
+        name: "Marco Antonio O.",
         fullText:
           "Gracias. Bueno, qué puedo decir: ha sido una ayuda increíble, porque sí hay veces que nos quedamos sin cosas para hacer de comer, y la despensa nos ha ayudado cuando pasamos por crisis un poco fuertes. Con las reflexiones nos han ayudado a estar más juntos como familia, a tratar de entendernos más y apoyarnos. Les agradezco de todo corazón por el apoyo que nos brindan, o más bien que les brindan a mis papás. Que Dios siempre los cuide y los bendiga.",
       },
       {
-        name: "Laura",
+        name: "Laura J.",
         fullText:
           "Buenas tardes a todos. Gracias a la despensa que nos brindan nos ha ayudado mucho, pero sobre todo también agradezco mucho que nos dan una bonita reflexión, que con eso nos regresan mucha paz y sobre todo la fe. Gracias a la fundación.",
       },
       {
-        name: "Angeles",
+        name: "Maria Angeles M.",
         fullText:
           "Buenas noches. Antes que nada, mi familia y yo estamos agradecidos porque gracias a la fundación no nos falta alimento en la mesa. Lo agradezco de corazón, de que somos bendecidos. Muchas gracias de corazón a las personas que siempre nos tienen presentes. Muchas gracias.",
       },
@@ -300,37 +300,37 @@ const testimonialGroups = [
     icon: HandHeart,
     quotes: [
       {
-        name: "Cristina Bermudez",
+        name: "Cristina B.",
         fullText:
           "Yo comparto mi ayuda porque siempre me ha gustado ayudar a los que necesitan. Lo hago con mucho gusto.",
       },
       {
-        name: "Alejandrina Cruz",
+        name: "Alejandrina C.",
         fullText:
           "Agradezco a este ministerio por darme la oportunidad de servir a mis hermanos en una de sus necesidades, esperando sea muy útil. La principal razón que me motivó para compartir lo poco o mucho que Dios me provee es porque yo también he tenido necesidad y sé lo difícil que es esta situación. Muchas gracias por todo.",
       },
       {
-        name: "Ma. del Carmen Maldonado",
+        name: "Maria del Carmen M.",
         fullText:
           "A mí me motivó dar mi pequeña cooperación para alguien necesitado, porque mi hermano me platicó la labor hermosa de Andrea.",
       },
       {
-        name: "Susana Piantzi",
+        name: "Susana P.",
         fullText:
           "Mi misión siempre ha sido seguir la palabra de Dios, compartir, pensar y accionar en ayudar a quien lo necesite.",
       },
       {
-        name: "Guillermina Carmona",
+        name: "Guillermina C.",
         fullText:
           "A mi edad me considero una persona muy bendecida por mi vida y familia. Estoy agradecida por tener la oportunidad de colaborar con el ministerio y poder ayudar a alguien que está necesitado, y contribuir con ayuda para la realización de este programa. Mientras pueda, cuentan conmigo. Muchas, muchas gracias y muchas bendiciones siempre.",
       },
       {
-        name: "Adelina",
+        name: "Adelina M.",
         fullText:
           "Buenas tardes. Quiero darles un pequeño testimonio de por qué me convertí en donador. Es algo que se siente en mi corazón al ver la necesidad. Esto yo ya lo venía haciendo desde antes: compraba despensas y salíamos a los semáforos o a las calles y las entregábamos a las personas que veíamos que tenían la necesidad de una despensa. Pero sobre todo es el amor, el amor que Jesús pone en nuestro corazón, porque hemos aprendido bíblicamente que es mejor dar que recibir. También hay una palabra que dice: bendiciendo, te bendeciré. Esto quiere decir que yo con una despensa puedo bendecir a una familia y Dios me bendice a mí. Quiero dar ese testimonio también: yo no aporto una cantidad porque me sobre, sino porque lo siento en mi corazón. Quisiera poder aportar mucho más porque sé que hay muchísima gente que lo necesita, pero lo poco que doy lo doy con todo mi corazón. He visto la mano de Dios en mi economía, que Dios me sorprende muchas veces porque lo doy de corazón y Dios me da de tal manera que puedo ver cómo Dios me socorre y me provee. Ese es uno de los motivos por el cual yo me convertí en donador, porque Cristo pone en mí ese querer y el hacer; siempre es su voluntad. Yo sé que su voluntad es que nosotros, que tenemos un plato de comida, una cobija segura, un techo que nos cubre, escojamos algo para darlo a aquellas personas que no tienen nada. Dios nos bendice grandemente porque Él mira el corazón lleno de amor con el cual nos despojamos para poder apoyar a algunas familias. Gracias a Dios me encontré con Andy y sé que el ministerio Trompeta está haciendo una buena labor. Seguimos adelante; si el día de mañana puedo donar un poco más, con mucho gusto lo haré, porque sé que cada vez hay más gente que necesita recibir una despensa para tener un plato de comida seguro. Ese es mi testimonio. Espero que le sirva y que Dios les bendiga a todos los que son parte de este ministerio Trompeta.",
       },
       {
-        name: "Ofelia",
+        name: "Ofelia R.",
         fullText:
           "Bendecido día para todos ustedes. Le doy gracias a Dios por tantas bendiciones que nos ha dado sin merecer y nos sigue dando. Con lo mucho o poco que tengamos, ayudemos a nuestros hermanos más necesitados. Dios Padre lo multiplique y tengamos un tesoro en el cielo, porque así como venimos nos vamos sin nada. Bendiciones, hermano.",
       },
@@ -339,39 +339,39 @@ const testimonialGroups = [
 ];
 
 const testimonialTextEn = {
-  "Dra. Judith":
+  "Judith M.":
     "I joined the ministry because of my love for the principles it longs for and carries out. I am proud to be part of serving and helping under the Word of God our Lord. In that way, it makes me one more servant of the Lord, showing that God our Lord is present. Likewise, through the ministry, may the objective be fulfilled and multiplied, which makes one feel committed and devoted. Thankfully, may this reach more people who truly need it.",
   Xochil:
     "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
-  "Sra. Lidia":
+  "Claudia V.":
     "Since we started receiving help until now, we do not go to bed without eating. Thankfully, may God bless the founders of this noble cause.",
-  Arturo:
+  "Arturo I.":
     "I am grateful to receive the help, and thanks to you my economy has improved a little. My lifestyle has, without a doubt, taken a breath, and thanks to the ministry I have more to provide for my family. Also, but no less important, the clothing: thank you very much for that, because thanks to it I have been able to take some garments to my family with all the love in my heart. Thank you very much; I thank you from my heart.",
-  "Araceli Cuadros":
+  "Araceli C.":
     "Good afternoon, Mrs. María de Lourdes. My testimony is that God sent His angels to my family when we were lacking food because of many situations, but Dr. Mónica and you were here to support us. You have helped us so much, and now our stomachs have food. Each reflection helps us feel God with us and know that He is always by our side. May God always bless you and all those angels who are supporting us. Thank you.",
-  "María Bertha":
+  "Maria Bertha R.":
     "Receiving the pantry package every month is like a hug to the heart. Knowing that there are people who think about us and care that we have the basics at home is priceless. It is a gesture that fills us with hope and gives us strength to keep going. I feel very fortunate to be part of this ministry family, where we all support and care for one another. It is a place where we find understanding and affection, and where we know we can count on others in difficult moments. It is an enormous blessing. Knowing that we are part of something greater and that we are not alone on this path is something I am deeply grateful for.",
-  Conchita:
+  "Concepción O.":
     "Receiving the pantry package has honestly helped me so much. I have had very difficult days, and thanks to God's blessing, which through you blesses me with sacred food, I have seen God's grace through you. Above all, I have had a lot of time to read the reflections you give me with the pantry package, and I have concluded that God's grace comes through people outside my family, and that there are still good people who seek to help their neighbor. I send you a warm hug, and may God bless you and the whole ministry. May your reward be greater than the support you give.",
-  "Marco Antonio":
+  "Marco Antonio O.":
     "Thank you. Well, what can I say: it has been incredible help, because there are times when we run out of things to cook, and the pantry package has helped us when we go through somewhat strong crises. The reflections have helped us stay more united as a family, try to understand each other more, and support one another. I thank you with all my heart for the support you give us, or rather, that you give to my parents. May God always care for you and bless you.",
-  Laura:
+  "Laura J.":
     "Good afternoon to everyone. Thanks to the pantry package you provide, it has helped us a lot, but above all I am also very grateful that you give us a beautiful reflection, which brings us much peace and, above all, faith. Thank you to the foundation.",
-  Angeles:
-    "Good evening. First of all, my family and I are grateful because thanks to the foundation we do not lack food on the table. I thank you from my heart because we are blessed. Thank you from the heart to the people who always keep us in mind. Thank you very much.",
-  "Cristina Bermudez":
+  "Cristina B.":
     "I share my help because I have always liked helping those who need it. I do it gladly.",
-  "Alejandrina Cruz":
+  "Maria Angeles M.":
+    "Good evening. First of all, my family and I are grateful because thanks to the foundation we do not lack food on the table. I thank you from my heart because we are blessed. Thank you from the heart to the people who always keep us in mind. Thank you very much.",
+  "Alejandrina C.":
     "I thank this ministry for giving me the opportunity to serve my brothers and sisters in one of their needs, hoping it will be very useful. The main reason that motivated me to share the little or much that God provides for me is because I have also experienced need, and I know how difficult that situation is. Thank you very much for everything.",
-  "Ma. del Carmen Maldonado":
+  "Maria del Carmen M.":
     "What motivated me to give my small contribution for someone in need was that my brother told me about Andrea's beautiful work.",
-  "Susana Piantzi":
+  "Susana P.":
     "My mission has always been to follow the Word of God, to share, to think, and to take action in helping whoever needs it.",
-  "Guillermina Carmona":
+  "Guillermina C.":
     "At my age, I consider myself a person very blessed by my life and family. I am grateful to have the opportunity to collaborate with the ministry and to be able to help someone who is in need, and to contribute help toward the realization of this program. As long as I can, you can count on me. Many, many thanks and many blessings always.",
-  Adelina:
+  "Adelina M.":
     "Good afternoon. I want to give you a small testimony about why I became a donor. It is something I feel in my heart when I see need. I had already been doing this before: I bought pantry packages and we went out to traffic lights or streets and gave them to people we saw had the need for a pantry package. But above all, it is love, the love that Jesus places in our hearts, because we have learned biblically that it is better to give than to receive. There is also a word that says: blessing, I will bless you. This means that with one pantry package I can bless a family, and God blesses me. I also want to give that testimony: I do not contribute an amount because I have extra, but because I feel it in my heart. I wish I could contribute much more because I know there are so many people who need it, but the little I give, I give with all my heart. I have seen God's hand in my finances; God surprises me many times because I give from the heart, and God gives to me in such a way that I can see how God helps and provides for me. That is one of the reasons I became a donor, because Christ places in me both the desire and the action; it is always His will. I know His will is that those of us who have a plate of food, a secure blanket, and a roof that covers us should choose something to give to those who have nothing. God blesses us greatly because He sees the heart full of love with which we let go of what we have in order to support some families. Thank God I met Andy, and I know the Trumpet ministry is doing good work. We keep moving forward; if tomorrow I can donate a little more, I will gladly do it, because I know more and more people need to receive a pantry package so they can have a secure plate of food. That is my testimony. I hope it is useful, and may God bless all who are part of this Trumpet ministry.",
-  Ofelia:
+  "Ofelia R.":
     "Blessed day to all of you. I thank God for so many blessings He has given us without deserving them, and that He continues to give us. With the much or little we have, let us help our brothers and sisters most in need. May God the Father multiply it, and may we have treasure in heaven, because just as we came, we leave with nothing. Blessings, brother.",
 };
 

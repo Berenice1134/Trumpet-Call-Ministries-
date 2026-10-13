@@ -628,71 +628,88 @@ function InteractiveGallery({
 }
 
 /* ============================================================
-   CartolandiaVisitBlock — encabezado de visita + carrusel
+   CartolandiaGallery — selector compacto entre las dos visitas
+   Mantiene el mismo tamaño visual que las galerías de las demás misiones.
    ============================================================ */
-function CartolandiaVisitBlock({
-  year,
-  label,
-  title,
-  description,
-  photos,
-  onOpen,
-  accent = "emerald",
-  isLast = false,
+function CartolandiaGallery({
+  firstVisitPhotos,
+  secondVisitPhotos,
+  onOpenFirst,
+  onOpenSecond,
   photosCountLabel = "fotos",
   language = "es",
 }) {
-  const safePhotos = photos || [];
-  const theme = accent === "teal"
-    ? {
-        dot: "from-teal-400 to-cyan-600 shadow-teal-500/50 ring-teal-400/30",
-        label: "text-teal-300",
-        line: "from-teal-400/60 via-teal-400/20",
-        badge: "text-teal-100 bg-teal-500/15 border-teal-400/30",
-      }
-    : {
-        dot: "from-emerald-400 to-teal-600 shadow-emerald-500/50 ring-emerald-400/30",
-        label: "text-emerald-300",
-        line: "from-emerald-400/60 via-emerald-400/20",
-        badge: "text-emerald-100 bg-emerald-500/15 border-emerald-400/30",
-      };
-
-  if (safePhotos.length === 0) return null;
+  const [selectedVisit, setSelectedVisit] = useState("2023");
+  const isEnglish = language === "en";
+  const isFirstVisit = selectedVisit === "2023";
+  const photos = isFirstVisit ? firstVisitPhotos : secondVisitPhotos;
+  const visitLabel = isFirstVisit
+    ? (isEnglish ? "FIRST VISIT · 2023" : "PRIMERA VISITA · 2023")
+    : (isEnglish ? "SECOND VISIT · FEBRUARY 2025" : "SEGUNDA VISITA · FEBRERO DE 2025");
+  const visitTitle = isFirstVisit
+    ? (isEnglish ? "The beginning" : "El inicio")
+    : (isEnglish ? "The return" : "El regreso");
+  const visitDescription = isFirstVisit
+    ? (isEnglish
+        ? "The first visit, sharing food, prayer, and hope with families in the community."
+        : "El primer acercamiento, compartiendo alimento, oración y esperanza con las familias de la comunidad.")
+    : (isEnglish
+        ? "A return to continue the work and accompany more families."
+        : "Una nueva visita para continuar la labor y acompañar a más familias.");
 
   return (
-    <div className="relative grid gap-6 sm:grid-cols-[auto_1fr] sm:gap-8">
-      <div className="relative hidden flex-col items-center sm:flex">
-        <span className={`relative z-10 grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${theme.dot} text-white shadow-xl ring-4 ring-white/5`}>
-          <span className="text-[10px] font-black uppercase tracking-widest opacity-90">{year}</span>
-          <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/20" />
-        </span>
-        {!isLast && <span className={`mt-3 w-px flex-1 bg-gradient-to-b ${theme.line} to-transparent`} />}
-      </div>
-
-      <div className="min-w-0 space-y-5">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div className="min-w-0 space-y-1.5">
-            <div className="flex items-center gap-3 sm:hidden">
-              <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] ${theme.badge}`}>
-                {year}
-              </span>
-            </div>
-            <p className={`text-xs font-black uppercase tracking-[0.24em] ${theme.label}`}>{label}</p>
-            <h3 className="text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">{title}</h3>
-            {description && <p className="max-w-2xl pt-1 text-sm leading-relaxed text-white/60">{description}</p>}
-          </div>
-          <span className="shrink-0 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-wider text-white/80 backdrop-blur">
-            {safePhotos.length} {photosCountLabel}
-          </span>
+    <div className="w-full min-w-0 space-y-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-300 sm:text-xs">
+            {visitLabel}
+          </p>
+          <h3 className="mt-1 text-xl font-black leading-tight text-white sm:text-2xl">
+            {visitTitle}
+          </h3>
+          <p className="mt-1 max-w-xl text-sm leading-relaxed text-white/55">
+            {visitDescription}
+          </p>
         </div>
 
-        <InteractiveGallery
-          photos={safePhotos}
-          onOpen={onOpen}
-          photosCountLabel={photosCountLabel}
-          language={language}
-        />
+        <div
+          className="inline-flex shrink-0 self-start rounded-full border border-white/10 bg-slate-950/45 p-1 shadow-lg backdrop-blur-sm"
+          role="group"
+          aria-label={isEnglish ? "Choose Cartolandia visit" : "Elegir visita a Cartolandia"}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedVisit("2023")}
+            aria-pressed={isFirstVisit}
+            className={`rounded-full px-4 py-2 text-xs font-black transition-all duration-200 ${
+              isFirstVisit
+                ? "bg-emerald-400 text-slate-950 shadow-md"
+                : "text-white/60 hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            2023
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedVisit("2025")}
+            aria-pressed={!isFirstVisit}
+            className={`rounded-full px-4 py-2 text-xs font-black transition-all duration-200 ${
+              !isFirstVisit
+                ? "bg-emerald-400 text-slate-950 shadow-md"
+                : "text-white/60 hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            2025
+          </button>
+        </div>
       </div>
+
+      <InteractiveGallery
+        photos={photos}
+        onOpen={(index) => (isFirstVisit ? onOpenFirst(index) : onOpenSecond(index))}
+        photosCountLabel={photosCountLabel}
+        language={language}
+      />
     </div>
   );
 }
@@ -1093,54 +1110,16 @@ export default function HospitalVisit() {
                   )}
                 </div>
 
-                <div className={`motion-float ${mission.id === "cartolandia" ? "lg:col-span-2" : ""} ${isReversed ? "lg:order-1" : ""}`}>
+                <div className={`motion-float ${isReversed ? "lg:order-1" : ""}`}>
                   {mission.id === "cartolandia" ? (
-                    <div className="space-y-14">
-                      {/* Primera visita */}
-                      <CartolandiaVisitBlock
-                        year="2023"
-                        label={language === "en" ? "First visit" : "Primera visita"}
-                        title={language === "en" ? "Where it all began" : "Donde todo comenzó"}
-                        description={
-                          language === "en"
-                            ? "The first approach to Cartolandia, where the ministry shared food, prayer, and hope with the families of the community."
-                            : "El primer acercamiento a Cartolandia, donde el ministerio compartió alimento, oración y esperanza con las familias de la comunidad."
-                        }
-                        photos={firstVisitPhotos}
-                        onOpen={(idx) => openLightbox(firstVisitPhotos, idx)}
-                        accent="emerald"
-                        photosCountLabel={copy.photosCount}
-                        language={language}
-                      />
-
-                      {/* Conector entre visitas */}
-                      <div className="flex items-center gap-4">
-                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-                        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/45 backdrop-blur">
-                          <Sparkles size={12} />
-                          {language === "en" ? "Two years later" : "Dos años después"}
-                        </span>
-                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-                      </div>
-
-                      {/* Segunda visita */}
-                      <CartolandiaVisitBlock
-                        year="2025"
-                        label={language === "en" ? "Second visit · February" : "Segunda visita · Febrero"}
-                        title={language === "en" ? "The return" : "El regreso"}
-                        description={
-                          language === "en"
-                            ? "The ministry returned to Cartolandia in February 2025, continuing the work with new families and renewed hope."
-                            : "El ministerio regresó a Cartolandia en febrero de 2025, continuando la labor con nuevas familias y esperanza renovada."
-                        }
-                        photos={photos}
-                        onOpen={(idx) => openLightbox(photos, idx)}
-                        accent="teal"
-                        isLast
-                        photosCountLabel={copy.photosCount}
-                        language={language}
-                      />
-                    </div>
+                    <CartolandiaGallery
+                      firstVisitPhotos={firstVisitPhotos}
+                      secondVisitPhotos={photos}
+                      onOpenFirst={(idx) => openLightbox(firstVisitPhotos, idx)}
+                      onOpenSecond={(idx) => openLightbox(photos, idx)}
+                      photosCountLabel={copy.photosCount}
+                      language={language}
+                    />
                   ) : photos.length > 0 ? (
                     <>
                       <InteractiveGallery

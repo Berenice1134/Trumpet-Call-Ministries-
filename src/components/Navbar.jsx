@@ -29,7 +29,7 @@ const menuGroupsByLanguage = {
       label: "Misiones",
       path: "/misiones",
       items: [
-        { label: "Hospital Infantil de Tlaxcala", id: "hospital-infantil-tlaxcala" },
+        { label: "HIT", id: "hospital-infantil-tlaxcala" },
         { label: "Cartolandia", id: "cartolandia" },
         { label: "Día de Caridad", id: "dia-caridad" },
         { label: "Españita", id: "espanita" },
@@ -89,7 +89,7 @@ const menuGroupsByLanguage = {
       label: "Missions",
       path: "/misiones",
       items: [
-        { label: "Children's Hospital of Tlaxcala", id: "hospital-infantil-tlaxcala" },
+        { label: "HIT", id: "hospital-infantil-tlaxcala" },
         { label: "Cartolandia", id: "cartolandia" },
         { label: "Charity Day", id: "dia-caridad" },
         { label: "Españita", id: "espanita" },

@@ -22,20 +22,14 @@ import {
 import { useLanguage } from "../context/useLanguage.js";
 
 const hospitalPhotos = [
-  { key: "dreamsBoard", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-01.jpeg` },
-  { key: "blueCostume", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-02.jpeg` },
-  { key: "hospitalEntrance", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-03.jpeg` },
-  { key: "micActivity", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-04.jpeg` },
-  { key: "balloonArch", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-05.jpeg` },
-  { key: "groupActivity", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-06.jpeg` },
-  { key: "heartGraphic", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-07.png` },
-  { key: "hospitalKermesTeam", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-01.jpeg` },
-  { key: "hospitalKermesDelivery", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-02.jpeg` },
-  { key: "hospitalKermesWelcome", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-03.jpeg` },
-  { key: "hospitalKermesSupport", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-04.jpeg` },
-  { key: "hospitalKermesFoodTable", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-05.jpeg` },
-  { key: "hospitalKermesConversation", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-06.jpeg` },
-  { key: "hospitalKermesService", src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-kermes-07.jpeg` },
+  ...Array.from({ length: 21 }, (_, index) => ({
+    key: `hospitalNew${String(index + 1).padStart(2, "0")}`,
+    src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-${String(index + 1).padStart(2, "0")}.jpeg`,
+  })),
+  ...["img_2675", "img_2659", "img_2596", "img_2668"].map((name) => ({
+    key: name,
+    src: `${import.meta.env.BASE_URL}assets/hospital-infantil/${name}.jpeg`,
+  })),
 ];
 
 const cartolandiaFirstVisitPhotos = Array.from({ length: 21 }, (_, index) => ({
@@ -151,12 +145,24 @@ const otherMissions = [
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Entrega cercana a beneficiarios" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-03.jpeg`, label: "Equipo de servicio en Españita" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-04.jpeg`, label: "Acompañamiento y apoyo comunitario" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-05.jpeg`, label: "Acompañamiento a una residente del Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-06.jpeg`, label: "Entrega de apoyo a residentes del Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-07.jpeg`, label: "Convivencia y entrega de apoyo a residentes" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-08.jpeg`, label: "Espacio exterior del Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-09.jpeg`, label: "Despensas preparadas para el Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-10.jpeg`, label: "Preparación de alimentos en el Asilo de San Judas" },
     ],
     photosEn: [
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-01.jpeg`, label: "Food and support preparation" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Personal delivery to beneficiaries" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-03.jpeg`, label: "Service team in Españita" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-04.jpeg`, label: "Community accompaniment and support" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-05.jpeg`, label: "Spending time with a resident at Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-06.jpeg`, label: "Support delivered to residents at Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-07.jpeg`, label: "Fellowship and support for residents" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-08.jpeg`, label: "Outdoor area at Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-09.jpeg`, label: "Food pantries prepared for Asilo de San Judas" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-10.jpeg`, label: "Food preparation at Asilo de San Judas" },
     ],
   },
 ];
@@ -645,7 +651,7 @@ export default function HospitalVisit() {
       >
         <div className="absolute inset-0">
           <img
-            src={`${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-01.jpeg`}
+              src={hospitalPhotos[0].src}
             alt=""
             className="h-full w-full object-cover opacity-25 mix-blend-overlay"
           />
@@ -764,13 +770,13 @@ export default function HospitalVisit() {
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-4 shadow-2xl">
             <img
-              src={`${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-02.jpeg`}
-              alt={t("hospital.photoLabels.blueCostume")}
+              src={hospitalPhotos[1].src}
+              alt={t("hospital.photoLabels.hospitalNew02")}
               className="h-full max-h-[520px] w-full rounded-[1.5rem] object-contain"
             />
             <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/10 bg-white/10 p-4 text-white backdrop-blur">
               <p className="text-sm font-black uppercase tracking-[0.16em] text-rose-200">
-                Hospital Infantil de Tlaxcala
+                HIT
               </p>
               <p className="mt-1 text-lg font-black">
                 {language === "en" ? "Monthly accompaniment with hope" : "Acompañamiento mensual con esperanza"}

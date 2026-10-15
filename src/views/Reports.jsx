@@ -35,9 +35,33 @@ const yearlySupport = [
 ];
 
 const infographicPeriods = [
-  { id: "2026-jan-feb", months: { es: "Enero–febrero", en: "January–February" }, year: 2026, files: { es: null, en: null } },
-  { id: "2026-mar-apr", months: { es: "Marzo–abril", en: "March–April" }, year: 2026, files: { es: null, en: null } },
-  { id: "2026-may-jun", months: { es: "Mayo–junio", en: "May–June" }, year: 2026, files: { es: null, en: null } },
+  {
+    id: "2026-jan-feb",
+    months: { es: "Enero–febrero", en: "January–February" },
+    year: 2026,
+    files: {
+      es: "assets/reportes/infografia-enero-febrero-2026.pdf",
+      en: "assets/reportes/newsletter-january-february-2026.pdf",
+    },
+  },
+  {
+    id: "2026-mar-apr",
+    months: { es: "Marzo–abril", en: "March–April" },
+    year: 2026,
+    files: {
+      es: "assets/reportes/infografia-marzo-abril-2026.pdf",
+      en: "assets/reportes/newsletter-march-april-2026.pdf",
+    },
+  },
+  {
+    id: "2026-may-aug",
+    months: { es: "Mayo–agosto", en: "May–August" },
+    year: 2026,
+    files: {
+      es: "assets/reportes/infografia-mayo-agosto-2026.pdf",
+      en: "assets/reportes/newsletter-may-august-2026.pdf",
+    },
+  },
 ];
 
 const donorSources2026 = [
@@ -101,7 +125,7 @@ const reportsCopy = {
     timelineText: "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
     tenTons: "10 Toneladas",
-    archiveText: "Consulta las tres ediciones bimestrales más recientes. Cada periodo tendrá una infografía en español y otra en inglés.",
+    archiveText: "Consulta los tres periodos más recientes, con una infografía en español y un boletín en inglés para cada periodo.",
     spanish: "Español",
     english: "Inglés",
     pending: "Espacio reservado. La infografía se agregará cuando esté disponible.",
@@ -148,7 +172,7 @@ const reportsCopy = {
     timelineText: "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
     tenTons: "10 Tons",
-    archiveText: "Browse the three most recent bimonthly editions. Each period will have one Spanish infographic and one English infographic.",
+    archiveText: "Browse the three most recent reporting periods, with a Spanish infographic and an English newsletter for each period.",
     spanish: "Spanish",
     english: "English",
     pending: "Reserved space. The infographic will be added when it is available.",
@@ -993,7 +1017,7 @@ export default function Reports() {
   const copy = reportsCopy[language] ?? reportsCopy.es;
   const timelineItems = infographicTimeline[language] ?? infographicTimeline.es;
   const [showFullscreen, setShowFullscreen] = useState(false);
-  const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-jun");
+  const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-aug");
   const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(
     language === "en" ? "en" : "es"
   );

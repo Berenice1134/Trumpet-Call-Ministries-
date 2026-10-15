@@ -20,6 +20,7 @@ import {
   Download,
   Eye,
   X,
+  Maximize2,
 } from "lucide-react";
 import { createElement, useEffect, useState } from "react";
 import InfoCard from "../components/InfoCard.jsx";
@@ -151,6 +152,9 @@ const reportsCopy = {
     totalDonated: "Total de alimentos donados",
     clickToView: "Haz clic para ver detalles",
     total: "Total",
+    expand: "Ampliar",
+    tapToExpand: "Ver detalles",
+    close: "Cerrar",
   },
   en: {
     eyebrow: "Ministry charts",
@@ -198,6 +202,9 @@ const reportsCopy = {
     totalDonated: "Total food donated",
     clickToView: "Click to view details",
     total: "Total",
+    expand: "Expand",
+    tapToExpand: "View details",
+    close: "Close",
   },
 };
 
@@ -308,182 +315,272 @@ function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
   );
 }
 
-// ===== BAR CHART (Beneficiarios) =====
-function ChartZoom({ title, data, type, valueKey, children, color = "from-cyan-500 to-blue-600" }) {
+// ===== CHART SHELL (vista previa compacta + modal al hacer clic) =====
+function ChartShell({
+  title,
+  subtitle,
+  icon: Icon,
+  gradient = "from-cyan-500 to-blue-600",
+  glow = "from-cyan-100/70",
+  accentText = "text-cyan-700",
+  ringHover = "hover:ring-cyan-200",
+  preview,
+  children,
+  expandLabel = "Ver detalles",
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return undefined;
     const closeOnEscape = (event) => event.key === "Escape" && setOpen(false);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
   }, [open]);
 
-  const maxValue = Math.max(...data.map((item) => item[valueKey] ?? item.value));
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} aria-label={`Ampliar gráfica: ${title}`}
-        className="chart-preview group relative flex min-h-[190px] w-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 text-left shadow-md transition-all duration-300 hover:z-20 hover:border-cyan-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-6">
-        <span className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full bg-cyan-100/70 blur-3xl" />
-        <span className="relative flex w-full items-start justify-between gap-4">
-          <span className="text-lg font-black leading-tight tracking-tight text-slate-900 sm:text-xl">{title}</span>
-          <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${color} text-white shadow-md`}>
-            {type === "donut" ? <PieChart size={19} /> : <BarChart3 size={19} />}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={`${expandLabel}: ${title}`}
+        className={`group relative flex w-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white p-5 text-left shadow-md ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-6 ${ringHover}`}
+      >
+        {/* Glow decorativo */}
+        <span
+          className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${glow} to-transparent blur-3xl transition duration-700 group-hover:scale-125`}
+        />
+
+        {/* Header */}
+        <span className="relative flex items-start justify-between gap-3">
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-base font-black leading-tight tracking-tight text-slate-900 sm:text-lg">
+              {title}
+            </span>
+            {subtitle && (
+              <span className="mt-1 block truncate text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                {subtitle}
+              </span>
+            )}
+          </span>
+          <span
+            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}
+          >
+            <Icon size={18} />
           </span>
         </span>
-        <span className="relative mt-4 flex min-h-16 w-full items-end gap-2 rounded-2xl bg-slate-50/90 px-4 py-3 ring-1 ring-slate-100">
-          {type === "donut" ? (
-            <span className="flex w-full items-center gap-4">
-              <span className="h-14 w-14 shrink-0 rounded-full p-[7px]" style={{ background: `conic-gradient(${data.map((item, i) => `${item.hex} ${data.slice(0, i).reduce((sum, d) => sum + d.value, 0)}% ${data.slice(0, i + 1).reduce((sum, d) => sum + d.value, 0)}%`).join(", ")})` }}>
-                <span className="block h-full w-full rounded-full bg-white" />
-              </span>
-              <span className="flex flex-1 flex-col gap-1.5">
-                {data.slice(0, 3).map((item) => <span key={item.key} className="flex items-center gap-2"><span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200"><span className="block h-full rounded-full" style={{ width: `${item.value}%`, backgroundColor: item.hex }} /></span><span className="w-8 text-right text-[10px] font-black text-slate-500">{item.value}%</span></span>)}
-              </span>
-            </span>
-          ) : data.map((item) => <span key={item.year} className={`flex h-12 min-w-0 flex-1 items-end overflow-hidden rounded-t-md bg-gradient-to-t ${color}`} title={String(item[valueKey])}>
-            <span className="w-full rounded-t-md bg-white/25" style={{ height: `${Math.max(12, (item[valueKey] / maxValue) * 100)}%` }} />
-          </span>)}
-        </span>
-        <span className="relative mt-2 flex w-full justify-between text-[10px] font-bold text-slate-400">
-          <span>{type === "donut" ? "Distribución" : data[0]?.year}</span>
-          <span className="text-cyan-700 transition group-hover:translate-x-1">Pasar o tocar para ampliar →</span>
-          <span>{type === "donut" ? "" : data[data.length - 1]?.year}</span>
+
+        {/* Vista previa (mini gráfica) */}
+        <span className="relative mt-5 block flex-1">{preview}</span>
+
+        {/* Footer con CTA */}
+        <span className="relative mt-4 flex items-center justify-between">
+          <span
+            className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${gradient} opacity-60 transition-all duration-500 group-hover:w-24 group-hover:opacity-100`}
+          />
+          <span
+            className={`flex translate-x-2 items-center gap-1.5 text-[11px] font-black opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100 ${accentText}`}
+          >
+            {expandLabel}
+            <Maximize2 size={12} />
+          </span>
         </span>
       </button>
-      {open && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm sm:p-6" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}>
-        <section role="dialog" aria-modal="true" aria-label={title} className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-3xl bg-white p-3 shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:p-6">
-          <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar gráfica" className="sticky top-0 z-10 float-right -mb-12 mr-1 grid h-11 w-11 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"><X size={22} /></button>
-          {children}
-        </section>
-      </div>}
+
+      {open && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm animate-in fade-in duration-200 sm:p-6"
+          onMouseDown={(event) =>
+            event.target === event.currentTarget && setOpen(false)
+          }
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-label={title}
+            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-3 shadow-2xl animate-in zoom-in-95 duration-200 sm:max-h-[calc(100dvh-3rem)] sm:p-6"
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Cerrar gráfica"
+              className="sticky top-0 z-10 float-right -mb-12 mr-1 grid h-10 w-10 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"
+            >
+              <X size={20} />
+            </button>
+            {children}
+          </section>
+        </div>
+      )}
     </>
   );
 }
 
+// ===== BAR CHART (Beneficiarios) =====
 function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
+  // ---- Vista previa mini ----
+  const preview = (
+    <span className="flex h-24 items-end gap-1.5 sm:gap-2">
+      {data.map((item, i) => {
+        const h = Math.max(10, (item[valueKey] / maxValue) * 100);
+        const isLast = i === data.length - 1;
+        return (
+          <span key={item.year} className="flex flex-1 flex-col items-center gap-1.5">
+            <span className="relative flex w-full flex-1 items-end">
+              <span
+                className={`w-full rounded-t-md bg-gradient-to-t ${color} transition-all duration-500 ${
+                  isLast ? "shadow-[0_0_0_2px_rgba(244,63,94,0.15)]" : ""
+                }`}
+                style={{ height: `${h}%` }}
+              >
+                <span className="absolute inset-x-0.5 top-0.5 block h-0.5 rounded-full bg-white/40" />
+              </span>
+            </span>
+            <span className="text-[9px] font-black text-slate-400">
+              {String(item.year).slice(2)}
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
+
   return (
-    <ChartZoom title={title} data={data} type="bar" valueKey={valueKey} color={color}>
-    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
+    <ChartShell
+      title={title}
+      subtitle={`${formatNumber(total)}${valueLabel ? ` ${valueLabel}` : ""}`}
+      icon={BarChart3}
+      gradient="from-rose-500 to-pink-600"
+      glow="from-rose-100/70"
+      accentText="text-rose-600"
+      ringHover="hover:ring-rose-200"
+      preview={preview}
+      expandLabel="Ver detalles"
+    >
+      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
 
-      <div className="relative">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-            <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-              {formatNumber(total)}
-              {valueLabel ? ` ${valueLabel}` : ""}
-            </p>
-          </div>
-          <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 p-3 text-white shadow-lg shadow-rose-500/30">
-            <BarChart3 size={20} />
-          </div>
-        </div>
-
-        {selectedData && (
-          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 p-4 ring-1 ring-rose-100 animate-in slide-in-from-top-2 duration-300">
+        <div className="relative">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                {selectedData.year}
-              </p>
-              <p className="text-2xl font-black text-rose-600">
-                {formatNumber(selectedData[valueKey])}
+              <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+              <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
+                {formatNumber(total)}
                 {valueLabel ? ` ${valueLabel}` : ""}
               </p>
             </div>
-            {secondaryKey && (
-              <div className="text-right">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  {secondaryLabel}
+            <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 p-3 text-white shadow-lg shadow-rose-500/30">
+              <BarChart3 size={20} />
+            </div>
+          </div>
+
+          {selectedData && (
+            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 p-4 ring-1 ring-rose-100 animate-in slide-in-from-top-2 duration-300">
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  {selectedData.year}
                 </p>
-                <p className="text-lg font-black text-slate-700">
-                  {formatNumber(selectedData[secondaryKey])}
+                <p className="text-2xl font-black text-rose-600">
+                  {formatNumber(selectedData[valueKey])}
+                  {valueLabel ? ` ${valueLabel}` : ""}
                 </p>
               </div>
-            )}
-            <button
-              onClick={() => setSelectedIndex(null)}
-              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
-            >
-              <X size={14} />
-            </button>
-          </div>
-        )}
-
-        <div className="mt-6 space-y-4">
-          {data.map((item, index) => {
-            const pct = (item[valueKey] / maxValue) * 100;
-            const isSelected = selectedIndex === index;
-            const prev = index > 0 ? data[index - 1][valueKey] : null;
-            const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
-
-            return (
+              {secondaryKey && (
+                <div className="text-right">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    {secondaryLabel}
+                  </p>
+                  <p className="text-lg font-black text-slate-700">
+                    {formatNumber(selectedData[secondaryKey])}
+                  </p>
+                </div>
+              )}
               <button
-                key={item.year}
-                type="button"
-                onClick={() => setSelectedIndex(isSelected ? null : index)}
-                className="group/row block w-full text-left"
+                onClick={() => setSelectedIndex(null)}
+                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
               >
-                <div className="mb-1.5 flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`font-black transition-colors ${
-                        isSelected ? "text-rose-600" : "text-slate-800"
-                      }`}
-                    >
-                      {item.year}
-                    </span>
-                    {delta !== null && (
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          <div className="mt-6 space-y-4">
+            {data.map((item, index) => {
+              const pct = (item[valueKey] / maxValue) * 100;
+              const isSelected = selectedIndex === index;
+              const prev = index > 0 ? data[index - 1][valueKey] : null;
+              const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
+
+              return (
+                <button
+                  key={item.year}
+                  type="button"
+                  onClick={() => setSelectedIndex(isSelected ? null : index)}
+                  className="group/row block w-full text-left"
+                >
+                  <div className="mb-1.5 flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
                       <span
-                        className={`rounded-full px-2 py-0.5 text-[10px] font-black tracking-tight ring-1 ring-inset ${
-                          delta >= 0
-                            ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-                            : "bg-rose-50 text-rose-700 ring-rose-200"
+                        className={`font-black transition-colors ${
+                          isSelected ? "text-rose-600" : "text-slate-800"
                         }`}
                       >
-                        {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
+                        {item.year}
                       </span>
-                    )}
+                      {delta !== null && (
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-black tracking-tight ring-1 ring-inset ${
+                            delta >= 0
+                              ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+                              : "bg-rose-50 text-rose-700 ring-rose-200"
+                          }`}
+                        >
+                          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
+                        </span>
+                      )}
+                    </div>
+                    <span
+                      className={`font-black tabular-nums transition-colors ${
+                        isSelected ? "text-rose-600" : "text-slate-500"
+                      }`}
+                    >
+                      {formatNumber(item[valueKey])}
+                      {valueLabel ? ` ${valueLabel}` : ""}
+                    </span>
                   </div>
-                  <span
-                    className={`font-black tabular-nums transition-colors ${
-                      isSelected ? "text-rose-600" : "text-slate-500"
-                    }`}
-                  >
-                    {formatNumber(item[valueKey])}
-                    {valueLabel ? ` ${valueLabel}` : ""}
-                  </span>
-                </div>
-                <div className="relative h-3 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/70">
-                  <div
-                    className={`relative h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
-                      isSelected
-                        ? "shadow-[0_0_0_3px_rgba(244,63,94,0.18)]"
-                        : "group-hover/row:brightness-110"
-                    }`}
-                    style={{ width: `${Math.max(6, pct)}%` }}
-                  >
-                    <span className="absolute inset-x-1 top-0.5 h-1 rounded-full bg-white/35" />
+                  <div className="relative h-3 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/70">
+                    <div
+                      className={`relative h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
+                        isSelected
+                          ? "shadow-[0_0_0_3px_rgba(244,63,94,0.18)]"
+                          : "group-hover/row:brightness-110"
+                      }`}
+                      style={{ width: `${Math.max(6, pct)}%` }}
+                    >
+                      <span className="absolute inset-x-1 top-0.5 h-1 rounded-full bg-white/35" />
+                    </div>
                   </div>
-                </div>
-                {secondaryKey && (
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {formatNumber(item[secondaryKey])} {secondaryLabel}
-                  </p>
-                )}
-              </button>
-            );
-          })}
+                  {secondaryKey && (
+                    <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      {formatNumber(item[secondaryKey])} {secondaryLabel}
+                    </p>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </article>
-    </ChartZoom>
+      </article>
+    </ChartShell>
   );
 }
 
@@ -753,151 +850,186 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   );
 }
 
-// ===== COLUMN CHART (Despensas) — FIX: espacio reservado para la píldora =====
+// ===== COLUMN CHART (Despensas) =====
 function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
+  // ---- Vista previa mini ----
+  const preview = (
+    <span className="flex h-24 items-end gap-1.5 sm:gap-2">
+      {data.map((item, i) => {
+        const h = Math.max(10, (item[valueKey] / maxValue) * 100);
+        const isLast = i === data.length - 1;
+        return (
+          <span key={item.year} className="flex flex-1 flex-col items-center gap-1.5">
+            <span className="relative flex w-full flex-1 items-end">
+              <span
+                className={`w-full rounded-t-lg bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 transition-all duration-500 ${
+                  isLast ? "shadow-[0_0_0_2px_rgba(6,182,212,0.18)]" : ""
+                }`}
+                style={{ height: `${h}%` }}
+              >
+                <span className="absolute inset-x-0.5 top-0.5 block h-0.5 rounded-full bg-white/40" />
+              </span>
+            </span>
+            <span className="text-[9px] font-black text-slate-400">
+              {String(item.year).slice(2)}
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
+
   return (
-    <ChartZoom title={title} data={data} type="column" valueKey={valueKey}>
-    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-      <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
+    <ChartShell
+      title={title}
+      subtitle={`${formatNumber(total)} ${valueLabel}`}
+      icon={BarChart3}
+      gradient="from-cyan-500 to-blue-600"
+      glow="from-cyan-100/70"
+      accentText="text-cyan-700"
+      ringHover="hover:ring-cyan-200"
+      preview={preview}
+      expandLabel="Ver detalles"
+    >
+      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
+        <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
 
-      <div className="relative">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-            <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-              {formatNumber(total)} {valueLabel}
-            </p>
-          </div>
-          <div className="rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 p-3 text-white shadow-lg shadow-cyan-500/30">
-            <BarChart3 size={20} />
-          </div>
-        </div>
-
-        {selectedData && (
-          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-cyan-50 to-blue-50 p-4 ring-1 ring-cyan-100 animate-in slide-in-from-top-2 duration-300">
+        <div className="relative">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                {selectedData.year}
+              <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+              <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
+                {formatNumber(total)} {valueLabel}
               </p>
-              <div className="mt-1 flex gap-6">
-                <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {valueLabel}
-                  </p>
-                  <p className="text-xl font-black text-cyan-600">
-                    {formatNumber(selectedData[valueKey])}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {secondaryLabel}
-                  </p>
-                  <p className="text-xl font-black text-slate-700">
-                    {formatNumber(selectedData[secondaryKey])}
-                  </p>
+            </div>
+            <div className="rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 p-3 text-white shadow-lg shadow-cyan-500/30">
+              <BarChart3 size={20} />
+            </div>
+          </div>
+
+          {selectedData && (
+            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-cyan-50 to-blue-50 p-4 ring-1 ring-cyan-100 animate-in slide-in-from-top-2 duration-300">
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  {selectedData.year}
+                </p>
+                <div className="mt-1 flex gap-6">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      {valueLabel}
+                    </p>
+                    <p className="text-xl font-black text-cyan-600">
+                      {formatNumber(selectedData[valueKey])}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      {secondaryLabel}
+                    </p>
+                    <p className="text-xl font-black text-slate-700">
+                      {formatNumber(selectedData[secondaryKey])}
+                    </p>
+                  </div>
                 </div>
               </div>
+              <button
+                onClick={() => setSelectedIndex(null)}
+                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
+              >
+                <X size={14} />
+              </button>
             </div>
-            <button
-              onClick={() => setSelectedIndex(null)}
-              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
-            >
-              <X size={14} />
-            </button>
-          </div>
-        )}
+          )}
 
-        {/* Contenedor con padding superior reservado para las píldoras */}
-        <div className="relative mt-6 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent px-4 pb-4 pt-14">
-          {/* Grid lines alineadas al área de barras */}
-          <div className="pointer-events-none absolute inset-x-4 top-14 bottom-12 flex flex-col justify-between">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-px bg-slate-100" />
+          <div className="relative mt-6 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent px-4 pb-4 pt-14">
+            <div className="pointer-events-none absolute inset-x-4 top-14 bottom-12 flex flex-col justify-between">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-px bg-slate-100" />
+              ))}
+            </div>
+
+            <div className="relative flex h-64 items-end gap-2 sm:gap-3">
+              {data.map((item, index) => {
+                const h = Math.max(8, (item[valueKey] / maxValue) * 100);
+                const isSelected = selectedIndex === index;
+                const prev = index > 0 ? data[index - 1][valueKey] : null;
+                const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
+
+                return (
+                  <button
+                    key={item.year}
+                    type="button"
+                    onClick={() => setSelectedIndex(isSelected ? null : index)}
+                    className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
+                  >
+                    <div className="relative flex flex-1 items-end">
+                      <div
+                        className={`relative w-full rounded-t-2xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
+                          isSelected
+                            ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
+                            : "group-hover/bar:brightness-110"
+                        }`}
+                        style={{ height: `${h}%` }}
+                      >
+                        <span className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-cyan-400/60 blur-md" />
+                        <span className="absolute inset-x-1 top-1 h-1.5 rounded-full bg-white/40" />
+                        {delta !== null && (
+                          <span
+                            className={`absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
+                              isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
+                            } ${
+                              delta >= 0
+                                ? "bg-emerald-500 text-white"
+                                : "bg-rose-500 text-white"
+                            }`}
+                          >
+                            {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={`text-center text-xs font-black transition-colors ${
+                        isSelected ? "text-cyan-600" : "text-slate-500"
+                      }`}
+                    >
+                      {item.year}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {data.slice(-3).map((item) => (
+              <div
+                key={item.year}
+                className="group/mini rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="font-black text-slate-900">{item.year}</p>
+                  <span className="h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" />
+                </div>
+                <p className="mt-1 font-bold text-slate-500">
+                  {formatNumber(item[secondaryKey])} {secondaryLabel}
+                </p>
+              </div>
             ))}
           </div>
-
-          <div className="relative flex h-64 items-end gap-2 sm:gap-3">
-            {data.map((item, index) => {
-              const h = Math.max(8, (item[valueKey] / maxValue) * 100);
-              const isSelected = selectedIndex === index;
-              const prev = index > 0 ? data[index - 1][valueKey] : null;
-              const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
-
-              return (
-                <button
-                  key={item.year}
-                  type="button"
-                  onClick={() => setSelectedIndex(isSelected ? null : index)}
-                  className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
-                >
-                  <div className="relative flex flex-1 items-end">
-                    <div
-                      className={`relative w-full rounded-t-2xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
-                        isSelected
-                          ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
-                          : "group-hover/bar:brightness-110"
-                      }`}
-                      style={{ height: `${h}%` }}
-                    >
-                      <span className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-cyan-400/60 blur-md" />
-                      <span className="absolute inset-x-1 top-1 h-1.5 rounded-full bg-white/40" />
-                      {delta !== null && (
-                        <span
-                          className={`absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
-                            isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
-                          } ${
-                            delta >= 0
-                              ? "bg-emerald-500 text-white"
-                              : "bg-rose-500 text-white"
-                          }`}
-                        >
-                          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <span
-                    className={`text-center text-xs font-black transition-colors ${
-                      isSelected ? "text-cyan-600" : "text-slate-500"
-                    }`}
-                  >
-                    {item.year}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
         </div>
-
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          {data.slice(-3).map((item) => (
-            <div
-              key={item.year}
-              className="group/mini rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
-            >
-              <div className="flex items-center justify-between">
-                <p className="font-black text-slate-900">{item.year}</p>
-                <span className="h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" />
-              </div>
-              <p className="mt-1 font-bold text-slate-500">
-                {formatNumber(item[secondaryKey])} {secondaryLabel}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </article>
-    </ChartZoom>
+      </article>
+    </ChartShell>
   );
 }
 
 // ===== DONUT CHART =====
-function DonutChart({ title, items, labels }) {
+function DonutChart({ title, items, labels, accent = "cyan" }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const total = items.reduce((sum, item) => sum + item.value, 0);
   const radius = 42;
@@ -917,123 +1049,214 @@ function DonutChart({ title, items, labels }) {
     return s;
   });
 
-  return (
-    <ChartZoom title={title} data={items} type="donut" valueKey="value">
-    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
-
-      <div className="relative">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-          <div className="rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 p-3 text-white shadow-lg">
-            <PieChart size={20} />
-          </div>
-        </div>
-
-        {selectedItem && (
-          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-4 ring-1 ring-slate-200 animate-in slide-in-from-top-2 duration-300">
-            <div>
-              <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                {labels[selectedItem.key]}
-              </p>
-              <p className="text-2xl font-black text-ministry-blue">{selectedItem.value}%</p>
-            </div>
-            <div className="max-w-[55%] text-right">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Detalle
-              </p>
-              <p className="text-sm font-bold text-slate-700">
-                {selectedItem.description || "—"}
-              </p>
-            </div>
-            <button
-              onClick={() => setSelectedKey(null)}
-              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
-            >
-              <X size={14} />
-            </button>
-          </div>
+  // ---- Vista previa mini (donut pequeño + leyenda) ----
+  const preview = (
+    <span className="flex items-center gap-4">
+      <span className="relative h-20 w-20 shrink-0">
+        <svg viewBox="0 0 100 100" className="-rotate-90">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#eef2f7" strokeWidth="14" />
+          {items.map((item, i) => {
+            const before = items.slice(0, i).reduce((s, d) => s + d.value, 0);
+            const after = before + item.value;
+            return (
+              <circle
+                key={item.key}
+                cx="50"
+                cy="50"
+                r="40"
+                fill="none"
+                stroke={item.hex}
+                strokeWidth="14"
+                strokeDasharray={`${Math.max(0, after - before - 1.5)} 100`}
+                strokeDashoffset={-before}
+                strokeLinecap="round"
+                className="transition-all duration-500"
+              />
+            );
+          })}
+        </svg>
+        <span className="absolute inset-0 grid place-items-center">
+          <span className="text-base font-black leading-none text-slate-900">
+            {largest.value}%
+          </span>
+        </span>
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col gap-1.5">
+        {items.slice(0, 3).map((item) => (
+          <span key={item.key} className="flex items-center gap-2">
+            <span
+              className="h-2 w-2 shrink-0 rounded-full"
+              style={{ backgroundColor: item.hex }}
+            />
+            <span className="min-w-0 flex-1 truncate text-[10px] font-bold text-slate-500">
+              {labels[item.key]}
+            </span>
+            <span className="shrink-0 text-[10px] font-black text-slate-800">
+              {item.value}%
+            </span>
+          </span>
+        ))}
+        {items.length > 3 && (
+          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            +{items.length - 3} más
+          </span>
         )}
+      </span>
+    </span>
+  );
 
-        <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
-          <div className="relative mx-auto h-56 w-56">
-            <div className="pointer-events-none absolute inset-4 rounded-full bg-gradient-to-br from-cyan-100/60 via-transparent to-rose-100/60 blur-2xl" />
-            <svg viewBox="0 0 100 100" className="-rotate-90">
-              <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef2f7" strokeWidth="12" />
-              {segments.map((s) => {
-                const gap = 2.5;
-                const isSelected = selectedKey === s.key;
-                return (
-                  <circle
-                    key={s.key}
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    fill="none"
-                    stroke={s.hex}
-                    strokeWidth={isSelected ? 16 : 12}
-                    strokeLinecap="round"
-                    strokeDasharray={`${Math.max(0, s.seg - gap)} ${circumference}`}
-                    strokeDashoffset={-s.offset}
-                    onClick={() => setSelectedKey(isSelected ? null : s.key)}
-                    className="cursor-pointer transition-all duration-500 hover:brightness-110"
-                    style={{ filter: isSelected ? `drop-shadow(0 0 6px ${s.hex})` : "none" }}
-                  />
-                );
-              })}
-            </svg>
-            <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
-              <div className="flex flex-col items-center gap-1 rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
-                <LargestIcon size={18} className="text-slate-400" />
-                <p className="text-4xl font-black leading-none text-slate-900">
-                  {largest.value}%
+  const gradientMap = {
+    cyan: "from-cyan-500 to-blue-600",
+    slate: "from-slate-700 to-slate-900",
+    violet: "from-violet-500 to-fuchsia-600",
+    rose: "from-rose-500 to-pink-600",
+  };
+  const glowMap = {
+    cyan: "from-cyan-100/70",
+    slate: "from-slate-200/70",
+    violet: "from-violet-100/70",
+    rose: "from-rose-100/70",
+  };
+  const ringMap = {
+    cyan: "hover:ring-cyan-200",
+    slate: "hover:ring-slate-300",
+    violet: "hover:ring-violet-200",
+    rose: "hover:ring-rose-200",
+  };
+  const accentMap = {
+    cyan: "text-cyan-700",
+    slate: "text-slate-700",
+    violet: "text-violet-700",
+    rose: "text-rose-700",
+  };
+
+  return (
+    <ChartShell
+      title={title}
+      subtitle={`${total}% distribuido`}
+      icon={PieChart}
+      gradient={gradientMap[accent]}
+      glow={glowMap[accent]}
+      accentText={accentMap[accent]}
+      ringHover={ringMap[accent]}
+      preview={preview}
+      expandLabel="Ver detalles"
+    >
+      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
+
+        <div className="relative">
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
+            <div className="rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 p-3 text-white shadow-lg">
+              <PieChart size={20} />
+            </div>
+          </div>
+
+          {selectedItem && (
+            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-4 ring-1 ring-slate-200 animate-in slide-in-from-top-2 duration-300">
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  {labels[selectedItem.key]}
                 </p>
-                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
-                  {labels[largest.key]}
+                <p className="text-2xl font-black text-ministry-blue">{selectedItem.value}%</p>
+              </div>
+              <div className="max-w-[55%] text-right">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  Detalle
+                </p>
+                <p className="text-sm font-bold text-slate-700">
+                  {selectedItem.description || "—"}
                 </p>
               </div>
+              <button
+                onClick={() => setSelectedKey(null)}
+                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
+            <div className="relative mx-auto h-56 w-56">
+              <div className="pointer-events-none absolute inset-4 rounded-full bg-gradient-to-br from-cyan-100/60 via-transparent to-rose-100/60 blur-2xl" />
+              <svg viewBox="0 0 100 100" className="-rotate-90">
+                <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef2f7" strokeWidth="12" />
+                {segments.map((s) => {
+                  const gap = 2.5;
+                  const isSelected = selectedKey === s.key;
+                  return (
+                    <circle
+                      key={s.key}
+                      cx="50"
+                      cy="50"
+                      r={radius}
+                      fill="none"
+                      stroke={s.hex}
+                      strokeWidth={isSelected ? 16 : 12}
+                      strokeLinecap="round"
+                      strokeDasharray={`${Math.max(0, s.seg - gap)} ${circumference}`}
+                      strokeDashoffset={-s.offset}
+                      onClick={() => setSelectedKey(isSelected ? null : s.key)}
+                      className="cursor-pointer transition-all duration-500 hover:brightness-110"
+                      style={{ filter: isSelected ? `drop-shadow(0 0 6px ${s.hex})` : "none" }}
+                    />
+                  );
+                })}
+              </svg>
+              <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+                <div className="flex flex-col items-center gap-1 rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
+                  <LargestIcon size={18} className="text-slate-400" />
+                  <p className="text-4xl font-black leading-none text-slate-900">
+                    {largest.value}%
+                  </p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                    {labels[largest.key]}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2.5">
+              {items.map((item) => {
+                const Icon = item.icon;
+                const isSelected = selectedKey === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => setSelectedKey(isSelected ? null : item.key)}
+                    className={`group/item relative w-full overflow-hidden rounded-xl p-3 pl-4 text-left ring-1 transition-all ${
+                      isSelected
+                        ? "bg-slate-100 ring-2 ring-ministry-blue"
+                        : "bg-slate-50 ring-slate-100 hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
+                    }`}
+                  >
+                    <span
+                      className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${item.color}`}
+                    />
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="flex items-center gap-3 text-sm font-black text-slate-800">
+                        <Icon size={16} className="text-slate-400" />
+                        {labels[item.key]}
+                      </span>
+                      <span className="text-sm font-black text-ministry-blue">{item.value}%</span>
+                    </div>
+                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
+                      <div
+                        className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
+                        style={{ width: `${item.value}%` }}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
-
-          <div className="space-y-2.5">
-            {items.map((item) => {
-              const Icon = item.icon;
-              const isSelected = selectedKey === item.key;
-              return (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => setSelectedKey(isSelected ? null : item.key)}
-                  className={`group/item relative w-full overflow-hidden rounded-xl p-3 pl-4 text-left ring-1 transition-all ${
-                    isSelected
-                      ? "bg-slate-100 ring-2 ring-ministry-blue"
-                      : "bg-slate-50 ring-slate-100 hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
-                  }`}
-                >
-                  <span
-                    className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${item.color}`}
-                  />
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="flex items-center gap-3 text-sm font-black text-slate-800">
-                      <Icon size={16} className="text-slate-400" />
-                      {labels[item.key]}
-                    </span>
-                    <span className="text-sm font-black text-ministry-blue">{item.value}%</span>
-                  </div>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
-                    <div
-                      className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
-                      style={{ width: `${item.value}%` }}
-                    />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
         </div>
-      </div>
-    </article>
-    </ChartZoom>
+      </article>
+    </ChartShell>
   );
 }
 
@@ -1232,6 +1455,7 @@ export default function Reports() {
               title={copy.donorTitle}
               items={donorSources2026}
               labels={copy.sourceLabels}
+              accent="violet"
             />
           </div>
 
@@ -1249,6 +1473,7 @@ export default function Reports() {
               title={copy.hospitalTitle}
               items={hospitalDonationMix}
               labels={copy.hospitalLabels}
+              accent="rose"
             />
           </div>
 

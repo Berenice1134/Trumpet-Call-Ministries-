@@ -21,7 +21,7 @@ import {
   Eye,
   X,
 } from "lucide-react";
-import { createElement, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -1026,7 +1026,23 @@ export default function Reports() {
     infographicPeriods.find((period) => period.id === selectedPeriodId) ??
     infographicPeriods.at(-1);
   const selectedInfographic = selectedPeriod.files[selectedDocumentLanguage];
-  const visibleInfographicPeriods = infographicPeriods.slice(-3).reverse();
+  const visibleInfographicPeriods = infographicPeriods.slice(-3);
+
+  useEffect(() => {
+    if (!showFullscreen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setShowFullscreen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showFullscreen]);
 
   const totalPantries = yearlySupport.at(-1).cumulativePantries;
   const totalFoodKg = yearlySupport.at(-1).cumulativeFoodKg;
@@ -1286,9 +1302,9 @@ export default function Reports() {
 
       <section
         id="pdf-institucional"
-        className="section-shell scroll-mt-28 bg-gradient-to-b from-white to-slate-50"
+        className="section-shell !max-w-none scroll-mt-28 bg-gradient-to-b from-white to-slate-50"
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[1800px]">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-violet-700 border border-violet-200">
               <FileText size={15} />
@@ -1299,77 +1315,109 @@ export default function Reports() {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-            <div className="space-y-4" aria-label={copy.pdfTitle}>
+          <div className="space-y-8">
+            <div
+              className="relative grid gap-4 before:absolute before:left-[19px] before:top-5 before:bottom-5 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-cyan-300 before:via-ministry-blue before:to-ministry-gold md:grid-cols-3 md:gap-8 md:before:left-[16.66%] md:before:right-[16.66%] md:before:top-[21px] md:before:bottom-auto md:before:h-1 md:before:w-auto"
+              aria-label={copy.pdfTitle}
+            >
               {visibleInfographicPeriods.map((period) => (
                 <article
                   key={period.id}
-                  className={`rounded-2xl border p-5 transition ${
+                  className={`relative flex items-start gap-4 rounded-2xl border p-4 transition md:flex-col md:items-center md:border-0 md:bg-transparent md:p-0 md:text-center ${
                     selectedPeriodId === period.id
-                      ? "border-ministry-blue bg-cyan-50 shadow-md"
-                      : "border-slate-200 bg-white"
+                      ? "border-cyan-200 bg-cyan-50/80 shadow-md md:shadow-none"
+                      : "border-slate-200 bg-white/90 md:bg-transparent"
                   }`}
                 >
                   <button
+                    type="button"
                     onClick={() => setSelectedPeriodId(period.id)}
-                    className="w-full text-left text-xl font-black text-slate-900"
+                    aria-label={`${period.months[language] ?? period.months.es} ${period.year}`}
+                    aria-current={selectedPeriodId === period.id ? "step" : undefined}
+                    className={`relative z-10 mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full border-4 text-xs font-black shadow-sm transition md:mt-0 ${
+                      selectedPeriodId === period.id
+                        ? "border-white bg-ministry-blue text-white ring-4 ring-cyan-200"
+                        : "border-white bg-slate-300 text-slate-700 hover:bg-cyan-400"
+                    }`}
                   >
-                    {period.months[language] ?? period.months.es} {period.year}
+                    {visibleInfographicPeriods.indexOf(period) + 1}
                   </button>
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    {["es", "en"].map((docLanguage) => {
-                      const hasFile = Boolean(period.files[docLanguage]);
-                      const active =
-                        selectedPeriodId === period.id &&
-                        selectedDocumentLanguage === docLanguage;
-                      return (
-                        <button
-                          key={docLanguage}
-                          onClick={() => {
-                            setSelectedPeriodId(period.id);
-                            setSelectedDocumentLanguage(docLanguage);
-                          }}
-                          className={`rounded-xl border px-3 py-3 text-sm font-bold transition ${
-                            active
-                              ? "border-ministry-blue bg-ministry-blue text-white"
-                              : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500"
-                          }`}
-                        >
-                          {docLanguage === "es" ? copy.spanish : copy.english}
-                          {hasFile ? " · PDF" : " · …"}
-                        </button>
-                      );
-                    })}
+                  <div className="min-w-0 flex-1 md:mt-3 md:w-full md:flex-none">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedPeriodId(period.id)}
+                      className="text-left text-lg font-black leading-tight text-slate-900 hover:text-ministry-blue md:text-center md:text-xl"
+                    >
+                      {period.months[language] ?? period.months.es} {period.year}
+                    </button>
+                    <div className="mt-3 flex flex-wrap gap-2 md:justify-center">
+                      {["es", "en"].map((docLanguage) => {
+                        const hasFile = Boolean(period.files[docLanguage]);
+                        const active =
+                          selectedPeriodId === period.id &&
+                          selectedDocumentLanguage === docLanguage;
+                        return (
+                          <button
+                            key={docLanguage}
+                            type="button"
+                            disabled={!hasFile}
+                            onClick={() => {
+                              setSelectedPeriodId(period.id);
+                              setSelectedDocumentLanguage(docLanguage);
+                            }}
+                            className={`rounded-full border px-4 py-2 text-sm font-bold transition ${
+                              active
+                                ? "border-ministry-blue bg-ministry-blue text-white shadow-md"
+                                : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500 hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-50"
+                            }`}
+                          >
+                            {docLanguage === "es" ? copy.spanish : copy.english}
+                            {hasFile ? " · PDF" : " · …"}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </article>
               ))}
             </div>
 
-            <div className="relative min-h-[420px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+            <div className="relative min-h-[560px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
               {selectedInfographic ? (
                 <>
-                  <div className="absolute right-4 top-4 z-10 flex gap-2">
-                    <button
-                      onClick={() => setShowFullscreen(true)}
-                      className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-700 shadow-lg"
-                    >
-                      <Eye size={16} />
-                      {language === "en" ? "Fullscreen" : "Pantalla completa"}
-                    </button>
-                    <a
-                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
-                      download
-                      className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"
-                    >
-                      <Download size={16} />
-                      {language === "en" ? "Download" : "Descargar"}
-                    </a>
+                  <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur sm:px-6">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-black text-slate-800 sm:text-base">
+                        {selectedPeriod.months[language] ?? selectedPeriod.months.es} {selectedPeriod.year}
+                      </p>
+                      <p className="text-xs font-semibold text-slate-500">
+                        {selectedDocumentLanguage === "es" ? copy.spanish : copy.english} · PDF
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowFullscreen(true)}
+                        className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-md transition hover:bg-slate-800"
+                      >
+                        <Eye size={16} />
+                        {language === "en" ? "Fullscreen" : "Pantalla completa"}
+                      </button>
+                      <a
+                        href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                        download
+                        className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"
+                      >
+                        <Download size={16} />
+                        {language === "en" ? "Download" : "Descargar"}
+                      </a>
+                    </div>
                   </div>
                   <iframe
                     title={`${
                       selectedPeriod.months[language] ?? selectedPeriod.months.es
                     } ${selectedPeriod.year} — ${selectedDocumentLanguage}`}
-                    className="h-[600px] w-full bg-white"
+                    className="h-[78vh] min-h-[560px] max-h-[1100px] w-full bg-white pt-[68px]"
                     src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
                   />
                 </>
@@ -1392,20 +1440,34 @@ export default function Reports() {
       </section>
 
       {showFullscreen && selectedInfographic && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4">
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-3 pt-16 sm:p-6 sm:pt-20"
+          role="dialog"
+          aria-modal="true"
+          aria-label={language === "en" ? "PDF viewer" : "Visor de PDF"}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowFullscreen(false);
+          }}
+        >
           <button
+            type="button"
             onClick={() => setShowFullscreen(false)}
-            className="absolute top-4 right-4 text-white/50 hover:text-white text-4xl transition-colors"
+            aria-label={language === "en" ? "Close PDF viewer" : "Cerrar visor de PDF"}
+            title={language === "en" ? "Close PDF viewer (Esc)" : "Cerrar visor de PDF (Esc)"}
+            className="fixed right-4 top-3 z-[110] inline-flex h-12 items-center gap-2 rounded-full bg-white px-5 text-base font-black text-slate-900 shadow-xl transition hover:bg-cyan-100 sm:right-6 sm:top-4"
           >
-            ×
+            <X size={20} />
+            {language === "en" ? "Close" : "Cerrar"}
           </button>
-          <iframe
-            title={`${
-              selectedPeriod.months[language] ?? selectedPeriod.months.es
-            } ${selectedPeriod.year}`}
-            className="h-[95vh] w-full max-w-6xl rounded-lg"
-            src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
-          />
+          <div className="h-[calc(100dvh-5.5rem)] w-full max-w-[1700px] overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <iframe
+              title={`${
+                selectedPeriod.months[language] ?? selectedPeriod.months.es
+              } ${selectedPeriod.year}`}
+              className="h-full w-full bg-white"
+              src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+            />
+          </div>
         </div>
       )}
     </>

@@ -108,7 +108,7 @@ const donationPageCopy = {
     founderLetterVerse:
       "Proverbios 11:25 dice: “Una persona generosa prosperará; quien refresque a otros será renovado.”",
     founderLetterSignature: "A Su servicio,",
-    founderLetterName: "Lic. Andrea Byrn",
+    founderLetterName: "Lic. Andrea L. Byrn",
     founderLetterRole: "Directora",
   },
   en: {

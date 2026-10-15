@@ -316,7 +316,7 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
 
       <div className="relative">
@@ -707,7 +707,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
       <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
 
       <div className="relative">
@@ -862,7 +862,7 @@ function DonutChart({ title, items, labels }) {
   });
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
+    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
       <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
 
       <div className="relative">

@@ -309,6 +309,58 @@ function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
 }
 
 // ===== BAR CHART (Beneficiarios) =====
+function ChartZoom({ title, data, type, valueKey, children, color = "from-cyan-500 to-blue-600" }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const closeOnEscape = (event) => event.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
+  const maxValue = Math.max(...data.map((item) => item[valueKey] ?? item.value));
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)} aria-label={`Ampliar gráfica: ${title}`}
+        className="chart-preview group relative flex min-h-[190px] w-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 text-left shadow-md transition-all duration-300 hover:z-20 hover:border-cyan-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-6">
+        <span className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full bg-cyan-100/70 blur-3xl" />
+        <span className="relative flex w-full items-start justify-between gap-4">
+          <span className="text-lg font-black leading-tight tracking-tight text-slate-900 sm:text-xl">{title}</span>
+          <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${color} text-white shadow-md`}>
+            {type === "donut" ? <PieChart size={19} /> : <BarChart3 size={19} />}
+          </span>
+        </span>
+        <span className="relative mt-4 flex min-h-16 w-full items-end gap-2 rounded-2xl bg-slate-50/90 px-4 py-3 ring-1 ring-slate-100">
+          {type === "donut" ? (
+            <span className="flex w-full items-center gap-4">
+              <span className="h-14 w-14 shrink-0 rounded-full p-[7px]" style={{ background: `conic-gradient(${data.map((item, i) => `${item.hex} ${data.slice(0, i).reduce((sum, d) => sum + d.value, 0)}% ${data.slice(0, i + 1).reduce((sum, d) => sum + d.value, 0)}%`).join(", ")})` }}>
+                <span className="block h-full w-full rounded-full bg-white" />
+              </span>
+              <span className="flex flex-1 flex-col gap-1.5">
+                {data.slice(0, 3).map((item) => <span key={item.key} className="flex items-center gap-2"><span className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200"><span className="block h-full rounded-full" style={{ width: `${item.value}%`, backgroundColor: item.hex }} /></span><span className="w-8 text-right text-[10px] font-black text-slate-500">{item.value}%</span></span>)}
+              </span>
+            </span>
+          ) : data.map((item) => <span key={item.year} className={`flex h-12 min-w-0 flex-1 items-end overflow-hidden rounded-t-md bg-gradient-to-t ${color}`} title={String(item[valueKey])}>
+            <span className="w-full rounded-t-md bg-white/25" style={{ height: `${Math.max(12, (item[valueKey] / maxValue) * 100)}%` }} />
+          </span>)}
+        </span>
+        <span className="relative mt-2 flex w-full justify-between text-[10px] font-bold text-slate-400">
+          <span>{type === "donut" ? "Distribución" : data[0]?.year}</span>
+          <span className="text-cyan-700 transition group-hover:translate-x-1">Pasar o tocar para ampliar →</span>
+          <span>{type === "donut" ? "" : data[data.length - 1]?.year}</span>
+        </span>
+      </button>
+      {open && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm sm:p-6" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}>
+        <section role="dialog" aria-modal="true" aria-label={title} className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-3xl bg-white p-3 shadow-2xl sm:max-h-[calc(100dvh-3rem)] sm:p-6">
+          <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar gráfica" className="sticky top-0 z-10 float-right -mb-12 mr-1 grid h-11 w-11 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"><X size={22} /></button>
+          {children}
+        </section>
+      </div>}
+    </>
+  );
+}
+
 function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey, secondaryLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
@@ -316,7 +368,8 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   return (
-    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
+    <ChartZoom title={title} data={data} type="bar" valueKey={valueKey} color={color}>
+    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
 
       <div className="relative">
@@ -430,6 +483,7 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
         </div>
       </div>
     </article>
+    </ChartZoom>
   );
 }
 
@@ -707,7 +761,8 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   return (
-    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
+    <ChartZoom title={title} data={data} type="column" valueKey={valueKey}>
+    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
       <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
 
       <div className="relative">
@@ -837,6 +892,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
         </div>
       </div>
     </article>
+    </ChartZoom>
   );
 }
 
@@ -862,7 +918,8 @@ function DonutChart({ title, items, labels }) {
   });
 
   return (
-    <article tabIndex={0} className="chart-card-expand group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-8">
+    <ChartZoom title={title} data={items} type="donut" valueKey="value">
+    <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
       <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
 
       <div className="relative">
@@ -976,6 +1033,7 @@ function DonutChart({ title, items, labels }) {
         </div>
       </div>
     </article>
+    </ChartZoom>
   );
 }
 

@@ -23,6 +23,7 @@ import {
   Maximize2,
 } from "lucide-react";
 import { createElement, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -216,15 +217,30 @@ const formatNumber = (value, decimals = 0) =>
 
 // ===== MODAL DE DETALLE (COMPACTO) =====
 function DetailModal({ isOpen, onClose, title, data, total, color }) {
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/70 p-3 backdrop-blur-sm sm:p-6"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
     >
       <div
-        className="relative flex w-full max-w-sm max-h-[80vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl animate-in zoom-in-95 duration-200"
+        className="relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className={`shrink-0 bg-gradient-to-r ${color} px-5 py-4 text-white`}>
@@ -275,7 +291,8 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           </p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -342,6 +359,53 @@ function ChartShell({
     };
   }, [open]);
 
+  const modal = open
+    ? createPortal(
+        <div
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/80 p-2 backdrop-blur-md animate-in fade-in duration-200 sm:p-6"
+          onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+        >
+          <section className="relative flex max-h-[calc(100dvh-1rem)] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl animate-in zoom-in-95 duration-200 sm:max-h-[calc(100dvh-3rem)]">
+            {/* Header fijo del modal */}
+            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-100 bg-white/95 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
+              <div className="flex min-w-0 items-center gap-3">
+                <span
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md`}
+                >
+                  <Icon size={18} />
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-black text-slate-900 sm:text-base">
+                    {title}
+                  </p>
+                  {subtitle && (
+                    <p className="truncate text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                      {subtitle}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Cerrar gráfica"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Contenido scrollable del modal */}
+            <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-6">{children}</div>
+          </section>
+        </div>,
+        document.body
+      )
+    : null;
+
   return (
     <>
       <button
@@ -350,12 +414,10 @@ function ChartShell({
         aria-label={`${expandLabel}: ${title}`}
         className={`group relative flex w-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white p-5 text-left shadow-md ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-6 ${ringHover}`}
       >
-        {/* Glow decorativo */}
         <span
           className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${glow} to-transparent blur-3xl transition duration-700 group-hover:scale-125`}
         />
 
-        {/* Header */}
         <span className="relative flex items-start justify-between gap-3">
           <span className="min-w-0 flex-1">
             <span className="block truncate text-base font-black leading-tight tracking-tight text-slate-900 sm:text-lg">
@@ -374,10 +436,8 @@ function ChartShell({
           </span>
         </span>
 
-        {/* Vista previa (mini gráfica) */}
         <span className="relative mt-5 block flex-1">{preview}</span>
 
-        {/* Footer con CTA */}
         <span className="relative mt-4 flex items-center justify-between">
           <span
             className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${gradient} opacity-60 transition-all duration-500 group-hover:w-24 group-hover:opacity-100`}
@@ -391,31 +451,7 @@ function ChartShell({
         </span>
       </button>
 
-      {open && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm animate-in fade-in duration-200 sm:p-6"
-          onMouseDown={(event) =>
-            event.target === event.currentTarget && setOpen(false)
-          }
-        >
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-label={title}
-            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-white p-3 shadow-2xl animate-in zoom-in-95 duration-200 sm:max-h-[calc(100dvh-3rem)] sm:p-6"
-          >
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Cerrar gráfica"
-              className="sticky top-0 z-10 float-right -mb-12 mr-1 grid h-10 w-10 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"
-            >
-              <X size={20} />
-            </button>
-            {children}
-          </section>
-        </div>
-      )}
+      {modal}
     </>
   );
 }
@@ -427,7 +463,6 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
-  // ---- Vista previa mini ----
   const preview = (
     <span className="flex h-24 items-end gap-1.5 sm:gap-2">
       {data.map((item, i) => {
@@ -857,7 +892,6 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
-  // ---- Vista previa mini ----
   const preview = (
     <span className="flex h-24 items-end gap-1.5 sm:gap-2">
       {data.map((item, i) => {
@@ -1049,7 +1083,6 @@ function DonutChart({ title, items, labels, accent = "cyan" }) {
     return s;
   });
 
-  // ---- Vista previa mini (donut pequeño + leyenda) ----
   const preview = (
     <span className="flex items-center gap-4">
       <span className="relative h-20 w-20 shrink-0">

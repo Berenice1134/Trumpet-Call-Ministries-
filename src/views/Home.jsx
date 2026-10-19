@@ -734,6 +734,43 @@ export default function Home() {
 
       <div id="sobre-nosotros" className="scroll-mt-28" />
 
+      {/* ========== MAPA PRINCIPAL DE COBERTURA ========== */}
+      <section id="zonas-de-apoyo" className="section-shell scroll-mt-28 overflow-hidden bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-950">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="mx-auto mb-10 max-w-4xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-5 py-2 text-xs font-black uppercase tracking-[0.2em] text-amber-300">
+              <MapPin size={15} />
+              {language === "en" ? "Our reach across Tlaxcala" : "Nuestro alcance en Tlaxcala"}
+            </span>
+            <h2 className="mt-5 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+              {language === "en" ? "Every community we support" : "Cada comunidad a la que llegamos"}
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-indigo-100/80 sm:text-xl">
+              {language === "en"
+                ? "This map brings together all ministry support areas across Tlaxcala, including home visits and mission communities."
+                : "Este mapa reúne todas las zonas de apoyo del ministerio en Tlaxcala, incluidas las visitas domiciliares y las comunidades donde realizamos misiones."}
+            </p>
+          </div>
+
+          <figure className="overflow-hidden rounded-[1.75rem] border border-white/15 bg-white p-2 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.8)] sm:rounded-[2.5rem] sm:p-4">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/home/mapa-zonas-apoyo-yauhquemehcan.png`}
+              alt={language === "en"
+                ? "Map of all Trumpet Call Ministries support areas in Tlaxcala, including mission communities"
+                : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala, incluidas las comunidades de misión"}
+              className="h-auto w-full rounded-[1.2rem] sm:rounded-[1.8rem]"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption className="px-3 py-4 text-center text-sm font-semibold text-slate-600 sm:px-6 sm:py-5 sm:text-base">
+              {language === "en"
+                ? "Support areas and mission communities throughout Tlaxcala."
+                : "Zonas de apoyo y comunidades de misión en Tlaxcala."}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* ========== OBJETIVO SECTION ========== */}
       <section id="objetivo" className="section-shell scroll-mt-28 bg-white">
         <div className="max-w-6xl mx-auto">

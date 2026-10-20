@@ -482,67 +482,6 @@ const ministryTimelineByLanguage = {
   ],
 };
 
-const beneficiariesByLanguage = {
-  es: [
-    "Viudas",
-    "Huérfanos",
-    "Personas con discapacidad",
-    "Adultos mayores solos o abandonados",
-    "Familias de escasos recursos",
-    "Familias vulnerables",
-    "Personas con padecimiento crónico o terminal",
-    "Personas sin hogar o en crisis temporal",
-  ],
-  en: [
-    "Widows",
-    "Orphans",
-    "People with disabilities",
-    "Older adults who are alone or abandoned",
-    "Low-income families",
-    "Vulnerable families",
-    "People with chronic or terminal illness",
-    "People without housing or in temporary crisis",
-  ],
-};
-
-
-const supportAreasByLanguage = {
-  es: [
-    {
-      title: "Clases particulares de inglés",
-      text: "English Center Tlaxcala ayuda a sostener el ministerio y fue parte del inicio de este proyecto de servicio.",
-      icon: BookOpen,
-    },
-    {
-      title: "Donadores mexicanos y extranjeros",
-      text: "Cada donación se transforma en despensa, kit, calzado, ropa adaptada o apoyo práctico para una familia.",
-      icon: HandHeart,
-    },
-    {
-      title: "Voluntarios de corazón",
-      text: "Estudiantes, padres, vecinos, iglesias, grupos particulares y beneficiarios ayudan a empacar y repartir.",
-      icon: Users,
-    },
-  ],
-  en: [
-    {
-      title: "Private English classes",
-      text: "English Center Tlaxcala helps sustain the ministry and was part of the beginning of this service project.",
-      icon: BookOpen,
-    },
-    {
-      title: "Mexican and international donors",
-      text: "Every donation becomes a pantry package, kit, footwear, adapted clothing, or practical support for a family.",
-      icon: HandHeart,
-    },
-    {
-      title: "Wholehearted volunteers",
-      text: "Students, parents, neighbors, churches, private groups, and beneficiaries help pack and distribute support.",
-      icon: Users,
-    },
-  ],
-};
-
 const ministryContextByLanguage = {
   es: [
     {
@@ -620,7 +559,6 @@ export default function Home() {
   const { dictionary, language, t } = useLanguage();
   const copy = homePageCopy[language] ?? homePageCopy.es;
   const ministryTimeline = ministryTimelineByLanguage[language] ?? ministryTimelineByLanguage.es;
-  const beneficiaries = beneficiariesByLanguage[language] ?? beneficiariesByLanguage.es;
   const supportAreas = supportAreasByLanguage[language] ?? supportAreasByLanguage.es;
   const ministryContext = ministryContextByLanguage[language] ?? ministryContextByLanguage.es;
   const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
@@ -1112,43 +1050,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== SOSTENIBILIDAD SECTION ========== */}
-      <section id="como-se-sostiene" className="section-shell scroll-mt-28 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 text-violet-600 text-xs font-bold uppercase tracking-wider mb-4">
-              <Heart size={14} />
-              {t("home.supportTitle")}
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-violet-900 bg-clip-text text-transparent mb-4">
-              {t("home.supportTitle")}
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              {t("home.supportText")}
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {supportAreas.map((area) => {
-              const Icon = area.icon;
-
-              return (
-                <div key={area.title} className="group bg-gradient-to-br from-violet-50 to-white rounded-2xl p-8 border border-violet-100 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-500">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center mb-6 shadow-lg shadow-violet-200">
-                    <Icon size={24} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{area.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">{area.text}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-    </section>
-
-
-
       {/* ========== DASHBOARD GRID ========== */}
-      <section id="dashboards" className="bg-gradient-to-b from-white via-slate-50 to-white">
+      <section id="" className="bg-gradient-to-b from-white via-slate-50 to-white">
         <div className="section-shell">
           <div className="text-center mb-12">
             <p className="eyebrow inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 text-violet-600 text-xs font-bold uppercase tracking-wider mb-4">

@@ -139,19 +139,12 @@ const featuredHomeCarePhotos = featuredHomeCarePhotoKeys
 
 const homeCarePageCopy = {
   es: {
-    territoryEyebrow: "Cobertura Territorial",
-    municipalityMapTitle: "Mapa de municipios",
-    municipalityMapText:
-      "Estos son los municipios y comunidades que actualmente reciben apoyos domiciliares.",
-    municipalityMapAlt: "Mapa de municipios con apoyos domiciliares activos en Tlaxcala",
-    municipalityMapLegend:
-      "Actualmente se apoya con servicio domiciliar en las siguientes comunidades y municipios:",
+    currentSupportAreasTitle: "Zonas que reciben apoyo hoy",
+    currentSupportAreasText:
+      "El servicio domiciliar acompaña a familias de estas comunidades con despensa, oración y seguimiento cercano.",
+    currentSupportAreasLegend:
+      "Municipios y comunidades donde actualmente se brinda apoyo domiciliar:",
     serviceCoverageEyebrow: "Cobertura del Servicio",
-    serviceAreaTitle: "Área de servicio",
-    serviceAreaText:
-      "La cobertura domiciliar se concentra en familias de Tlaxcala que reciben despensa, acompañamiento, oración y seguimiento mensual.",
-    serviceAreaLegend:
-      "Son los municipios que actualmente reciben apoyos domiciliares.",
     historyEyebrow: "Nuestra Trayectoria",
     historyServiceTitle: "Historia del servicio domiciliar",
     historyServiceText:
@@ -173,19 +166,12 @@ const homeCarePageCopy = {
     viewGallery: "Ver galería",
   },
   en: {
-    territoryEyebrow: "Territorial Coverage",
-    municipalityMapTitle: "Municipality Map",
-    municipalityMapText:
-      "These are the municipalities and communities currently receiving home care support.",
-    municipalityMapAlt: "Map of municipalities with active home care support in Tlaxcala",
-    municipalityMapLegend:
-      "Home care support is currently provided in the following communities and municipalities:",
+    currentSupportAreasTitle: "Where support is reaching families today",
+    currentSupportAreasText:
+      "The home care service accompanies families in these communities with food support, prayer, and close follow-up.",
+    currentSupportAreasLegend:
+      "Municipalities and communities currently receiving home care support:",
     serviceCoverageEyebrow: "Service Coverage",
-    serviceAreaTitle: "Service Area",
-    serviceAreaText:
-      "Home care coverage focuses on families in Tlaxcala who receive pantry support, accompaniment, prayer, and monthly follow-up.",
-    serviceAreaLegend:
-      "Loma Bonita Tlax, El Sabinal Tlax, Tlacomulco Tlax, El Alto Chiautempan, Texcacoac Chiautempan, Contla de Juan Cuamatzi, Tlaxco, Tizostoc, Ixtacuixtla de Mariano Matamoros, Tizatlán Tlax, Zacatelco, Texoloc, and San Diego Metepec Tlax are the municipalities currently receiving home care support.",
     historyEyebrow: "Our Journey",
     historyServiceTitle: "Home Care Service History",
     historyServiceText:
@@ -476,99 +462,54 @@ export default function HomeCare() {
           photos={homeCarePhotos}
           badge={t("homeCare.gallery")}
           getLabel={(photo) => t(`homeCare.photoLabels.${photo.key}`)}
+          layout="mosaic"
         />
       </section>
 
-<div id="area-servicio-domiciliar" className="scroll-mt-28" />
+{/* ========== ZONAS CON APOYO DOMICILIAR ACTUAL ========== */}
+<section id="area-servicio-domiciliar" className="section-shell scroll-mt-28 overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-cyan-50">
+  <div className="mx-auto max-w-7xl">
+    <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+      <div>
+        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-700 shadow-sm">
+          <MapPinned size={15} />
+          {copy.serviceCoverageEyebrow}
+        </span>
+        <h2 className="mt-5 text-4xl font-black leading-tight text-slate-900 sm:text-5xl">
+          {copy.currentSupportAreasTitle}
+        </h2>
+        <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+          {copy.currentSupportAreasText}
+        </p>
+        <div className="mt-7 flex items-center gap-4 rounded-2xl border border-emerald-100 bg-white p-5 shadow-lg shadow-emerald-900/5">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg">
+            <MapPinned size={25} />
+          </span>
+          <span>
+            <span className="block text-3xl font-black text-slate-900">{serviceCommunities.length}</span>
+            <span className="text-sm font-bold text-slate-500">
+              {language === "en" ? "active support areas" : "zonas de apoyo activas"}
+            </span>
+          </span>
+        </div>
+      </div>
 
-{/* ========== MAPA DE MUNICIPIOS SECTION ========== */}
-<section id="mapa-municipios" className="relative scroll-mt-28 overflow-hidden bg-slate-950 py-12 lg:py-16">
-  <div className="absolute inset-0 opacity-30 pattern-grid" />
-  <div className="absolute -left-28 top-10 h-80 w-80 rounded-full bg-ministry-teal/30 blur-3xl" />
-  <div className="absolute -right-28 bottom-10 h-96 w-96 rounded-full bg-ministry-gold/25 blur-3xl" />
-  <div className="section-shell relative">
-    <div className="text-center mb-8 lg:mb-10">
-      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-ministry-gold text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur border border-white/10">
-        <MapPinned size={14} />
-        {copy.territoryEyebrow}
-      </span>
-      <h2 className="text-3xl lg:text-5xl font-black bg-gradient-to-r from-white via-cyan-100 to-ministry-gold bg-clip-text text-transparent mb-3">
-        {copy.municipalityMapTitle}
-      </h2>
-      <p className="text-white/70 max-w-3xl mx-auto text-base lg:text-lg leading-relaxed">
-        {copy.municipalityMapText}
-      </p>
-    </div>
-    <div className="mx-auto max-w-6xl">
-      <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 shadow-2xl shadow-cyan-950/70 backdrop-blur">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr]">
-          {/* Map Column */}
-          <div className="bg-gradient-to-br from-white via-cyan-50 to-blue-50 p-4 sm:p-6 lg:p-8">
-            <div className="relative h-full flex flex-col">
-              <div className="relative flex-1 min-h-[280px] sm:min-h-[320px] lg:min-h-[400px]">
-                <div className="absolute inset-4 rounded-3xl bg-ministry-teal/10 blur-2xl" />
-                <img
-                  src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/mapa-area-servicio.png`}
-                  alt={copy.municipalityMapAlt}
-                  className="relative w-full h-full object-contain rounded-3xl shadow-2xl ring-1 ring-white/70"
-                />
-                <div className="absolute left-4 top-4 hidden rounded-full bg-slate-950/90 px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-ministry-gold shadow-lg backdrop-blur sm:inline-flex">
-                  {copy.territoryEyebrow}
-                </div>
-              </div>
-              
-              {/* Stats */}
-              <div className="mt-4 rounded-2xl border border-white/40 bg-white/95 p-4 shadow-xl backdrop-blur">
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { value: serviceCommunities.length, label: language === "en" ? "active areas" : "zonas activas", icon: MapPinned },
-                    { value: "12kg", label: language === "en" ? "monthly pantry" : "despensa mensual", icon: PackageCheck },
-                    { value: "1x", label: language === "en" ? "monthly visit" : "visita mensual", icon: Calendar },
-                  ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-2.5">
-                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ministry-blue text-white">
-                        <stat.icon size={17} />
-                      </span>
-                      <span>
-                        <span className="block text-xl font-black text-ink leading-tight">{stat.value}</span>
-                        <span className="block text-xs font-bold uppercase tracking-[0.12em] text-slate-500 leading-tight">{stat.label}</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <div className="rounded-[2rem] border border-white bg-white/80 p-5 shadow-2xl shadow-emerald-900/10 backdrop-blur sm:p-8">
+        <p className="mb-5 text-sm font-bold leading-6 text-slate-500 sm:text-base">
+          {copy.currentSupportAreasLegend}
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {serviceCommunities.map((community, index) => (
+            <div
+              key={community}
+              className="flex min-h-16 items-center gap-3 rounded-2xl border border-emerald-100 bg-gradient-to-br from-white to-emerald-50/70 px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-600 text-xs font-black text-white shadow-sm">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="text-sm font-bold leading-5 text-slate-800">{community}</span>
             </div>
-          </div>
-
-          {/* Communities List Column */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-ministry-blue via-slate-900 to-ink p-6 lg:p-8 text-white flex flex-col">
-            <div className="absolute right-0 top-0 h-44 w-44 rounded-bl-full bg-ministry-gold/15" />
-            <div className="relative flex flex-col h-full">
-              <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-white/10 shadow-lg ring-1 ring-white/15 shrink-0">
-                <MapPinned size={28} />
-              </div>
-              <h3 className="text-2xl lg:text-3xl font-black leading-tight">
-                {copy.serviceAreaTitle}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/78">
-                {copy.municipalityMapLegend}
-              </p>
-
-              <div className="mt-5 grid grid-cols-1 gap-2.5 flex-1 content-start">
-                {serviceCommunities.map((community, index) => (
-                  <span
-                    key={community}
-                    className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 px-4 py-2.5 text-sm font-bold text-white shadow-sm backdrop-blur transition hover:translate-x-1 hover:bg-white/15"
-                  >
-                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ministry-gold text-xs font-black text-ink">
-                      {index + 1}
-                    </span>
-                    <span className="truncate">{community}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

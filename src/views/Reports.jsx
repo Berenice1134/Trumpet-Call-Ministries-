@@ -1756,35 +1756,38 @@ export default function Reports() {
       </section>
 
       {showFullscreen && selectedInfographic && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-3 pt-16 sm:p-6 sm:pt-20"
-          role="dialog"
-          aria-modal="true"
-          aria-label={language === "en" ? "PDF viewer" : "Visor de PDF"}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setShowFullscreen(false);
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => setShowFullscreen(false)}
-            aria-label={language === "en" ? "Close PDF viewer" : "Cerrar visor de PDF"}
-            title={language === "en" ? "Close PDF viewer (Esc)" : "Cerrar visor de PDF (Esc)"}
-            className="fixed right-4 top-3 z-[110] inline-flex h-12 items-center gap-2 rounded-full bg-white px-5 text-base font-black text-slate-900 shadow-xl transition hover:bg-cyan-100 sm:right-6 sm:top-4"
+        createPortal(
+          <div
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/95 p-3 pt-16 sm:p-6 sm:pt-20"
+            role="dialog"
+            aria-modal="true"
+            aria-label={language === "en" ? "PDF viewer" : "Visor de PDF"}
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setShowFullscreen(false);
+            }}
           >
-            <X size={20} />
-            {language === "en" ? "Close" : "Cerrar"}
-          </button>
-          <div className="h-[calc(100dvh-5.5rem)] w-full max-w-[1700px] overflow-hidden rounded-2xl bg-white shadow-2xl">
-            <iframe
-              title={`${
-                selectedPeriod.months[language] ?? selectedPeriod.months.es
-              } ${selectedPeriod.year}`}
-              className="h-full w-full bg-white"
-              src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
-            />
-          </div>
-        </div>
+            <button
+              type="button"
+              onClick={() => setShowFullscreen(false)}
+              aria-label={language === "en" ? "Close PDF viewer" : "Cerrar visor de PDF"}
+              title={language === "en" ? "Close PDF viewer (Esc)" : "Cerrar visor de PDF (Esc)"}
+              className="fixed right-4 top-3 z-[1010] inline-flex h-12 items-center gap-2 rounded-full bg-white px-5 text-base font-black text-slate-900 shadow-xl transition hover:bg-cyan-100 sm:right-6 sm:top-4"
+            >
+              <X size={20} />
+              {language === "en" ? "Close" : "Cerrar"}
+            </button>
+            <div className="h-[calc(100dvh-5.5rem)] w-full max-w-[1700px] overflow-hidden rounded-2xl bg-white shadow-2xl">
+              <iframe
+                title={`${
+                  selectedPeriod.months[language] ?? selectedPeriod.months.es
+                } ${selectedPeriod.year}`}
+                className="h-full w-full bg-white"
+                src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+              />
+            </div>
+          </div>,
+          document.body
+        )
       )}
     </>
   );

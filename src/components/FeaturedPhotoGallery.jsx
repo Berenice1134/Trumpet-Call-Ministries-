@@ -13,6 +13,7 @@ export default function FeaturedPhotoGallery({
   getLabel,
   badge,
   onImageClick,
+  layout = "carousel",
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -76,6 +77,57 @@ export default function FeaturedPhotoGallery({
         </div>
       )}
 
+      {layout === "mosaic" ? (
+        <div className="relative mx-auto grid auto-rows-[125px] grid-flow-dense grid-cols-2 gap-3 sm:auto-rows-[150px] sm:grid-cols-4 sm:gap-4 lg:auto-rows-[170px] lg:grid-cols-6">
+          {photos.map((photo, index) => {
+            const tileLayouts = [
+              "col-span-2 row-span-2",
+              "row-span-2",
+              "",
+              "col-span-2 sm:col-span-1",
+              "col-span-2",
+              "",
+              "row-span-2",
+              "",
+              "col-span-2",
+              "row-span-2",
+              "",
+              "col-span-2 sm:col-span-1",
+            ];
+
+            return (
+              <button
+                key={photo.src}
+                type="button"
+                className={`group relative isolate overflow-hidden rounded-2xl bg-slate-900 text-left shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-ministry-gold/50 ${tileLayouts[index % tileLayouts.length]}`}
+                onClick={() => {
+                  setActiveIndex(index);
+                  onImageClick?.(index);
+                  setIsViewerOpen(true);
+                }}
+                aria-label={getLabel(photo)}
+              >
+                <img
+                  src={photo.src}
+                  alt={getLabel(photo)}
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/5 to-transparent opacity-75 transition group-hover:opacity-100" />
+                <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-black tracking-wider text-slate-800 shadow sm:left-4 sm:top-4">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="absolute inset-x-0 bottom-0 p-3 text-left text-xs font-bold leading-5 text-white sm:p-4 sm:text-sm">
+                  {getLabel(photo)}
+                </span>
+                <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-ministry-blue opacity-0 shadow transition group-hover:opacity-100 sm:right-4 sm:top-4">
+                  <Maximize2 size={16} />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
       <div className="relative mx-auto h-[430px] max-w-6xl sm:h-[500px]">
         {visiblePhotos.map(({ photo, index, offset }) => {
           const isActive = offset === 0;
@@ -158,6 +210,7 @@ export default function FeaturedPhotoGallery({
           <ChevronRight size={28} />
         </button>
       </div>
+      )}
 
       {isViewerOpen &&
         createPortal(
@@ -221,22 +274,24 @@ export default function FeaturedPhotoGallery({
           document.body,
         )}
 
-      <div className="relative mx-auto mt-8 flex w-fit max-w-full items-center gap-2 overflow-x-auto rounded-full bg-white px-4 py-3 shadow-xl shadow-slate-200/70">
-        {photos.map((photo, index) => (
-          <button
-            key={photo.src}
-            type="button"
-            className={[
-              "h-3 shrink-0 rounded-full transition-all",
-              index === activeIndex
-                ? "w-10 bg-ministry-teal"
-                : "w-3 bg-slate-200 hover:bg-ministry-gold",
-            ].join(" ")}
-            onClick={() => setActiveIndex(index)}
-            aria-label={getLabel(photo)}
-          />
-        ))}
-      </div>
+      {layout !== "mosaic" && (
+        <div className="relative mx-auto mt-8 flex w-fit max-w-full items-center gap-2 overflow-x-auto rounded-full bg-white px-4 py-3 shadow-xl shadow-slate-200/70">
+          {photos.map((photo, index) => (
+            <button
+              key={photo.src}
+              type="button"
+              className={[
+                "h-3 shrink-0 rounded-full transition-all",
+                index === activeIndex
+                  ? "w-10 bg-ministry-teal"
+                  : "w-3 bg-slate-200 hover:bg-ministry-gold",
+              ].join(" ")}
+              onClick={() => setActiveIndex(index)}
+              aria-label={getLabel(photo)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

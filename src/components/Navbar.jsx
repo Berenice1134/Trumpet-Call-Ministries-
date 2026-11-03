@@ -18,11 +18,10 @@ const menuGroupsByLanguage = {
       label: "Servicio Domiciliar",
       path: "/servicio-domiciliar",
       items: [
-        { label: "Mapa de municipios", id: "mapa-municipios" },
-        { label: "Área de servicio", id: "area-servicio-domiciliar" },
+        { label: "Zonas con apoyo actual", id: "area-servicio-domiciliar" },
         { label: "Historia", id: "historia-domiciliar" },
         { label: "Toneladas repartidas", id: "toneladas-repartidas" },
-        { label: "Galería de voluntarios", id: "galeria-voluntarios" },
+        { label: "Galería de servicio domiciliar", id: "galeria-voluntarios" },
       ],
     },
     {
@@ -78,11 +77,10 @@ const menuGroupsByLanguage = {
       label: "Home Care",
       path: "/servicio-domiciliar",
       items: [
-        { label: "Municipality Map", id: "mapa-municipios" },
-        { label: "Service Area", id: "area-servicio-domiciliar" },
+        { label: "Current support areas", id: "area-servicio-domiciliar" },
         { label: "History", id: "historia-domiciliar" },
         { label: "Tons Distributed", id: "toneladas-repartidas" },
-        { label: "Volunteer Gallery", id: "galeria-voluntarios" },
+        { label: "Home Care Photo Gallery", id: "galeria-voluntarios" },
       ],
     },
     {

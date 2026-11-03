@@ -751,31 +751,6 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-8 rounded-[2rem] border border-slate-100 bg-slate-950 p-6 shadow-xl md:p-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-cyan-400/15 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-cyan-200">
-                  <Heart size={14} />
-                  {language === "en" ? "Who we serve" : "A quienes servimos"}
-                </span>
-                <h3 className="mt-4 text-3xl font-black text-white">
-                  {language === "en" ? "Families facing difficult seasons" : "Familias atravesando temporadas difíciles"}
-                </h3>
-              </div>
-              <p className="max-w-xl text-sm leading-7 text-white/65">
-                {language === "en"
-                  ? "Home visits focus on people who need more than a pantry package: they need to be heard, accompanied, prayed for, and reminded that they are not alone."
-                  : "Las visitas domiciliares se enfocan en personas que necesitan más que una despensa: necesitan ser escuchadas, acompañadas, recibir oración y recordar que no están solas."}
-              </p>
-            </div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {beneficiaries.map((item) => (
-                <span key={item} className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white/85">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

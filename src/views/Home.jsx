@@ -559,7 +559,6 @@ export default function Home() {
   const { dictionary, language, t } = useLanguage();
   const copy = homePageCopy[language] ?? homePageCopy.es;
   const ministryTimeline = ministryTimelineByLanguage[language] ?? ministryTimelineByLanguage.es;
-  const supportAreas = supportAreasByLanguage[language] ?? supportAreasByLanguage.es;
   const ministryContext = ministryContextByLanguage[language] ?? ministryContextByLanguage.es;
   const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
   const activeTimelineItem = ministryTimeline[activeTimelineIndex] ?? ministryTimeline[0];

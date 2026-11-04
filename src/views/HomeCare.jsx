@@ -1,20 +1,17 @@
 import {
   BookOpen,
-  Camera,
   ClipboardList,
   MapPinned,
   PackageCheck,
   Sparkles,
   TrendingUp,
   Users,
-  ArrowRight,
   ChevronDown,
   Heart,
   Home,
   Truck,
   Calendar,
 } from "lucide-react";
-import FeaturedPhotoGallery from "../components/FeaturedPhotoGallery.jsx";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
@@ -137,6 +134,32 @@ const featuredHomeCarePhotos = featuredHomeCarePhotoKeys
   .map((key) => homeCarePhotos.find((photo) => photo.key === key))
   .filter(Boolean);
 
+const homeCareTimelinePhotoKeys = [
+  "carBags",
+  "homeVisitTableSupport",
+  "homeVisitPrayerCare",
+  "homeVisitFlorDelivery",
+];
+
+function CarePhoto({ photo, label, className = "" }) {
+  if (!photo) return null;
+
+  return (
+    <figure className={`group relative isolate overflow-hidden rounded-[1.75rem] bg-slate-900 shadow-xl ${className}`}>
+      <img
+        src={photo.src}
+        alt={label}
+        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/5 to-transparent" />
+      <figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-bold leading-5 text-white drop-shadow sm:p-5 sm:text-base">
+        {label}
+      </figcaption>
+    </figure>
+  );
+}
+
 const homeCarePageCopy = {
   es: {
     currentSupportAreasTitle: "Zonas que reciben apoyo hoy",
@@ -162,8 +185,7 @@ const homeCarePageCopy = {
     familiesHelped: "Familias beneficiadas",
     tonsDistributed: "Toneladas repartidas",
     activeCommunities: "Comunidades activas",
-    viewFullGallery: "Ver galería completa",
-    viewGallery: "Ver galería",
+    viewCoverage: "Conoce las zonas de apoyo",
   },
   en: {
     currentSupportAreasTitle: "Where support is reaching families today",
@@ -189,8 +211,7 @@ const homeCarePageCopy = {
     familiesHelped: "Families helped",
     tonsDistributed: "Tons distributed",
     activeCommunities: "Active communities",
-    viewFullGallery: "View full gallery",
-    viewGallery: "View gallery",
+    viewCoverage: "Explore current support areas",
   },
 };
 
@@ -412,10 +433,10 @@ export default function HomeCare() {
 
               {/* CTA */}
               <a
-                href="#galeria-voluntarios"
+                href="#area-servicio-domiciliar"
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
               >
-                {copy.viewFullGallery}
+                {copy.viewCoverage}
                 <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
               </a>
             </div>
@@ -437,33 +458,6 @@ export default function HomeCare() {
             <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
           </div>
         </div>
-      </section>
-
-      {/* ========== GALLERY SECTION ========== */}
-      <section id="galeria-voluntarios" className="section-shell scroll-mt-28 bg-white">
-        <div className="mb-12">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700">
-                <Camera size={17} />
-                {t("homeCare.gallery")}
-              </div>
-              <h2 className="mt-4 max-w-3xl text-4xl font-black bg-gradient-to-r from-slate-900 to-emerald-900 bg-clip-text text-transparent sm:text-5xl">
-                {t("homeCare.galleryTitle")}
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-slate-500">
-              {t("homeCare.galleryIntro")}
-            </p>
-          </div>
-        </div>
-
-        <FeaturedPhotoGallery
-          photos={homeCarePhotos}
-          badge={t("homeCare.gallery")}
-          getLabel={(photo) => t(`homeCare.photoLabels.${photo.key}`)}
-          layout="mosaic"
-        />
       </section>
 
 {/* ========== ZONAS CON APOYO DOMICILIAR ACTUAL ========== */}
@@ -492,6 +486,11 @@ export default function HomeCare() {
             </span>
           </span>
         </div>
+        <CarePhoto
+          photo={homeCarePhotos.find((photo) => photo.key === "homeVisitVolunteersBags")}
+          label={t("homeCare.photoLabels.homeVisitVolunteersBags")}
+          className="mt-5 h-56 sm:h-64"
+        />
       </div>
 
       <div className="rounded-[2rem] border border-white bg-white/80 p-5 shadow-2xl shadow-emerald-900/10 backdrop-blur sm:p-8">
@@ -547,6 +546,9 @@ export default function HomeCare() {
         <div className="space-y-16 relative">
           {homeCareTimeline.map((item, index) => {
             const isEven = index % 2 === 0;
+            const timelinePhoto = homeCarePhotos.find(
+              (photo) => photo.key === homeCareTimelinePhotoKeys[index % homeCareTimelinePhotoKeys.length],
+            );
 
             return (
               <div key={item.period} className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
@@ -571,7 +573,13 @@ export default function HomeCare() {
                         {item.stat}
                       </span>
                     </div>
-                  ) : null}
+                  ) : (
+                    <CarePhoto
+                      photo={timelinePhoto}
+                      label={t(`homeCare.photoLabels.${timelinePhoto?.key}`)}
+                      className="h-64 w-full lg:h-[340px]"
+                    />
+                  )}
                 </div>
                 
                 <div className="relative z-10 flex-shrink-0">
@@ -602,7 +610,13 @@ export default function HomeCare() {
                         {item.stat}
                       </span>
                     </div>
-                  ) : null}
+                  ) : (
+                    <CarePhoto
+                      photo={timelinePhoto}
+                      label={t(`homeCare.photoLabels.${timelinePhoto?.key}`)}
+                      className="h-64 w-full lg:h-[340px]"
+                    />
+                  )}
                 </div>
               </div>
             );
@@ -654,20 +668,36 @@ export default function HomeCare() {
       ))}
     </div>
 
-    <div className="max-w-4xl mx-auto">
-      <div className="relative rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white p-10 text-center border-2 border-emerald-200/50 shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-500">
-        <div className="relative flex items-center justify-center gap-4 flex-wrap">
-        </div>
+    <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <CarePhoto
+        photo={homeCarePhotos.find((photo) => photo.key === "homeVisitChildMilk")}
+        label={t("homeCare.photoLabels.homeVisitChildMilk")}
+        className="h-72 sm:h-[380px]"
+      />
+      <div className="rounded-[1.75rem] border border-emerald-100 bg-white p-7 shadow-lg sm:p-9">
+        <span className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">
+          {language === "en" ? "Every visit matters" : "Cada visita importa"}
+        </span>
+        <p className="mt-3 text-2xl font-black leading-tight text-slate-900 sm:text-3xl">
+          {language === "en"
+            ? "Practical help, offered with care and dignity."
+            : "Apoyo práctico, ofrecido con cuidado y dignidad."}
+        </p>
+        <p className="mt-4 leading-7 text-slate-600">
+          {language === "en"
+            ? "Food support is one part of a personal visit that also makes room for listening, prayer, and continued accompaniment."
+            : "La despensa es parte de una visita personal que también abre espacio para escuchar, orar y acompañar de manera continua."}
+        </p>
       </div>
     </div>
   </div>
 </section>
 
 {/* ========== ACTIVITIES & FORM SECTION ========== */}
-<section className="section-shell bg-gradient-to-b from-slate-50 via-white to-slate-50/50 relative overflow-hidden">
+<section id="actividades-domiciliares" className="section-shell bg-gradient-to-b from-slate-50 via-white to-slate-50/50 relative overflow-hidden">
   <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]" />
   
-  <div className="grid gap-8 max-w-4xl mx-auto relative">
+  <div className="grid gap-8 max-w-6xl mx-auto relative lg:grid-cols-2 lg:items-stretch">
     {/* Left Column - Activities */}
     <div className="grid gap-6">
       <div className="group relative bg-white rounded-2xl p-8 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
@@ -697,30 +727,11 @@ export default function HomeCare() {
         </ul>
       </div>
 
-      <div className="group relative bg-white rounded-2xl p-8 border border-violet-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-violet-100/20 rounded-full -mr-20 -mt-20" />
-        
-        <div className="relative flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center shadow-lg shadow-violet-300/40 group-hover:scale-110 transition-transform duration-300">
-            <PackageCheck size={22} className="text-white" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors">
-            {t("homeCare.gallery")}
-          </h3>
-        </div>
-        <p className="relative text-slate-600 leading-relaxed">
-          {t("homeCare.galleryIntro")}
-        </p>
-        <a
-          href="#galeria-voluntarios"
-          className="relative inline-flex items-center gap-2 mt-5 text-violet-600 font-semibold hover:text-violet-700 transition-colors group/link"
-        >
-          <span className="border-b-2 border-violet-200 group-hover/link:border-violet-500 transition-colors pb-0.5">
-            {copy.viewGallery}
-          </span>
-          <ArrowRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
-        </a>
-      </div>
+      <CarePhoto
+        photo={homeCarePhotos.find((photo) => photo.key === "homeVisitFamilyKitchen")}
+        label={t("homeCare.photoLabels.homeVisitFamilyKitchen")}
+        className="min-h-[320px] lg:h-full"
+      />
     </div>
 
   </div>

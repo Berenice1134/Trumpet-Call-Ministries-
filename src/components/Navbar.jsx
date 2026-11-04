@@ -21,7 +21,7 @@ const menuGroupsByLanguage = {
         { label: "Zonas con apoyo actual", id: "area-servicio-domiciliar" },
         { label: "Historia", id: "historia-domiciliar" },
         { label: "Toneladas repartidas", id: "toneladas-repartidas" },
-        { label: "Galería de servicio domiciliar", id: "galeria-voluntarios" },
+        { label: "Actividades", id: "actividades-domiciliares" },
       ],
     },
     {
@@ -80,7 +80,7 @@ const menuGroupsByLanguage = {
         { label: "Current support areas", id: "area-servicio-domiciliar" },
         { label: "History", id: "historia-domiciliar" },
         { label: "Tons Distributed", id: "toneladas-repartidas" },
-        { label: "Home Care Photo Gallery", id: "galeria-voluntarios" },
+        { label: "Activities", id: "actividades-domiciliares" },
       ],
     },
     {

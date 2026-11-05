@@ -1,4 +1,4 @@
-﻿import {
+import {
   Camera,
   Church,
   HeartHandshake,
@@ -33,47 +33,47 @@ import { useLanguage } from "../context/useLanguage.js";
 const volunteerPhotos = [
   {
     key: "teamBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Equipo de voluntarios con despensas",
   },
   {
     key: "youngTeam",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Jóvenes voluntarios",
   },
   {
     key: "ricePacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Empacando arroz",
   },
   {
     key: "tablePrep",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Preparando mesa de trabajo",
   },
   {
     key: "bagFilling",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Llenando bolsas",
   },
   {
     key: "supplies",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Organizando suministros",
   },
   {
     key: "familiesPacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Familias empacando",
   },
   {
     key: "waving",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Voluntarios saludando",
   },
   {
     key: "childrenBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`, // Ruta corregida
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
     alt: "Niños con bolsas",
   },
 ];
@@ -437,7 +437,7 @@ function getTestimonialPreview(text) {
   return `${shortText.slice(0, sentenceEnd > 140 ? sentenceEnd + 1 : 250)}...`;
 }
 
-// ===== CARRUSEL DE FOTOS =====
+// Carrusel con estado local para índice activo y reproducción automática.
 const PhotoCarousel = ({ photos }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -494,7 +494,7 @@ const PhotoCarousel = ({ photos }) => {
           ))}
         </div>
 
-        {/* Flechas de navegación */}
+        {/* Controles para recorrer las imágenes en ambas direcciones. */}
         <button
           onClick={prevSlide}
           className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2.5 text-white backdrop-blur-sm transition hover:bg-black/70 hover:scale-110"
@@ -510,7 +510,7 @@ const PhotoCarousel = ({ photos }) => {
           <ChevronRight size={22} />
         </button>
 
-        {/* Indicadores de página (puntos) */}
+        {/* Indicadores sincronizados con el índice de la imagen activa. */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
           {photos.map((_, index) => (
             <button
@@ -526,7 +526,7 @@ const PhotoCarousel = ({ photos }) => {
           ))}
         </div>
 
-        {/* Botón de pausa/reproducción */}
+        {/* Permite alternar la reproducción automática del carrusel. */}
         <button
           onClick={togglePlay}
           className="absolute top-3 right-3 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
@@ -695,7 +695,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
   );
 };
 
-// ===== TESTIMONIAL GROUP COMPONENT =====
+// Presenta testimonios asociados al grupo seleccionado y expone sus acciones.
 const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupTitle = language === "en" ? group.titleEn : group.title;
@@ -850,7 +850,7 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
   );
 };
 
-// ===== MODAL DE TESTIMONIO =====
+// Diálogo modal con contenido ampliado y cierre accesible.
 const TestimonialModal = ({ testimonial, onClose, copy }) => {
   useEffect(() => {
     const handleEsc = (e) => {
@@ -939,7 +939,7 @@ export default function Volunteers() {
               <HeartHandshake size={16} />
               {t("volunteers.carouselLabel")}
             </div>
-            <h1 className="mt-6 text-5xl font-black leading-none sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 text-4xl font-black leading-tight sm:text-6xl lg:text-7xl">
               {t("volunteers.title")}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">
@@ -947,7 +947,7 @@ export default function Volunteers() {
             </p>
           </div>
 
-          {/* Carrusel principal */}
+          {/* Galería destacada de la página de voluntariado. */}
           <div>
             <PhotoCarousel photos={featuredVolunteerPhotos} />
           </div>
@@ -970,7 +970,7 @@ export default function Volunteers() {
             </p>
           </div>
 
-          {/* Selector de grupos */}
+          {/* Selector que determina el contenido de la sección siguiente. */}
           <div className="grid gap-3 md:grid-cols-5 mb-8">
             {volunteerGroups.map((group) => {
               const Icon = group.icon;
@@ -1004,7 +1004,7 @@ export default function Volunteers() {
             })}
           </div>
 
-          {/* Contenido del grupo seleccionado */}
+          {/* Detalle derivado del grupo activo en el selector. */}
           <div className="overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-100">
             <div className={`bg-gradient-to-r ${selectedGroup.color} p-6 md:p-8 text-white`}>
               <div className="flex items-center gap-4">
@@ -1043,7 +1043,7 @@ export default function Volunteers() {
                   </div>
                 </div>
 
-                {/* Carrusel del grupo */}
+                {/* Fotografías asociadas al grupo activo. */}
                 <div>
                   <p className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">
                     {language === "en" ? "Gallery" : "Galería"}

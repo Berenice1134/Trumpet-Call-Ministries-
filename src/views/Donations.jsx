@@ -82,7 +82,7 @@ const donationPageCopy = {
     bankDetails: "Datos bancarios",
     bankText: "Este es el único medio autorizado para transferencias. Elige el área que quieres apoyar y usa el concepto indicado.",
     accountNumber: "Número de cuenta",
-    clabe: "CLABE interbancaria",
+    clabe: "Clave interbancaria para transferencias interbancaria",
     transferConcept: "Concepto",
     copy: "Copiar",
     copied: "Copiado",
@@ -136,7 +136,7 @@ const donationPageCopy = {
     bankDetails: "Bank details",
     bankText: "This is the only authorized method for bank transfers. Choose the area you want to support and use the matching concept.",
     accountNumber: "Account number",
-    clabe: "Interbank CLABE",
+    clabe: "Interbank Clave interbancaria para transferencias",
     transferConcept: "Concept",
     copy: "Copy",
     copied: "Copied",
@@ -301,18 +301,18 @@ export default function Donations() {
 
   return (
     <>
-      {/* ========== HERO SECTION ========== */}
+      {/* ========== Encabezado principal y accesos a las opciones de donación ========== */}
       <section id="donaciones" className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-amber-950 to-orange-950 scroll-mt-28">
-        {/* Background Layers */}
+        {/* Capas decorativas de fondo */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-amber-950/80 to-orange-950/90" />
           
-          {/* Animated gradient orbs */}
+          {/* Elementos ambientales animados */}
           <div className="absolute top-1/4 -left-20 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000" />
           <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-yellow-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
           
-          {/* Pattern overlay */}
+          {/* Trama de fondo con contraste reducido */}
           <div className="absolute inset-0 opacity-[0.03]">
             <div className="h-full w-full" style={{ 
               backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
@@ -320,7 +320,7 @@ export default function Donations() {
             }} />
           </div>
 
-          {/* Floating coins decoration */}
+          {/* Ilustraciones decorativas de monedas */}
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(8)].map((_, i) => (
               <div
@@ -357,7 +357,7 @@ export default function Donations() {
             </div>
 
             {/* Title */}
-            <h1 className="text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl mb-6">
+            <h1 className="text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl mb-6">
               <span className="bg-gradient-to-r from-white via-white to-amber-100 bg-clip-text text-transparent">
                 {t("donations.title")}
               </span>
@@ -398,7 +398,7 @@ export default function Donations() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Indicador visual de desplazamiento */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
             <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
@@ -406,7 +406,7 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== PLANS SECTION ========== */}
+      {/* ========== Planes de aportación y frecuencia ========== */}
       <section id="planes-donacion" className="section-shell bg-gradient-to-b from-white to-slate-50 scroll-mt-28">
         <div className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold uppercase tracking-wider mb-4">
@@ -422,7 +422,7 @@ export default function Donations() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
-          {/* Monthly Home Card */}
+          {/* Tarjeta de aportación al servicio domiciliar */}
           <div className="group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-teal-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
             <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl">
@@ -456,7 +456,7 @@ export default function Donations() {
             </div>
           </div>
 
-          {/* Monthly Hospital Card */}
+          {/* Tarjeta de aportación al hospital infantil */}
           <div className="group relative lg:-mt-8">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400 to-orange-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
             <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl ring-2 ring-amber-400">
@@ -495,7 +495,7 @@ export default function Donations() {
             </div>
           </div>
 
-          {/* Custom Donation Card */}
+          {/* Formulario para definir una aportación personalizada */}
           <div className="group relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-400 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
             <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl">
@@ -531,7 +531,7 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== BANK TRANSFER SECTION ========== */}
+      {/* ========== Datos bancarios para transferencias ========== */}
       <section id="transferencias" className="section-shell bg-white scroll-mt-28">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -552,7 +552,7 @@ export default function Donations() {
               <div key={index} className="group relative">
                 <div className={`absolute -inset-0.5 bg-gradient-to-r ${account.color} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`} />
                 <div className={`relative h-full bg-white rounded-2xl p-8 shadow-lg border ${account.borderLight}`}>
-                  {/* Bank Header */}
+                  {/* Identificación de la cuenta receptora */}
                   <div className="flex items-center gap-4 mb-6">
                     <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${account.color} flex items-center justify-center shadow-lg`}>
                       <account.icon size={24} className="text-white" />
@@ -563,9 +563,9 @@ export default function Donations() {
                     </div>
                   </div>
 
-                  {/* Account Details */}
+                  {/* Campos de referencia para realizar la transferencia */}
                   <div className="space-y-4">
-                    {/* Account Number */}
+                    {/* Número de cuenta bancaria */}
                     <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -593,7 +593,7 @@ export default function Donations() {
                       </p>
                     </div>
 
-                    {/* CLABE */}
+                    {/* Clave interbancaria para transferencias */}
                     <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -621,7 +621,7 @@ export default function Donations() {
                       </p>
                     </div>
 
-                    {/* Transfer Concept */}
+                    {/* Concepto sugerido para identificar el depósito */}
                     <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -664,7 +664,7 @@ export default function Donations() {
                     </div>
                   </div>
 
-                  {/* Share Button */}
+                  {/* Acción para compartir los datos bancarios */}
                   <button
                     type="button"
                     onClick={shareTransferDetails}
@@ -684,7 +684,7 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== IMPACT SECTION ========== */}
+      {/* ========== Resultados financiados por las donaciones ========== */}
       <section id="impacto" className="section-shell bg-white scroll-mt-28">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-8 md:p-12 shadow-lg">
@@ -707,7 +707,7 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== KERMES INVIERNO MAGICO SECTION ========== */}
+      {/* ========== Galería de la campaña Invierno Mágico ========== */}
       <section id="kermes-invierno-magico" className="relative overflow-hidden scroll-mt-28 bg-gradient-to-br from-slate-950 via-blue-950 to-amber-950">
         <div className="absolute inset-0 opacity-25 pattern-grid" />
         <div className="absolute -left-28 top-16 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
@@ -740,7 +740,7 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== FOUNDER LETTER SECTION - REDESIGNED ========== */}
+      {/* ========== Perfil de la fundadora y carta institucional ========== */}
       <section id="carta-fundadora" className="relative overflow-hidden scroll-mt-28">
         {/* Fondo decorativo con efecto de libro antiguo */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50/30 to-stone-100">

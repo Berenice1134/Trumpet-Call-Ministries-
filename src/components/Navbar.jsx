@@ -1,4 +1,4 @@
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Heart, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
@@ -153,46 +153,49 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-ink/5 bg-cream/85 backdrop-blur-xl">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-2 sm:px-6 lg:px-8">
         
-        {/* --- INICIO DE LA SECCIÓN MODIFICADA DEL LOGO --- */}
+        {/* Mantiene el logotipo visible en móvil y oculta el nombre cuando falta espacio horizontal. */}
         <NavLink
           to="/"
-          className="flex items-center gap-3"
+          className="flex min-w-0 items-center gap-2 sm:gap-3"
           onClick={() => setIsOpen(false)}
         >
-          {/* Contenedor del logo: sin tamaño fijo, solo centrado */}
-          <span className="flex shrink-0 items-center justify-center">
+          {/* El contenedor no se contrae para conservar la proporción del logotipo. */}
+          <span className="flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white">
             <img
               src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
-              /* h-16 en móvil, crece hasta h-28 en pantallas grandes. w-auto y object-contain evitan deformaciones y recortes */
-              className="h-16 w-auto object-contain sm:h-20 lg:h-24 xl:h-28"
+              /* La altura escala por breakpoint; el ancho automático conserva la proporción original. */
+              className="h-11 w-auto object-contain sm:h-14 lg:h-16"
             />
           </span>
           
-          {/* Texto al lado del logo */}
-          <span className="hidden text-base font-bold leading-tight text-ink sm:block sm:text-lg lg:text-xl">
+          {/* La marca textual se habilita desde el breakpoint sm para priorizar controles en móvil. */}
+          <span className="hidden font-display text-lg font-semibold leading-tight text-ink sm:block xl:text-xl">
             {t("brand")}
           </span>
         </NavLink>
-        {/* --- FIN DE LA SECCIÓN MODIFICADA DEL LOGO --- */}
 
-        <div className="hidden items-center gap-1 lg:flex">
-          {menuGroups.map((group) => (
+        <div className="hidden items-center gap-0.5 lg:flex">
+          {menuGroups.map((group) => {
+            const isCurrent = location.pathname === group.path || (group.path === "/misiones" && location.pathname === "/hospital-infantil");
+            return (
             <div key={group.label} className="group relative">
               <button
                 type="button"
-                className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-ministry-sky hover:text-ministry-blue"
+                onClick={() => navigate(group.path)}
+                className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-white hover:text-ember ${isCurrent ? "text-ember" : "text-slate-700"}`}
               >
                 {group.label}
                 <ChevronDown
-                  size={16}
-                  className="transition group-hover:rotate-180"
+                  size={14}
+                  className="opacity-60 transition group-hover:rotate-180"
                 />
               </button>
-              <div className="pointer-events-none absolute left-0 top-full min-w-64 translate-y-2 rounded-lg border border-slate-200 bg-white p-2 opacity-0 shadow-soft transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="pointer-events-none absolute left-0 top-full min-w-64 translate-y-2 pt-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                <div className="rounded-2xl border border-ink/5 bg-white p-2 shadow-soft">
                 {group.items.map((item) => (
                   <a
                     key={item.id}
@@ -200,29 +203,39 @@ export default function Navbar() {
                     onClick={(event) =>
                       handleAnchorClick(event, group.path, item.id)
                     }
-                    className="block rounded-md px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-ministry-sky hover:text-ministry-blue"
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-cream hover:text-ember"
                   >
                     {item.label}
                   </a>
                 ))}
+                </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-2">
           <select
             aria-label="Language selector"
-            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-ministry-teal focus:ring-2 focus:ring-ministry-teal/20"
+            className="rounded-full border border-ink/10 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/20"
             value={language}
             onChange={(event) => setLanguage(event.target.value)}
           >
             <option value="es">ES</option>
             <option value="en">EN</option>
           </select>
+          <NavLink
+            to="/donaciones#donaciones"
+            onClick={() => setIsOpen(false)}
+            className="hidden items-center gap-1.5 rounded-full bg-ember px-4 py-2 text-sm font-bold text-white shadow-md shadow-ember/30 transition hover:bg-ember-dark sm:inline-flex"
+          >
+            <Heart size={15} className="fill-white" />
+            {t("common.donateNow")}
+          </NavLink>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-md border border-slate-300 text-slate-700 lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-ink/10 bg-white text-slate-700 lg:hidden"
             aria-label={t("nav.menu")}
             onClick={() => setIsOpen((value) => !value)}
           >
@@ -232,12 +245,20 @@ export default function Navbar() {
       </nav>
 
       {isOpen && (
-        <div className="max-h-[calc(100vh-73px)] overflow-y-auto border-t border-slate-200 bg-white px-4 py-3 lg:hidden">
+        <div className="max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-ink/5 bg-cream px-4 py-3 lg:hidden">
           <div className="mx-auto grid max-w-7xl gap-2">
+            <NavLink
+              to="/donaciones#donaciones"
+              onClick={() => setIsOpen(false)}
+              className="btn-primary sm:hidden"
+            >
+              <Heart size={16} className="fill-white" />
+              {t("common.donateNow")}
+            </NavLink>
             {menuGroups.map((group) => {
               const isGroupOpen = openMobileGroup === group.label;
               return (
-                <div key={group.label} className="rounded-lg border border-slate-200">
+                <div key={group.label} className="rounded-2xl border border-ink/5 bg-white">
                   <button
                     type="button"
                     className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-ink"
@@ -250,12 +271,12 @@ export default function Navbar() {
                       size={18}
                       className={[
                         "transition",
-                        isGroupOpen ? "rotate-180 text-ministry-teal" : "",
+                        isGroupOpen ? "rotate-180 text-ember" : "",
                       ].join(" ")}
                     />
                   </button>
                   {isGroupOpen && (
-                    <div className="grid gap-1 border-t border-slate-100 p-2">
+                    <div className="grid gap-1 border-t border-ink/5 p-2">
                       {group.items.map((item) => (
                         <a
                           key={item.id}
@@ -263,7 +284,7 @@ export default function Navbar() {
                           onClick={(event) =>
                             handleAnchorClick(event, group.path, item.id)
                           }
-                          className="rounded-md px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-ministry-sky hover:text-ministry-blue"
+                          className="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-cream hover:text-ember"
                         >
                           {item.label}
                         </a>

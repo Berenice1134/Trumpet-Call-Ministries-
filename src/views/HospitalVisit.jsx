@@ -782,7 +782,7 @@ export default function HospitalVisit() {
                 </span>
               </div>
 
-              <h1 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
+              <h1 className="max-w-4xl text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
                 <span className="bg-gradient-to-r from-white via-white to-rose-100 bg-clip-text text-transparent">
                   {t("hospital.title")}
                 </span>
@@ -1063,7 +1063,7 @@ export default function HospitalVisit() {
                     </span>
                   </div>
 
-                  <h2 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
+                  <h2 className="max-w-4xl text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
                     <span className="bg-gradient-to-r from-white via-white to-slate-300 bg-clip-text text-transparent">
                       {language === "en" ? mission.titleEn : mission.title}
                     </span>

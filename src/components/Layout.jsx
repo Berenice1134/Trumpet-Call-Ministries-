@@ -25,7 +25,7 @@ export default function Layout() {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-ministry-mist text-ink">
+    <div className="min-h-screen bg-cream text-ink">
       <Navbar />
       <main key={location.pathname} className="page-transition">
         {outlet}

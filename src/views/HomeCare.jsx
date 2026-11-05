@@ -23,8 +23,8 @@ import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 /* ============================================================
-   BASE DE DATOS DE FOTOS
-   Agrega aquí las nuevas imágenes que vayas sumando.
+   Catálogo de imágenes y metadatos usados por las galerías de servicio.
+   Las claves permiten componer selecciones por sección sin duplicar rutas.
    ============================================================ */
 const homeCarePhotos = [
   {
@@ -116,7 +116,7 @@ const homeCarePhotos = [
 const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
 
 /* ============================================================
-   DISTRIBUCIÓN ÚNICA POR SECCIÓN (sin repetir fotos)
+   Selecciones derivadas por sección; cada clave se asigna a una sola colección.
    ============================================================ */
 const heroPhotoKeys = [
   "homeVisitElderlyWomanBag",
@@ -158,7 +158,7 @@ const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
 const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
 
 /* ============================================================
-   COMPONENTES
+   Componentes de presentación para galerías, marcadores y visor modal.
    ============================================================ */
 
 /* --- Lightbox / visualizador grande --- */
@@ -320,7 +320,7 @@ function PhotoGrid({
 }
 
 /* ============================================================
-   COPY
+   Contenido localizado complementario a las traducciones compartidas.
    ============================================================ */
 const homeCarePageCopy = {
   es: {
@@ -548,7 +548,7 @@ const gallerySpans = [
 ];
 
 /* ============================================================
-   PÁGINA
+   Vista del servicio domiciliar: cobertura, historia, resultados y actividades.
    ============================================================ */
 export default function HomeCare() {
   const { dictionary, language, t } = useLanguage();
@@ -588,7 +588,7 @@ export default function HomeCare() {
                 </span>
               </div>
 
-              <h1 className="max-w-4xl text-5xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
+              <h1 className="max-w-4xl text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
                 <span className="bg-gradient-to-r from-white via-white to-emerald-100 bg-clip-text text-transparent">
                   {t("homeCare.title")}
                 </span>

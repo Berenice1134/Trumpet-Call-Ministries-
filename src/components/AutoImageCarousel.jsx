@@ -31,7 +31,7 @@ export default function AutoImageCarousel({
   const goTo = (index) => setActiveIndex((index + photos.length) % photos.length);
 
   return (
-    <div className={`relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-2xl ${className}`}>
+    <div className={`relative overflow-hidden rounded-[1.75rem] bg-ink shadow-photo ${className}`}>
       <div className={`group relative ${heightClassName}`}>
         <img
           key={currentPhoto.src}
@@ -40,26 +40,26 @@ export default function AutoImageCarousel({
           className={`gallery-photo-enter h-full w-full ${imageFit === "contain" ? "object-contain p-3" : "object-cover"}`}
           loading={activeIndex === 0 ? "eager" : "lazy"}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
         {getLabel(currentPhoto) && (
-          <p className="pointer-events-none absolute bottom-7 left-6 right-6 text-lg font-bold text-white drop-shadow sm:text-xl">
+          <p className="pointer-events-none absolute bottom-7 left-6 right-6 font-display text-xl font-semibold text-white drop-shadow sm:text-2xl">
             {getLabel(currentPhoto)}
           </p>
         )}
         {photos.length > 1 && (
           <>
-            <button type="button" onClick={() => goTo(activeIndex - 1)} aria-label={previousLabel} className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75">
+            <button type="button" onClick={() => goTo(activeIndex - 1)} aria-label={previousLabel} className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-90 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
               <ChevronLeft size={24} />
             </button>
-            <button type="button" onClick={() => goTo(activeIndex + 1)} aria-label={nextLabel} className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75">
+            <button type="button" onClick={() => goTo(activeIndex + 1)} aria-label={nextLabel} className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-90 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
               <ChevronRight size={24} />
             </button>
-            <span className="absolute right-4 top-4 rounded-full bg-black/55 px-3 py-1 text-sm font-bold text-white backdrop-blur">
+            <span className="absolute right-4 top-4 rounded-full bg-ink/60 px-3 py-1 text-sm font-bold text-white backdrop-blur">
               {activeIndex + 1} / {photos.length}
             </span>
             <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
               {photos.map((photo, index) => (
-                <button key={photo.key ?? photo.src} type="button" onClick={() => goTo(index)} aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`} className={`h-2.5 rounded-full transition-all ${index === activeIndex ? "w-8 bg-amber-400" : "w-2.5 bg-white/65 hover:bg-white"}`} />
+                <button key={photo.key ?? photo.src} type="button" onClick={() => goTo(index)} aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`} className={`h-2.5 rounded-full transition-all ${index === activeIndex ? "w-8 bg-ember" : "w-2.5 bg-white/65 hover:bg-white"}`} />
               ))}
             </div>
           </>

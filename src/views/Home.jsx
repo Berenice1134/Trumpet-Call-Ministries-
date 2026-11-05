@@ -3,70 +3,54 @@ import {
   HandHeart,
   HeartPulse,
   Home as HomeIcon,
-  Sparkles,
   Users,
   ArrowRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   MapPin,
-  Star,
-  Target,
-  BookOpen,
   Heart,
   HelpingHand,
-  Calendar,
-  Clock,
-  TrendingUp,
-  Award,
-  Flame,
+  Quote,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import DashboardCard from "../components/DashboardCard.jsx";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
-import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
+
+const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
 
 const dashboardItems = [
   {
     to: "/servicio-domiciliar",
     key: "homeCare",
     icon: HomeIcon,
-    color: "from-emerald-500 to-teal-600",
-    bgLight: "bg-emerald-50",
-    borderLight: "border-emerald-200",
+    image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg"),
   },
   {
     to: "/misiones",
     key: "hospital",
     icon: HeartPulse,
-    color: "from-rose-500 to-pink-600",
-    bgLight: "bg-rose-50",
-    borderLight: "border-rose-200",
+    image: asset("hospital-infantil/hospital-nuevo-06.jpeg"),
   },
   {
     to: "/voluntarios",
     key: "volunteers",
     icon: Users,
-    color: "from-blue-500 to-indigo-600",
-    bgLight: "bg-blue-50",
-    borderLight: "border-blue-200",
+    image: asset("voluntarios/voluntarios-04.jpeg"),
   },
   {
     to: "/donaciones",
     key: "donations",
     icon: HandHeart,
-    color: "from-amber-500 to-orange-600",
-    bgLight: "bg-amber-50",
-    borderLight: "border-amber-200",
+    image: asset("misiones/cartolandia-03.jpeg"),
   },
   {
     to: "/reportes",
     key: "reports",
     icon: FileText,
-    color: "from-violet-500 to-purple-600",
-    bgLight: "bg-violet-50",
-    borderLight: "border-violet-200",
+    image: asset("home/home-pantry-display.png"),
   },
 ];
 
@@ -91,7 +75,17 @@ const homePageCopy = {
     serviceTitle: "Área de servicio",
     serviceText:
       "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
-   
+    storyTitle: "Detrás de cada despensa hay una familia con nombre e historia",
+    storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
+    workEyebrow: "Cómo trabajamos",
+    workTitle: "Un ministerio construido alrededor de familias y necesidades reales",
+    workText: "El ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal.",
+    areasEyebrow: "Lo que hacemos",
+    readMore: "Ver más",
+    readLess: "Ver menos",
+    ctaTitle: "Tu ayuda llega a una mesa, a un hogar y a un corazón",
+    ctaText:
+      "Con tu donativo o tu tiempo, una familia de Tlaxcala recibe alimento, compañía y la certeza de que no está sola.",
   },
   en: {
     mission: "Mission",
@@ -108,6 +102,17 @@ const homePageCopy = {
     serviceTitle: "Service Area",
     serviceText:
       "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
+    storyTitle: "Behind every pantry bag is a family with a name and a story",
+    storyCaption: "Every visit is an embrace, a prayer, and a table with food.",
+    workEyebrow: "How we work",
+    workTitle: "A ministry built around real families and real needs",
+    workText: "The ministry combines food support, spiritual care, and personal follow-up.",
+    areasEyebrow: "What we do",
+    readMore: "Read more",
+    readLess: "Read less",
+    ctaTitle: "Your help reaches a table, a home, and a heart",
+    ctaText:
+      "With your gift or your time, a family in Tlaxcala receives food, companionship, and the assurance that they are not alone.",
   },
 };
 

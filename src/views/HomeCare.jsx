@@ -1,282 +1,327 @@
+import { useEffect, useState } from "react";
 import {
   BookOpen,
   ClipboardList,
   MapPinned,
   PackageCheck,
-  Sparkles,
   TrendingUp,
-  Users,
   ChevronDown,
   Heart,
   Home,
-  Truck,
   Calendar,
   Camera,
   Images,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  Sparkles,
+  ShieldCheck,
+  Gift,
 } from "lucide-react";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
-import InfoCard from "../components/InfoCard.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
+/* ============================================================
+   BASE DE DATOS DE FOTOS
+   Agrega aquí las nuevas imágenes que vayas sumando.
+   ============================================================ */
 const homeCarePhotos = [
   {
     key: "carTeam",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`,
-    className: "sm:col-span-2 sm:row-span-2",
   },
   {
     key: "carBags",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-02.png`,
-    className: "",
   },
   {
     key: "pantryDisplay",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-03.png`,
-    className: "",
   },
   {
     key: "coupleVisit",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-04.png`,
-    className: "",
   },
   {
     key: "familySupport",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-05.png`,
-    className: "sm:col-span-2",
   },
   {
     key: "tablePantry",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-06.png`,
-    className: "",
   },
   {
     key: "singlePantry",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-07.png`,
-    className: "",
   },
   {
     key: "outdoorFamily",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-08.png`,
-    className: "sm:row-span-2",
   },
   {
     key: "twoBags",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-09.png`,
-    className: "",
   },
   {
     key: "personalDelivery",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-10.png`,
-    className: "",
   },
   {
     key: "elderPantry",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-11.png`,
-    className: "sm:col-span-2",
   },
   {
     key: "homeFamily",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-12.png`,
-    className: "",
   },
   {
     key: "homeVisitElderlyWomanBag",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-01.jpeg`,
-    className: "sm:col-span-2",
   },
   {
     key: "homeVisitTableSupport",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`,
-    className: "",
   },
   {
     key: "homeVisitConversation",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-03.jpeg`,
-    className: "",
   },
   {
     key: "homeVisitFamilyKitchen",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg`,
-    className: "",
   },
   {
     key: "homeVisitPrayerCare",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg`,
-    className: "sm:col-span-2",
   },
   {
     key: "homeVisitVolunteersBags",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg`,
-    className: "",
   },
   {
     key: "homeVisitChildMilk",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-07.jpeg`,
-    className: "",
   },
   {
     key: "homeVisitFamilyBag",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-08.jpeg`,
-    className: "sm:col-span-2",
   },
   {
     key: "homeVisitFlorDelivery",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg`,
-    className: "",
   },
 ];
 
-/* ========== HELPERS DE FOTOS ========== */
 const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
 
-// Hero: más fotos para rotación más emocional
-const featuredHomeCarePhotoKeys = [
+/* ============================================================
+   DISTRIBUCIÓN ÚNICA POR SECCIÓN (sin repetir fotos)
+   ============================================================ */
+const heroPhotoKeys = [
   "homeVisitElderlyWomanBag",
   "homeVisitPrayerCare",
   "familySupport",
   "homeVisitChildMilk",
-  "homeVisitFamilyBag",
-  "pantryDisplay",
-];
-
-const featuredHomeCarePhotos = featuredHomeCarePhotoKeys
-  .map(findPhoto)
-  .filter(Boolean);
-
-// Galería: 12 fotos para el mosaico central
-const galleryPhotoKeys = [
   "carTeam",
   "coupleVisit",
-  "tablePantry",
-  "outdoorFamily",
-  "twoBags",
-  "elderPantry",
-  "homeFamily",
+];
+
+const galleryPhotoKeys = [
   "homeVisitConversation",
   "personalDelivery",
-  "homeVisitVolunteersBags",
+  "tablePantry",
+  "homeVisitFamilyBag",
+  "outdoorFamily",
   "homeVisitFlorDelivery",
-  "homeVisitFamilyKitchen",
 ];
 
-const galleryPhotos = galleryPhotoKeys.map(findPhoto).filter(Boolean);
+const zonasPhotoKeys = ["homeVisitVolunteersBags"];
 
-// Fotos por período de la historia
-const timelinePhotoGroups = [
-  ["carBags", "coupleVisit", "homeVisitTableSupport"],
-  ["homeVisitConversation", "homeVisitPrayerCare", "twoBags"],
-  ["homeVisitFamilyKitchen", "homeVisitFamilyBag", "elderPantry"],
-  ["homeVisitVolunteersBags", "homeVisitFlorDelivery", "homeFamily"],
-];
-
-// Fotos para la sección de impacto
-const impactPhotoKeys = ["homeVisitChildMilk", "personalDelivery", "tablePantry"];
-
-const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
-
-// Fotos para actividades
-const activityPhotoKeys = [
-  "homeVisitFamilyKitchen",
+// 1 foto por período (4 períodos), todas únicas
+const timelinePhotoKeys = [
   "carBags",
-  "homeVisitVolunteersBags",
-  "singlePantry",
+  "homeVisitTableSupport",
+  "homeVisitFamilyKitchen",
+  "homeFamily",
 ];
 
+const impactPhotoKeys = ["pantryDisplay", "singlePantry"];
+
+const activityPhotoKeys = ["twoBags", "elderPantry"];
+
+const heroPhotos = heroPhotoKeys.map(findPhoto).filter(Boolean);
+const galleryPhotos = galleryPhotoKeys.map(findPhoto).filter(Boolean);
+const zonasPhotos = zonasPhotoKeys.map(findPhoto).filter(Boolean);
+const timelinePhotos = timelinePhotoKeys.map(findPhoto).filter(Boolean);
+const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
 const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
 
-// Patrones de mosaico
-const mosaicSpans = [
-  "sm:col-span-2 sm:row-span-2",
-  "",
-  "",
-  "",
-  "sm:col-span-2",
-  "",
-  "",
-  "",
-  "sm:col-span-2 sm:row-span-2",
-  "",
-  "",
-  "",
-];
+/* ============================================================
+   COMPONENTES
+   ============================================================ */
 
-/* ========== COMPONENTES DE FOTO ========== */
-function CarePhoto({ photo, label, className = "" }) {
-  if (!photo) return null;
+/* --- Lightbox / visualizador grande --- */
+function Lightbox({ photos, index, onClose, onPrev, onNext }) {
+  useEffect(() => {
+    if (index === null) return;
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
+    document.addEventListener("keydown", handler);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handler);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [index, onClose, onPrev, onNext]);
+
+  if (index === null || !photos[index]) return null;
 
   return (
-    <figure
-      className={`group relative isolate overflow-hidden rounded-[1.75rem] bg-slate-900 shadow-xl ${className}`}
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-4 backdrop-blur-md"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        onClick={onClose}
+        className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
+        aria-label="Cerrar"
+      >
+        <X size={22} />
+      </button>
+
+      {photos.length > 1 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
+          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:left-4"
+          aria-label="Anterior"
+        >
+          <ChevronLeft size={24} />
+        </button>
+      )}
+
+      <img
+        src={photos[index].src}
+        alt=""
+        className="max-h-[88vh] max-w-[92vw] rounded-xl object-contain shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+
+      {photos.length > 1 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-4"
+          aria-label="Siguiente"
+        >
+          <ChevronRight size={24} />
+        </button>
+      )}
+
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white/80 backdrop-blur">
+        {index + 1} / {photos.length}
+      </div>
+    </div>
+  );
+}
+
+/* --- Foto clickable sin descripción --- */
+function PhotoFrame({ photo, onClick, className = "" }) {
+  if (!photo) return null;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg transition-shadow hover:shadow-2xl ${className}`}
+      aria-label="Ampliar imagen"
     >
       <img
         src={photo.src}
-        alt={label}
-        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/5 to-transparent" />
-      <figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-bold leading-5 text-white drop-shadow sm:p-5 sm:text-base">
-        {label}
-      </figcaption>
-    </figure>
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-md">
+          <Camera size={20} />
+        </span>
+      </div>
+    </button>
   );
 }
 
-/* NUEVO: Mosaico de fotos grande y emocional */
-function PhotoMosaic({ photos, getLabel, className = "" }) {
+/* --- Placeholder para imágenes futuras --- */
+function PhotoPlaceholder({ className = "" }) {
   return (
     <div
-      className={`grid grid-cols-2 grid-flow-dense auto-rows-[150px] gap-3 sm:auto-rows-[180px] sm:grid-cols-4 sm:gap-4 ${className}`}
+      className={`flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-200 bg-gradient-to-br from-slate-50 to-white ${className}`}
     >
-      {photos.map((photo, index) => (
-        <figure
-          key={photo.key}
-          className={`group relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg ${
-            mosaicSpans[index % mosaicSpans.length]
-          }`}
-        >
-          <img
-            src={photo.src}
-            alt={getLabel(photo)}
-            className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/10 to-transparent opacity-60 transition-opacity group-hover:opacity-90" />
-          <figcaption className="absolute inset-x-0 bottom-0 translate-y-1 p-3 text-xs font-bold text-white drop-shadow transition-transform group-hover:translate-y-0 sm:p-4 sm:text-sm">
-            {getLabel(photo)}
-          </figcaption>
-        </figure>
-      ))}
+      <Camera size={22} className="text-slate-300" />
+      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">
+        Próximamente
+      </span>
     </div>
   );
 }
 
-/* Mini mosaic de 2 fotos para el timeline */
-function DualPhoto({ photos, getLabel, className = "" }) {
+/* --- Grid reutilizable: fotos + placeholders + lightbox --- */
+function PhotoGrid({
+  photos,
+  gridClassName = "grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4",
+  itemClassName = "h-44 sm:h-56",
+  spanPattern = [],
+  placeholderCount = 0,
+}) {
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
   return (
-    <div className={`grid grid-cols-2 gap-3 ${className}`}>
-      {photos.map((photo) => (
-        <figure
-          key={photo.key}
-          className="group relative h-56 overflow-hidden rounded-2xl bg-slate-900 shadow-lg sm:h-64"
-        >
-          <img
-            src={photo.src}
-            alt={getLabel(photo)}
-            className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-            loading="lazy"
+    <>
+      <div className={gridClassName}>
+        {photos.map((photo, i) => (
+          <PhotoFrame
+            key={photo.key}
+            photo={photo}
+            className={`${itemClassName} ${spanPattern[i] || ""}`}
+            onClick={() => setLightboxIndex(i)}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
-          <figcaption className="absolute inset-x-0 bottom-0 p-3 text-[11px] font-bold leading-4 text-white drop-shadow sm:text-xs">
-            {getLabel(photo)}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
+        ))}
+        {Array.from({ length: placeholderCount }).map((_, i) => (
+          <PhotoPlaceholder
+            key={`ph-${i}`}
+            className={`${itemClassName} ${spanPattern[photos.length + i] || ""}`}
+          />
+        ))}
+      </div>
+      <Lightbox
+        photos={photos}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onPrev={() =>
+          setLightboxIndex((i) => (i > 0 ? i - 1 : photos.length - 1))
+        }
+        onNext={() =>
+          setLightboxIndex((i) => (i < photos.length - 1 ? i + 1 : 0))
+        }
+      />
+    </>
   );
 }
 
-/* ========== COPY ========== */
+/* ============================================================
+   COPY
+   ============================================================ */
 const homeCarePageCopy = {
   es: {
     currentSupportAreasTitle: "Zonas que reciben apoyo hoy",
@@ -292,21 +337,41 @@ const homeCarePageCopy = {
     impactMetricsEyebrow: "Métricas de Impacto",
     tonsTitle: "Toneladas repartidas",
     tonsText:
-      "Espacio para métricas de despensas, kilos repartidos y familias beneficiadas.",
+      "Detrás de cada kilo de alimento hay una historia de esperanza. Cada despensa lleva consigo el mensaje: «No estás solo».",
     familiesHelped: "Familias beneficiadas",
     tonsDistributed: "Toneladas repartidas",
     activeCommunities: "Comunidades activas",
     viewCoverage: "Conoce las zonas de apoyo",
-    // NUEVO COPY EMOCIONAL
+    // Galería
     galleryEyebrow: "Galería de Historias",
     galleryTitle: "El rostro de nuestra misión",
     galleryText:
-      "Detrás de cada despensa hay un rostro, una historia y una vida que se siente acompañada. Estas imágenes son el reflejo del amor que se entrega casa por casa.",
+      "No son solo fotografías. Son madres, abuelos, niños y familias que un día sintieron que ya no podían solos... y encontraron una mano amiga. Cada imagen captura un momento de amor que tú haces posible.",
+    galleryCta: "Estas historias pueden seguir sucediendo",
+    // Impacto
     impactLeadTitle: "Historias que se ven, vidas que se transforman",
     impactLeadText:
-      "Cada kilo de alimento, cada visita, cada oración representa una familia que no está sola. Estas imágenes capturan la esencia de nuestro servicio: amor que se traduce en acción.",
+      "Cada visita, cada despensa, cada oración representa una familia que dejó de sentir que estaba sola. Estas imágenes capturan la esencia de nuestro servicio: amor que se traduce en acción.",
+    // Actividades
     activityPhotosEyebrow: "Momentos del Servicio",
     activityPhotosTitle: "Así se ve el amor en acción",
+    // Donación
+    donateEyebrow: "Sé parte de esta historia",
+    donateTitle: "Tu donación se convierte en esperanza",
+    donateText:
+      "Con $250 al mes, una familia en Tlaxcala recibe despensa, oración y una visita que les recuerda que no están solos. Tú puedes ser esa mano amiga que estaban esperando.",
+    donateTier1Title: "Apadrina 1 familia",
+    donateTier1Desc: "Despensa mensual, visita y oración para una familia.",
+    donateTier2Title: "Apadrina 2 familias",
+    donateTier2Desc: "Doble bendición para tu comunidad cada mes.",
+    donateTier2Badge: "Más elegido",
+    donateTier3Title: "Apadrina 4 familias",
+    donateTier3Desc: "Transformas comunidades enteras con tu generosidad.",
+    donatePerMonth: "al mes",
+    donateCta: "Quiero donar ahora",
+    donateTrust: "100% de tu donación llega a las familias. Cada peso cuenta.",
+    donateUrgency:
+      "Hay familias esperando tu ayuda este mes en 12 comunidades de Tlaxcala.",
   },
   en: {
     currentSupportAreasTitle: "Where support is reaching families today",
@@ -322,21 +387,37 @@ const homeCarePageCopy = {
     impactMetricsEyebrow: "Impact Metrics",
     tonsTitle: "Tons Distributed",
     tonsText:
-      "Space for pantry, kilograms distributed, and beneficiary family metrics.",
+      "Behind every kilogram of food there is a story of hope. Every pantry carries a message: 'You are not alone.'",
     familiesHelped: "Families helped",
     tonsDistributed: "Tons distributed",
     activeCommunities: "Active communities",
     viewCoverage: "Explore current support areas",
-    // NUEVO COPY EMOCIONAL
     galleryEyebrow: "Stories Gallery",
     galleryTitle: "The face of our mission",
     galleryText:
-      "Behind every pantry there is a face, a story, and a life that feels accompanied. These images reflect the love that is delivered home by home.",
+      "These are not just photographs. They are mothers, grandparents, children, and families who one day felt they could not go on alone... and found a helping hand. Each image captures a moment of love that you make possible.",
+    galleryCta: "These stories can keep happening",
     impactLeadTitle: "Stories you can see, lives being transformed",
     impactLeadText:
-      "Every kilogram of food, every visit, every prayer represents a family that is not alone. These images capture the essence of our service: love translated into action.",
+      "Every visit, every pantry, every prayer represents a family that stopped feeling alone. These images capture the essence of our service: love translated into action.",
     activityPhotosEyebrow: "Moments of Service",
     activityPhotosTitle: "This is what love in action looks like",
+    donateEyebrow: "Be part of this story",
+    donateTitle: "Your donation becomes hope",
+    donateText:
+      "With $250 a month, a family in Tlaxcala receives a pantry, prayer, and a visit that reminds them they are not alone. You can be the helping hand they were waiting for.",
+    donateTier1Title: "Sponsor 1 family",
+    donateTier1Desc: "Monthly pantry, visit, and prayer for one family.",
+    donateTier2Title: "Sponsor 2 families",
+    donateTier2Desc: "Double blessing for your community every month.",
+    donateTier2Badge: "Most chosen",
+    donateTier3Title: "Sponsor 4 families",
+    donateTier3Desc: "You transform entire communities with your generosity.",
+    donatePerMonth: "per month",
+    donateCta: "Donate now",
+    donateTrust: "100% of your donation reaches the families. Every gift counts.",
+    donateUrgency:
+      "Families are waiting for your help this month in 12 communities of Tlaxcala.",
   },
 };
 
@@ -450,17 +531,34 @@ const serviceCommunities = [
   "San Diego Metepec, Tlax.",
 ];
 
+/* Span patterns para mosaico (12 items = 6 fotos + 6 placeholders) */
+const gallerySpans = [
+  "sm:col-span-2 sm:row-span-2",
+  "",
+  "",
+  "sm:col-span-2",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+];
+
+/* ============================================================
+   PÁGINA
+   ============================================================ */
 export default function HomeCare() {
   const { dictionary, language, t } = useLanguage();
   const copy = homeCarePageCopy[language] ?? homeCarePageCopy.es;
   const homeCareTimeline =
     homeCareTimelineByLanguage[language] ?? homeCareTimelineByLanguage.es;
 
-  const photoLabel = (photo) => t(`homeCare.photoLabels.${photo?.key}`);
-
   return (
     <>
-      {/* ========== HERO SECTION ========== */}
+      {/* ===================== HERO ===================== */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950">
         <div className="absolute inset-0">
           <img
@@ -472,15 +570,6 @@ export default function HomeCare() {
           <div className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-teal-500/20 blur-3xl animate-pulse animation-delay-2000" />
           <div className="absolute top-1/2 left-1/3 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl animate-pulse animation-delay-4000" />
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div
-              className="h-full w-full"
-              style={{
-                backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                backgroundSize: "40px 40px",
-              }}
-            />
-          </div>
         </div>
 
         <div className="section-shell relative w-full">
@@ -552,10 +641,10 @@ export default function HomeCare() {
               </div>
 
               <a
-                href="#area-servicio-domiciliar"
+                href="#galeria-domiciliar"
                 className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-white/10"
               >
-                {copy.viewCoverage}
+                {language === "en" ? "See the stories" : "Ver las historias"}
                 <ChevronDown
                   size={18}
                   className="transition-transform group-hover:translate-y-1"
@@ -563,11 +652,11 @@ export default function HomeCare() {
               </a>
             </div>
 
-            {/* Carrusel más grande y protagonista */}
+            {/* Carrusel (sin descripciones visibles) */}
             <AutoImageCarousel
               className="motion-float"
-              photos={featuredHomeCarePhotos}
-              getLabel={(photo) => t(`homeCare.photoLabels.${photo.key}`)}
+              photos={heroPhotos}
+              getLabel={() => ""}
               language={language}
               heightClassName="h-[420px] sm:h-[540px] lg:h-[660px]"
             />
@@ -581,7 +670,7 @@ export default function HomeCare() {
         </div>
       </section>
 
-      {/* ========== NUEVA: GALERÍA DE HISTORIAS (protagonismo visual) ========== */}
+      {/* ===================== GALERÍA DE HISTORIAS ===================== */}
       <section
         id="galeria-domiciliar"
         className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
@@ -604,11 +693,34 @@ export default function HomeCare() {
             </p>
           </div>
 
-          <PhotoMosaic photos={galleryPhotos} getLabel={photoLabel} />
+          <PhotoGrid
+            photos={galleryPhotos}
+            gridClassName="grid grid-cols-2 gap-3 auto-rows-[160px] sm:auto-rows-[200px] sm:grid-cols-4 sm:gap-4"
+            itemClassName=""
+            spanPattern={gallerySpans}
+            placeholderCount={6}
+          />
+
+          <div className="mt-10 flex flex-col items-center gap-3">
+            <p className="text-center text-sm font-bold uppercase tracking-[0.16em] text-emerald-400">
+              {copy.galleryCta}
+            </p>
+            <a
+              href="#donar"
+              className="group inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-emerald-500/50"
+            >
+              <Heart size={16} className="fill-white" />
+              {copy.donateCta}
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* ========== ZONAS CON APOYO DOMICILIAR ACTUAL ========== */}
+      {/* ===================== ZONAS ===================== */}
       <section
         id="area-servicio-domiciliar"
         className="section-shell scroll-mt-28 overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-cyan-50"
@@ -642,14 +754,11 @@ export default function HomeCare() {
                 </span>
               </div>
 
-              {/* Strip de 3 fotos en lugar de 1 sola */}
-              <DualPhoto
-                photos={[
-                  findPhoto("homeVisitVolunteersBags"),
-                  findPhoto("carBags"),
-                ].filter(Boolean)}
-                getLabel={photoLabel}
-                className="mt-5"
+              <PhotoGrid
+                photos={zonasPhotos}
+                gridClassName="mt-5 grid grid-cols-2 gap-3"
+                itemClassName="h-40 sm:h-48"
+                placeholderCount={1}
               />
             </div>
 
@@ -677,7 +786,7 @@ export default function HomeCare() {
         </div>
       </section>
 
-      {/* ========== HISTORIA SECTION (con más fotos y más grandes) ========== */}
+      {/* ===================== HISTORIA ===================== */}
       <section
         id="historia-domiciliar"
         className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50"
@@ -709,11 +818,7 @@ export default function HomeCare() {
               <div className="relative space-y-16">
                 {homeCareTimeline.map((item, index) => {
                   const isEven = index % 2 === 0;
-                  const periodPhotoKeys =
-                    timelinePhotoGroups[index % timelinePhotoGroups.length];
-                  const periodPhotos = periodPhotoKeys
-                    .map(findPhoto)
-                    .filter(Boolean);
+                  const periodPhoto = timelinePhotos[index];
 
                   const textCard = (
                     <div className="group relative rounded-2xl border border-amber-100 bg-white p-7 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-amber-300 hover:shadow-2xl">
@@ -742,20 +847,12 @@ export default function HomeCare() {
                   );
 
                   const photosBlock = (
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                      {periodPhotos.map((photo, pIndex) => (
-                        <CarePhoto
-                          key={photo.key}
-                          photo={photo}
-                          label={photoLabel(photo)}
-                          className={
-                            pIndex === 0
-                              ? "col-span-2 h-48 sm:h-60 lg:h-72"
-                              : "col-span-1 h-48 sm:h-60 lg:h-72"
-                          }
-                        />
-                      ))}
-                    </div>
+                    <PhotoGrid
+                      photos={periodPhoto ? [periodPhoto] : []}
+                      gridClassName="grid grid-cols-2 gap-3"
+                      itemClassName="h-56 sm:h-64 lg:h-72"
+                      placeholderCount={1}
+                    />
                   );
 
                   return (
@@ -790,7 +887,7 @@ export default function HomeCare() {
         </div>
       </section>
 
-      {/* ========== IMPACTO / TONELADAS (foto-céntrico) ========== */}
+      {/* ===================== IMPACTO ===================== */}
       <section
         id="toneladas-repartidas"
         className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-white via-emerald-50/30 to-white"
@@ -812,8 +909,7 @@ export default function HomeCare() {
             </p>
           </div>
 
-          {/* Stats + mosaico de fotos combinados */}
-          <div className="mb-10 grid max-w-5xl mx-auto gap-4 sm:grid-cols-3">
+          <div className="mx-auto mb-10 grid max-w-5xl gap-4 sm:grid-cols-3">
             {[
               {
                 value: "500+",
@@ -853,12 +949,12 @@ export default function HomeCare() {
             ))}
           </div>
 
-          {/* Mosaico visual impactante con overlay emocional */}
           <div className="grid items-stretch gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-            <PhotoMosaic
+            <PhotoGrid
               photos={impactPhotos}
-              getLabel={photoLabel}
-              className="lg:auto-rows-[200px]"
+              gridClassName="grid grid-cols-2 gap-3 sm:grid-cols-3"
+              itemClassName="h-48 sm:h-64"
+              placeholderCount={1}
             />
 
             <div className="flex flex-col justify-center rounded-[1.75rem] border border-emerald-100 bg-white p-7 shadow-lg sm:p-9">
@@ -875,15 +971,12 @@ export default function HomeCare() {
         </div>
       </section>
 
-      {/* ========== ACTIVIDADES + COLLAGE FOTOGRÁFICO ========== */}
+      {/* ===================== ACTIVIDADES ===================== */}
       <section
         id="actividades-domiciliares"
         className="section-shell relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50"
       >
-        <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]" />
-
         <div className="relative mx-auto max-w-7xl">
-          {/* Collage superior de fotos */}
           <div className="mb-12 text-center">
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-5 py-2 text-xs font-bold uppercase tracking-wider text-emerald-600 shadow-sm">
               <Camera size={14} />
@@ -894,18 +987,15 @@ export default function HomeCare() {
             </h2>
           </div>
 
-          <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-            {activityPhotos.map((photo) => (
-              <CarePhoto
-                key={photo.key}
-                photo={photo}
-                label={photoLabel(photo)}
-                className="h-44 sm:h-56 lg:h-64"
-              />
-            ))}
+          <div className="mb-12">
+            <PhotoGrid
+              photos={activityPhotos}
+              gridClassName="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+              itemClassName="h-44 sm:h-56 lg:h-64"
+              placeholderCount={2}
+            />
           </div>
 
-          {/* Lista de actividades */}
           <div className="mx-auto max-w-4xl">
             <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-2xl">
               <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-emerald-100/20" />
@@ -934,6 +1024,122 @@ export default function HomeCare() {
                 ))}
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== DONACIÓN ===================== */}
+      <section
+        id="donar"
+        className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-950 py-20 sm:py-28"
+      >
+        <div className="absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-amber-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-rose-400/10 blur-3xl" />
+        </div>
+
+        <div className="section-shell relative">
+          <div className="mx-auto max-w-5xl text-center">
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300 backdrop-blur">
+              <Sparkles size={14} />
+              {copy.donateEyebrow}
+            </span>
+            <h2 className="mb-5 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+              {copy.donateTitle}
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/70">
+              {copy.donateText}
+            </p>
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-amber-400/10 px-4 py-2 text-sm font-bold text-amber-300">
+              <Heart size={14} className="fill-amber-300" />
+              {copy.donateUrgency}
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {[
+              {
+                amount: "$250",
+                title: copy.donateTier1Title,
+                desc: copy.donateTier1Desc,
+                highlight: false,
+              },
+              {
+                amount: "$500",
+                title: copy.donateTier2Title,
+                desc: copy.donateTier2Desc,
+                highlight: true,
+                badge: copy.donateTier2Badge,
+              },
+              {
+                amount: "$1,000",
+                title: copy.donateTier3Title,
+                desc: copy.donateTier3Desc,
+                highlight: false,
+              },
+            ].map((tier, i) => (
+              <div
+                key={i}
+                className={`relative flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 ${
+                  tier.highlight
+                    ? "border-emerald-400/50 bg-emerald-500/10 shadow-2xl shadow-emerald-500/20 backdrop-blur-lg"
+                    : "border-white/10 bg-white/5 backdrop-blur-lg hover:border-white/20"
+                }`}
+              >
+                {tier.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-lg">
+                    {tier.badge}
+                  </span>
+                )}
+                <div className="mb-1 flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-white">
+                    {tier.amount}
+                  </span>
+                  <span className="text-sm font-bold text-white/60">
+                    {copy.donatePerMonth}
+                  </span>
+                </div>
+                <h3 className="mb-2 text-lg font-bold text-emerald-300">
+                  {tier.title}
+                </h3>
+                <p className="mb-6 flex-1 text-sm leading-6 text-white/60">
+                  {tier.desc}
+                </p>
+                <a
+                  href="#donar-form"
+                  className={`group inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black transition-all ${
+                    tier.highlight
+                      ? "bg-white text-slate-900 shadow-lg hover:bg-emerald-50"
+                      : "border border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10"
+                  }`}
+                >
+                  {copy.donateCta}
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col items-center gap-4 text-center">
+            <a
+              href="#donar-form"
+              className="group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-black text-white shadow-2xl shadow-emerald-500/40 transition-all hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 hover:shadow-emerald-500/60"
+            >
+              <Heart size={20} className="fill-white" />
+              {copy.donateCta}
+              <ArrowRight
+                size={20}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </a>
+            <p className="flex items-center gap-2 text-xs font-semibold text-white/50">
+              <ShieldCheck size={14} />
+              {copy.donateTrust}
+            </p>
           </div>
         </div>
       </section>

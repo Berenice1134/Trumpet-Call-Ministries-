@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  color: #0b2a3a;
-  background: #fbf7f1;
+  color: #0a1e3c;
+  background: #f8fafc;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -103,38 +103,39 @@ select {
 
 /* Botones de llamada a la acción. */
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full bg-ember px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-ember/30 transition duration-300 hover:-translate-y-0.5 hover:bg-ember-dark hover:shadow-xl hover:shadow-ember/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-ember/30;
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-ember/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ember/45 focus:outline-none focus-visible:ring-4 focus-visible:ring-ember/30;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-7 py-3.5 text-sm font-bold text-ink transition duration-300 hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-ink/10;
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 bg-white px-7 py-3.5 text-sm font-bold text-ink shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-ministry-blue/40 hover:text-ministry-blue hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-ministry-blue/15;
 }
 
 .btn-ghost-light {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition duration-300 hover:bg-white/20 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30;
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30;
 }
 
-/* Marco de fotografía con zoom suave al pasar el cursor. */
+/* Marco de fotografía con encuadre superior para no cortar rostros. */
 .photo-frame {
-  @apply relative overflow-hidden rounded-[1.75rem] bg-sand shadow-photo;
+  @apply relative overflow-hidden rounded-[1.75rem] bg-slate-900 shadow-photo ring-1 ring-ink/5;
 }
 
 .photo-frame img {
-  @apply h-full w-full object-cover transition duration-[1200ms] ease-out;
+  @apply h-full w-full object-cover transition duration-[900ms] ease-out;
+  object-position: center 18%;
 }
 
 .photo-frame:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-/* Degradado inferior para leer texto encima de una fotografía. */
+/* Degradado inferior sutil solo en la base para no oscurecer los rostros. */
 .photo-overlay {
-  @apply pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent;
+  @apply pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/15 to-transparent;
 }
 
-/* Tarjeta limpia y ligera. */
+/* Tarjeta limpia y luminosa. */
 .soft-card {
-  @apply rounded-[1.5rem] border border-ink/5 bg-white p-6 shadow-soft sm:p-8;
+  @apply rounded-[1.5rem] border border-slate-200/80 bg-white p-6 shadow-soft sm:p-8;
 }
 
 /* Cita o versículo destacado. */

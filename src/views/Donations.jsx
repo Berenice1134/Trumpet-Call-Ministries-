@@ -1,36 +1,33 @@
 import {
+  ArrowRight,
   Banknote,
+  BookOpen,
+  Camera,
+  Check,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Copy,
-  DollarSign,
   Gift,
   Heart,
   Home,
   Hospital,
-  Share2,
-  Sparkles,
-  Star,
-  Users,
-  Check,
-  Camera,
-  ChevronLeft,
-  ChevronRight,
   Quote,
-  Award,
-  BookOpen,
-  Compass,
+  Share2,
   Snowflake,
+  Sparkles,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
+
+const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
 
 const bankAccounts = [
   {
     bank: "INBURSA",
     accountNumber: "4658 2859 1470 0814",
     clabe: "0368 3050 0726 3336 01",
-    color: "from-cyan-500 to-blue-700",
-    bgLight: "bg-cyan-50",
-    borderLight: "border-cyan-200",
     icon: Banknote,
   },
 ];
@@ -110,6 +107,21 @@ const donationPageCopy = {
     founderLetterSignature: "A Su servicio,",
     founderLetterName: "Lic. Andrea L. Byrn",
     founderLetterRole: "Directora",
+    readFullLetter: "Leer carta completa",
+    readLessLetter: "Mostrar menos",
+    bibleEyebrow: "Qué dice la Biblia",
+    bibleSubtitle: "Servir a quienes más lo necesitan es responder al llamado de amor del Señor.",
+    whatGiftAchieves: "Lo que logra tu aportación",
+    impactHighlights: [
+      { value: "80+", label: "Familias acompañadas cada mes" },
+      { value: "12 kg", label: "De alimento básico en cada despensa" },
+      { value: "HIT", label: "Kits, insumos y apoyo en hemodiálisis" },
+    ],
+    ctaEyebrow: "Tu generosidad transforma vidas",
+    ctaTitle: "Hoy puedes poner alimento en una mesa y esperanza en un corazón",
+    ctaText:
+      "Cada transferencia se convierte en despensas, insumos médicos para niños con insuficiencia renal y visitas llenas de fe en Tlaxcala.",
+    ctaVolunteer: "Quiero ser voluntario",
   },
   en: {
     badge: "Donations",
@@ -164,6 +176,21 @@ const donationPageCopy = {
     founderLetterSignature: "In His Service,",
     founderLetterName: "Lic. Andrea L. Byrn",
     founderLetterRole: "Director",
+    readFullLetter: "Read full letter",
+    readLessLetter: "Show less",
+    bibleEyebrow: "What the Bible Says",
+    bibleSubtitle: "Serving those in greatest need is answering the Lord's call to love.",
+    whatGiftAchieves: "What your gift achieves",
+    impactHighlights: [
+      { value: "80+", label: "Families accompanied every month" },
+      { value: "12 kg", label: "Of staple food in every pantry bag" },
+      { value: "HIT", label: "Kits, supplies & hemodialysis care" },
+    ],
+    ctaEyebrow: "Your generosity transforms lives",
+    ctaTitle: "Today you can place food on a table and hope in a heart",
+    ctaText:
+      "Every transfer becomes food pantries, medical supplies for children with kidney failure, and faith-filled visits across Tlaxcala.",
+    ctaVolunteer: "Become a volunteer",
   },
 };
 
@@ -190,51 +217,53 @@ function KermesPhotoCarousel({ photos, copy, language }) {
   if (!currentPhoto) return null;
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-2xl">
-      <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] lg:aspect-[21/11]">
+    <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink/80 shadow-photo">
+      <div className="relative aspect-[4/3] overflow-hidden bg-black/40 sm:aspect-[16/10] lg:aspect-[21/11]">
         <img
+          key={currentPhoto.key}
           src={currentPhoto.src}
           alt={`${copy.kermesTitle} ${currentIndex + 1}`}
-          className="h-full w-full object-contain p-2"
+          className="gallery-photo-enter h-full w-full object-contain p-2 sm:p-4"
           loading={currentIndex === 0 ? "eager" : "lazy"}
         />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-5 pb-5 pt-20 text-white">
-          <p className="text-sm font-black uppercase tracking-[0.14em] text-amber-300">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent px-6 pb-6 pt-20 text-white">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-ember-light">
             {copy.kermesTitle}
           </p>
-          <p className="mt-1 text-xs font-semibold text-white/70">
-            {currentIndex + 1} / {totalSlides} {copy.kermesCounter}{totalSlides > 1 ? "s" : ""}
+          <p className="mt-1 text-sm font-medium text-white/80">
+            {currentIndex + 1} / {totalSlides} {copy.kermesCounter}
+            {totalSlides > 1 ? "s" : ""}
           </p>
         </div>
 
         <button
           type="button"
           onClick={previousSlide}
-          className="absolute left-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75"
+          className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/70 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
           aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
         >
-          <ChevronLeft size={25} />
+          <ChevronLeft size={22} />
         </button>
         <button
           type="button"
           onClick={nextSlide}
-          className="absolute right-3 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75"
+          className="absolute right-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/70 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
           aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
         >
-          <ChevronRight size={25} />
+          <ChevronRight size={22} />
         </button>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto border-t border-white/10 bg-slate-900 p-3">
+      <div className="no-scrollbar flex gap-2.5 overflow-x-auto border-t border-white/10 bg-ink/95 p-4">
         {photos.map((photo, index) => (
           <button
             key={photo.key}
             type="button"
             onClick={() => goToSlide(index)}
-            className={`h-16 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
+            className={`h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 transition duration-300 ${
               index === currentIndex
-                ? "border-amber-400 opacity-100"
-                : "border-white/10 opacity-60 hover:opacity-90"
+                ? " scale-[1.03] border-ember opacity-100 shadow-md"
+                : "border-white/10 opacity-55 hover:opacity-90"
             }`}
             aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`}
           >
@@ -256,7 +285,10 @@ export default function Donations() {
   const copy = donationPageCopy[language] ?? donationPageCopy.es;
   const [copiedField, setCopiedField] = useState(null);
   const [selectedSupport, setSelectedSupport] = useState("general");
-  const selectedConcept = copy.supportOptions.find((option) => option.value === selectedSupport)?.concept ?? "GENERAL";
+  const [isLetterExpanded, setIsLetterExpanded] = useState(false);
+
+  const selectedConcept =
+    copy.supportOptions.find((option) => option.value === selectedSupport)?.concept ?? "GENERAL";
 
   const scrollToTransfers = (support = selectedSupport) => {
     setSelectedSupport(support);
@@ -299,406 +331,469 @@ export default function Donations() {
     }
   };
 
+  const donationPlans = [
+    {
+      key: "home",
+      supportValue: "home",
+      icon: Home,
+      title: t("donations.monthlyHome"),
+      description: t("donations.homeText"),
+      amount: "$250",
+      subtitle: copy.perMonth,
+      image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg"),
+      imageAlt:
+        language === "en"
+          ? "Monthly home care pantry delivery"
+          : "Entrega mensual de despensa en servicio domiciliar",
+      featured: false,
+    },
+    {
+      key: "hospital",
+      supportValue: "hospital",
+      icon: Hospital,
+      title: t("donations.monthlyHospital"),
+      description: t("donations.hospitalText"),
+      amount: "$500",
+      subtitle: copy.perMonth,
+      image: asset("hospital-infantil/hospital-nuevo-06.jpeg"),
+      imageAlt:
+        language === "en"
+          ? "Support for children at the Children's Hospital of Tlaxcala"
+          : "Apoyo a niños en el Hospital Infantil de Tlaxcala",
+      featured: true,
+    },
+    {
+      key: "general",
+      supportValue: "general",
+      icon: Gift,
+      title: t("donations.gift"),
+      description: t("donations.giftText"),
+      amount: copy.custom,
+      subtitle: copy.chooseAmount,
+      image: asset("misiones/cartolandia-03.jpeg"),
+      imageAlt:
+        language === "en"
+          ? "Community mission and food support"
+          : "Misión comunitaria y entrega de alimentos",
+      featured: false,
+    },
+  ];
+
+  const visibleParagraphs = isLetterExpanded
+    ? copy.founderLetterParagraphs
+    : copy.founderLetterParagraphs.slice(0, 2);
+
   return (
     <>
-      {/* ========== Encabezado principal y accesos a las opciones de donación ========== */}
-      <section id="donaciones" className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-amber-950 to-orange-950 scroll-mt-28">
-        {/* Capas decorativas de fondo */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-amber-950/80 to-orange-950/90" />
-          
-          {/* Elementos ambientales animados */}
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000" />
-          <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-yellow-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-          
-          {/* Trama de fondo con contraste reducido */}
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="h-full w-full" style={{ 
-              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }} />
+      {/* ========== HERO DIVIDIDO CON FOTOGRAFÍA COMPLETA (SIN ROSTROS CORTADOS) ========== */}
+      <section
+        id="donaciones"
+        className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white scroll-mt-28"
+      >
+        <div className="pointer-events-none absolute -left-24 top-10 h-96 w-96 rounded-full bg-ember/25 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-blue/30 blur-3xl" />
+
+        <div className="section-shell relative z-10 py-14 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="motion-rise">
+              <span className="kicker kicker-light">{copy.badge}</span>
+
+              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-white sm:text-5xl lg:text-6xl">
+                {t("donations.title")}
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/85 sm:text-xl">
+                {t("donations.text")}
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a href="#planes-donacion" className="btn-primary">
+                  <Heart size={16} className="fill-white" />
+                  {copy.chooseHow}
+                </a>
+                <a href="#transferencias" className="btn-ghost-light">
+                  <Banknote size={18} />
+                  {copy.bankDetails}
+                </a>
+              </div>
+
+              {/* Píldoras de navegación interna de la página */}
+              <div className="mt-8 flex flex-wrap gap-2">
+                <a
+                  href="#planes-donacion"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.plans}
+                </a>
+                <a
+                  href="#transferencias"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.transfers}
+                </a>
+                <a
+                  href="#impacto"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.impact}
+                </a>
+                <a
+                  href="#carta-fundadora"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.founderLetterEyebrow}
+                </a>
+                <a
+                  href="#que-dice-la-biblia"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.bibleEyebrow}
+                </a>
+                <a
+                  href="#kermes-invierno-magico"
+                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
+                >
+                  {copy.kermesNav}
+                </a>
+              </div>
+            </div>
+
+            {/* Fotografía vertical completa, sin recortar las cabezas */}
+            <div className="mx-auto w-full max-w-md lg:max-w-none">
+              <figure className="photo-frame aspect-[3/4] max-h-[540px] w-full ring-2 ring-white/15">
+                <img
+                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
+                  alt={
+                    language === "en"
+                      ? "Warm embrace during a ministry food delivery in Tlaxcala"
+                      : "Abrazo cálido durante la entrega de alimento en Tlaxcala"
+                  }
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white/95">
+                  {language === "en"
+                    ? "Every gift reaches a real family in Tlaxcala."
+                    : "Cada donativo llega directamente a una familia real en Tlaxcala."}
+                </figcaption>
+              </figure>
+            </div>
           </div>
 
-          {/* Ilustraciones decorativas de monedas */}
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-float"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${i * 0.7}s`,
-                  animationDuration: `${3 + Math.random() * 4}s`,
-                  opacity: 0.1,
-                }}
-              >
-                <DollarSign size={24 + Math.random() * 20} className="text-amber-400" />
+          {/* Cifras clave del impacto de donar */}
+          <div className="mt-12 grid gap-6 border-t border-white/15 pt-8 sm:grid-cols-3">
+            {copy.impactHighlights.map((item) => (
+              <div key={item.label}>
+                <p className="font-display text-3xl font-semibold text-amber-300 sm:text-4xl">
+                  {item.value}
+                </p>
+                <p className="mt-1 text-sm text-white/80">{item.label}</p>
               </div>
             ))}
           </div>
         </div>
-
-        <div className="section-shell relative w-full">
-          <div className="max-w-4xl mx-auto text-center motion-rise">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl mb-8">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-400" />
-                </span>
-                <Heart size={14} className="text-amber-400" />
-              </div>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400">
-                {copy.badge}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1 className="text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl mb-6">
-              <span className="bg-gradient-to-r from-white via-white to-amber-100 bg-clip-text text-transparent">
-                {t("donations.title")}
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-lg leading-relaxed text-white/70 font-light max-w-2xl mx-auto">
-              {t("donations.text")}
-            </p>
-
-            {/* Navigation Pills */}
-            <div className="flex flex-wrap justify-center gap-3 mt-8">
-              <a
-                href="#planes-donacion"
-                className="px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300"
-              >
-                {copy.plans}
-              </a>
-              <a
-                href="#transferencias"
-                className="px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300"
-              >
-                {copy.transfers}
-              </a>
-              <a
-                href="#impacto"
-                className="px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300"
-              >
-                {copy.impact}
-              </a>
-              <a
-                href="#kermes-invierno-magico"
-                className="px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300"
-              >
-                {copy.kermesNav}
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Indicador visual de desplazamiento */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
-            <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
-          </div>
-        </div>
       </section>
 
-      {/* ========== Planes de aportación y frecuencia ========== */}
-      <section id="planes-donacion" className="section-shell bg-gradient-to-b from-white to-slate-50 scroll-mt-28">
-        <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Star size={14} />
-            {copy.plans}
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-amber-900 bg-clip-text text-transparent mb-4">
-            {copy.chooseHow}
-          </h2>
-          <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-            {copy.chooseText}
-          </p>
+      {/* ========== PLANES DE DONACIÓN CON FOTOGRAFÍAS PROTAGONISTAS ========== */}
+      <section id="planes-donacion" className="section-shell scroll-mt-28 bg-cream">
+        <div className="reveal mx-auto max-w-3xl text-center">
+          <span className="kicker">{copy.plans}</span>
+          <h2 className="title-lg mt-3">{copy.chooseHow}</h2>
+          <p className="lead mt-4">{copy.chooseText}</p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
-          {/* Tarjeta de aportación al servicio domiciliar */}
-          <div className="group relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-teal-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
-            <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity" />
-              <div className="relative space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
-                  <Home size={28} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    {t("donations.monthlyHome")}
-                  </h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    {t("donations.homeText")}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600">
-                    $250
-                  </p>
-                  <p className="text-sm text-slate-500 mt-1">{copy.perMonth}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToTransfers("home")}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold hover:shadow-lg hover:shadow-emerald-200 transition-all duration-300 hover:scale-[1.02]"
-                >
-                  {copy.donateNow}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Tarjeta de aportación al hospital infantil */}
-          <div className="group relative lg:-mt-8">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400 to-orange-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
-            <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl ring-2 ring-amber-400">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="px-4 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg">
-                  {copy.popular}
-                </span>
-              </div>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity" />
-              <div className="relative space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-200">
-                  <Hospital size={28} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    {t("donations.monthlyHospital")}
-                  </h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    {t("donations.hospitalText")}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">
-                    $500
-                  </p>
-                  <p className="text-sm text-slate-500 mt-1">{copy.perMonth}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToTransfers("hospital")}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold hover:shadow-lg hover:shadow-amber-200 transition-all duration-300 hover:scale-[1.02]"
-                >
-                  {copy.donateNow}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Formulario para definir una aportación personalizada */}
-          <div className="group relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-400 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500" />
-            <div className="relative h-full bg-white rounded-2xl p-8 shadow-xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-50 rounded-bl-full opacity-50 group-hover:opacity-100 transition-opacity" />
-              <div className="relative space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-200">
-                  <Gift size={28} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    {t("donations.gift")}
-                  </h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    {t("donations.giftText")}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-purple-600">
-                    {copy.custom}
-                  </p>
-                  <p className="text-sm text-slate-500 mt-1">{copy.chooseAmount}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => scrollToTransfers("general")}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-bold hover:shadow-lg hover:shadow-violet-200 transition-all duration-300 hover:scale-[1.02]"
-                >
-                  {copy.donateNow}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== Datos bancarios para transferencias ========== */}
-      <section id="transferencias" className="section-shell bg-white scroll-mt-28">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4">
-              <Banknote size={14} />
-              {copy.bankTransfer}
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent mb-4">
-              {copy.bankDetails}
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              {copy.bankText}
-            </p>
-          </div>
-
-          <div className="mx-auto grid max-w-3xl gap-8">
-            {bankAccounts.map((account, index) => (
-              <div key={index} className="group relative">
-                <div className={`absolute -inset-0.5 bg-gradient-to-r ${account.color} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`} />
-                <div className={`relative h-full bg-white rounded-2xl p-8 shadow-lg border ${account.borderLight}`}>
-                  {/* Identificación de la cuenta receptora */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${account.color} flex items-center justify-center shadow-lg`}>
-                      <account.icon size={24} className="text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900">{account.bank}</h3>
-                      <p className="text-sm text-slate-500">{copy.bankTransfer}</p>
+        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+          {donationPlans.map((plan) => {
+            const Icon = plan.icon;
+            return (
+              <article
+                key={plan.key}
+                className={`reveal flex flex-col overflow-hidden rounded-[1.75rem] bg-white transition duration-300 hover:-translate-y-1 ${
+                  plan.featured
+                    ? "ring-2 ring-ember shadow-photo"
+                    : "border border-slate-200/80 shadow-soft"
+                }`}
+              >
+                <figure className="photo-frame relative h-64 w-full rounded-none">
+                  <img
+                    src={plan.image}
+                    alt={plan.imageAlt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
+                  <div className="photo-overlay" />
+                  {plan.featured && (
+                    <span className="absolute right-4 top-4 rounded-full bg-ember px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-md">
+                      {copy.popular}
+                    </span>
+                  )}
+                  <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3 text-white">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-ember text-white shadow-md">
+                      <Icon size={22} />
+                    </span>
+                    <div className="text-right">
+                      <p className="font-display text-3xl font-semibold leading-none text-white sm:text-4xl">
+                        {plan.amount}
+                      </p>
+                      <p className="mt-1 text-xs font-medium text-white/85">{plan.subtitle}</p>
                     </div>
                   </div>
+                </figure>
 
-                  {/* Campos de referencia para realizar la transferencia */}
-                  <div className="space-y-4">
-                    {/* Número de cuenta bancaria */}
-                    <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                          {copy.accountNumber}
-                        </span>
-                        <button
-                          onClick={() => copyToClipboard(account.accountNumber, `account-${index}`)}
-                          className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-                        >
-                          {copiedField === `account-${index}` ? (
-                            <>
-                              <Check size={14} className="text-emerald-500" />
-                              <span className="text-emerald-500">{copy.copied}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy size={14} />
-                              {copy.copy}
-                            </>
-                          )}
-                        </button>
-                      </div>
-                      <p className="text-lg font-bold text-slate-900 font-mono tracking-wider">
-                        {account.accountNumber}
-                      </p>
-                    </div>
-
-                    {/* Clave interbancaria para transferencias */}
-                    <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                          {copy.clabe}
-                        </span>
-                        <button
-                          onClick={() => copyToClipboard(account.clabe, `clabe-${index}`)}
-                          className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-                        >
-                          {copiedField === `clabe-${index}` ? (
-                            <>
-                              <Check size={14} className="text-emerald-500" />
-                              <span className="text-emerald-500">{copy.copied}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy size={14} />
-                              {copy.copy}
-                            </>
-                          )}
-                        </button>
-                      </div>
-                      <p className="text-lg font-bold text-slate-900 font-mono tracking-wider">
-                        {account.clabe}
-                      </p>
-                    </div>
-
-                    {/* Concepto sugerido para identificar el depósito */}
-                    <div className={`rounded-xl ${account.bgLight} p-4 border ${account.borderLight}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                          {copy.transferConcept}
-                        </span>
-                        <button
-                          onClick={() => copyToClipboard(selectedConcept, `concept-${index}`, false)}
-                          className="flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-                        >
-                          {copiedField === `concept-${index}` ? (
-                            <>
-                              <Check size={14} className="text-emerald-500" />
-                              <span className="text-emerald-500">{copy.copied}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy size={14} />
-                              {copy.copy}
-                            </>
-                          )}
-                        </button>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Sparkles size={20} className="text-slate-400" />
-                        <p className="text-lg font-black text-slate-900 tracking-wider">
-                          {selectedConcept}
-                        </p>
-                      </div>
-                      <label className="mt-4 block text-sm font-semibold text-slate-700" htmlFor={`support-${index}`}>
-                        {language === "en" ? "Choose what to support" : "Elige a qué quieres apoyar"}
-                      </label>
-                      <select
-                        id={`support-${index}`}
-                        value={selectedSupport}
-                        onChange={(event) => setSelectedSupport(event.target.value)}
-                        className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base font-semibold text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                      >
-                        {copy.supportOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                      </select>
-                    </div>
+                <div className="flex flex-1 flex-col justify-between p-7 sm:p-8">
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold text-ink">
+                      {plan.title}
+                    </h3>
+                    <p className="mt-3 text-base leading-7 text-slate-600">
+                      {plan.description}
+                    </p>
                   </div>
 
-                  {/* Acción para compartir los datos bancarios */}
                   <button
                     type="button"
-                    onClick={shareTransferDetails}
-                    className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-300"
+                    onClick={() => scrollToTransfers(plan.supportValue)}
+                    className={`mt-7 w-full ${plan.featured ? "btn-primary" : "btn-secondary"}`}
                   >
-                    {copiedField === "transfer-details" ? (
-                      <Check size={18} className="text-emerald-500" />
-                    ) : (
-                      <Share2 size={18} />
-                    )}
-                    {copiedField === "transfer-details" ? copy.transferShared : copy.shareBankDetails}
+                    <Heart size={16} className={plan.featured ? "fill-white" : "text-ember"} />
+                    {language === "en" ? "Select this option" : "Elegir este apoyo"}
+                    <ArrowRight size={16} />
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      {/* ========== Resultados financiados por las donaciones ========== */}
-      <section id="impacto" className="section-shell bg-white scroll-mt-28">
-        <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-8 md:p-12 shadow-lg">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-200">
-                  <Heart size={36} className="text-white" />
+      {/* ========== DATOS BANCARIOS Y LO QUE LOGRA TU DONACIÓN ========== */}
+      <section id="transferencias" className="section-shell scroll-mt-28 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="reveal max-w-3xl">
+            <span className="kicker">{copy.bankTransfer}</span>
+            <h2 className="title-lg mt-3">{copy.bankDetails}</h2>
+            <p className="lead mt-4">{copy.bankText}</p>
+          </div>
+
+          <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+            {/* Tarjeta de cuenta bancaria */}
+            <div>
+              {bankAccounts.map((account, index) => {
+                const AccountIcon = account.icon;
+                return (
+                  <div
+                    key={account.bank}
+                    className="soft-card border border-slate-200 bg-slate-50/70 p-6 sm:p-9"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-white shadow-sm">
+                          <AccountIcon size={26} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                            {copy.bankTransfer}
+                          </p>
+                          <h3 className="font-display text-3xl font-semibold text-ink">
+                            {account.bank}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      {/* Número de cuenta */}
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                            {copy.accountNumber}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              copyToClipboard(account.accountNumber, `account-${index}`)
+                            }
+                            className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-xs font-bold text-ink transition hover:bg-ember hover:text-white"
+                          >
+                            {copiedField === `account-${index}` ? (
+                              <>
+                                <Check size={14} className="text-emerald-600" />
+                                <span className="text-emerald-700">{copy.copied}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={14} />
+                                {copy.copy}
+                              </>
+                            )}
+                          </button>
+                        </div>
+                        <p className="mt-2 font-mono text-xl font-bold tracking-wider text-ink sm:text-2xl">
+                          {account.accountNumber}
+                        </p>
+                      </div>
+
+                      {/* CLABE interbancaria */}
+                      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                            {copy.clabe}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard(account.clabe, `clabe-${index}`)}
+                            className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-xs font-bold text-ink transition hover:bg-ember hover:text-white"
+                          >
+                            {copiedField === `clabe-${index}` ? (
+                              <>
+                                <Check size={14} className="text-emerald-600" />
+                                <span className="text-emerald-700">{copy.copied}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={14} />
+                                {copy.copy}
+                              </>
+                            )}
+                          </button>
+                        </div>
+                        <p className="mt-2 font-mono text-xl font-bold tracking-wider text-ink sm:text-2xl">
+                          {account.clabe}
+                        </p>
+                      </div>
+
+                      {/* Concepto y selector moderno de destino (sin <select> nativo) */}
+                      <div className="rounded-2xl border border-ember/25 bg-white p-5 shadow-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-ember">
+                            {copy.transferConcept}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              copyToClipboard(selectedConcept, `concept-${index}`, false)
+                            }
+                            className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3.5 py-1.5 text-xs font-bold text-ember transition hover:bg-ember hover:text-white"
+                          >
+                            {copiedField === `concept-${index}` ? (
+                              <>
+                                <Check size={14} className="text-emerald-600" />
+                                <span className="text-emerald-700">{copy.copied}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={14} />
+                                {copy.copy}
+                              </>
+                            )}
+                          </button>
+                        </div>
+
+                        <div className="mt-2 flex items-center gap-2.5">
+                          <Sparkles size={18} className="shrink-0 text-ember" />
+                          <p className="font-display text-xl font-semibold tracking-wide text-ink sm:text-2xl">
+                            {selectedConcept}
+                          </p>
+                        </div>
+
+                        <p className="mt-5 text-xs font-bold uppercase tracking-wider text-slate-500">
+                          {language === "en"
+                            ? "Choose what to support"
+                            : "Elige a qué quieres apoyar"}
+                        </p>
+
+                        <div
+                          role="radiogroup"
+                          aria-label={
+                            language === "en"
+                              ? "Choose what to support"
+                              : "Elige a qué quieres apoyar"
+                          }
+                          className="mt-2.5 grid gap-2"
+                        >
+                          {copy.supportOptions.map((option) => {
+                            const isSelected = selectedSupport === option.value;
+                            return (
+                              <button
+                                key={option.value}
+                                type="button"
+                                role="radio"
+                                aria-checked={isSelected}
+                                onClick={() => setSelectedSupport(option.value)}
+                                className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold transition ${
+                                  isSelected
+                                    ? "border-ember bg-rose-50/80 text-ink shadow-sm ring-1 ring-ember"
+                                    : "border-slate-200 bg-slate-50/60 text-slate-700 hover:border-ember/40 hover:bg-white"
+                                }`}
+                              >
+                                <span>{option.label}</span>
+                                <span
+                                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                                    isSelected
+                                      ? "bg-ember text-white"
+                                      : "bg-slate-200/70 text-slate-600"
+                                  }`}
+                                >
+                                  {isSelected && <Check size={12} />}
+                                  {option.concept}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={shareTransferDetails}
+                      className="btn-secondary mt-6 w-full"
+                    >
+                      {copiedField === "transfer-details" ? (
+                        <Check size={18} className="text-emerald-600" />
+                      ) : (
+                        <Share2 size={18} />
+                      )}
+                      {copiedField === "transfer-details"
+                        ? copy.transferShared
+                        : copy.shareBankDetails}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Columna derecha: Impacto visual de la donación (#impacto) */}
+            <div id="impacto" className="scroll-mt-28 space-y-6">
+              <figure className="photo-frame h-72 sm:h-80">
+                <img
+                  src={asset("home/home-pantry-display.png")}
+                  alt={
+                    language === "en"
+                      ? "Food pantry packages prepared with donations"
+                      : "Despensas preparadas gracias a las donaciones"
+                  }
+                  loading="lazy"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-5 left-6 right-6 text-white">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
+                    {copy.whatGiftAchieves}
+                  </span>
+                  <p className="mt-1 font-display text-2xl font-semibold">
+                    {copy.impactTitle}
+                  </p>
+                </figcaption>
+              </figure>
+
+              <div className="soft-card border border-slate-200/80 bg-cream">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                  <Heart size={24} />
                 </div>
-              </div>
-              <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                <h3 className="mt-4 font-display text-2xl font-semibold text-ink">
                   {copy.impactTitle}
                 </h3>
-                <p className="text-slate-600 leading-relaxed text-lg">
+                <p className="mt-3 text-base leading-8 text-slate-600">
                   {t("donations.impactNote")}
                 </p>
               </div>
@@ -707,27 +802,159 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== Galería de la campaña Invierno Mágico ========== */}
-      <section id="kermes-invierno-magico" className="relative overflow-hidden scroll-mt-28 bg-gradient-to-br from-slate-950 via-blue-950 to-amber-950">
-        <div className="absolute inset-0 opacity-25 pattern-grid" />
-        <div className="absolute -left-28 top-16 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="absolute -right-28 bottom-10 h-96 w-96 rounded-full bg-amber-400/25 blur-3xl" />
-        <div className="section-shell relative">
-          <div className="mb-10 flex flex-col gap-5 text-white lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-amber-300 backdrop-blur">
-                <Snowflake size={15} />
-                {copy.kermesEyebrow}
+      {/* ========== CARTA DE LA FUNDADORA Y QUÉ DICE LA BIBLIA ========== */}
+      <section id="carta-fundadora" className="section-shell scroll-mt-28 bg-sand">
+        <div className="mx-auto max-w-6xl">
+          <div className="reveal max-w-3xl">
+            <span className="kicker">
+              <BookOpen size={14} />
+              {copy.founderLetterEyebrow}
+            </span>
+            <h2 className="title-lg mt-3">{copy.founderLetterTitle}</h2>
+            <p className="lead mt-4 italic">{copy.founderLetterIntro}</p>
+          </div>
+
+          <div className="mt-12 grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr]">
+            {/* Retrato de la directora */}
+            <aside className="reveal space-y-6">
+              <figure className="photo-frame aspect-[4/5] w-full">
+                <img
+                  src={asset("directora/andrea-byrn.png")}
+                  alt={
+                    language === "en"
+                      ? "Andrea Byrn, Director of Trumpet Call Ministries"
+                      : "Andrea Byrn, Directora de Trumpet Call Ministries"
+                  }
+                  className="h-full w-full object-cover object-top"
+                  loading="lazy"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-6 left-6 right-6 text-white">
+                  <span className="inline-block rounded-full bg-ember px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                    Trumpet Call Ministries • 2021
+                  </span>
+                  <p className="mt-3 font-display text-2xl font-semibold text-white sm:text-3xl">
+                    {copy.founderLetterName}
+                  </p>
+                  <p className="text-sm font-medium text-white/85">{copy.founderLetterRole}</p>
+                </figcaption>
+              </figure>
+
+              <div className="soft-card bg-white">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                  {language === "en"
+                    ? "Faith in action, service with purpose."
+                    : "Fe en acción, servicio con propósito."}
+                </p>
+                <p className="mt-3 font-display text-lg italic leading-relaxed text-ink">
+                  {language === "en"
+                    ? "“Serve the Lord with gladness; come before his presence with singing.”"
+                    : "“Servid al Señor con alegría; venid ante su presencia con regocijo.”"}
+                </p>
               </div>
-              <h2 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
-                {copy.kermesTitle}
-              </h2>
-              <p className="mt-4 max-w-2xl text-base leading-7 text-white/70">
+            </aside>
+
+            {/* Carta personal con divulgación progresiva */}
+            <article className="reveal soft-card bg-white p-7 sm:p-10 lg:p-12">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-5">
+                <span className="text-xs font-bold uppercase tracking-[0.22em] text-ember">
+                  {language === "en" ? "A Personal Letter" : "Carta Personal"}
+                </span>
+                <span className="text-xs font-semibold text-slate-400">
+                  Loma Bonita, Tlaxcala
+                </span>
+              </div>
+
+              <div className="mt-7 space-y-5 text-base leading-8 text-slate-700 sm:text-lg">
+                {visibleParagraphs.map((paragraph, idx) => (
+                  <p
+                    key={idx}
+                    className={
+                      idx === 0
+                        ? "font-display text-xl font-normal leading-relaxed text-ink"
+                        : ""
+                    }
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {copy.founderLetterParagraphs.length > 2 && (
+                <button
+                  type="button"
+                  onClick={() => setIsLetterExpanded((prev) => !prev)}
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-rose-50 px-5 py-2.5 text-sm font-bold text-ember transition hover:bg-ember hover:text-white"
+                >
+                  {isLetterExpanded ? copy.readLessLetter : copy.readFullLetter}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${
+                      isLetterExpanded ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              )}
+
+              {/* Qué dice la Biblia (#que-dice-la-biblia) */}
+              <div
+                id="que-dice-la-biblia"
+                className="mt-9 scroll-mt-28 rounded-2xl border-l-4 border-ember bg-cream p-6 sm:p-8"
+              >
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                  <Quote size={16} />
+                  <span>{copy.bibleEyebrow}</span>
+                </div>
+                <p className="quote-block mt-3 text-xl sm:text-2xl">
+                  {copy.founderLetterVerse}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">{copy.bibleSubtitle}</p>
+              </div>
+
+              {/* Firma de la fundadora */}
+              <div className="mt-9 flex flex-wrap items-end justify-between gap-4 border-t border-slate-100 pt-7">
+                <div>
+                  <p className="font-display text-base italic text-slate-500">
+                    {copy.founderLetterSignature}
+                  </p>
+                  <p className="mt-1 font-display text-2xl font-semibold text-ink sm:text-3xl">
+                    {copy.founderLetterName}
+                  </p>
+                  <p className="text-sm font-semibold text-ember">{copy.founderLetterRole}</p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 bg-cream px-4 py-2.5 text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+                    {language === "en" ? "Founded" : "Fundado"}
+                  </p>
+                  <p className="font-display text-lg font-semibold text-ink">2021</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== GALERÍA KERMÉS INVIERNO MÁGICO DE CARIDAD ========== */}
+      <section
+        id="kermes-invierno-magico"
+        className="section-shell scroll-mt-28 bg-ink text-white"
+      >
+        <div className="mx-auto max-w-6xl">
+          <div className="reveal mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <span className="kicker kicker-light">
+                <Snowflake size={14} />
+                {copy.kermesEyebrow}
+              </span>
+              <h2 className="title-lg mt-3 text-white">{copy.kermesTitle}</h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
                 {copy.kermesIntro}
               </p>
             </div>
-            <div className="inline-flex w-fit items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white shadow-lg backdrop-blur">
-              <Camera size={18} className="text-amber-300" />
+
+            <div className="inline-flex w-fit items-center gap-2.5 rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm">
+              <Camera size={18} className="text-ember-light" />
               {kermesWinterPhotos.length} {copy.kermesCounter}s
             </div>
           </div>
@@ -740,231 +967,40 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== Perfil de la fundadora y carta institucional ========== */}
-      <section id="carta-fundadora" className="relative overflow-hidden scroll-mt-28">
-        {/* Fondo decorativo con efecto de libro antiguo */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50/30 to-stone-100">
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: `radial-gradient(circle at 20% 50%, #8B6914 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
-          }} />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative section-shell py-16 md:py-24">
-          <div className="max-w-7xl mx-auto">
-            {/* Encabezado decorativo */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-amber-100/80 backdrop-blur-sm border border-amber-200/50 shadow-sm mb-6">
-                <BookOpen size={16} className="text-amber-700" />
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-800">
-                  {copy.founderLetterEyebrow}
-                </span>
-              </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-4 tracking-tight">
-                {copy.founderLetterTitle}
+      {/* ========== CIERRE EMOCIONAL (SIN IMAGEN CORTADA Y SIN REPETIR "DONAR AHORA") ========== */}
+      <section className="section-shell bg-cream">
+        <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#0D2B52] to-ink text-white shadow-photo">
+          <div className="grid items-center gap-8 p-6 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:p-16">
+            <div>
+              <span className="kicker kicker-light">{copy.ctaEyebrow}</span>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                {copy.ctaTitle}
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mx-auto mb-4" />
-              <p className="text-slate-600 max-w-2xl mx-auto text-lg font-light italic">
-                {copy.founderLetterIntro}
+              <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">
+                {copy.ctaText}
               </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link to="/voluntarios" className="btn-primary">
+                  {copy.ctaVolunteer}
+                  <ArrowRight size={16} />
+                </Link>
+                <Link to="/reportes" className="btn-ghost-light">
+                  {language === "en" ? "View impact reports" : "Ver reportes de impacto"}
+                </Link>
+              </div>
             </div>
 
-            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-start">
-              {/* ===== COLUMNA IZQUIERDA - PERFIL ===== */}
-              <aside className="relative">
-                {/* Tarjeta principal con efecto pergamino */}
-                <div className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-amber-950/90 to-orange-950/90 p-1 shadow-2xl">
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400/20 via-orange-500/20 to-transparent opacity-50" />
-                  
-                  <div className="relative rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-900/95 p-6 backdrop-blur-sm">
-                    {/* Marco decorativo superior */}
-                    <div className="flex justify-center mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-[2px] bg-gradient-to-r from-transparent to-amber-400/50" />
-                        <Compass size={20} className="text-amber-400/60" />
-                        <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-amber-400/50" />
-                      </div>
-                    </div>
-
-                    {/* Foto con marco de oro */}
-                    <figure className="group relative overflow-hidden rounded-2xl border-2 border-amber-400/30 bg-amber-400/5 p-2 shadow-2xl">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-amber-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      <img
-                        src={`${import.meta.env.BASE_URL}assets/directora/andrea-byrn.png`}
-                        alt={language === "en" ? "Andrea Byrn, Director of Trumpet Call Ministries" : "Andrea Byrn, Directora de Trumpet Call Ministries"}
-                        className="h-[420px] w-full rounded-xl object-cover object-[50%_25%] transition-all duration-700 group-hover:scale-[1.02]"
-                      />
-                      {/* Sello decorativo */}
-                      <div className="absolute bottom-4 right-4 w-16 h-16 rounded-full border-2 border-amber-400/30 bg-black/40 backdrop-blur-sm flex items-center justify-center rotate-[-10deg]">
-                        <Award size={28} className="text-amber-400" />
-                      </div>
-                      <div className="absolute inset-x-3 bottom-3 rounded-b-xl bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent px-5 pb-5 pt-16">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-300">
-                          {copy.founderLetterName}
-                        </p>
-                        <p className="mt-1 text-sm font-medium text-white/70">
-                          {copy.founderLetterRole}
-                        </p>
-                      </div>
-                    </figure>
-
-                    {/* Nombre y título con estilo */}
-                    <div className="mt-6 text-center">
-                      <div className="inline-block px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
-                        <p className="text-xs font-bold uppercase tracking-[0.15em] text-amber-300">
-                          Trumpet Call Ministries
-                        </p>
-                      </div>
-                      <h3 className="mt-4 text-2xl font-bold text-white/90 tracking-tight">
-                        {language === "en" ? "Faith in action," : "Fe en acción,"}
-                        <span className="block text-amber-300/80">
-                          {language === "en" ? "service with purpose." : "servicio con propósito."}
-                        </span>
-                      </h3>
-                    </div>
-                    {/* Cita inspiradora */}
-                    <div className="mt-6 p-4 rounded-xl border border-amber-400/10 bg-amber-400/5">
-                      <div className="flex gap-3">
-                        <Quote size={18} className="text-amber-400/40 flex-shrink-0 mt-0.5" />
-                        <p className="text-sm text-white/60 italic leading-relaxed">
-                          {language === "en" 
-                            ? "\"Serve the Lord with gladness; come before his presence with singing.\"" 
-                            : "\"Servid al Señor con alegría; venid ante su presencia con regocijo.\""}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Línea decorativa inferior */}
-                    <div className="flex justify-center mt-6">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-[2px] bg-gradient-to-r from-transparent to-amber-400/30" />
-                        <div className="w-2 h-2 rounded-full bg-amber-400/40" />
-                        <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-amber-400/30" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </aside>
-
-              {/* ===== COLUMNA DERECHA - CARTA ===== */}
-              <article className="relative">
-                {/* Efecto de papel envejecido */}
-                <div className="relative rounded-3xl bg-gradient-to-br from-amber-100/90 via-orange-50/90 to-stone-100/90 p-1 shadow-2xl border border-amber-200/30">
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400/10 via-orange-300/10 to-transparent opacity-30" />
-                  
-                  <div className="relative rounded-2xl bg-gradient-to-b from-white/95 to-amber-50/90 p-8 md:p-12 backdrop-blur-sm">
-                    {/* Decoración de carta antigua */}
-                    <div className="flex justify-between items-start mb-8">
-                      <div className="space-y-1">
-                        <div className="w-16 h-[2px] bg-gradient-to-r from-amber-400 to-amber-300/20 rounded-full" />
-                        <p className="text-xs font-serif text-amber-600/60 tracking-[0.3em] uppercase">
-                          {language === "en" ? "A Personal Letter" : "Carta Personal"}
-                        </p>
-                      </div>
-                      <div className="w-8 h-8 rounded-full border border-amber-300/30 flex items-center justify-center">
-                        <Sparkles size={14} className="text-amber-400/60" />
-                      </div>
-                    </div>
-
-                    {/* Contenido de la carta */}
-                    <div className="space-y-6 text-slate-700 leading-relaxed font-serif">
-                      {copy.founderLetterParagraphs.map((paragraph, idx) => (
-                        <p key={idx} className="first:drop-cap first:pl-1">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-
-                    {/* Versículo destacado */}
-                    <div id="que-dice-la-biblia" className="my-8 scroll-mt-28 relative">
-                      <div className="absolute -left-3 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full" />
-                      <div className="pl-6 py-4 rounded-xl bg-gradient-to-r from-amber-400/5 to-orange-400/5 border border-amber-200/20">
-                        <div className="flex gap-4 items-start">
-                          <Quote size={24} className="text-amber-400/50 flex-shrink-0 mt-1" />
-                          <p className="text-xl font-serif italic text-slate-800 leading-relaxed">
-                            {copy.founderLetterVerse}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Firma con estilo */}
-                    <div className="mt-10 pt-8 border-t-2 border-amber-200/30">
-                      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                        <div className="space-y-1">
-                          <p className="text-sm text-slate-500 font-serif italic">
-                            {copy.founderLetterSignature}
-                          </p>
-                          <p className="text-3xl font-serif font-bold text-slate-900 tracking-wide">
-                            {copy.founderLetterName}
-                          </p>
-                          <p className="text-sm font-medium text-amber-700">
-                            {copy.founderLetterRole}
-                          </p>
-                        </div>
-                        {/* Sello decorativo */}
-                        <div className="flex-shrink-0 w-20 h-20 rounded-full border-2 border-amber-400/30 bg-amber-400/10 flex items-center justify-center">
-                          <div className="text-center">
-                            <p className="text-[8px] font-bold uppercase text-amber-600/60 tracking-wider leading-tight">
-                              {language === "en" ? "Founded" : "Fundado"}
-                            </p>
-                            <p className="text-sm font-serif font-bold text-amber-700">2021</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Decoración inferior de carta */}
-                    <div className="flex justify-center mt-8">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-300/30" />
-                        <div className="flex gap-1">
-                          {[...Array(3)].map((_, i) => (
-                            <div key={i} className="w-1 h-1 rounded-full bg-amber-300/40" />
-                          ))}
-                        </div>
-                        <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-300/30" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
+            <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+              <img
+                src={asset("donaciones/kermes-invierno-magico/kermes-invierno-magico-02.jpeg")}
+                alt={copy.kermesTitle}
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+            </figure>
           </div>
         </div>
       </section>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(10deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        .drop-cap::first-letter {
-          font-size: 3.5em;
-          float: left;
-          line-height: 0.8;
-          margin-right: 0.15em;
-          color: #b45309;
-          font-weight: 700;
-          font-family: serif;
-        }
-        @media (max-width: 640px) {
-          .drop-cap::first-letter {
-            font-size: 2.8em;
-          }
-        }
-      `}</style>
     </>
   );
 }

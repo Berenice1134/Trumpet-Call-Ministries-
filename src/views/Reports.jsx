@@ -21,11 +21,15 @@ import {
   Eye,
   X,
   Maximize2,
+  ChevronDown,
+  ArrowUpRight,
 } from "lucide-react";
 import { createElement, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import InfoCard from "../components/InfoCard.jsx";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
+
+const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
 
 const yearlySupport = [
   { year: 2021, months: "6", beneficiaries: 12, foodKg: 719, pantries: 72, cumulativePantries: 72, cumulativeFoodKg: 719 },
@@ -67,23 +71,50 @@ const infographicPeriods = [
 ];
 
 const donorSources2026 = [
-  { key: "mexico", value: 37, color: "from-cyan-400 to-cyan-600", hex: "#06b6d4", icon: Globe, description: "Donaciones desde México" },
-  { key: "englishCenter", value: 2, color: "from-emerald-400 to-emerald-600", hex: "#10b981", icon: GraduationCap, description: "Ingresos del English Center" },
-  { key: "usd", value: 55, color: "from-amber-400 to-amber-600", hex: "#fbbf24", icon: Building2, description: "Donaciones en USD" },
-  { key: "kermes", value: 6, color: "from-rose-400 to-rose-600", hex: "#f43f5e", icon: Heart, description: "Recaudación por kermés" },
+  { key: "mexico", value: 37, color: "from-ink to-ministry-blue", hex: "#0A1E3C", icon: Globe, description: "Donaciones desde México" },
+  { key: "englishCenter", value: 2, color: "from-ministry-teal to-teal-600", hex: "#06B6D4", icon: GraduationCap, description: "Ingresos del English Center" },
+  { key: "usd", value: 55, color: "from-ember to-ember-dark", hex: "#E11D48", icon: Building2, description: "Donaciones en USD" },
+  { key: "kermes", value: 6, color: "from-amber-400 to-amber-600", hex: "#F59E0B", icon: Heart, description: "Recaudación por kermés" },
 ];
 
 const hospitalDonationMix = [
-  { key: "hygieneKits", value: 43, color: "from-blue-400 to-blue-600", hex: "#3b82f6", icon: PackageCheck, description: "Kits de higiene personal" },
-  { key: "pajamas", value: 18, color: "from-violet-400 to-violet-600", hex: "#8b5cf6", icon: Heart, description: "Pijamas para niños" },
-  { key: "sandals", value: 6, color: "from-teal-400 to-teal-600", hex: "#14b8a6", icon: ClipboardList, description: "Chanclas y calzado" },
-  { key: "activities", value: 33, color: "from-pink-400 to-pink-600", hex: "#ec4899", icon: Sparkles, description: "Actividades recreativas" },
+  { key: "hygieneKits", value: 43, color: "from-ink to-ministry-blue", hex: "#0A1E3C", icon: PackageCheck, description: "Kits de higiene personal" },
+  { key: "pajamas", value: 18, color: "from-ministry-teal to-teal-600", hex: "#06B6D4", icon: Heart, description: "Pijamas para niños" },
+  { key: "sandals", value: 6, color: "from-amber-400 to-amber-600", hex: "#F59E0B", icon: ClipboardList, description: "Chanclas y calzado" },
+  { key: "activities", value: 33, color: "from-ember to-ember-dark", hex: "#E11D48", icon: Sparkles, description: "Actividades recreativas" },
 ];
 
 const missionDonations = [
-  { year: 2023, month: "Jun", place: "Cartolandia", value: 28, icon: Church, color: "from-orange-400 to-orange-600", description: "47 familias apoyadas" },
-  { year: 2023, month: "Ago", place: "Cáritas", value: 30, icon: HandHeart, color: "from-amber-400 to-amber-600", description: "53 familias apoyadas" },
-  { year: 2025, month: "Mar", place: "San Judas", value: 42, icon: Church, color: "from-red-400 to-red-600", description: "75 kg + 50 cobijas" },
+  {
+    year: 2023,
+    month: "Jun",
+    place: "Cartolandia",
+    value: 28,
+    icon: Church,
+    color: "from-ember to-ember-dark",
+    description: "47 familias apoyadas",
+    photo: asset("misiones/cartolandia-primera-14.jpeg"),
+  },
+  {
+    year: 2023,
+    month: "Ago",
+    place: "Cáritas",
+    value: 30,
+    icon: HandHeart,
+    color: "from-ink to-ministry-blue",
+    description: "53 familias apoyadas",
+    photo: asset("misiones/dia-caridad-caritas-03.jpeg"),
+  },
+  {
+    year: 2025,
+    month: "Mar",
+    place: "San Judas",
+    value: 42,
+    icon: Church,
+    color: "from-ministry-teal to-teal-600",
+    description: "75 kg + 50 cobijas",
+    photo: asset("misiones/espanita-02.jpeg"),
+  },
 ];
 
 const infographicTimeline = {
@@ -110,6 +141,13 @@ const infographicTimeline = {
 const reportsCopy = {
   es: {
     eyebrow: "Gráficos del ministerio",
+    intro: "Detrás de cada cifra hay una mesa servida, una oración compartida y una familia acompañada con constancia en Tlaxcala.",
+    heroQuote: "Cada número es una familia con nombre, rostro e historia",
+    heroCtaCharts: "Explorar impacto",
+    heroCtaPdfs: "Ver boletines e infografías",
+    humanNoteEyebrow: "Transparencia con rostro humano",
+    humanNoteTitle: "Más de diez toneladas de alimento convertidas en abrazos y esperanza",
+    humanNoteText: "Cada despensa entregada desde 2021 representa visitas mensuales a hogares vulnerables, escucha atenta y seguimiento espiritual.",
     stats: {
       pantries: "Despensas donadas",
       food: "Alimentos donados",
@@ -127,6 +165,7 @@ const reportsCopy = {
     timelineText: "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
     tenTons: "10 Toneladas",
+    archiveEyebrow: "Documentos institucionales",
     archiveText: "Consulta los tres periodos más recientes, con una infografía en español y un boletín en inglés para cada periodo.",
     spanish: "Español",
     english: "Inglés",
@@ -156,10 +195,22 @@ const reportsCopy = {
     expand: "Ampliar",
     tapToExpand: "Ver detalles",
     close: "Cerrar",
+    showAllMilestones: "Ver los 7 hitos completos",
+    showLessMilestones: "Mostrar resumen",
+    ctaEyebrow: "¿Cómo puedes ayudar?",
+    ctaTitle: "Sé parte del próximo reporte de esperanza en Tlaxcala",
+    ctaText: "Tu donativo o voluntariado se transforma directamente en despensas mensuales, visitas al hospital y misiones comunitarias.",
+    volunteering: "Voluntariado",
   },
   en: {
     eyebrow: "Ministry charts",
-    intro: "Annual food support, pantry deliveries, and ministry outreach at a glance.",
+    intro: "Annual food support, pantry deliveries, and ministry outreach at a glance — where every number represents a family accompanied with love.",
+    heroQuote: "Every number is a family with a name, a face, and a story",
+    heroCtaCharts: "Explore impact",
+    heroCtaPdfs: "View newsletters & infographics",
+    humanNoteEyebrow: "Transparency with a human heart",
+    humanNoteTitle: "Over ten tons of food turned into embraces and hope",
+    humanNoteText: "Every pantry bag delivered since 2021 represents monthly visits to vulnerable homes, attentive listening, and spiritual care.",
     stats: {
       pantries: "Pantries donated",
       food: "Food donated",
@@ -177,6 +228,7 @@ const reportsCopy = {
     timelineText: "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
     tenTons: "10 Tons",
+    archiveEyebrow: "Institutional documents",
     archiveText: "Browse the three most recent reporting periods, with a Spanish infographic and an English newsletter for each period.",
     spanish: "Spanish",
     english: "English",
@@ -206,6 +258,12 @@ const reportsCopy = {
     expand: "Expand",
     tapToExpand: "View details",
     close: "Close",
+    showAllMilestones: "View all 7 milestones",
+    showLessMilestones: "Show summary",
+    ctaEyebrow: "How can you help?",
+    ctaTitle: "Be part of the next report of hope in Tlaxcala",
+    ctaText: "Your gift or volunteer service turns directly into monthly pantry bags, hospital visits, and community missions.",
+    volunteering: "Volunteer Service",
   },
 };
 
@@ -216,7 +274,7 @@ const formatNumber = (value, decimals = 0) =>
   }).format(value);
 
 // ===== MODAL DE DETALLE (COMPACTO) =====
-function DetailModal({ isOpen, onClose, title, data, total, color }) {
+function DetailModal({ isOpen, onClose, title, data, total, totalLabel, hintLabel }) {
   useEffect(() => {
     if (!isOpen) return undefined;
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -233,50 +291,50 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/70 p-3 backdrop-blur-sm sm:p-6"
+      className="fixed inset-0 z-[300] flex items-center justify-center bg-ink/75 p-3 backdrop-blur-sm sm:p-6"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
       <div
-        className="relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        className="relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-[1.75rem] border border-ink/10 bg-white shadow-photo"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`shrink-0 bg-gradient-to-r ${color} px-5 py-4 text-white`}>
+        <div className="shrink-0 bg-ink px-6 py-5 text-white">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="truncate text-base font-black leading-tight">{title}</h3>
+            <h3 className="truncate font-display text-xl font-semibold leading-tight text-white">{title}</h3>
             <button
               onClick={onClose}
               aria-label="Cerrar"
-              className="shrink-0 rounded-full bg-white/20 p-1.5 transition-colors hover:bg-white/30"
+              className="shrink-0 rounded-full bg-white/15 p-2 text-white transition-colors hover:bg-white/25"
             >
               <X size={16} />
             </button>
           </div>
           {total !== undefined && (
-            <p className="mt-1 text-xs text-white/85">
-              {reportsCopy.es.total}: <span className="font-black">{total}</span>
+            <p className="mt-1.5 text-xs uppercase tracking-[0.18em] text-ember-light">
+              {totalLabel}: <span className="font-bold text-white">{total}</span>
             </p>
           )}
         </div>
 
-        <div className="flex-1 space-y-1.5 overflow-y-auto p-3">
+        <div className="flex-1 space-y-2 overflow-y-auto p-4">
           {data.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2 transition-colors hover:bg-slate-100"
+              className="flex items-center justify-between gap-3 rounded-xl bg-cream px-4 py-3 transition-colors hover:bg-sand/70"
             >
-              <div className="flex min-w-0 items-center gap-2">
-                <div className={`h-2 w-2 shrink-0 rounded-full bg-gradient-to-r ${item.color}`} />
-                <span className="truncate text-sm font-bold text-slate-700">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-ember" />
+                <span className="truncate font-display text-base font-semibold text-ink">
                   {item.label}
                 </span>
               </div>
               <div className="flex shrink-0 items-center gap-2 tabular-nums">
-                <span className="text-sm font-black text-slate-900">{item.value}</span>
+                <span className="text-sm font-bold text-ink">{item.value}</span>
                 {item.percentage !== undefined && (
-                  <span className="text-xs font-bold text-slate-400">
+                  <span className="text-xs font-semibold text-slate-500">
                     ({item.percentage}%)
                   </span>
                 )}
@@ -285,9 +343,9 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
           ))}
         </div>
 
-        <div className="shrink-0 border-t border-slate-100 bg-slate-50 px-4 py-2">
-          <p className="text-center text-[10px] font-medium text-slate-400">
-            {reportsCopy.es.clickToView}
+        <div className="shrink-0 border-t border-ink/5 bg-cream/60 px-4 py-2.5">
+          <p className="text-center text-xs font-medium text-slate-500">
+            {hintLabel}
           </p>
         </div>
       </div>
@@ -297,38 +355,39 @@ function DetailModal({ isOpen, onClose, title, data, total, color }) {
 }
 
 // ===== STAT CARD =====
-function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
+function StatCard({ icon, label, value, detail, expandLabel, onClick }) {
   return (
-    <article
+    <button
+      type="button"
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-transparent hover:shadow-2xl"
+      className="soft-card group relative flex w-full flex-col justify-between text-left transition duration-300 hover:-translate-y-1 hover:border-ember/30 hover:shadow-photo"
     >
-      <div
-        className={`pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full ${color} opacity-[0.08] blur-2xl transition duration-700 group-hover:scale-125 group-hover:opacity-20`}
-      />
-      <div className="relative flex items-start gap-4">
-        <span
-          className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
-        >
-          {createElement(icon, { size: 24 })}
+      <div className="flex items-start justify-between gap-4">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-ember/10 text-ember transition group-hover:bg-ember group-hover:text-white">
+          {createElement(icon, { size: 22 })}
         </span>
-        <span className="min-w-0">
-          <span className="block text-3xl font-black tracking-tight text-slate-900">{value}</span>
-          <span className="mt-1 block text-sm font-bold text-slate-700">{label}</span>
-          <span className="mt-1 block text-[11px] font-black uppercase tracking-[0.18em] text-slate-400">
-            {detail}
-          </span>
+        <span className="rounded-full bg-cream px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+          {detail}
         </span>
       </div>
-      <div className="mt-5 flex items-center justify-between">
-        <div
-          className={`h-1.5 w-16 rounded-full bg-gradient-to-r ${gradient} opacity-70 transition-all duration-500 group-hover:w-28 group-hover:opacity-100`}
+
+      <div className="mt-6">
+        <span className="block font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          {value}
+        </span>
+        <span className="mt-2 block text-base font-medium text-slate-600">{label}</span>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between border-t border-ink/5 pt-4">
+        <span className="text-xs font-bold uppercase tracking-[0.16em] text-ember">
+          {expandLabel}
+        </span>
+        <ArrowUpRight
+          size={16}
+          className="text-ember transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
-        <span className="translate-x-2 text-xs font-black text-ministry-blue opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
-          Ver detalles →
-        </span>
       </div>
-    </article>
+    </button>
   );
 }
 
@@ -336,11 +395,7 @@ function StatCard({ icon, label, value, detail, color, gradient, onClick }) {
 function ChartShell({
   title,
   subtitle,
-  icon: Icon,
-  gradient = "from-cyan-500 to-blue-600",
-  glow = "from-cyan-100/70",
-  accentText = "text-cyan-700",
-  ringHover = "hover:ring-cyan-200",
+  icon,
   preview,
   children,
   expandLabel = "Ver detalles",
@@ -362,27 +417,24 @@ function ChartShell({
   const modal = open
     ? createPortal(
         <div
-          className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/80 p-2 backdrop-blur-md animate-in fade-in duration-200 sm:p-6"
+          className="fixed inset-0 z-[300] flex items-center justify-center bg-ink/80 p-3 backdrop-blur-md sm:p-6"
           onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-label={title}
         >
-          <section className="relative flex max-h-[calc(100dvh-1rem)] w-full max-w-6xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl animate-in zoom-in-95 duration-200 sm:max-h-[calc(100dvh-3rem)]">
-            {/* Header fijo del modal */}
-            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-100 bg-white/95 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
+          <section className="relative flex max-h-[calc(100dvh-1.5rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[1.75rem] border border-ink/10 bg-cream shadow-photo sm:max-h-[calc(100dvh-3rem)]">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-ink/10 bg-white px-5 py-4 sm:px-7">
               <div className="flex min-w-0 items-center gap-3">
-                <span
-                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md`}
-                >
-                  <Icon size={18} />
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ember/10 text-ember">
+                  {createElement(icon, { size: 18 })}
                 </span>
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-black text-slate-900 sm:text-base">
+                  <p className="truncate font-display text-lg font-semibold text-ink sm:text-xl">
                     {title}
                   </p>
                   {subtitle && (
-                    <p className="truncate text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                    <p className="truncate text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
                       {subtitle}
                     </p>
                   )}
@@ -392,14 +444,13 @@ function ChartShell({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Cerrar gráfica"
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-900 text-white shadow-lg transition hover:scale-105 hover:bg-slate-700"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-white transition hover:bg-ember"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
-            {/* Contenido scrollable del modal */}
-            <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-6">{children}</div>
+            <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-7">{children}</div>
           </section>
         </div>,
         document.body
@@ -412,41 +463,31 @@ function ChartShell({
         type="button"
         onClick={() => setOpen(true)}
         aria-label={`${expandLabel}: ${title}`}
-        className={`group relative flex w-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white p-5 text-left shadow-md ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:ring-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-200 sm:p-6 ${ringHover}`}
+        className="soft-card group relative flex w-full flex-col justify-between text-left transition duration-300 hover:-translate-y-1 hover:border-ember/30 hover:shadow-photo focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ember/20"
       >
-        <span
-          className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${glow} to-transparent blur-3xl transition duration-700 group-hover:scale-125`}
-        />
-
-        <span className="relative flex items-start justify-between gap-3">
+        <span className="flex w-full items-start justify-between gap-4">
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-base font-black leading-tight tracking-tight text-slate-900 sm:text-lg">
+            <span className="block font-display text-xl font-semibold leading-snug text-ink sm:text-2xl">
               {title}
             </span>
             {subtitle && (
-              <span className="mt-1 block truncate text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+              <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-ember">
                 {subtitle}
               </span>
             )}
           </span>
-          <span
-            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}
-          >
-            <Icon size={18} />
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cream text-ink transition group-hover:bg-ember group-hover:text-white">
+            {createElement(icon, { size: 19 })}
           </span>
         </span>
 
-        <span className="relative mt-5 block flex-1">{preview}</span>
+        <span className="mt-6 block w-full flex-1">{preview}</span>
 
-        <span className="relative mt-4 flex items-center justify-between">
-          <span
-            className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${gradient} opacity-60 transition-all duration-500 group-hover:w-24 group-hover:opacity-100`}
-          />
-          <span
-            className={`flex translate-x-2 items-center gap-1.5 text-[11px] font-black opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100 ${accentText}`}
-          >
+        <span className="mt-6 flex w-full items-center justify-between border-t border-ink/5 pt-4">
+          <span className="h-1 w-12 rounded-full bg-ember/40 transition-all duration-300 group-hover:w-20 group-hover:bg-ember" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition group-hover:text-ember">
             {expandLabel}
-            <Maximize2 size={12} />
+            <Maximize2 size={13} />
           </span>
         </span>
       </button>
@@ -457,30 +498,29 @@ function ChartShell({
 }
 
 // ===== BAR CHART (Beneficiarios) =====
-function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey, secondaryLabel }) {
+function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, secondaryLabel, expandLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   const preview = (
-    <span className="flex h-24 items-end gap-1.5 sm:gap-2">
+    <span className="flex h-28 items-end gap-2 pt-2">
       {data.map((item, i) => {
-        const h = Math.max(10, (item[valueKey] / maxValue) * 100);
+        const h = Math.max(12, (item[valueKey] / maxValue) * 100);
         const isLast = i === data.length - 1;
         return (
-          <span key={item.year} className="flex flex-1 flex-col items-center gap-1.5">
+          <span key={item.year} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
+            <span className="text-xs font-bold text-ink">{item[valueKey]}</span>
             <span className="relative flex w-full flex-1 items-end">
               <span
-                className={`w-full rounded-t-md bg-gradient-to-t ${color} transition-all duration-500 ${
-                  isLast ? "shadow-[0_0_0_2px_rgba(244,63,94,0.15)]" : ""
+                className={`w-full rounded-t-lg transition-all duration-500 ${
+                  isLast ? "bg-ember" : "bg-ink/80 group-hover:bg-ink"
                 }`}
                 style={{ height: `${h}%` }}
-              >
-                <span className="absolute inset-x-0.5 top-0.5 block h-0.5 rounded-full bg-white/40" />
-              </span>
+              />
             </span>
-            <span className="text-[9px] font-black text-slate-400">
+            <span className="text-xs font-semibold text-slate-500">
               {String(item.year).slice(2)}
             </span>
           </span>
@@ -494,125 +534,113 @@ function BarChartBlock({ title, data, valueKey, color, valueLabel, secondaryKey,
       title={title}
       subtitle={`${formatNumber(total)}${valueLabel ? ` ${valueLabel}` : ""}`}
       icon={BarChart3}
-      gradient="from-rose-500 to-pink-600"
-      glow="from-rose-100/70"
-      accentText="text-rose-600"
-      ringHover="hover:ring-rose-200"
       preview={preview}
-      expandLabel="Ver detalles"
+      expandLabel={expandLabel}
     >
-      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-pink-200/40 blur-3xl" />
+      <article tabIndex={0} className="soft-card">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-display text-2xl font-semibold text-ink">{title}</h3>
+            <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-ember">
+              {formatNumber(total)}
+              {valueLabel ? ` ${valueLabel}` : ""}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-ember/10 p-3 text-ember">
+            <BarChart3 size={20} />
+          </div>
+        </div>
 
-        <div className="relative">
-          <div className="flex items-start justify-between gap-4">
+        {selectedData && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-cream p-4 border border-ink/10">
             <div>
-              <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-              <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-                {formatNumber(total)}
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {selectedData.year}
+              </p>
+              <p className="font-display text-2xl font-semibold text-ember">
+                {formatNumber(selectedData[valueKey])}
                 {valueLabel ? ` ${valueLabel}` : ""}
               </p>
             </div>
-            <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 p-3 text-white shadow-lg shadow-rose-500/30">
-              <BarChart3 size={20} />
-            </div>
-          </div>
-
-          {selectedData && (
-            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 p-4 ring-1 ring-rose-100 animate-in slide-in-from-top-2 duration-300">
-              <div>
-                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  {selectedData.year}
+            {secondaryKey && (
+              <div className="text-right">
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  {secondaryLabel}
                 </p>
-                <p className="text-2xl font-black text-rose-600">
-                  {formatNumber(selectedData[valueKey])}
-                  {valueLabel ? ` ${valueLabel}` : ""}
+                <p className="font-display text-xl font-semibold text-ink">
+                  {formatNumber(selectedData[secondaryKey])}
                 </p>
               </div>
-              {secondaryKey && (
-                <div className="text-right">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {secondaryLabel}
-                  </p>
-                  <p className="text-lg font-black text-slate-700">
-                    {formatNumber(selectedData[secondaryKey])}
-                  </p>
-                </div>
-              )}
+            )}
+            <button
+              onClick={() => setSelectedIndex(null)}
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-ink"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        <div className="mt-6 space-y-4">
+          {data.map((item, index) => {
+            const pct = (item[valueKey] / maxValue) * 100;
+            const isSelected = selectedIndex === index;
+            const prev = index > 0 ? data[index - 1][valueKey] : null;
+            const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
+
+            return (
               <button
-                onClick={() => setSelectedIndex(null)}
-                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
+                key={item.year}
+                type="button"
+                onClick={() => setSelectedIndex(isSelected ? null : index)}
+                className="group/row block w-full text-left"
               >
-                <X size={14} />
-              </button>
-            </div>
-          )}
-
-          <div className="mt-6 space-y-4">
-            {data.map((item, index) => {
-              const pct = (item[valueKey] / maxValue) * 100;
-              const isSelected = selectedIndex === index;
-              const prev = index > 0 ? data[index - 1][valueKey] : null;
-              const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
-
-              return (
-                <button
-                  key={item.year}
-                  type="button"
-                  onClick={() => setSelectedIndex(isSelected ? null : index)}
-                  className="group/row block w-full text-left"
-                >
-                  <div className="mb-1.5 flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
+                <div className="mb-1.5 flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`font-display text-base font-semibold transition-colors ${
+                        isSelected ? "text-ember" : "text-ink"
+                      }`}
+                    >
+                      {item.year}
+                    </span>
+                    {delta !== null && (
                       <span
-                        className={`font-black transition-colors ${
-                          isSelected ? "text-rose-600" : "text-slate-800"
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                          delta >= 0
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "bg-amber-50 text-amber-800"
                         }`}
                       >
-                        {item.year}
+                        {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
                       </span>
-                      {delta !== null && (
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-black tracking-tight ring-1 ring-inset ${
-                            delta >= 0
-                              ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-                              : "bg-rose-50 text-rose-700 ring-rose-200"
-                          }`}
-                        >
-                          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
-                        </span>
-                      )}
-                    </div>
-                    <span
-                      className={`font-black tabular-nums transition-colors ${
-                        isSelected ? "text-rose-600" : "text-slate-500"
-                      }`}
-                    >
-                      {formatNumber(item[valueKey])}
-                      {valueLabel ? ` ${valueLabel}` : ""}
-                    </span>
+                    )}
                   </div>
-                  <div className="relative h-3 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/70">
-                    <div
-                      className={`relative h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700 ease-out ${
-                        isSelected
-                          ? "shadow-[0_0_0_3px_rgba(244,63,94,0.18)]"
-                          : "group-hover/row:brightness-110"
-                      }`}
-                      style={{ width: `${Math.max(6, pct)}%` }}
-                    >
-                      <span className="absolute inset-x-1 top-0.5 h-1 rounded-full bg-white/35" />
-                    </div>
-                  </div>
-                  {secondaryKey && (
-                    <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                      {formatNumber(item[secondaryKey])} {secondaryLabel}
-                    </p>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+                  <span
+                    className={`font-bold tabular-nums transition-colors ${
+                      isSelected ? "text-ember" : "text-slate-600"
+                    }`}
+                  >
+                    {formatNumber(item[valueKey])}
+                    {valueLabel ? ` ${valueLabel}` : ""}
+                  </span>
+                </div>
+                <div className="relative h-3 overflow-hidden rounded-full bg-sand">
+                  <div
+                    className={`relative h-full rounded-full transition-all duration-700 ease-out ${
+                      isSelected ? "bg-ember" : "bg-ink group-hover/row:bg-ember"
+                    }`}
+                    style={{ width: `${Math.max(6, pct)}%` }}
+                  />
+                </div>
+                {secondaryKey && (
+                  <p className="mt-1 text-xs font-medium text-slate-500">
+                    {formatNumber(item[secondaryKey])} {secondaryLabel}
+                  </p>
+                )}
+              </button>
+            );
+          })}
         </div>
       </article>
     </ChartShell>
@@ -624,18 +652,20 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   const [activeIndex, setActiveIndex] = useState(null);
 
   const W = 1000;
-  const H = 420;
-  const padL = 78;
-  const padR = 40;
-  const padT = 40;
-  const padB = 64;
+  const H = 400;
+  const padL = 82;
+  const padR = 44;
+  const padT = 36;
+  const padB = 60;
+  const plotInsetX = 46;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
 
   const maxCum = 12000;
   const maxAnnual = Math.max(...data.map((d) => d.foodKg));
 
-  const xFor = (i) => padL + (i / (data.length - 1)) * innerW;
+  const xFor = (i) =>
+    padL + plotInsetX + (i / (data.length - 1)) * (innerW - plotInsetX * 2);
   const yCum = (v) => padT + innerH - (v / maxCum) * innerH;
   const yAnnual = (v) => padT + innerH - (v / maxAnnual) * (innerH * 0.55);
 
@@ -669,247 +699,244 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   const active = activeIndex !== null ? data[activeIndex] : null;
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-emerald-200/50 to-cyan-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gradient-to-br from-rose-200/40 to-amber-200/40 blur-3xl" />
-
-      <div className="relative">
-        <div className="flex flex-wrap items-start justify-between gap-5">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700 ring-1 ring-emerald-200">
-              <TrendingUp size={12} /> 2021 – 2026
-            </span>
-            <h3 className="mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
-              {title}
-            </h3>
+    <article className="soft-card relative">
+      <div className="flex flex-wrap items-start justify-between gap-6">
+        <div>
+          <span className="kicker">
+            <TrendingUp size={14} /> 2021 – 2026
+          </span>
+          <h3 className="mt-2 font-display text-2xl font-semibold text-ink sm:text-3xl">
+            {title}
+          </h3>
+        </div>
+        <div className="flex flex-wrap items-stretch gap-3">
+          <div className="rounded-2xl bg-ink px-5 py-3.5 text-white">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember-light">
+              {totalDonated}
+            </p>
+            <p className="mt-0.5 font-display text-2xl font-semibold leading-tight sm:text-3xl">
+              {totalTons} t
+            </p>
           </div>
-          <div className="flex items-stretch gap-3">
-            <div className="rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 px-5 py-3 text-white shadow-lg shadow-emerald-500/30">
-              <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-80">
-                {totalDonated}
-              </p>
-              <p className="text-2xl font-black leading-tight">{totalTons} t</p>
-            </div>
-            <div className="rounded-2xl bg-slate-900 px-5 py-3 text-white shadow-lg">
-              <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-70">
-                2026 · {annualLabel}
-              </p>
-              <p className="text-2xl font-black leading-tight">
-                {formatNumber(latestAnnual)} {kgLabel}
-              </p>
-            </div>
+          <div className="rounded-2xl border border-ink/10 bg-cream px-5 py-3.5 text-ink">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+              2026 · {annualLabel}
+            </p>
+            <p className="mt-0.5 font-display text-2xl font-semibold leading-tight sm:text-3xl">
+              {formatNumber(latestAnnual)} {kgLabel}
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-5 text-xs font-bold text-slate-600">
-          <span className="inline-flex items-center gap-2">
-            <span className="h-3 w-3 rounded-sm bg-gradient-to-b from-rose-400 to-rose-600" />
-            {annualLabel} ({kgLabel})
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500" />
-            {totalDonated}
-          </span>
-        </div>
+      <div className="mt-5 flex flex-wrap items-center gap-6 text-xs font-bold text-slate-600">
+        <span className="inline-flex items-center gap-2">
+          <span className="h-3 w-3 rounded-sm bg-ember" />
+          {annualLabel} ({kgLabel})
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full bg-ink" />
+          {totalDonated}
+        </span>
+      </div>
 
-        <div className="relative mt-4">
-          <svg
-            viewBox={`0 0 ${W} ${H}`}
-            className="w-full"
-            onMouseLeave={() => setActiveIndex(null)}
-            role="img"
-            aria-label={title}
-          >
-            <defs>
-              <linearGradient id="barGrad" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="#fb7185" stopOpacity="0.95" />
-                <stop offset="100%" stopColor="#e11d48" stopOpacity="0.55" />
-              </linearGradient>
-              <linearGradient id="areaGrad" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.38" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
-              </linearGradient>
-              <linearGradient id="lineGrad" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="#34d399" />
-                <stop offset="100%" stopColor="#0d9488" />
-              </linearGradient>
-            </defs>
+      <div className="relative mt-4">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="w-full"
+          onMouseLeave={() => setActiveIndex(null)}
+          role="img"
+          aria-label={title}
+        >
+          <defs>
+            <linearGradient id="barGradWarm" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#E11D48" stopOpacity="0.92" />
+              <stop offset="100%" stopColor="#FB7185" stopOpacity="0.45" />
+            </linearGradient>
+            <linearGradient id="areaGradWarm" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#0A1E3C" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#0A1E3C" stopOpacity="0" />
+            </linearGradient>
+          </defs>
 
-            {ticks.map((t) => {
-              const y = yCum(t);
-              return (
-                <g key={t}>
-                  <line
-                    x1={padL}
-                    x2={W - padR}
-                    y1={y}
-                    y2={y}
-                    stroke="#e2e8f0"
-                    strokeDasharray="3 6"
-                    strokeWidth="1"
-                  />
-                  <text
-                    x={padL - 14}
-                    y={y + 5}
-                    textAnchor="end"
-                    fill="#94a3b8"
-                    fontSize="13"
-                    fontWeight="700"
-                  >
-                    {formatNumber(t)}
-                  </text>
-                </g>
-              );
-            })}
-
-            {data.map((d, i) => {
-              const bw = (innerW / data.length) * 0.42;
-              const y = yAnnual(d.foodKg);
-              const h = padT + innerH - y;
-              const isActive = activeIndex === i;
-              return (
-                <rect
-                  key={`bar-${d.year}`}
-                  x={xFor(i) - bw / 2}
-                  y={y}
-                  width={bw}
-                  height={Math.max(2, h)}
-                  rx="8"
-                  fill="url(#barGrad)"
-                  className="transition-opacity duration-300"
-                  opacity={activeIndex === null || isActive ? 0.9 : 0.35}
+          {ticks.map((t) => {
+            const y = yCum(t);
+            return (
+              <g key={t}>
+                <line
+                  x1={padL}
+                  x2={W - padR}
+                  y1={y}
+                  y2={y}
+                  stroke="#cbd5e1"
+                  strokeDasharray="3 6"
+                  strokeWidth="1"
                 />
-              );
-            })}
+                <text
+                  x={padL - 14}
+                  y={y + 5}
+                  textAnchor="end"
+                  fill="#64748b"
+                  fontSize="13"
+                  fontWeight="600"
+                >
+                  {formatNumber(t)}
+                </text>
+              </g>
+            );
+          })}
 
-            <path d={areaPath} fill="url(#areaGrad)" className="transition-all duration-500" />
-            <path
-              d={linePath}
-              fill="none"
-              stroke="url(#lineGrad)"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-
-            {activeIndex !== null && (
-              <line
-                x1={xFor(activeIndex)}
-                x2={xFor(activeIndex)}
-                y1={padT}
-                y2={padT + innerH}
-                stroke="#0d9488"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-                opacity="0.55"
+          {data.map((d, i) => {
+            const bw = (innerW / data.length) * 0.38;
+            const y = yAnnual(d.foodKg);
+            const h = padT + innerH - y;
+            const isActive = activeIndex === i;
+            return (
+              <rect
+                key={`bar-${d.year}`}
+                x={xFor(i) - bw / 2}
+                y={y}
+                width={bw}
+                height={Math.max(2, h)}
+                rx="8"
+                fill="url(#barGradWarm)"
+                className="transition-opacity duration-300"
+                opacity={activeIndex === null || isActive ? 0.92 : 0.35}
               />
-            )}
+            );
+          })}
 
-            {cumPts.map(([x, y], i) => {
-              const isActive = activeIndex === i;
-              return (
-                <g key={`pt-${i}`} className="pointer-events-none">
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={isActive ? 11 : 6}
-                    fill="#fff"
-                    stroke="#10b981"
-                    strokeWidth="3.5"
-                    className="transition-all duration-300"
-                  />
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={isActive ? 5 : 2.8}
-                    fill="#10b981"
-                    className="transition-all duration-300"
-                  />
-                </g>
-              );
-            })}
+          <path d={areaPath} fill="url(#areaGradWarm)" className="transition-all duration-500" />
+          <path
+            d={linePath}
+            fill="none"
+            stroke="#0A1E3C"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
 
-            {data.map((d, i) => {
-              const x = xFor(i);
-              const isActive = activeIndex === i;
-              return (
-                <g key={`x-${d.year}`}>
-                  <text
-                    x={x}
-                    y={H - 26}
-                    textAnchor="middle"
-                    fill={isActive ? "#0f172a" : "#64748b"}
-                    fontSize="15"
-                    fontWeight="800"
-                    className="transition-colors"
-                  >
-                    {d.year}
-                  </text>
-                  <rect
-                    x={x - innerW / data.length / 2}
-                    y={padT}
-                    width={innerW / data.length}
-                    height={innerH}
-                    fill="transparent"
-                    onMouseEnter={() => setActiveIndex(i)}
-                  />
-                </g>
-              );
-            })}
-          </svg>
-
-          {active && (
-            <div
-              className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-2xl bg-slate-900/95 px-4 py-3 text-white shadow-2xl ring-1 ring-white/10 backdrop-blur"
-              style={{
-                left: `${(xFor(activeIndex) / W) * 100}%`,
-                top: `${(yCum(active.cumulativeFoodKg) / H) * 100}%`,
-                marginTop: "-16px",
-              }}
-            >
-              <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-300">
-                {active.year}
-              </p>
-              <p className="mt-1 text-sm font-bold">
-                {formatNumber(active.foodKg, 2)} {kgLabel} · {annualLabel}
-              </p>
-              <p className="text-sm font-bold text-emerald-300">
-                {formatNumber(active.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}
-              </p>
-              <div className="mt-2 h-0.5 w-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" />
-            </div>
+          {activeIndex !== null && (
+            <line
+              x1={xFor(activeIndex)}
+              x2={xFor(activeIndex)}
+              y1={padT}
+              y2={padT + innerH}
+              stroke="#E11D48"
+              strokeWidth="1.5"
+              strokeDasharray="4 4"
+              opacity="0.7"
+            />
           )}
-        </div>
+
+          {cumPts.map(([x, y], i) => {
+            const isActive = activeIndex === i;
+            return (
+              <g key={`pt-${i}`} className="pointer-events-none">
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={isActive ? 10 : 6}
+                  fill="#fff"
+                  stroke="#0A1E3C"
+                  strokeWidth="3"
+                  className="transition-all duration-300"
+                />
+                <circle
+                  cx={x}
+                  cy={y}
+                  r={isActive ? 4.5 : 2.5}
+                  fill="#E11D48"
+                  className="transition-all duration-300"
+                />
+              </g>
+            );
+          })}
+
+          {data.map((d, i) => {
+            const x = xFor(i);
+            const isActive = activeIndex === i;
+            return (
+              <g key={`x-${d.year}`}>
+                <text
+                  x={x}
+                  y={H - 22}
+                  textAnchor="middle"
+                  fill={isActive ? "#0B2A3A" : "#64748b"}
+                  fontSize="15"
+                  fontWeight="700"
+                  className="transition-colors"
+                >
+                  {d.year}
+                </text>
+                <rect
+                  x={x - innerW / data.length / 2}
+                  y={padT}
+                  width={innerW / data.length}
+                  height={innerH}
+                  fill="transparent"
+                  onMouseEnter={() => setActiveIndex(i)}
+                />
+              </g>
+            );
+          })}
+        </svg>
+
+        {active && (
+          <div
+            className={`pointer-events-none absolute z-20 w-max max-w-[260px] -translate-y-full rounded-2xl bg-ink px-4 py-3 text-white shadow-photo sm:max-w-xs ${
+              activeIndex === 0
+                ? "translate-x-0"
+                : activeIndex === data.length - 1
+                  ? "-translate-x-full"
+                  : "-translate-x-1/2"
+            }`}
+            style={{
+              left: `${(xFor(activeIndex) / W) * 100}%`,
+              top: `${(yCum(active.cumulativeFoodKg) / H) * 100}%`,
+              marginTop: "-14px",
+            }}
+          >
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-ember-light">
+              {active.year}
+            </p>
+            <p className="mt-1 text-sm font-semibold">
+              {formatNumber(active.foodKg, 2)} {kgLabel} · {annualLabel}
+            </p>
+            <p className="text-sm font-semibold text-white/85">
+              {formatNumber(active.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}
+            </p>
+          </div>
+        )}
       </div>
     </article>
   );
 }
 
 // ===== COLUMN CHART (Despensas) =====
-function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel }) {
+function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel, expandLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
   const selectedData = selectedIndex !== null ? data[selectedIndex] : null;
 
   const preview = (
-    <span className="flex h-24 items-end gap-1.5 sm:gap-2">
+    <span className="flex h-28 items-end gap-2 pt-2">
       {data.map((item, i) => {
-        const h = Math.max(10, (item[valueKey] / maxValue) * 100);
+        const h = Math.max(12, (item[valueKey] / maxValue) * 100);
         const isLast = i === data.length - 1;
         return (
-          <span key={item.year} className="flex flex-1 flex-col items-center gap-1.5">
+          <span key={item.year} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
+            <span className="text-xs font-bold text-ink">{item[valueKey]}</span>
             <span className="relative flex w-full flex-1 items-end">
               <span
-                className={`w-full rounded-t-lg bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 transition-all duration-500 ${
-                  isLast ? "shadow-[0_0_0_2px_rgba(6,182,212,0.18)]" : ""
+                className={`w-full rounded-t-lg transition-all duration-500 ${
+                  isLast ? "bg-ember" : "bg-ministry-teal/80 group-hover:bg-ministry-teal"
                 }`}
                 style={{ height: `${h}%` }}
-              >
-                <span className="absolute inset-x-0.5 top-0.5 block h-0.5 rounded-full bg-white/40" />
-              </span>
+              />
             </span>
-            <span className="text-[9px] font-black text-slate-400">
+            <span className="text-xs font-semibold text-slate-500">
               {String(item.year).slice(2)}
             </span>
           </span>
@@ -922,140 +949,111 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
     <ChartShell
       title={title}
       subtitle={`${formatNumber(total)} ${valueLabel}`}
-      icon={BarChart3}
-      gradient="from-cyan-500 to-blue-600"
-      glow="from-cyan-100/70"
-      accentText="text-cyan-700"
-      ringHover="hover:ring-cyan-200"
+      icon={PackageCheck}
       preview={preview}
-      expandLabel="Ver detalles"
+      expandLabel={expandLabel}
     >
-      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-        <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-cyan-200/50 to-blue-200/40 blur-3xl" />
+      <article tabIndex={0} className="soft-card">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-display text-2xl font-semibold text-ink">{title}</h3>
+            <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-ember">
+              {formatNumber(total)} {valueLabel}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-ember/10 p-3 text-ember">
+            <PackageCheck size={20} />
+          </div>
+        </div>
 
-        <div className="relative">
-          <div className="flex items-start justify-between gap-4">
+        {selectedData && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-cream p-4">
             <div>
-              <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-              <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-                {formatNumber(total)} {valueLabel}
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {selectedData.year}
+              </p>
+              <div className="mt-1 flex gap-6">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    {valueLabel}
+                  </p>
+                  <p className="font-display text-xl font-semibold text-ember">
+                    {formatNumber(selectedData[valueKey])}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    {secondaryLabel}
+                  </p>
+                  <p className="font-display text-xl font-semibold text-ink">
+                    {formatNumber(selectedData[secondaryKey])}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setSelectedIndex(null)}
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-ink"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        <div className="relative mt-6 overflow-hidden rounded-2xl bg-cream px-4 pb-4 pt-12">
+          <div className="relative flex h-56 items-end gap-2 sm:gap-3">
+            {data.map((item, index) => {
+              const h = Math.max(10, (item[valueKey] / maxValue) * 100);
+              const isSelected = selectedIndex === index;
+
+              return (
+                <button
+                  key={item.year}
+                  type="button"
+                  onClick={() => setSelectedIndex(isSelected ? null : index)}
+                  className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
+                >
+                  <span className="text-center text-xs font-bold text-ink">
+                    {item[valueKey]}
+                  </span>
+                  <div className="relative flex flex-1 items-end">
+                    <div
+                      className={`relative w-full rounded-t-xl transition-all duration-500 ${
+                        isSelected
+                          ? "bg-ember"
+                          : "bg-ink/85 group-hover/bar:bg-ember"
+                      }`}
+                      style={{ height: `${h}%` }}
+                    />
+                  </div>
+                  <span
+                    className={`text-center text-xs font-bold transition-colors ${
+                      isSelected ? "text-ember" : "text-slate-600"
+                    }`}
+                  >
+                    {item.year}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          {data.slice(-3).map((item) => (
+            <div
+              key={item.year}
+              className="rounded-2xl border border-ink/5 bg-cream p-4 text-sm"
+            >
+              <div className="flex items-center justify-between">
+                <p className="font-display text-lg font-semibold text-ink">{item.year}</p>
+                <span className="h-2 w-2 rounded-full bg-ember" />
+              </div>
+              <p className="mt-1 font-medium text-slate-600">
+                {formatNumber(item[secondaryKey])} {secondaryLabel}
               </p>
             </div>
-            <div className="rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 p-3 text-white shadow-lg shadow-cyan-500/30">
-              <BarChart3 size={20} />
-            </div>
-          </div>
-
-          {selectedData && (
-            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-cyan-50 to-blue-50 p-4 ring-1 ring-cyan-100 animate-in slide-in-from-top-2 duration-300">
-              <div>
-                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  {selectedData.year}
-                </p>
-                <div className="mt-1 flex gap-6">
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                      {valueLabel}
-                    </p>
-                    <p className="text-xl font-black text-cyan-600">
-                      {formatNumber(selectedData[valueKey])}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                      {secondaryLabel}
-                    </p>
-                    <p className="text-xl font-black text-slate-700">
-                      {formatNumber(selectedData[secondaryKey])}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedIndex(null)}
-                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          )}
-
-          <div className="relative mt-6 overflow-hidden rounded-2xl bg-gradient-to-b from-cyan-50/60 via-white to-transparent px-4 pb-4 pt-14">
-            <div className="pointer-events-none absolute inset-x-4 top-14 bottom-12 flex flex-col justify-between">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-px bg-slate-100" />
-              ))}
-            </div>
-
-            <div className="relative flex h-64 items-end gap-2 sm:gap-3">
-              {data.map((item, index) => {
-                const h = Math.max(8, (item[valueKey] / maxValue) * 100);
-                const isSelected = selectedIndex === index;
-                const prev = index > 0 ? data[index - 1][valueKey] : null;
-                const delta = prev ? Math.round(((item[valueKey] - prev) / prev) * 100) : null;
-
-                return (
-                  <button
-                    key={item.year}
-                    type="button"
-                    onClick={() => setSelectedIndex(isSelected ? null : index)}
-                    className="group/bar flex h-full flex-1 flex-col justify-end gap-2"
-                  >
-                    <div className="relative flex flex-1 items-end">
-                      <div
-                        className={`relative w-full rounded-t-2xl bg-gradient-to-t from-cyan-600 via-cyan-500 to-sky-400 shadow-lg transition-all duration-500 ${
-                          isSelected
-                            ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-white"
-                            : "group-hover/bar:brightness-110"
-                        }`}
-                        style={{ height: `${h}%` }}
-                      >
-                        <span className="absolute -bottom-1 left-1/2 h-3 w-[80%] -translate-x-1/2 rounded-full bg-cyan-400/60 blur-md" />
-                        <span className="absolute inset-x-1 top-1 h-1.5 rounded-full bg-white/40" />
-                        {delta !== null && (
-                          <span
-                            className={`absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-black shadow-md ring-1 ring-white transition ${
-                              isSelected ? "opacity-100" : "opacity-0 group-hover/bar:opacity-100"
-                            } ${
-                              delta >= 0
-                                ? "bg-emerald-500 text-white"
-                                : "bg-rose-500 text-white"
-                            }`}
-                          >
-                            {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <span
-                      className={`text-center text-xs font-black transition-colors ${
-                        isSelected ? "text-cyan-600" : "text-slate-500"
-                      }`}
-                    >
-                      {item.year}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {data.slice(-3).map((item) => (
-              <div
-                key={item.year}
-                className="group/mini rounded-2xl bg-slate-50 p-4 text-sm ring-1 ring-slate-100 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="font-black text-slate-900">{item.year}</p>
-                  <span className="h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" />
-                </div>
-                <p className="mt-1 font-bold text-slate-500">
-                  {formatNumber(item[secondaryKey])} {secondaryLabel}
-                </p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </article>
     </ChartShell>
@@ -1063,7 +1061,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
 }
 
 // ===== DONUT CHART =====
-function DonutChart({ title, items, labels, accent = "cyan" }) {
+function DonutChart({ title, items, labels, expandLabel }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const total = items.reduce((sum, item) => sum + item.value, 0);
   const radius = 42;
@@ -1073,7 +1071,9 @@ function DonutChart({ title, items, labels, accent = "cyan" }) {
     items[0]
   );
   const selectedItem = items.find((item) => item.key === selectedKey);
-  const LargestIcon = largest.icon;
+  // El centro muestra la sección seleccionada; si no hay selección, la más grande.
+  const focusItem = selectedItem ?? largest;
+  const FocusIcon = focusItem.icon;
 
   let acc = 0;
   const segments = items.map((item) => {
@@ -1084,10 +1084,10 @@ function DonutChart({ title, items, labels, accent = "cyan" }) {
   });
 
   const preview = (
-    <span className="flex items-center gap-4">
-      <span className="relative h-20 w-20 shrink-0">
+    <span className="flex items-center gap-5">
+      <span className="relative h-24 w-24 shrink-0">
         <svg viewBox="0 0 100 100" className="-rotate-90">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#eef2f7" strokeWidth="14" />
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#F3EADF" strokeWidth="14" />
           {items.map((item, i) => {
             const before = items.slice(0, i).reduce((s, d) => s + d.value, 0);
             const after = before + item.value;
@@ -1100,192 +1100,155 @@ function DonutChart({ title, items, labels, accent = "cyan" }) {
                 fill="none"
                 stroke={item.hex}
                 strokeWidth="14"
+                pathLength="100"
                 strokeDasharray={`${Math.max(0, after - before - 1.5)} 100`}
                 strokeDashoffset={-before}
-                strokeLinecap="round"
                 className="transition-all duration-500"
               />
             );
           })}
         </svg>
         <span className="absolute inset-0 grid place-items-center">
-          <span className="text-base font-black leading-none text-slate-900">
+          <span className="font-display text-lg font-semibold leading-none text-ink">
             {largest.value}%
           </span>
         </span>
       </span>
-      <span className="flex min-w-0 flex-1 flex-col gap-1.5">
-        {items.slice(0, 3).map((item) => (
+      <span className="flex min-w-0 flex-1 flex-col gap-2">
+        {items.map((item) => (
           <span key={item.key} className="flex items-center gap-2">
             <span
-              className="h-2 w-2 shrink-0 rounded-full"
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
               style={{ backgroundColor: item.hex }}
             />
-            <span className="min-w-0 flex-1 truncate text-[10px] font-bold text-slate-500">
+            <span className="min-w-0 flex-1 truncate text-xs font-medium text-slate-600">
               {labels[item.key]}
             </span>
-            <span className="shrink-0 text-[10px] font-black text-slate-800">
+            <span className="shrink-0 text-xs font-bold text-ink">
               {item.value}%
             </span>
           </span>
         ))}
-        {items.length > 3 && (
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-            +{items.length - 3} más
-          </span>
-        )}
       </span>
     </span>
   );
 
-  const gradientMap = {
-    cyan: "from-cyan-500 to-blue-600",
-    slate: "from-slate-700 to-slate-900",
-    violet: "from-violet-500 to-fuchsia-600",
-    rose: "from-rose-500 to-pink-600",
-  };
-  const glowMap = {
-    cyan: "from-cyan-100/70",
-    slate: "from-slate-200/70",
-    violet: "from-violet-100/70",
-    rose: "from-rose-100/70",
-  };
-  const ringMap = {
-    cyan: "hover:ring-cyan-200",
-    slate: "hover:ring-slate-300",
-    violet: "hover:ring-violet-200",
-    rose: "hover:ring-rose-200",
-  };
-  const accentMap = {
-    cyan: "text-cyan-700",
-    slate: "text-slate-700",
-    violet: "text-violet-700",
-    rose: "text-rose-700",
-  };
-
   return (
     <ChartShell
       title={title}
-      subtitle={`${total}% distribuido`}
+      subtitle={`${total}%`}
       icon={PieChart}
-      gradient={gradientMap[accent]}
-      glow={glowMap[accent]}
-      accentText={accentMap[accent]}
-      ringHover={ringMap[accent]}
       preview={preview}
-      expandLabel="Ver detalles"
+      expandLabel={expandLabel}
     >
-      <article tabIndex={0} className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-gradient-to-br from-slate-200/60 to-cyan-100/60 blur-3xl" />
+      <article tabIndex={0} className="soft-card">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="font-display text-2xl font-semibold text-ink">{title}</h3>
+          <div className="rounded-2xl bg-ember/10 p-3 text-ember">
+            <PieChart size={20} />
+          </div>
+        </div>
 
-        <div className="relative">
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">{title}</h3>
-            <div className="rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 p-3 text-white shadow-lg">
-              <PieChart size={20} />
+        {selectedItem && (
+          <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-cream p-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {labels[selectedItem.key]}
+              </p>
+              <p className="font-display text-2xl font-semibold text-ember">{selectedItem.value}%</p>
+            </div>
+            <div className="max-w-[55%] text-right">
+              <p className="text-sm font-medium text-slate-700">
+                {selectedItem.description || "—"}
+              </p>
+            </div>
+            <button
+              onClick={() => setSelectedKey(null)}
+              className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-ink"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+
+        <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
+          <div className="relative mx-auto h-52 w-52">
+            <svg viewBox="0 0 100 100" className="-rotate-90">
+              <circle cx="50" cy="50" r={radius} fill="none" stroke="#F3EADF" strokeWidth="12" />
+              {segments.map((s) => {
+                const gap = 1.5;
+                const isSelected = selectedKey === s.key;
+                const isDimmed = selectedKey !== null && !isSelected;
+                return (
+                  <circle
+                    key={s.key}
+                    cx="50"
+                    cy="50"
+                    r={radius}
+                    fill="none"
+                    stroke={s.hex}
+                    strokeWidth={isSelected ? 15 : 12}
+                    strokeDasharray={`${Math.max(0, s.seg - gap)} ${circumference}`}
+                    strokeDashoffset={-s.offset}
+                    opacity={isDimmed ? 0.25 : 1}
+                    onClick={() => setSelectedKey(isSelected ? null : s.key)}
+                    className="cursor-pointer transition-all duration-300 hover:opacity-90"
+                  />
+                );
+              })}
+            </svg>
+            <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+              <div
+                key={focusItem.key}
+                className="gallery-photo-enter flex max-w-[7.5rem] flex-col items-center gap-1"
+              >
+                <FocusIcon size={16} style={{ color: focusItem.hex }} />
+                <p className="font-display text-3xl font-semibold leading-none text-ink">
+                  {focusItem.value}%
+                </p>
+                <p className="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.12em] text-slate-500">
+                  {labels[focusItem.key]}
+                </p>
+              </div>
             </div>
           </div>
 
-          {selectedItem && (
-            <div className="mt-5 flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-4 ring-1 ring-slate-200 animate-in slide-in-from-top-2 duration-300">
-              <div>
-                <p className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  {labels[selectedItem.key]}
-                </p>
-                <p className="text-2xl font-black text-ministry-blue">{selectedItem.value}%</p>
-              </div>
-              <div className="max-w-[55%] text-right">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Detalle
-                </p>
-                <p className="text-sm font-bold text-slate-700">
-                  {selectedItem.description || "—"}
-                </p>
-              </div>
-              <button
-                onClick={() => setSelectedKey(null)}
-                className="rounded-full bg-white p-1.5 text-slate-500 shadow-sm transition hover:text-slate-900"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          )}
-
-          <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
-            <div className="relative mx-auto h-56 w-56">
-              <div className="pointer-events-none absolute inset-4 rounded-full bg-gradient-to-br from-cyan-100/60 via-transparent to-rose-100/60 blur-2xl" />
-              <svg viewBox="0 0 100 100" className="-rotate-90">
-                <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef2f7" strokeWidth="12" />
-                {segments.map((s) => {
-                  const gap = 2.5;
-                  const isSelected = selectedKey === s.key;
-                  return (
-                    <circle
-                      key={s.key}
-                      cx="50"
-                      cy="50"
-                      r={radius}
-                      fill="none"
-                      stroke={s.hex}
-                      strokeWidth={isSelected ? 16 : 12}
-                      strokeLinecap="round"
-                      strokeDasharray={`${Math.max(0, s.seg - gap)} ${circumference}`}
-                      strokeDashoffset={-s.offset}
-                      onClick={() => setSelectedKey(isSelected ? null : s.key)}
-                      className="cursor-pointer transition-all duration-500 hover:brightness-110"
-                      style={{ filter: isSelected ? `drop-shadow(0 0 6px ${s.hex})` : "none" }}
+          <div className="space-y-2.5">
+            {items.map((item) => {
+              const Icon = item.icon;
+              const isSelected = selectedKey === item.key;
+              const isDimmed = selectedKey !== null && !isSelected;
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setSelectedKey(isSelected ? null : item.key)}
+                  aria-pressed={isSelected}
+                  style={isSelected ? { borderColor: item.hex, boxShadow: `0 0 0 1px ${item.hex}` } : undefined}
+                  className={`w-full rounded-xl border p-3.5 text-left transition ${
+                    isSelected
+                      ? "bg-white"
+                      : isDimmed
+                        ? "border-ink/5 bg-cream/60 opacity-50 hover:opacity-90"
+                        : "border-ink/5 bg-cream/60 hover:bg-cream"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="flex items-center gap-3 text-sm font-bold text-ink">
+                      <Icon size={16} className="text-ember" />
+                      {labels[item.key]}
+                    </span>
+                    <span className="font-display text-lg font-semibold text-ink">{item.value}%</span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-sand">
+                    <div
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${item.value}%`, backgroundColor: item.hex }}
                     />
-                  );
-                })}
-              </svg>
-              <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
-                <div className="flex flex-col items-center gap-1 rounded-2xl bg-white/85 px-5 py-3 shadow-lg ring-1 ring-slate-100 backdrop-blur">
-                  <LargestIcon size={18} className="text-slate-400" />
-                  <p className="text-4xl font-black leading-none text-slate-900">
-                    {largest.value}%
-                  </p>
-                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
-                    {labels[largest.key]}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2.5">
-              {items.map((item) => {
-                const Icon = item.icon;
-                const isSelected = selectedKey === item.key;
-                return (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setSelectedKey(isSelected ? null : item.key)}
-                    className={`group/item relative w-full overflow-hidden rounded-xl p-3 pl-4 text-left ring-1 transition-all ${
-                      isSelected
-                        ? "bg-slate-100 ring-2 ring-ministry-blue"
-                        : "bg-slate-50 ring-slate-100 hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow"
-                    }`}
-                  >
-                    <span
-                      className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${item.color}`}
-                    />
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="flex items-center gap-3 text-sm font-black text-slate-800">
-                        <Icon size={16} className="text-slate-400" />
-                        {labels[item.key]}
-                      </span>
-                      <span className="text-sm font-black text-ministry-blue">{item.value}%</span>
-                    </div>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
-                      <div
-                        className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
-                        style={{ width: `${item.value}%` }}
-                      />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </article>
@@ -1297,32 +1260,41 @@ function DonutChart({ title, items, labels, accent = "cyan" }) {
 function MissionCard({ item }) {
   const Icon = item.icon;
   return (
-    <div className="group/item relative overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5 transition-all hover:-translate-y-1 hover:shadow-xl hover:ring-2 hover:ring-amber-200">
-      <div
-        className={`absolute -right-10 -top-10 h-24 w-24 rounded-full bg-gradient-to-br ${item.color} opacity-10 blur-xl transition group-hover/item:scale-150`}
-      />
-      <div className="relative">
-        <div className="flex items-center gap-2">
-          <div
-            className={`grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br ${item.color} text-white shadow`}
-          >
-            <Icon size={14} />
-          </div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+    <article className="group overflow-hidden rounded-[1.5rem] border border-ink/5 bg-cream/60 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
+      <figure className="photo-frame relative h-56 overflow-hidden rounded-none bg-ink">
+        <img
+          src={item.photo}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-35"
+          loading="lazy"
+        />
+        <img
+          src={item.photo}
+          alt={item.place}
+          loading="lazy"
+          className="relative z-10 h-full w-full object-contain p-1.5"
+        />
+        <div className="photo-overlay z-20" />
+        <figcaption className="absolute bottom-3 left-4 right-4 z-30 flex items-center justify-between text-white">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold backdrop-blur-md">
+            <Icon size={13} />
             {item.month} {item.year}
-          </p>
-        </div>
-        <h4 className="mt-3 text-lg font-black text-slate-900">{item.place}</h4>
-        <p className="mt-1 text-xs text-slate-500">{item.description}</p>
-        <p className="mt-4 text-3xl font-black text-ministry-blue">{item.value}%</p>
-        <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-slate-100">
+          </span>
+          <span className="font-display text-2xl font-semibold text-white">{item.value}%</span>
+        </figcaption>
+      </figure>
+      <div className="p-5">
+        <h4 className="font-display text-xl font-semibold text-ink">{item.place}</h4>
+        <p className="mt-1 text-sm text-slate-600">{item.description}</p>
+        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-sand">
           <div
-            className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700`}
+            className="h-full rounded-full bg-ember transition-all duration-700"
             style={{ width: `${item.value}%` }}
           />
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -1336,6 +1308,8 @@ export default function Reports() {
     language === "en" ? "en" : "es"
   );
   const [detailModal, setDetailModal] = useState(null);
+  const [showAllMilestones, setShowAllMilestones] = useState(false);
+
   const selectedPeriod =
     infographicPeriods.find((period) => period.id === selectedPeriodId) ??
     infographicPeriods.at(-1);
@@ -1364,11 +1338,11 @@ export default function Reports() {
     (sum, item) => sum + item.beneficiaries,
     0
   );
+
   const handleStatClick = (stat) => {
     let title = "";
     let data = [];
     let total = "";
-    let color = "";
 
     switch (stat) {
       case "pantries":
@@ -1376,94 +1350,187 @@ export default function Reports() {
         data = yearlySupport.map((item) => ({
           label: item.year,
           value: item.pantries,
-          color: "from-cyan-400 to-cyan-600",
           percentage: Math.round((item.pantries / totalPantries) * 100),
         }));
         total = formatNumber(totalPantries);
-        color = "from-cyan-500 to-blue-600";
         break;
       case "food":
         title = copy.stats.food;
         data = yearlySupport.map((item) => ({
           label: item.year,
           value: `${formatNumber(item.foodKg, 2)} kg`,
-          color: "from-emerald-400 to-emerald-600",
           percentage: Math.round((item.foodKg / totalFoodKg) * 100),
         }));
         total = `${formatNumber(totalFoodKg, 2)} kg`;
-        color = "from-emerald-500 to-teal-600";
         break;
       case "beneficiaries":
         title = copy.stats.beneficiaries;
         data = yearlySupport.map((item) => ({
           label: item.year,
           value: item.beneficiaries,
-          color: "from-rose-400 to-rose-600",
           percentage: Math.round((item.beneficiaries / totalBeneficiaries) * 100),
         }));
         total = formatNumber(totalBeneficiaries);
-        color = "from-rose-500 to-pink-600";
         break;
       default:
         return;
     }
 
-    setDetailModal({ title, data, total, color });
+    setDetailModal({ title, data, total });
   };
+
+  const displayedMilestones = showAllMilestones ? timelineItems : timelineItems.slice(0, 4);
 
   return (
     <>
+      {/* ========== HERO DIVIDIDO: CIFRAS CON ROSTRO HUMANO COMPLETO ========== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white">
+        <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-ember/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-teal/15 blur-3xl" />
+
+        <div className="section-shell relative z-10 w-full py-12 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="motion-rise lg:col-span-7">
+              <span className="kicker kicker-light">{copy.eyebrow}</span>
+              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-white sm:text-5xl lg:text-6xl">
+                {t("reports.title")}
+              </h1>
+              <p className="mt-5 font-display text-xl italic text-ember-light sm:text-2xl">
+                “{copy.heroQuote}”
+              </p>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-white/85 sm:text-lg">
+                {copy.intro}
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a href="#graficos-ministerio" className="btn-primary">
+                  {copy.heroCtaCharts}
+                  <ChevronDown size={18} />
+                </a>
+                <a href="#pdf-institucional" className="btn-ghost-light">
+                  <FileText size={16} />
+                  {copy.heroCtaPdfs}
+                </a>
+              </div>
+
+              {/* Cifras humanas destacadas sobre la portada */}
+              <div className="mt-10 grid gap-6 border-t border-white/15 pt-7 sm:grid-cols-3">
+                <button
+                  type="button"
+                  onClick={() => handleStatClick("pantries")}
+                  className="group text-left transition hover:opacity-95"
+                >
+                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
+                    {formatNumber(totalPantries)}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
+                    {copy.stats.pantries} (2021–2026) →
+                  </p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleStatClick("food")}
+                  className="group text-left transition hover:opacity-95"
+                >
+                  <p className="font-display text-3xl font-semibold text-ember-light sm:text-4xl">
+                    {formatNumber(totalFoodKg / 1000, 1)} t
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
+                    {copy.tonsDelivered} ({formatNumber(totalFoodKg, 2)} kg) →
+                  </p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleStatClick("beneficiaries")}
+                  className="group text-left transition hover:opacity-95"
+                >
+                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
+                    {formatNumber(totalBeneficiaries)}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
+                    {copy.stats.beneficiaries} →
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5">
+              <figure className="photo-frame mx-auto max-w-md aspect-[3/4] shadow-2xl ring-1 ring-white/15">
+                <img
+                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
+                  alt={
+                    language === "en"
+                      ? "Ministry pantry delivery and family accompaniment in Tlaxcala"
+                      : "Entrega de despensa y acompañamiento familiar en Tlaxcala"
+                  }
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white">
+                  {copy.tenTons} · 2021–2026
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== GRÁFICOS DEL MINISTERIO ========== */}
       <section
         id="graficos-ministerio"
-        className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-cyan-50/30 to-white"
+        className="section-shell scroll-mt-28 bg-cream"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-ministry-gold/20 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue border border-ministry-gold/20">
-              <Sparkles size={15} />
-              {copy.eyebrow}
+          {/* Intro humana con fotografía */}
+          <div className="reveal mb-14 grid items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <span className="kicker">{copy.humanNoteEyebrow}</span>
+              <h2 className="title-lg mt-3">{copy.humanNoteTitle}</h2>
+              <p className="lead mt-4">{copy.humanNoteText}</p>
             </div>
-            <h2 className="mt-6 text-4xl font-black text-slate-900 sm:text-5xl">
-              {t("reports.title")}
-            </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-              {copy.intro}
-            </p>
+            <figure className="photo-frame h-64 sm:h-72 lg:col-span-5">
+              <img
+                src={asset("home/home-pantry-display.png")}
+                alt={copy.stats.pantries}
+                loading="lazy"
+              />
+              <div className="photo-overlay" />
+              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
+                {copy.tenTons} · 2021–2026
+              </figcaption>
+            </figure>
           </div>
 
-          {/* Stats */}
-          <div className="grid gap-5 sm:grid-cols-3">
+          {/* Tarjetas de impacto interactivas */}
+          <div className="reveal grid gap-6 sm:grid-cols-3">
             <StatCard
               icon={PackageCheck}
               label={copy.stats.pantries}
               value={formatNumber(totalPantries)}
-              detail="2021-2026"
-              color="bg-ministry-blue"
-              gradient="from-ministry-blue to-cyan-500"
+              detail="2021–2026"
+              expandLabel={copy.tapToExpand}
               onClick={() => handleStatClick("pantries")}
             />
             <StatCard
               icon={Scale}
-              value={formatNumber(totalFoodKg / 1000, 1)}
+              value={`${formatNumber(totalFoodKg / 1000, 1)} t`}
               label={copy.tonsDelivered}
               detail={`${formatNumber(totalFoodKg, 2)} kg`}
-              color="bg-emerald-500"
-              gradient="from-emerald-400 to-emerald-600"
+              expandLabel={copy.tapToExpand}
               onClick={() => handleStatClick("food")}
             />
             <StatCard
               icon={Users}
               label={copy.stats.beneficiaries}
               value={formatNumber(totalBeneficiaries)}
-              detail="2021-2026"
-              color="bg-rose-500"
-              gradient="from-rose-400 to-rose-600"
+              detail="2021–2026"
+              expandLabel={copy.tapToExpand}
               onClick={() => handleStatClick("beneficiaries")}
             />
           </div>
 
-          {/* HERO: Food chart full width */}
-          <div className="mt-8">
+          {/* Gráfica principal de alimentos */}
+          <div className="reveal mt-8">
             <AreaLineChartBlock
               title={copy.foodTitle}
               data={yearlySupport}
@@ -1473,8 +1540,8 @@ export default function Reports() {
             />
           </div>
 
-          {/* Row 2: Beneficiarios + Donut fuentes */}
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          {/* Fila 2: Beneficiarios + Fuentes de apoyo */}
+          <div className="reveal mt-6 grid gap-6 lg:grid-cols-2">
             <BarChartBlock
               title={copy.beneficiariesTitle}
               data={yearlySupport}
@@ -1482,18 +1549,18 @@ export default function Reports() {
               valueLabel=""
               secondaryKey="months"
               secondaryLabel={copy.months}
-              color="from-rose-400 to-pink-500"
+              expandLabel={copy.tapToExpand}
             />
             <DonutChart
               title={copy.donorTitle}
               items={donorSources2026}
               labels={copy.sourceLabels}
-              accent="violet"
+              expandLabel={copy.tapToExpand}
             />
           </div>
 
-          {/* Row 3: Despensas + Donut hospital */}
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          {/* Fila 3: Despensas + Hospital */}
+          <div className="reveal mt-6 grid gap-6 lg:grid-cols-2">
             <ColumnChartBlock
               title={copy.pantriesTitle}
               data={yearlySupport}
@@ -1501,37 +1568,33 @@ export default function Reports() {
               valueLabel={copy.donated}
               secondaryKey="cumulativePantries"
               secondaryLabel={copy.cumulative}
+              expandLabel={copy.tapToExpand}
             />
             <DonutChart
               title={copy.hospitalTitle}
               items={hospitalDonationMix}
               labels={copy.hospitalLabels}
-              accent="rose"
+              expandLabel={copy.tapToExpand}
             />
           </div>
 
-          {/* Row 4: Misiones full width */}
-          <article className="mt-6 group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-xl transition-shadow duration-500 hover:shadow-2xl sm:p-8">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br from-rose-200/50 to-amber-200/40 blur-3xl" />
-            <div className="relative">
-              <div className="mb-6 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
-                    {copy.missionTitle}
-                  </h3>
-                  <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400">
-                    2023 – 2025
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 p-3 text-white shadow-lg shadow-rose-500/30">
-                  <HandHeart size={20} />
-                </div>
+          {/* Fila 4: Misiones con fotografía */}
+          <article className="reveal soft-card mt-8">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <span className="kicker">2023 – 2025</span>
+                <h3 className="mt-2 font-display text-2xl font-semibold text-ink sm:text-3xl">
+                  {copy.missionTitle}
+                </h3>
               </div>
-              <div className="grid gap-4 sm:grid-cols-3">
-                {missionDonations.map((item) => (
-                  <MissionCard key={`${item.year}-${item.place}`} item={item} />
-                ))}
-              </div>
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                <HandHeart size={20} />
+              </span>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-3">
+              {missionDonations.map((item) => (
+                <MissionCard key={`${item.year}-${item.place}`} item={item} />
+              ))}
             </div>
           </article>
         </div>
@@ -1544,221 +1607,264 @@ export default function Reports() {
           title={detailModal.title}
           data={detailModal.data}
           total={detailModal.total}
-          color={detailModal.color}
+          totalLabel={copy.total}
+          hintLabel={copy.clickToView}
         />
       )}
 
+      {/* ========== HITOS DEL MINISTERIO (SECCIÓN OSCURA CON DIVULGACIÓN PROGRESIVA) ========== */}
       <section
         id="linea-tiempo-ministerio"
-        className="section-shell scroll-mt-28 bg-white"
+        className="section-shell scroll-mt-28 bg-ink text-white"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-cyan-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue border border-cyan-200">
-              <CalendarDays size={15} />
-              {copy.timelineEyebrow}
-            </span>
-            <h2 className="mt-6 text-4xl font-black text-slate-900 sm:text-5xl">
-              {copy.timelineTitle}
-            </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <span className="kicker kicker-light">
+                <CalendarDays size={14} />
+                {copy.timelineEyebrow}
+              </span>
+              <h2 className="title-lg mt-3 text-white">{copy.timelineTitle}</h2>
+            </div>
+            <p className="max-w-md text-base leading-7 text-white/75">
               {copy.timelineText}
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 shadow-2xl md:p-10">
-            <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
-            <div className="absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-ministry-gold/20 blur-3xl" />
-            <div className="absolute inset-0 opacity-[0.03]">
-              <div
-                className="h-full w-full"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-                  backgroundSize: "30px 30px",
-                }}
-              />
-            </div>
-
-            <div className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {timelineItems.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <article
-                    key={`${item.date}-${item.title}`}
-                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 text-white backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 hover:border-white/20"
-                  >
-                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-white/5 transition group-hover:scale-150" />
-                    <div className="relative">
-                      <div className="mb-4 flex items-center gap-3">
-                        <span className="grid h-10 w-10 place-items-center rounded-full bg-ministry-gold text-sm font-black text-slate-950 shadow-lg">
-                          {index + 1}
-                        </span>
-                        <span className="text-xs font-black uppercase tracking-[0.16em] text-cyan-300">
-                          {item.date}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="rounded-lg bg-white/10 p-2 text-cyan-400">
-                          <Icon size={18} />
-                        </div>
-                        <h3 className="text-lg font-black text-white/95">{item.title}</h3>
-                      </div>
-                      <p className="text-sm leading-7 text-white/60 group-hover:text-white/80 transition-colors">
-                        {item.text}
-                      </p>
-                      <div className="mt-4 h-0.5 w-0 bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-500 group-hover:w-full" />
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {displayedMilestones.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <article
+                  key={`${item.date}-${item.title}`}
+                  className="flex flex-col justify-between rounded-[1.5rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition duration-300 hover:border-ember-light/40 hover:bg-white/10"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-ember-light">
+                        {item.date}
+                      </span>
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white">
+                        <Icon size={17} />
+                      </span>
                     </div>
-                  </article>
-                );
-              })}
-            </div>
+                    <h3 className="mt-4 font-display text-xl font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-6 text-white/75">
+                      {item.text}
+                    </p>
+                  </div>
+                  <div className="mt-5 flex items-center gap-2 pt-3 border-t border-white/10">
+                    <span className="font-display text-sm font-semibold text-ember-light">
+                      0{index + 1}
+                    </span>
+                    <span className="h-px flex-1 bg-white/15" />
+                  </div>
+                </article>
+              );
+            })}
           </div>
+
+          {timelineItems.length > 4 && (
+            <div className="mt-8 text-center">
+              <button
+                type="button"
+                onClick={() => setShowAllMilestones((prev) => !prev)}
+                className="btn-ghost-light"
+              >
+                {showAllMilestones ? copy.showLessMilestones : copy.showAllMilestones}
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform ${showAllMilestones ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
+      {/* ========== INFOGRAFÍAS Y BOLETINES PDF ========== */}
       <section
         id="pdf-institucional"
-        className="section-shell !max-w-none scroll-mt-28 bg-gradient-to-b from-white to-slate-50"
+        className="section-shell scroll-mt-28 bg-sand/60"
       >
-        <div className="mx-auto max-w-[1800px]">
-          <div className="mb-10 text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-violet-700 border border-violet-200">
-              <FileText size={15} />
-              {copy.pdfTitle}
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <span className="kicker">
+              <FileText size={14} />
+              {copy.archiveEyebrow}
             </span>
-            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-              {copy.archiveText}
-            </p>
+            <h2 className="title-lg mt-3">{copy.pdfTitle}</h2>
+            <p className="lead mt-4">{copy.archiveText}</p>
           </div>
 
-          <div className="space-y-8">
-            <div
-              className="relative grid gap-4 before:absolute before:left-[19px] before:top-5 before:bottom-5 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-cyan-300 before:via-ministry-blue before:to-ministry-gold md:grid-cols-3 md:gap-8 md:before:left-[16.66%] md:before:right-[16.66%] md:before:top-[21px] md:before:bottom-auto md:before:h-1 md:before:w-auto"
-              aria-label={copy.pdfTitle}
-            >
-              {visibleInfographicPeriods.map((period) => (
+          <div className="mt-10 grid gap-5 md:grid-cols-3" aria-label={copy.pdfTitle}>
+            {visibleInfographicPeriods.map((period, idx) => {
+              const isSelected = selectedPeriodId === period.id;
+              return (
                 <article
                   key={period.id}
-                  className={`relative flex items-start gap-4 rounded-2xl border p-4 transition md:flex-col md:items-center md:border-0 md:bg-transparent md:p-0 md:text-center ${
-                    selectedPeriodId === period.id
-                      ? "border-cyan-200 bg-cyan-50/80 shadow-md md:shadow-none"
-                      : "border-slate-200 bg-white/90 md:bg-transparent"
+                  className={`rounded-[1.5rem] border p-6 transition duration-300 ${
+                    isSelected
+                      ? "border-ember bg-white shadow-soft"
+                      : "border-ink/5 bg-white/75 hover:bg-white"
                   }`}
                 >
+                  <div className="flex items-center justify-between gap-3">
+                    <span
+                      className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold ${
+                        isSelected ? "bg-ember text-white" : "bg-sand text-ink"
+                      }`}
+                    >
+                      0{idx + 1}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+                      {period.year}
+                    </span>
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => setSelectedPeriodId(period.id)}
                     aria-label={`${period.months[language] ?? period.months.es} ${period.year}`}
-                    aria-current={selectedPeriodId === period.id ? "step" : undefined}
-                    className={`relative z-10 mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full border-4 text-xs font-black shadow-sm transition md:mt-0 ${
-                      selectedPeriodId === period.id
-                        ? "border-white bg-ministry-blue text-white ring-4 ring-cyan-200"
-                        : "border-white bg-slate-300 text-slate-700 hover:bg-cyan-400"
-                    }`}
+                    aria-current={isSelected ? "step" : undefined}
+                    className="mt-4 block text-left font-display text-2xl font-semibold text-ink hover:text-ember"
                   >
-                    {visibleInfographicPeriods.indexOf(period) + 1}
+                    {period.months[language] ?? period.months.es} {period.year}
                   </button>
-                  <div className="min-w-0 flex-1 md:mt-3 md:w-full md:flex-none">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPeriodId(period.id)}
-                      className="text-left text-lg font-black leading-tight text-slate-900 hover:text-ministry-blue md:text-center md:text-xl"
-                    >
-                      {period.months[language] ?? period.months.es} {period.year}
-                    </button>
-                    <div className="mt-3 flex flex-wrap gap-2 md:justify-center">
-                      {["es", "en"].map((docLanguage) => {
-                        const hasFile = Boolean(period.files[docLanguage]);
-                        const active =
-                          selectedPeriodId === period.id &&
-                          selectedDocumentLanguage === docLanguage;
-                        return (
-                          <button
-                            key={docLanguage}
-                            type="button"
-                            disabled={!hasFile}
-                            onClick={() => {
-                              setSelectedPeriodId(period.id);
-                              setSelectedDocumentLanguage(docLanguage);
-                            }}
-                            className={`rounded-full border px-4 py-2 text-sm font-bold transition ${
-                              active
-                                ? "border-ministry-blue bg-ministry-blue text-white shadow-md"
-                                : "border-slate-200 bg-white text-slate-700 hover:border-cyan-500 hover:bg-cyan-50 disabled:cursor-not-allowed disabled:opacity-50"
-                            }`}
-                          >
-                            {docLanguage === "es" ? copy.spanish : copy.english}
-                            {hasFile ? " · PDF" : " · …"}
-                          </button>
-                        );
-                      })}
-                    </div>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["es", "en"].map((docLanguage) => {
+                      const hasFile = Boolean(period.files[docLanguage]);
+                      const active =
+                        isSelected && selectedDocumentLanguage === docLanguage;
+                      return (
+                        <button
+                          key={docLanguage}
+                          type="button"
+                          disabled={!hasFile}
+                          onClick={() => {
+                            setSelectedPeriodId(period.id);
+                            setSelectedDocumentLanguage(docLanguage);
+                          }}
+                          className={`rounded-full px-4 py-2 text-xs font-bold transition ${
+                            active
+                              ? "bg-ink text-white shadow-sm"
+                              : "border border-ink/10 bg-cream text-ink hover:border-ember hover:text-ember disabled:cursor-not-allowed disabled:opacity-50"
+                          }`}
+                        >
+                          {docLanguage === "es" ? copy.spanish : copy.english}
+                          {hasFile ? " · PDF" : " · …"}
+                        </button>
+                      );
+                    })}
                   </div>
                 </article>
-              ))}
-            </div>
+              );
+            })}
+          </div>
 
-            <div className="relative min-h-[560px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
-              {selectedInfographic ? (
-                <>
-                  <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur sm:px-6">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-black text-slate-800 sm:text-base">
-                        {selectedPeriod.months[language] ?? selectedPeriod.months.es} {selectedPeriod.year}
-                      </p>
-                      <p className="text-xs font-semibold text-slate-500">
-                        {selectedDocumentLanguage === "es" ? copy.spanish : copy.english} · PDF
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setShowFullscreen(true)}
-                        className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-md transition hover:bg-slate-800"
-                      >
-                        <Eye size={16} />
-                        {language === "en" ? "Fullscreen" : "Pantalla completa"}
-                      </button>
-                      <a
-                        href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
-                        download
-                        className="flex items-center gap-2 rounded-full bg-ministry-blue px-4 py-2 text-sm font-bold text-white shadow-lg"
-                      >
-                        <Download size={16} />
-                        {language === "en" ? "Download" : "Descargar"}
-                      </a>
-                    </div>
+          <div className="mt-8 overflow-hidden rounded-[1.75rem] border border-ink/10 bg-white shadow-soft">
+            {selectedInfographic ? (
+              <>
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink/10 bg-white px-5 py-4 sm:px-7">
+                  <div className="min-w-0">
+                    <p className="truncate font-display text-lg font-semibold text-ink sm:text-xl">
+                      {selectedPeriod.months[language] ?? selectedPeriod.months.es}{" "}
+                      {selectedPeriod.year}
+                    </p>
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember">
+                      {selectedDocumentLanguage === "es" ? copy.spanish : copy.english} · PDF
+                    </p>
                   </div>
-                  <iframe
-                    title={`${
-                      selectedPeriod.months[language] ?? selectedPeriod.months.es
-                    } ${selectedPeriod.year} — ${selectedDocumentLanguage}`}
-                    className="h-[78vh] min-h-[560px] max-h-[1100px] w-full bg-white pt-[68px]"
-                    src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
-                  />
-                </>
-              ) : (
-                <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
-                  <FileText size={48} className="text-slate-300" />
-                  <h3 className="mt-5 text-2xl font-black text-slate-800">
-                    {selectedPeriod.months[language] ?? selectedPeriod.months.es}{" "}
-                    {selectedPeriod.year} ·{" "}
-                    {selectedDocumentLanguage === "es" ? copy.spanish : copy.english}
-                  </h3>
-                  <p className="mt-3 max-w-md text-base leading-7 text-slate-500">
-                    {copy.pending}
-                  </p>
+                  <div className="flex shrink-0 flex-wrap gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setShowFullscreen(true)}
+                      className="btn-secondary !px-5 !py-2.5 !text-xs"
+                    >
+                      <Eye size={15} />
+                      {language === "en" ? "Fullscreen" : "Pantalla completa"}
+                    </button>
+                    <a
+                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                      download
+                      className="btn-primary !px-5 !py-2.5 !text-xs"
+                    >
+                      <Download size={15} />
+                      {language === "en" ? "Download" : "Descargar"}
+                    </a>
+                  </div>
                 </div>
-              )}
+                <iframe
+                  title={`${
+                    selectedPeriod.months[language] ?? selectedPeriod.months.es
+                  } ${selectedPeriod.year} — ${selectedDocumentLanguage}`}
+                  className="h-[76vh] min-h-[540px] max-h-[1080px] w-full bg-white"
+                  src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                />
+              </>
+            ) : (
+              <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
+                <FileText size={48} className="text-slate-300" />
+                <h3 className="mt-5 font-display text-2xl font-semibold text-ink">
+                  {selectedPeriod.months[language] ?? selectedPeriod.months.es}{" "}
+                  {selectedPeriod.year} ·{" "}
+                  {selectedDocumentLanguage === "es" ? copy.spanish : copy.english}
+                </h3>
+                <p className="mt-3 max-w-md text-base leading-7 text-slate-500">
+                  {copy.pending}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== LLAMADO EMOCIONAL FINAL ========== */}
+      <section className="section-shell bg-cream">
+        <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#0D2B52] to-ink text-white shadow-photo">
+          <div className="grid items-center gap-8 p-6 sm:p-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <span className="kicker kicker-light">{copy.ctaEyebrow}</span>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                {copy.ctaTitle}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">
+                {copy.ctaText}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link to="/voluntarios" className="btn-primary">
+                  <Users size={16} />
+                  {copy.volunteering}
+                </Link>
+                <a href="#pdf-institucional" className="btn-ghost-light">
+                  <FileText size={16} />
+                  {copy.heroCtaPdfs}
+                </a>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <figure className="photo-frame mx-auto max-w-sm aspect-[3/4] ring-1 ring-white/15">
+                <img
+                  src={asset("misiones/cartolandia-03.jpeg")}
+                  alt={copy.ctaTitle}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="photo-overlay" />
+              </figure>
             </div>
           </div>
         </div>
       </section>
 
-      {showFullscreen && selectedInfographic && (
+      {showFullscreen &&
+        selectedInfographic &&
         createPortal(
           <div
-            className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-950/95 p-3 pt-16 sm:p-6 sm:pt-20"
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-ink/95 p-3 pt-16 sm:p-6 sm:pt-20"
             role="dialog"
             aria-modal="true"
             aria-label={language === "en" ? "PDF viewer" : "Visor de PDF"}
@@ -1771,9 +1877,9 @@ export default function Reports() {
               onClick={() => setShowFullscreen(false)}
               aria-label={language === "en" ? "Close PDF viewer" : "Cerrar visor de PDF"}
               title={language === "en" ? "Close PDF viewer (Esc)" : "Cerrar visor de PDF (Esc)"}
-              className="fixed right-4 top-3 z-[1010] inline-flex h-12 items-center gap-2 rounded-full bg-white px-5 text-base font-black text-slate-900 shadow-xl transition hover:bg-cyan-100 sm:right-6 sm:top-4"
+              className="fixed right-4 top-3 z-[1010] inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-ink shadow-xl transition hover:bg-ember hover:text-white sm:right-6 sm:top-4"
             >
-              <X size={20} />
+              <X size={18} />
               {language === "en" ? "Close" : "Cerrar"}
             </button>
             <div className="h-[calc(100dvh-5.5rem)] w-full max-w-[1700px] overflow-hidden rounded-2xl bg-white shadow-2xl">
@@ -1787,8 +1893,7 @@ export default function Reports() {
             </div>
           </div>,
           document.body
-        )
-      )}
+        )}
     </>
   );
 }

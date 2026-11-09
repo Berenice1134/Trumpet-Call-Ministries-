@@ -12,6 +12,15 @@ import {
   Heart,
   HelpingHand,
   Quote,
+  Sprout,
+  BookOpen,
+  GraduationCap,
+  Globe,
+  Church,
+  HeartHandshake,
+  PackageCheck,
+  Sparkles,
+  Award,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -560,14 +569,44 @@ const ministryContextByLanguage = {
   ],
 };
 
+// Íconos representativos de cada hito (mismo orden que ministryTimelineByLanguage).
+const timelineIcons = [
+  Sprout, // Inicio
+  BookOpen, // Apertura English Center
+  HomeIcon, // Visitas domiciliares mensuales
+  GraduationCap, // Inauguración English Center
+  Users, // Primeras voluntarias
+  Globe, // Donaciones de Estados Unidos
+  Church, // Julio 2023
+  HandHeart, // Agosto 2023
+  HeartHandshake, // Diciembre 2024
+  MapPin, // Febrero 2025
+  PackageCheck, // Marzo 2025
+  HeartPulse, // Hospital Infantil
+  Sparkles, // Marzo 2026
+  Award, // 5 años de servicio
+];
+
 export default function Home() {
   const { dictionary, language, t } = useLanguage();
   const copy = homePageCopy[language] ?? homePageCopy.es;
   const ministryTimeline = ministryTimelineByLanguage[language] ?? ministryTimelineByLanguage.es;
   const ministryContext = ministryContextByLanguage[language] ?? ministryContextByLanguage.es;
   const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
+  const [activeObjectiveTab, setActiveObjectiveTab] = useState("mission");
+  const [openContextIndex, setOpenContextIndex] = useState(0);
+  const timelinePillRefs = useRef([]);
+
   const activeTimelineItem = ministryTimeline[activeTimelineIndex] ?? ministryTimeline[0];
+  const ActiveTimelineIcon = timelineIcons[activeTimelineIndex % timelineIcons.length];
   const timelineProgress = ((activeTimelineIndex + 1) / ministryTimeline.length) * 100;
+
+  useEffect(() => {
+    const activeButton = timelinePillRefs.current[activeTimelineIndex];
+    if (activeButton) {
+      activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  }, [activeTimelineIndex]);
 
   const goToPreviousTimelineItem = () => {
     setActiveTimelineIndex((current) => (current === 0 ? ministryTimeline.length - 1 : current - 1));
@@ -577,134 +616,148 @@ export default function Home() {
     setActiveTimelineIndex((current) => (current === ministryTimeline.length - 1 ? 0 : current + 1));
   };
 
-  const getActiveGradient = () => {
-    return activeTimelineItem.color || "from-amber-400 to-amber-600";
-  };
-
   return (
     <>
-      {/* ========== HERO SECTION ========== */}
-      <section id="inicio" className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950">
-        {/* Background Layers */}
-        <div className="absolute inset-0">
-          <img
-            src={`${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`}
-            alt=""
-            className="h-full w-full object-cover opacity-25 mix-blend-overlay"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-indigo-950/80 to-violet-950/90" />
-          
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000" />
-          <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-amber-400/10 rounded-full blur-3xl animate-pulse animation-delay-4000" />
-          
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="h-full w-full" style={{ 
-              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }} />
-          </div>
-        </div>
+      {/* ========== HERO DIVIDIDO DE ALTO IMPACTO (ROSTROS COMPLETOS Y NÍTIDOS) ========== */}
+      <section
+        id="inicio"
+        className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white"
+      >
+        <div className="pointer-events-none absolute -left-24 top-10 h-96 w-96 rounded-full bg-ember/25 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-blue/30 blur-3xl" />
 
-        <div className="section-shell relative w-full">
-          <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-            <div className="motion-rise space-y-8">
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-400" />
-                  </span>
-                  <Sparkles size={14} className="text-amber-400" />
-                </div>
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400">
-                  {t("home.heroEyebrow")}
-                </span>
-              </div>
+        <div className="section-shell relative z-10 py-14 lg:py-20">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="motion-rise">
+              <span className="kicker kicker-light">{t("home.heroEyebrow")}</span>
 
-              <h1 className="max-w-5xl text-3xl font-black leading-[1.1] sm:text-4xl lg:text-5xl">
-                <span className="bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent">
-                  {t("home.heroText")}
-                </span>
+              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.08] text-white sm:text-5xl lg:text-6xl">
+                {t("home.heroTitle")}
               </h1>
 
-              <p className="mt-5 max-w-4xl text-xl leading-relaxed text-white/80 font-medium sm:text-2xl lg:text-3xl">
-                {t("home.heroTitle")}
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/85 sm:text-xl">
+                {t("home.heroText")}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/donaciones#donaciones"
-                  className="group relative px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-bold text-sm hover:shadow-2xl hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {t("common.donateNow")}
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity blur" />
-                </Link>
-                <a
-                  href="#objetivo"
-                  className="group px-8 py-4 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center gap-2"
-                >
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <a href="#areas-ministerio" className="btn-primary">
                   {t("home.heroCta")}
-                  <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
+                  <ArrowRight size={17} />
                 </a>
-              </div>
-
-              <div className="pt-4">
-                <ImpactStats items={dictionary.home.stats} />
+                <a href="#historia" className="btn-ghost-light">
+                  {t("home.historyTitle")}
+                  <ChevronDown size={18} />
+                </a>
               </div>
             </div>
 
-            <AutoImageCarousel
-              className="motion-float"
-              photos={homeHeroPhotos}
-              getLabel={(photo) => language === "en" ? photo.labelEn : photo.label}
-              language={language}
-              heightClassName="h-[360px] sm:h-[440px] lg:h-[540px]"
-            />
-          </div>
-        </div>
+            {/* Collage fotográfico sin recortes de rostros */}
+            <div className="grid grid-cols-12 items-center gap-4">
+              <figure className="photo-frame col-span-7 aspect-[3/4] ring-2 ring-white/15">
+                <img
+                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
+                  alt={language === "en" ? "Warm embrace during pantry delivery" : "Abrazo cálido durante entrega de despensa"}
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-4 left-4 right-4 text-xs font-semibold text-white/95 sm:text-sm">
+                  {copy.storyCaption}
+                </figcaption>
+              </figure>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
-            <div className="w-1.5 h-3 rounded-full bg-white/60 animate-pulse" />
+              <div className="col-span-5 grid gap-4">
+                <figure className="photo-frame aspect-[4/5] ring-2 ring-white/15">
+                  <img
+                    src={asset("misiones/espanita-02.jpeg")}
+                    alt={language === "en" ? "Sharing with older adults" : "Compartiendo con adultos mayores"}
+                    className="h-full w-full object-cover object-top"
+                  />
+                </figure>
+                <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+                  <img
+                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
+                    alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 border-t border-white/15 pt-8">
+            <ImpactStats items={dictionary.home.stats} variant="dark" />
           </div>
         </div>
       </section>
 
-      <div id="sobre-nosotros" className="scroll-mt-28" />
+      {/* ========== MAPA PROTAGONISTA: CADA COMUNIDAD A LA QUE LLEGAMOS ========== */}
+      <div id="area-servicio" className="scroll-mt-28" />
+      <section
+        id="zonas-de-apoyo"
+        className="relative scroll-mt-28 overflow-hidden bg-gradient-to-b from-[#0A1E3C] via-[#0D2B52] to-sand py-16 sm:py-24"
+      >
+        <div className="pointer-events-none absolute left-1/2 top-24 h-[28rem] w-[60rem] -translate-x-1/2 rounded-full bg-ember/15 blur-3xl" />
 
-      {/* ========== MAPA PRINCIPAL DE COBERTURA ========== */}
-      <section id="zonas-de-apoyo" className="section-shell scroll-mt-28 overflow-hidden bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-950">
-        <div className="mx-auto max-w-[1500px]">
-          <div className="mx-auto mb-10 max-w-4xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-5 py-2 text-xs font-black uppercase tracking-[0.2em] text-amber-300">
-              <MapPin size={15} />
+        <div className="relative z-10 mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="kicker kicker-light justify-center">
+              <MapPin size={14} />
               {language === "en" ? "Our reach across Tlaxcala" : "Nuestro alcance en Tlaxcala"}
             </span>
-            <h2 className="mt-5 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               {language === "en" ? "Every community we support" : "Cada comunidad a la que llegamos"}
             </h2>
-            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-indigo-100/80 sm:text-xl">
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">
               {language === "en"
                 ? "This map brings together all ministry support areas across Tlaxcala, including home visits and mission communities."
                 : "Este mapa reúne todas las zonas de apoyo del ministerio en Tlaxcala, incluidas las visitas domiciliares y las comunidades donde realizamos misiones."}
             </p>
+
+            <div className="mt-7 flex flex-wrap justify-center gap-2.5">
+              {[
+                { icon: HomeIcon, label: language === "en" ? "Home visits" : "Visitas domiciliares" },
+                { icon: Church, label: language === "en" ? "Mission communities" : "Comunidades de misión" },
+                { icon: HeartPulse, label: language === "en" ? "Children's Hospital" : "Hospital Infantil" },
+              ].map((chip) => {
+                const ChipIcon = chip.icon;
+                return (
+                  <span
+                    key={chip.label}
+                    className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold text-white ring-1 ring-white/20 backdrop-blur sm:text-sm"
+                  >
+                    <ChipIcon size={15} className="text-ember-light" />
+                    {chip.label}
+                  </span>
+                );
+              })}
+            </div>
           </div>
 
-          <figure className="overflow-hidden rounded-[1.75rem] border border-white/15 bg-white p-2 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.8)] sm:rounded-[2.5rem] sm:p-4">
-            <img
-              src={`${import.meta.env.BASE_URL}assets/home/mapa-zonas-apoyo-yauhquemehcan.png`}
-              alt={language === "en"
-                ? "Map of all Trumpet Call Ministries support areas in Tlaxcala, including mission communities"
-                : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala, incluidas las comunidades de misión"}
-              className="h-auto w-full rounded-[1.2rem] sm:rounded-[1.8rem]"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption className="px-3 py-4 text-center text-sm font-semibold text-slate-600 sm:px-6 sm:py-5 sm:text-base">
+          <figure className="reveal mt-12 overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_40px_100px_-30px_rgba(10,30,60,0.65)] ring-1 ring-white/30 sm:p-4">
+            <a
+              href={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block overflow-hidden rounded-[1.5rem]"
+              aria-label={language === "en" ? "Open full-size map" : "Abrir mapa en tamaño completo"}
+            >
+              <img
+                src={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
+                alt={
+                  language === "en"
+                    ? "Map of all Trumpet Call Ministries support areas in Tlaxcala, including mission communities"
+                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala, incluidas las comunidades de misión"
+                }
+                className="h-auto w-full transition duration-700 group-hover:scale-[1.02]"
+                decoding="async"
+              />
+              <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-3.5 py-1.5 text-xs font-bold text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
+                <MapPin size={13} />
+                {language === "en" ? "View full size" : "Ver en grande"}
+              </span>
+            </a>
+            <figcaption className="flex flex-wrap items-center justify-center gap-2 px-3 pb-1 pt-4 text-center text-sm font-medium text-slate-500">
+              <MapPin size={15} className="text-ember" />
               {language === "en"
                 ? "Support areas and mission communities throughout Tlaxcala."
                 : "Zonas de apoyo y comunidades de misión en Tlaxcala."}
@@ -713,377 +766,448 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== OBJETIVO SECTION ========== */}
-      <section id="objetivo" className="section-shell scroll-mt-28 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-4">
-              <Target size={14} />
-              {t("home.aboutEyebrow")}
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-emerald-900 bg-clip-text text-transparent mb-4">
-              {t("home.objectiveTitle")}
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              {t("home.objectiveText")}
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-8 shadow-lg hover:shadow-xl transition-all duration-500">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-100/50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
-                  <Target size={24} className="text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{copy.mission}</h3>
-                <p className="text-slate-600 leading-relaxed">{t("home.missionText")}</p>
-              </div>
+      <div id="sobre-nosotros" className="scroll-mt-28" />
+
+      {/* ========== MOSAICO VISUAL Y PROPÓSITO ========== */}
+      <section className="section-shell bg-cream">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="reveal grid grid-cols-12 gap-4">
+            <figure className="photo-frame col-span-12 aspect-[4/3] sm:col-span-7 sm:aspect-[3/4]">
+              <img
+                src={asset("hospital-infantil/hospital-nuevo-06.jpeg")}
+                alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+              <div className="photo-overlay" />
+              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
+                {copy.storyCaption}
+              </figcaption>
+            </figure>
+
+            <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-5 sm:grid-cols-1">
+              <figure className="photo-frame aspect-[4/3]">
+                <img
+                  src={asset("voluntarios/voluntarios-04.jpeg")}
+                  alt={language === "en" ? "Young volunteers preparing food bags" : "Jóvenes voluntarios preparando despensas"}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top"
+                />
+              </figure>
+              <figure className="photo-frame aspect-[4/3]">
+                <img
+                  src={asset("misiones/dia-caridad-caritas-03.jpeg")}
+                  alt={language === "en" ? "Community mission in Tlaxcala" : "Misión comunitaria en Tlaxcala"}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top"
+                />
+              </figure>
             </div>
-            <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-8 shadow-lg hover:shadow-xl transition-all duration-500">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-100/50 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
-                  <Star size={24} className="text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{copy.vision}</h3>
-                <p className="text-slate-600 leading-relaxed">{t("home.visionText")}</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 rounded-2xl border border-cyan-100 bg-gradient-to-r from-cyan-50 via-white to-amber-50 p-6 text-center shadow-lg">
-            <p className="text-xl font-black text-slate-900 md:text-2xl">
-              {t("home.missionVisionTagline")}
-            </p>
           </div>
 
+          <div className="reveal space-y-6">
+            <span className="kicker">{t("home.aboutEyebrow")}</span>
+            <h2 className="title-lg">{copy.storyTitle}</h2>
+            <p className="lead">{t("home.objectiveText")}</p>
+
+            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
+              <Quote size={22} className="mb-2 text-ember" />
+              <p className="font-display text-xl italic leading-snug text-ink">
+                {t("home.missionVisionTagline")}
+              </p>
+            </blockquote>
+
+            <div className="pt-2">
+              <AutoImageCarousel
+                photos={homeHeroPhotos}
+                getLabel={(photo) => (language === "en" ? photo.labelEn : photo.label)}
+                language={language}
+                heightClassName="h-60 sm:h-64"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="section-shell bg-gradient-to-b from-white via-ministry-sky/35 to-white">
+      {/* ========== ÁREAS DEL MINISTERIO (TARJETAS FOTOGRÁFICAS) ========== */}
+      <section id="areas-ministerio" className="section-shell scroll-mt-28 bg-white">
+        <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <span className="kicker">{copy.areasEyebrow}</span>
+            <h2 className="title-lg mt-3">{t("home.gridTitle")}</h2>
+          </div>
+          <p className="max-w-md text-base leading-7 text-slate-600">{t("home.gridText")}</p>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
+          {dashboardItems.map((item, index) => {
+            const Icon = item.icon;
+            const spanClass = index < 2 ? "lg:col-span-3 h-[380px] sm:h-[420px]" : "lg:col-span-2 h-[340px] sm:h-[380px]";
+
+            return (
+              <Link
+                key={item.key}
+                to={item.to}
+                className={`photo-frame group relative flex flex-col justify-end p-7 text-white ${spanClass}`}
+              >
+                <img
+                  src={item.image}
+                  alt={t(`cards.${item.key}.title`)}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-transparent transition duration-500 group-hover:from-ink" />
+
+                <div className="relative z-10">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-ember text-white shadow-md">
+                    <Icon size={20} />
+                  </span>
+                  <h3 className="mt-4 font-display text-2xl font-semibold leading-snug text-white sm:text-3xl">
+                    {t(`cards.${item.key}.title`)}
+                  </h3>
+                  <p className="mt-2 line-clamp-2 max-w-md text-sm leading-6 text-white/85">
+                    {t(`cards.${item.key}.text`)}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-amber-300">
+                    {t("common.learnMore")}
+                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ========== OBJETIVO, MISIÓN Y VISIÓN (CON PESTAÑAS PARA NO SATURAR) ========== */}
+      <section id="objetivo" className="section-shell scroll-mt-28 bg-sand">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <figure className="photo-frame h-[400px] sm:h-[500px]">
+              <img
+                src={
+                  activeObjectiveTab === "mission"
+                    ? asset("misiones/cartolandia-03.jpeg")
+                    : asset("hospital-infantil/hospital-nuevo-06.jpeg")
+                }
+                alt={activeObjectiveTab === "mission" ? copy.mission : copy.vision}
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+              <div className="photo-overlay" />
+              <figcaption className="absolute bottom-6 left-6 right-6">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
+                  {t("home.objectiveTitle")}
+                </p>
+                <p className="mt-1 font-display text-2xl font-semibold text-white">
+                  {activeObjectiveTab === "mission" ? copy.mission : copy.vision}
+                </p>
+              </figcaption>
+            </figure>
+
+            <div className="soft-card">
+              <span className="kicker">{t("home.objectiveTitle")}</span>
+
+              <div className="mt-5 inline-flex rounded-full bg-slate-100 p-1.5">
+                <button
+                  type="button"
+                  onClick={() => setActiveObjectiveTab("mission")}
+                  className={`rounded-full px-6 py-2.5 text-sm font-bold transition ${
+                    activeObjectiveTab === "mission"
+                      ? "bg-ember text-white shadow-sm"
+                      : "text-slate-600 hover:text-ink"
+                  }`}
+                >
+                  {copy.mission}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveObjectiveTab("vision")}
+                  className={`rounded-full px-6 py-2.5 text-sm font-bold transition ${
+                    activeObjectiveTab === "vision"
+                      ? "bg-ember text-white shadow-sm"
+                      : "text-slate-600 hover:text-ink"
+                  }`}
+                >
+                  {copy.vision}
+                </button>
+              </div>
+
+              <h3 className="mt-6 font-display text-3xl font-semibold text-ink">
+                {activeObjectiveTab === "mission" ? copy.mission : copy.vision}
+              </h3>
+
+              <p className="mt-4 text-base leading-8 text-slate-600">
+                {activeObjectiveTab === "mission" ? t("home.missionText") : t("home.visionText")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== CONTEXTO DEL MINISTERIO (DIVULGACIÓN PROGRESIVA) ========== */}
+      <section id="como-se-sostiene" className="section-shell scroll-mt-28 bg-cream">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full bg-ministry-blue/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-ministry-blue">
-              <HelpingHand size={15} />
-              {language === "en" ? "Ministry context" : "Contexto del ministerio"}
-            </span>
-            <h2 className="mt-4 text-4xl font-black text-ink sm:text-5xl">
-              {language === "en"
-                ? "A ministry built around real families and real needs"
-                : "Un ministerio construido alrededor de familias y necesidades reales"}
-            </h2>
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              {language === "en"
-                ? "The ministry combines food support, spiritual care, and personal follow-up."
-                : "El ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal."}
-            </p>
+          <div className="max-w-3xl">
+            <span className="kicker">{copy.workEyebrow}</span>
+            <h2 className="title-lg mt-3">{copy.workTitle}</h2>
+            <p className="lead mt-4">{copy.workText}</p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
-            {ministryContext.map((item) => {
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {ministryContext.map((item, index) => {
               const Icon = item.icon;
+              const isOpen = openContextIndex === index;
 
               return (
-                <article
-                  key={item.title}
-                  className="group relative overflow-hidden rounded-[1.5rem] border border-slate-100 bg-white p-6 shadow-xl shadow-slate-200/60 transition duration-500 hover:-translate-y-1 hover:shadow-2xl"
-                >
-                  <div className="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-ministry-gold/15 transition group-hover:bg-ministry-blue/10" />
-                  <div className="relative">
-                    <div className="grid h-14 w-14 place-items-center rounded-2xl bg-ministry-blue text-white shadow-lg shadow-ministry-blue/20">
-                      <Icon size={24} />
+                <article key={item.title} className="soft-card flex flex-col justify-between">
+                  <div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                      <Icon size={22} />
                     </div>
-                    <h3 className="mt-5 text-2xl font-black text-ink">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">
-                      {item.text}
-                    </p>
-                    <div className="mt-5 space-y-3">
-                      {item.points.map((point) => (
-                        <div key={point} className="flex gap-3 rounded-2xl bg-slate-50 p-3 text-sm font-semibold leading-6 text-slate-700">
-                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-ministry-gold" />
-                          <span>{point}</span>
-                        </div>
-                      ))}
-                    </div>
+                    <h3 className="mt-5 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                    <p className="mt-3 text-base leading-7 text-slate-600">{item.text}</p>
+
+                    {isOpen && (
+                      <ul className="mt-5 space-y-2.5 border-t border-slate-100 pt-4">
+                        {item.points.map((point) => (
+                          <li key={point} className="flex gap-3 text-sm leading-6 text-slate-700">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setOpenContextIndex(isOpen ? -1 : index)}
+                    className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-bold text-ember hover:text-ember-dark"
+                  >
+                    {isOpen ? copy.readLess : copy.readMore}
+                    <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
                 </article>
               );
             })}
           </div>
 
-          <div className="mt-8 rounded-[1.5rem] bg-ink p-6 text-center text-white shadow-2xl shadow-slate-300/60">
-            <p className="text-lg font-semibold leading-8 text-white/85">
+          <div className="mt-12 rounded-[1.75rem] bg-gradient-to-r from-ink via-[#0D2B52] to-ink px-6 py-10 text-center text-white shadow-soft sm:px-12">
+            <p className="mx-auto max-w-3xl font-display text-2xl italic leading-snug text-white/95 sm:text-3xl">
               {language === "en"
-                ? "Carry each other's burdens, and in this way you will fulfill the law of Christ. Galatians 6:2"
-                : "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo. Gálatas 6:2"}
+                ? "\u201cCarry each other\u2019s burdens, and in this way you will fulfill the law of Christ.\u201d \u2014 Galatians 6:2"
+                : "\u201cSobrellevad los unos las cargas de los otros, y cumplid as\u00ed la ley de Cristo.\u201d \u2014 G\u00e1latas 6:2"}
             </p>
           </div>
         </div>
       </section>
 
-      {/* ========== HISTORIA SECTION - SIN SCROLL ========== */}
-      <section id="historia" className="section-shell scroll-mt-28 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 text-xs font-bold uppercase tracking-wider mb-4">
-              <Flame size={14} />
-              {copy.historyEyebrow}
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 via-amber-800 to-orange-800 bg-clip-text text-transparent mb-4">
-              {t("home.historyTitle")}
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              {copy.historyIntro}
-            </p>
-          </div>
-
-          <div className="relative">
-            {/* Grid de botones - sin scroll horizontal */}
-            <div className="relative mb-10">
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3 md:gap-4">
-                {ministryTimeline.map((item, index) => {
-                  const isActive = index === activeTimelineIndex;
-                  const isPast = index < activeTimelineIndex;
-
-                  return (
-                    <button
-                      key={item.year}
-                      type="button"
-                      aria-pressed={isActive}
-                      onClick={() => setActiveTimelineIndex(index)}
-                      className={`
-                        group relative flex flex-col items-center gap-1.5 transition-all duration-500
-                        ${isActive ? 'scale-105' : 'hover:scale-105'}
-                        focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 rounded-lg
-                      `}
-                    >
-                      {/* Indicador circular */}
-                      <div className="relative">
-                        <div className={`
-                          relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full 
-                          transition-all duration-500 shadow-lg
-                          ${isActive 
-                            ? `bg-gradient-to-br ${item.color} shadow-${item.color.split(' ')[0].replace('from-', '')}/40 ring-4 ring-${item.color.split(' ')[0].replace('from-', '')}/20` 
-                            : isPast 
-                              ? 'bg-amber-100 border-2 border-amber-300' 
-                              : 'bg-white border-2 border-slate-200 hover:border-amber-300'
-                          }
-                        `}>
-                          <span className="text-xl sm:text-2xl leading-none">{item.icon}</span>
-                          {isActive && (
-                            <>
-                              <span className="absolute -inset-2 rounded-full bg-gradient-to-r from-amber-400/20 to-orange-400/20 animate-ping" />
-                              <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400/10 to-orange-400/10 animate-pulse" />
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Etiqueta del año */}
-                      <span className={`
-                        text-xs sm:text-xs font-bold transition-all duration-300 text-center leading-tight
-                        ${isActive ? 'text-amber-700' : 'text-slate-400 group-hover:text-slate-600'}
-                      `}>
-                        {item.year}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+      {/* ========== HISTORIA / LÍNEA DEL TIEMPO CON FOTOGRAFÍAS COMPLETAS ========== */}
+      <section id="historia" className="section-shell scroll-mt-28 bg-white">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <span className="kicker">{copy.historyEyebrow}</span>
+              <h2 className="title-lg mt-3">{t("home.historyTitle")}</h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">{copy.historyIntro}</p>
             </div>
 
-            {/* Contenido principal */}
-            <div className="relative">
-              <div className={`absolute inset-0 rounded-[2rem] bg-gradient-to-br ${getActiveGradient()} opacity-5 blur-2xl transition-all duration-700`} />
-              
-              <div className="relative grid gap-8 lg:grid-cols-[1fr_1.1fr] items-stretch">
-                {/* Tarjeta de información */}
-                <div className="relative overflow-hidden rounded-[2rem] bg-white shadow-2xl border border-slate-100 p-6 md:p-8 transition-all duration-500">
-                  <div className={`absolute top-0 right-0 w-48 h-48 rounded-bl-full bg-gradient-to-br ${getActiveGradient()} opacity-10 transition-all duration-700`} />
-                  
-                  <div className="relative">
-                    <div className="flex items-start justify-between gap-4 mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className={`
-                          w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${getActiveGradient()} 
-                          flex items-center justify-center text-2xl sm:text-3xl shadow-lg transition-all duration-500
-                          ${getActiveGradient().split(' ')[0].replace('from-', 'shadow-')}/30
-                        `}>
-                          {activeTimelineItem.icon}
-                        </div>
-                        <div>
-                          <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-600">
-                            {language === "en" ? "Milestone" : "Hito"}
-                          </p>
-                          <p className="text-xl sm:text-2xl font-black text-slate-900">{activeTimelineItem.year}</p>
-                        </div>
-                      </div>
-                      <div className={`
-                        px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-br ${getActiveGradient()} 
-                        text-white text-xs sm:text-xs font-black uppercase tracking-wider shadow-lg
-                      `}>
-                        {activeTimelineItem.stat}
-                      </div>
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight mb-4">
-                      {activeTimelineItem.title}
-                    </h3>
-                    
-                    <p className="text-slate-600 leading-relaxed text-base sm:text-lg mb-6">
-                      {activeTimelineItem.text}
-                    </p>
-
-                    <div className="space-y-3">
-                      {activeTimelineItem.details.map((detail, idx) => (
-                        <div 
-                          key={idx} 
-                          className="group flex gap-4 items-start p-3 sm:p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-amber-200 transition-all duration-300 hover:shadow-md"
-                        >
-                          <div className={`
-                            flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br ${getActiveGradient()} 
-                            flex items-center justify-center text-white text-xs sm:text-sm font-bold shadow-lg transition-all duration-300
-                            group-hover:scale-110
-                          `}>
-                            {idx + 1}
-                          </div>
-                          <p className="text-slate-700 leading-relaxed text-xs sm:text-sm flex-1">{detail}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-8 pt-6 border-t border-slate-100">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                          {language === "en" ? "Progress" : "Progreso"}
-                        </span>
-                        <span className="text-sm font-black text-slate-600">
-                          {activeTimelineIndex + 1} / {ministryTimeline.length}
-                        </span>
-                      </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-                        <div
-                          className={`h-full rounded-full bg-gradient-to-r ${getActiveGradient()} transition-all duration-700 ease-out`}
-                          style={{ width: `${timelineProgress}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Panel visual */}
-                <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 sm:p-8 shadow-2xl border border-white/10">
-                  <div className="absolute inset-0 opacity-20">
-                    <div className={`absolute -right-20 -top-20 w-64 h-64 rounded-full bg-gradient-to-br ${getActiveGradient()} blur-3xl animate-pulse`} />
-                    <div className={`absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-gradient-to-br ${getActiveGradient()} blur-3xl animate-pulse animation-delay-2000`} />
-                  </div>
-                  
-                  <div className="relative h-full flex flex-col justify-center">
-                    <div className="text-center mb-6 sm:mb-8">
-                      <div className={`
-                        inline-block text-6xl sm:text-8xl p-6 sm:p-8 rounded-full bg-gradient-to-br ${getActiveGradient()} 
-                        shadow-2xl transition-all duration-500 animate-float
-                      `}>
-                        {activeTimelineItem.icon}
-                      </div>
-                    </div>
-
-                    <div className="text-center space-y-3 sm:space-y-4">
-                      <div className="flex justify-center gap-2">
-                        <div className="w-8 sm:w-12 h-0.5 bg-amber-400/30" />
-                        <Sparkles size={14} className="text-amber-400/50" />
-                        <div className="w-8 sm:w-12 h-0.5 bg-amber-400/30" />
-                      </div>
-                      <p className="text-xl sm:text-2xl font-bold text-white/90 leading-tight">
-                        {language === "en" ? "Every step tells a story" : "Cada paso cuenta una historia"}
-                      </p>
-                      <p className="text-white/50 text-xs sm:text-sm">
-                        {language === "en" ? "A journey of faith and service" : "Un viaje de fe y servicio"}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 sm:mt-8 flex justify-center gap-3 sm:gap-4">
-                      <button
-                        type="button"
-                        onClick={goToPreviousTimelineItem}
-                        className="group px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-white/20 bg-white/10 text-white font-bold text-xs sm:text-sm hover:bg-white/20 transition-all duration-300 hover:scale-105 flex items-center gap-1 sm:gap-2"
-                      >
-                        <ArrowRight size={14} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
-                        <span className="hidden xs:inline">{language === "en" ? "Back" : "Atrás"}</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={goToNextTimelineItem}
-                        className={`group px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r ${getActiveGradient()} text-white font-bold text-xs sm:text-sm hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-1 sm:gap-2`}
-                      >
-                        <span className="hidden xs:inline">{language === "en" ? "Next" : "Siguiente"}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              <button
+                type="button"
+                onClick={goToPreviousTimelineItem}
+                aria-label={language === "en" ? "Previous milestone" : "Hito anterior"}
+                className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-ink transition hover:border-ember hover:text-ember"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <span className="px-3 text-sm font-bold text-slate-500">
+                {activeTimelineIndex + 1} / {ministryTimeline.length}
+              </span>
+              <button
+                type="button"
+                onClick={goToNextTimelineItem}
+                aria-label={language === "en" ? "Next milestone" : "Siguiente hito"}
+                className="grid h-11 w-11 place-items-center rounded-full bg-ember text-white transition hover:bg-ember-dark"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ========== DASHBOARD GRID ========== */}
-      <section id="" className="bg-gradient-to-b from-white via-slate-50 to-white">
-        <div className="section-shell">
-          <div className="text-center mb-12">
-            <p className="eyebrow inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-50 text-violet-600 text-xs font-bold uppercase tracking-wider mb-4">
-              {t("home.gridEyebrow")}
-            </p>
-            <h2 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-violet-900 bg-clip-text text-transparent mb-4">
-              {t("home.gridTitle")}
-            </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              {t("home.gridText")}
-            </p>
+          {/* Cinta horizontal de fechas con íconos */}
+          <div className="no-scrollbar mt-8 flex gap-2 overflow-x-auto pb-3">
+            {ministryTimeline.map((item, index) => {
+              const isActive = index === activeTimelineIndex;
+              const PillIcon = timelineIcons[index % timelineIcons.length];
+              return (
+                <button
+                  key={item.year}
+                  ref={(el) => {
+                    timelinePillRefs.current[index] = el;
+                  }}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setActiveTimelineIndex(index)}
+                  className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition ${
+                    isActive
+                      ? "bg-ember text-white shadow-md shadow-ember/25"
+                      : "bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-ember"
+                  }`}
+                >
+                  <PillIcon size={14} />
+                  {item.year}
+                </button>
+              );
+            })}
           </div>
-          
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-            {dashboardItems.map((item, index) => (
-              <DashboardCard
-                key={item.key}
-                to={item.to}
-                icon={item.icon}
-                title={t(`cards.${item.key}.title`)}
-                text={t(`cards.${item.key}.text`)}
-                delay={index * 100}
-                gradient={item.color}
-                bgLight={item.bgLight}
-                borderLight={item.borderLight}
+
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-ember to-amber-500 transition-all duration-500"
+              style={{ width: `${timelineProgress}%` }}
+            />
+          </div>
+
+          {/* Tarjeta del hito activo con ícono protagonista (sin fotografías) */}
+          <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
+            <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[400px] sm:p-10 lg:col-span-7">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
+              <ActiveTimelineIcon
+                aria-hidden="true"
+                strokeWidth={1}
+                className="pointer-events-none absolute -bottom-10 -right-8 h-64 w-64 text-white/[0.06] sm:h-80 sm:w-80"
               />
-            ))}
+
+              <div className="relative z-10 flex items-start justify-between gap-4">
+                <span
+                  key={activeTimelineIndex}
+                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ember via-rose-500 to-amber-500 shadow-lg shadow-ember/30 sm:h-24 sm:w-24"
+                >
+                  <ActiveTimelineIcon size={40} strokeWidth={1.75} />
+                </span>
+                <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white ring-1 ring-white/15 backdrop-blur">
+                  {activeTimelineItem.stat}
+                </span>
+              </div>
+
+              <div className="relative z-10 mt-10">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-ember-light">
+                  {language === "en" ? "Milestone" : "Hito"} {String(activeTimelineIndex + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-7xl">
+                  {activeTimelineItem.year}
+                </p>
+
+                {/* Mini recorrido de íconos de todos los hitos */}
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {ministryTimeline.map((item, index) => {
+                    const DotIcon = timelineIcons[index % timelineIcons.length];
+                    const isActive = index === activeTimelineIndex;
+                    const isPast = index < activeTimelineIndex;
+                    return (
+                      <button
+                        key={`dot-${item.year}`}
+                        type="button"
+                        onClick={() => setActiveTimelineIndex(index)}
+                        aria-label={item.year}
+                        title={item.year}
+                        className={`grid h-9 w-9 place-items-center rounded-xl transition ${
+                          isActive
+                            ? "scale-110 bg-white text-ember shadow-lg"
+                            : isPast
+                              ? "bg-ember/30 text-white hover:bg-ember/50"
+                              : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
+                        }`}
+                      >
+                        <DotIcon size={16} />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="soft-card flex flex-col justify-between lg:col-span-5">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                  {activeTimelineItem.year}
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-ink sm:text-3xl">
+                  {activeTimelineItem.title}
+                </h3>
+                <p className="mt-4 text-base leading-7 text-slate-600">{activeTimelineItem.text}</p>
+
+                <ul className="mt-6 space-y-3 border-t border-slate-100 pt-5">
+                  {activeTimelineItem.details.map((detail) => (
+                    <li key={detail} className="flex gap-3 text-sm leading-6 text-slate-700">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={goToPreviousTimelineItem}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-600 hover:text-ink"
+                >
+                  <ChevronLeft size={16} />
+                  {language === "en" ? "Previous" : "Anterior"}
+                </button>
+                <button
+                  type="button"
+                  onClick={goToNextTimelineItem}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-ember hover:text-ember-dark"
+                >
+                  {language === "en" ? "Next" : "Siguiente"}
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(3deg); }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        @media (max-width: 400px) {
-          .grid-cols-3 {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-        @media (min-width: 401px) and (max-width: 640px) {
-          .grid-cols-3 {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-      `}</style>
+      {/* (El mapa principal de cobertura se movió justo debajo de la portada como protagonista.) */}
+
+      {/* ========== LLAMADO EMOCIONAL FINAL (SIN IMAGEN CORTADA Y SIN REPETIR "DONAR AHORA") ========== */}
+      <section className="section-shell bg-cream">
+        <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#0D2B52] to-ink text-white shadow-photo">
+          <div className="grid items-center gap-8 p-6 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:p-16">
+            <div>
+              <span className="kicker kicker-light">{copy.helpQuestion}</span>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                {copy.ctaTitle}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">{copy.ctaText}</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link to="/voluntarios" className="btn-primary">
+                  <Users size={17} />
+                  {copy.volunteering}
+                </Link>
+                <Link to="/misiones" className="btn-ghost-light">
+                  {language === "en" ? "See community missions" : "Ver misiones comunitarias"}
+                  <ArrowRight size={17} />
+                </Link>
+              </div>
+            </div>
+
+            <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+              <img
+                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
+                alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}
+                loading="lazy"
+                className="h-full w-full object-cover object-center"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

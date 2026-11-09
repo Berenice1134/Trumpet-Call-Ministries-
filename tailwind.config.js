@@ -4,22 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#0B2A3A",
+        // Azul real profundo y rico para textos principales y bloques de alto impacto.
+        ink: "#0A1E3C",
         ministry: {
-          blue: "#005F7F",
-          teal: "#13AECB",
-          gold: "#FFD400",
-          red: "#0A4059",
-          mist: "#F2FAFC",
-          sky: "#DDF7FB",
+          blue: "#0284C7",
+          teal: "#06B6D4",
+          gold: "#F59E0B",
+          red: "#E11D48",
+          mist: "#F0F9FF",
+          sky: "#E0F2FE",
         },
-        // Paleta cálida para un tono más humano y conmovedor.
-        cream: "#FBF7F1",
-        sand: "#F3EADF",
+        // Fondos luminosos que hacen destacar las fotografías a todo color.
+        cream: "#F8FAFC",
+        sand: "#EFF6FF",
+        // Acento emocional vibrante (carmesí/coral corazón) para despertar empatía y acción.
         ember: {
-          DEFAULT: "#E07A3F",
-          light: "#F4A261",
-          dark: "#B95A24",
+          DEFAULT: "#E11D48",
+          light: "#FB7185",
+          dark: "#BE123C",
         },
       },
       fontFamily: {
@@ -27,8 +29,8 @@ export default {
         display: ["Fraunces", "Georgia", "ui-serif", "serif"],
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(11, 42, 58, 0.10)",
-        photo: "0 30px 60px -20px rgba(11, 42, 58, 0.45)",
+        soft: "0 20px 50px -12px rgba(10, 30, 60, 0.12)",
+        photo: "0 28px 60px -15px rgba(10, 30, 60, 0.32)",
       },
     },
   },

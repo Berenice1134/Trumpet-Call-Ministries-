@@ -33,31 +33,42 @@ export default function AutoImageCarousel({
   return (
     <div className={`relative overflow-hidden rounded-[1.75rem] bg-ink shadow-photo ${className}`}>
       <div className={`group relative ${heightClassName}`}>
+        {/* Fondo difuminado sutil para que cualquier proporción se vea armónica */}
+        <img
+          src={currentPhoto.src}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+        />
         <img
           key={currentPhoto.src}
           src={currentPhoto.src}
           alt={getLabel(currentPhoto)}
-          className={`gallery-photo-enter h-full w-full ${imageFit === "contain" ? "object-contain p-3" : "object-cover"}`}
+          className={`gallery-photo-enter relative z-10 h-full w-full ${
+            imageFit === "contain"
+              ? "object-contain p-3"
+              : "object-cover object-[center_18%]"
+          }`}
           loading={activeIndex === 0 ? "eager" : "lazy"}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
         {getLabel(currentPhoto) && (
-          <p className="pointer-events-none absolute bottom-7 left-6 right-6 font-display text-xl font-semibold text-white drop-shadow sm:text-2xl">
+          <p className="pointer-events-none absolute bottom-7 left-6 right-6 z-30 font-display text-xl font-semibold text-white drop-shadow sm:text-2xl">
             {getLabel(currentPhoto)}
           </p>
         )}
         {photos.length > 1 && (
           <>
-            <button type="button" onClick={() => goTo(activeIndex - 1)} aria-label={previousLabel} className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-90 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
+            <button type="button" onClick={() => goTo(activeIndex - 1)} aria-label={previousLabel} className="absolute left-4 top-1/2 z-30 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
               <ChevronLeft size={24} />
             </button>
-            <button type="button" onClick={() => goTo(activeIndex + 1)} aria-label={nextLabel} className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-ink opacity-90 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
+            <button type="button" onClick={() => goTo(activeIndex + 1)} aria-label={nextLabel} className="absolute right-4 top-1/2 z-30 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white">
               <ChevronRight size={24} />
             </button>
-            <span className="absolute right-4 top-4 rounded-full bg-ink/60 px-3 py-1 text-sm font-bold text-white backdrop-blur">
+            <span className="absolute right-4 top-4 z-30 rounded-full bg-ink/70 px-3 py-1 text-sm font-bold text-white backdrop-blur">
               {activeIndex + 1} / {photos.length}
             </span>
-            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
+            <div className="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 gap-2">
               {photos.map((photo, index) => (
                 <button key={photo.key ?? photo.src} type="button" onClick={() => goTo(index)} aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`} className={`h-2.5 rounded-full transition-all ${index === activeIndex ? "w-8 bg-ember" : "w-2.5 bg-white/65 hover:bg-white"}`} />
               ))}

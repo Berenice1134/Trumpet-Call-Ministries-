@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  BookOpen,
   ClipboardList,
   MapPinned,
   PackageCheck,
   TrendingUp,
   ChevronDown,
   Heart,
-  Home,
   Calendar,
   Camera,
-  Images,
   X,
   ChevronLeft,
   ChevronRight,
   ArrowRight,
-  Sparkles,
   ShieldCheck,
-  Gift,
+  Quote,
 } from "lucide-react";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import { useLanguage } from "../context/useLanguage.js";
@@ -158,11 +155,11 @@ const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
 const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
 
 /* ============================================================
-   Componentes de presentación para galerías, marcadores y visor modal.
+   Componentes de presentación para galerías y visor modal.
    ============================================================ */
 
 /* --- Lightbox / visualizador grande --- */
-function Lightbox({ photos, index, onClose, onPrev, onNext }) {
+function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
   useEffect(() => {
     if (index === null) return;
     const handler = (e) => {
@@ -180,15 +177,18 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }) {
   }, [index, onClose, onPrev, onNext]);
 
   if (index === null || !photos[index]) return null;
+  const activePhoto = photos[index];
+  const caption = getLabel ? getLabel(activePhoto) : "";
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <button
+        type="button"
         onClick={onClose}
         className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
         aria-label="Cerrar"
@@ -198,6 +198,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }) {
 
       {photos.length > 1 && (
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
             onPrev();
@@ -209,15 +210,25 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }) {
         </button>
       )}
 
-      <img
-        src={photos[index].src}
-        alt=""
-        className="max-h-[88vh] max-w-[92vw] rounded-xl object-contain shadow-2xl"
+      <figure
+        className="flex max-h-[88vh] max-w-[92vw] flex-col items-center"
         onClick={(e) => e.stopPropagation()}
-      />
+      >
+        <img
+          src={activePhoto.src}
+          alt={caption}
+          className="max-h-[80vh] max-w-[92vw] rounded-2xl object-contain shadow-2xl"
+        />
+        {caption && (
+          <figcaption className="mt-3 max-w-xl text-center font-display text-base text-white/90">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
 
       {photos.length > 1 && (
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
             onNext();
@@ -236,53 +247,55 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }) {
   );
 }
 
-/* --- Foto clickable sin descripción --- */
-function PhotoFrame({ photo, onClick, className = "" }) {
+/* --- Foto clickable con estética editorial --- */
+function PhotoFrame({ photo, label, onClick, className = "", contain = false }) {
   if (!photo) return null;
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`group relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg transition-shadow hover:shadow-2xl ${className}`}
-      aria-label="Ampliar imagen"
+      className={`photo-frame group text-left ${className}`}
+      aria-label={label || "Ampliar imagen"}
     >
+      {contain && (
+        <img
+          src={photo.src}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+        />
+      )}
       <img
         src={photo.src}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
+        alt={label || ""}
         loading="lazy"
+        className={
+          contain
+            ? "relative z-10 h-full w-full object-contain p-3"
+            : "h-full w-full object-cover object-[center_18%]"
+        }
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/25 text-white backdrop-blur-md">
-          <Camera size={20} />
+      <div className="photo-overlay z-20 opacity-75 transition-opacity duration-500 group-hover:opacity-95" />
+      {label && (
+        <span className="absolute bottom-4 left-5 right-5 z-30 font-display text-sm font-medium leading-snug text-white/95 sm:text-base">
+          {label}
         </span>
-      </div>
+      )}
+      <span className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-ink/50 text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
+        <Camera size={17} />
+      </span>
     </button>
   );
 }
 
-/* --- Placeholder para imágenes futuras --- */
-function PhotoPlaceholder({ className = "" }) {
-  return (
-    <div
-      className={`flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-200 bg-gradient-to-br from-slate-50 to-white ${className}`}
-    >
-      <Camera size={22} className="text-slate-300" />
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">
-        Próximamente
-      </span>
-    </div>
-  );
-}
-
-/* --- Grid reutilizable: fotos + placeholders + lightbox --- */
+/* --- Grid reutilizable con lightbox --- */
 function PhotoGrid({
   photos,
-  gridClassName = "grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4",
-  itemClassName = "h-44 sm:h-56",
+  getLabel,
+  gridClassName = "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3",
+  itemClassName = "h-64 sm:h-72",
   spanPattern = [],
-  placeholderCount = 0,
+  contain = false,
 }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
@@ -293,20 +306,17 @@ function PhotoGrid({
           <PhotoFrame
             key={photo.key}
             photo={photo}
+            label={getLabel ? getLabel(photo) : ""}
             className={`${itemClassName} ${spanPattern[i] || ""}`}
+            contain={contain}
             onClick={() => setLightboxIndex(i)}
-          />
-        ))}
-        {Array.from({ length: placeholderCount }).map((_, i) => (
-          <PhotoPlaceholder
-            key={`ph-${i}`}
-            className={`${itemClassName} ${spanPattern[photos.length + i] || ""}`}
           />
         ))}
       </div>
       <Lightbox
         photos={photos}
         index={lightboxIndex}
+        getLabel={getLabel}
         onClose={() => setLightboxIndex(null)}
         onPrev={() =>
           setLightboxIndex((i) => (i > 0 ? i - 1 : photos.length - 1))
@@ -372,6 +382,11 @@ const homeCarePageCopy = {
     donateTrust: "100% de tu donación llega a las familias. Cada peso cuenta.",
     donateUrgency:
       "Hay familias esperando tu ayuda este mes en 12 comunidades de Tlaxcala.",
+    readMore: "Ver detalles",
+    readLess: "Ocultar detalles",
+    volunteering: "Ser voluntario",
+    showAllCommunities: "Ver las 12 comunidades",
+    showFewerCommunities: "Ver menos",
   },
   en: {
     currentSupportAreasTitle: "Where support is reaching families today",
@@ -418,6 +433,11 @@ const homeCarePageCopy = {
     donateTrust: "100% of your donation reaches the families. Every gift counts.",
     donateUrgency:
       "Families are waiting for your help this month in 12 communities of Tlaxcala.",
+    readMore: "View details",
+    readLess: "Hide details",
+    volunteering: "Become a volunteer",
+    showAllCommunities: "See all 12 communities",
+    showFewerCommunities: "Show less",
   },
 };
 
@@ -531,20 +551,14 @@ const serviceCommunities = [
   "San Diego Metepec, Tlax.",
 ];
 
-/* Span patterns para mosaico (12 items = 6 fotos + 6 placeholders) */
+/* Patrón asimétrico editorial para las 6 fotografías de la galería principal */
 const gallerySpans = [
-  "sm:col-span-2 sm:row-span-2",
-  "",
-  "",
-  "sm:col-span-2",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
+  "sm:col-span-7 sm:h-[420px]",
+  "sm:col-span-5 sm:h-[420px]",
+  "sm:col-span-4 sm:h-[320px]",
+  "sm:col-span-4 sm:h-[320px]",
+  "sm:col-span-4 sm:h-[320px]",
+  "sm:col-span-12 sm:h-[380px]",
 ];
 
 /* ============================================================
@@ -556,116 +570,124 @@ export default function HomeCare() {
   const homeCareTimeline =
     homeCareTimelineByLanguage[language] ?? homeCareTimelineByLanguage.es;
 
+  const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
+  const [showTimelineDetails, setShowTimelineDetails] = useState(false);
+  const [showAllCommunities, setShowAllCommunities] = useState(false);
+
+  const getPhotoLabel = (photo) =>
+    photo ? t(`homeCare.photoLabels.${photo.key}`) : "";
+
+  const activeTimelineItem =
+    homeCareTimeline[activeTimelineIndex] ?? homeCareTimeline[0];
+  const activeTimelinePhoto =
+    timelinePhotos[activeTimelineIndex % timelinePhotos.length];
+  const timelineProgress =
+    ((activeTimelineIndex + 1) / homeCareTimeline.length) * 100;
+
+  const goToPreviousTimelineItem = () => {
+    setActiveTimelineIndex((current) =>
+      current === 0 ? homeCareTimeline.length - 1 : current - 1
+    );
+  };
+
+  const goToNextTimelineItem = () => {
+    setActiveTimelineIndex((current) =>
+      current === homeCareTimeline.length - 1 ? 0 : current + 1
+    );
+  };
+
+  const visibleCommunities = showAllCommunities
+    ? serviceCommunities
+    : serviceCommunities.slice(0, 6);
+
   return (
     <>
-      {/* ===================== HERO ===================== */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950">
-        <div className="absolute inset-0">
-          <img
-            src={`${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`}
-            alt=""
-            className="h-full w-full object-cover opacity-25 mix-blend-overlay"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-indigo-950/80 to-violet-950/90" />
-          <div className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-teal-500/20 blur-3xl animate-pulse animation-delay-2000" />
-          <div className="absolute top-1/2 left-1/3 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl animate-pulse animation-delay-4000" />
-        </div>
+      {/* ===================== HERO DIVIDIDO (ROSTROS COMPLETOS Y SIN RECORTAR) ===================== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white">
+        <div className="pointer-events-none absolute -left-24 top-10 h-96 w-96 rounded-full bg-ember/25 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-blue/30 blur-3xl" />
 
-        <div className="section-shell relative w-full">
-          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div className="motion-rise space-y-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 shadow-2xl backdrop-blur-xl">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-3 w-3">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-400" />
-                  </span>
-                  <Camera size={14} className="text-emerald-400" />
-                </div>
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">
-                  {t("homeCare.carouselLabel")}
-                </span>
-              </div>
+        <div className="section-shell relative z-10 py-14 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="motion-rise">
+              <span className="kicker kicker-light">
+                {t("homeCare.carouselLabel")}
+              </span>
 
-              <h1 className="max-w-4xl text-4xl font-black leading-[1.1] sm:text-6xl lg:text-7xl">
-                <span className="bg-gradient-to-r from-white via-white to-emerald-100 bg-clip-text text-transparent">
-                  {t("homeCare.title")}
-                </span>
+              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-white sm:text-5xl lg:text-6xl">
+                {t("homeCare.title")}
               </h1>
 
-              <p className="max-w-2xl text-lg font-light leading-relaxed text-white/70">
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/85 sm:text-xl">
                 {t("homeCare.text")}
               </p>
 
-              <div className="grid gap-4 sm:grid-cols-3">
-                {[
-                  {
-                    value: "12kg",
-                    label: t("homeCare.activityItems.1"),
-                    icon: PackageCheck,
-                    color: "from-emerald-400 to-teal-500",
-                  },
-                  {
-                    value: "$250",
-                    label: t("homeCare.monthlyCost"),
-                    icon: TrendingUp,
-                    color: "from-blue-400 to-indigo-500",
-                  },
-                  {
-                    value: "1x",
-                    label: t("homeCare.monthlyVisit"),
-                    icon: Calendar,
-                    color: "from-violet-400 to-purple-500",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.value}
-                    className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-                  >
-                    <div className="relative space-y-2">
-                      <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${item.color} shadow-lg`}
-                      >
-                        <item.icon size={18} className="text-white" />
-                      </div>
-                      <p className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-3xl font-black text-transparent">
-                        {item.value}
-                      </p>
-                      <p className="text-xs font-semibold leading-5 text-white/60">
-                        {item.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <a href="#galeria-domiciliar" className="btn-primary">
+                  {language === "en" ? "See the stories" : "Ver las historias"}
+                  <ArrowRight size={17} />
+                </a>
+                <a href="#area-servicio-domiciliar" className="btn-ghost-light">
+                  {copy.currentSupportAreasTitle}
+                  <ChevronDown size={18} />
+                </a>
               </div>
-
-              <a
-                href="#galeria-domiciliar"
-                className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-white/10"
-              >
-                {language === "en" ? "See the stories" : "Ver las historias"}
-                <ChevronDown
-                  size={18}
-                  className="transition-transform group-hover:translate-y-1"
-                />
-              </a>
             </div>
 
-            {/* Carrusel (sin descripciones visibles) */}
-            <AutoImageCarousel
-              className="motion-float"
-              photos={heroPhotos}
-              getLabel={() => ""}
-              language={language}
-              heightClassName="h-[420px] sm:h-[540px] lg:h-[660px]"
-            />
+            <div className="mx-auto w-full max-w-md lg:max-w-none">
+              <figure className="photo-frame aspect-[4/3] w-full ring-2 ring-white/15">
+                <img
+                  src={
+                    findPhoto("homeVisitLivingRoomTeam")?.src ??
+                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg`
+                  }
+                  alt={t("homeCare.photoLabels.homeVisitLivingRoomTeam")}
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-4 left-5 right-5 text-sm font-semibold text-white/95">
+                  {t("homeCare.photoLabels.homeVisitLivingRoomTeam")}
+                </figcaption>
+              </figure>
+            </div>
           </div>
-        </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/20 p-1.5">
-            <div className="h-3 w-1.5 animate-pulse rounded-full bg-white/60" />
+          {/* Cifras esenciales del programa sobre la portada */}
+          <div className="mt-14 grid gap-6 border-t border-white/15 pt-8 sm:grid-cols-3">
+            {[
+              {
+                value: "12kg",
+                label: t("homeCare.activityItems.1"),
+                icon: PackageCheck,
+              },
+              {
+                value: "$250",
+                label: t("homeCare.monthlyCost"),
+                icon: TrendingUp,
+              },
+              {
+                value: "1x",
+                label: t("homeCare.monthlyVisit"),
+                icon: Calendar,
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.value} className="flex items-start gap-4">
+                  <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ember/20 text-amber-300 backdrop-blur-sm">
+                    <Icon size={20} />
+                  </span>
+                  <div>
+                    <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
+                      {item.value}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-white/80">
+                      {item.label}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -673,391 +695,442 @@ export default function HomeCare() {
       {/* ===================== GALERÍA DE HISTORIAS ===================== */}
       <section
         id="galeria-domiciliar"
-        className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
+        className="section-shell scroll-mt-28 bg-cream"
       >
-        <div className="absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-emerald-500/5 blur-3xl" />
-        </div>
+        <div className="mx-auto max-w-7xl">
+          <div className="reveal grid items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <span className="kicker">{copy.galleryEyebrow}</span>
+              <h2 className="title-lg mt-3">{copy.galleryTitle}</h2>
+              <p className="lead mt-4">{copy.galleryText}</p>
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300 backdrop-blur">
-              <Images size={14} />
-              {copy.galleryEyebrow}
-            </span>
-            <h2 className="mb-4 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-              {copy.galleryTitle}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-300">
-              {copy.galleryText}
-            </p>
+              <blockquote className="mt-6 rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
+                <Quote size={20} className="mb-2 text-ember" />
+                <p className="font-display text-xl italic leading-snug text-ink">
+                  {copy.tonsText}
+                </p>
+              </blockquote>
+            </div>
+
+            <div className="lg:col-span-6">
+              <AutoImageCarousel
+                photos={heroPhotos}
+                getLabel={getPhotoLabel}
+                language={language}
+                heightClassName="h-[340px] sm:h-[420px]"
+              />
+            </div>
           </div>
 
-          <PhotoGrid
-            photos={galleryPhotos}
-            gridClassName="grid grid-cols-2 gap-3 auto-rows-[160px] sm:auto-rows-[200px] sm:grid-cols-4 sm:gap-4"
-            itemClassName=""
-            spanPattern={gallerySpans}
-            placeholderCount={6}
-          />
+          <div className="reveal mt-12">
+            <PhotoGrid
+              photos={galleryPhotos}
+              getLabel={getPhotoLabel}
+              gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-12"
+              itemClassName="h-72"
+              spanPattern={gallerySpans}
+            />
+          </div>
 
-          <div className="mt-10 flex flex-col items-center gap-3">
-            <p className="text-center text-sm font-bold uppercase tracking-[0.16em] text-emerald-400">
-              {copy.galleryCta}
-            </p>
-            <a
-              href="#donar"
-              className="group inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-emerald-500/50"
-            >
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 rounded-[1.75rem] bg-sand/70 px-6 py-8 text-center sm:flex-row sm:px-10 sm:text-left">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                {copy.galleryEyebrow}
+              </p>
+              <p className="mt-1 font-display text-2xl font-semibold text-ink">
+                {copy.galleryCta}
+              </p>
+            </div>
+            <a href="#donar" className="btn-primary shrink-0">
               <Heart size={16} className="fill-white" />
               {copy.donateCta}
-              <ArrowRight
-                size={16}
-                className="transition-transform group-hover:translate-x-1"
-              />
+              <ArrowRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      {/* ===================== ZONAS ===================== */}
+      {/* ===================== ZONAS DE APOYO ===================== */}
       <section
         id="area-servicio-domiciliar"
-        className="section-shell scroll-mt-28 overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-cyan-50"
+        className="section-shell scroll-mt-28 bg-white"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-700 shadow-sm">
-                <MapPinned size={15} />
-                {copy.serviceCoverageEyebrow}
-              </span>
-              <h2 className="mt-5 text-4xl font-black leading-tight text-slate-900 sm:text-5xl">
-                {copy.currentSupportAreasTitle}
-              </h2>
-              <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
+            <div className="reveal lg:col-span-5">
+              <span className="kicker">{copy.serviceCoverageEyebrow}</span>
+              <h2 className="title-lg mt-3">{copy.currentSupportAreasTitle}</h2>
+              <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
                 {copy.currentSupportAreasText}
               </p>
-              <div className="mt-7 flex items-center gap-4 rounded-2xl border border-emerald-100 bg-white p-5 shadow-lg shadow-emerald-900/5">
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg">
-                  <MapPinned size={25} />
+
+              <div className="soft-card mt-6 flex items-center gap-5 bg-cream/60">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-ember/10 text-ember">
+                  <MapPinned size={26} />
                 </span>
-                <span>
-                  <span className="block text-3xl font-black text-slate-900">
+                <div>
+                  <span className="block font-display text-4xl font-semibold text-ink sm:text-5xl">
                     {serviceCommunities.length}
                   </span>
-                  <span className="text-sm font-bold text-slate-500">
+                  <span className="text-sm font-medium text-slate-600">
                     {language === "en"
                       ? "active support areas"
                       : "zonas de apoyo activas"}
                   </span>
-                </span>
+                </div>
               </div>
 
-              <PhotoGrid
-                photos={zonasPhotos}
-                gridClassName="mt-5 grid grid-cols-2 gap-3"
-                itemClassName="h-40 sm:h-48"
-                placeholderCount={1}
-              />
+              <div className="mt-6">
+                <PhotoGrid
+                  photos={zonasPhotos}
+                  getLabel={getPhotoLabel}
+                  gridClassName="grid grid-cols-1"
+                  itemClassName="h-64 sm:h-72"
+                />
+              </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white bg-white/80 p-5 shadow-2xl shadow-emerald-900/10 backdrop-blur sm:p-8">
-              <p className="mb-5 text-sm font-bold leading-6 text-slate-500 sm:text-base">
+            <div className="reveal soft-card bg-cream/50 lg:col-span-7">
+              <p className="mb-6 text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
                 {copy.currentSupportAreasLegend}
               </p>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {serviceCommunities.map((community, index) => (
+
+              <div className="grid gap-3.5 sm:grid-cols-2">
+                {visibleCommunities.map((community, index) => (
                   <div
                     key={community}
-                    className="flex min-h-16 items-center gap-3 rounded-2xl border border-emerald-100 bg-gradient-to-br from-white to-emerald-50/70 px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                    className="flex items-center gap-3.5 rounded-2xl border border-ink/5 bg-white px-4 py-3.5 shadow-soft transition hover:-translate-y-0.5"
                   >
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-600 text-xs font-black text-white shadow-sm">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-ember/10 font-display text-sm font-semibold text-ember">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-sm font-bold leading-5 text-slate-800">
+                    <span className="text-sm font-semibold leading-5 text-ink">
                       {community}
                     </span>
                   </div>
                 ))}
               </div>
+
+              {serviceCommunities.length > 6 && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllCommunities((prev) => !prev)}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-ember hover:text-ember-dark"
+                >
+                  {showAllCommunities
+                    ? copy.showFewerCommunities
+                    : copy.showAllCommunities}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${
+                      showAllCommunities ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== HISTORIA ===================== */}
+      {/* ===================== HISTORIA DEL SERVICIO DOMICILIAR ===================== */}
       <section
         id="historia-domiciliar"
-        className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50"
+        className="section-shell scroll-mt-28 bg-sand/60"
       >
-        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-amber-200/20 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-orange-200/20 blur-3xl" />
+        <div className="mx-auto max-w-7xl">
+          <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <span className="kicker">{copy.historyEyebrow}</span>
+              <h2 className="title-lg mt-3">{copy.historyServiceTitle}</h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+                {copy.historyServiceText}
+              </p>
+            </div>
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="mb-16 text-center">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-gradient-to-r from-amber-50 to-orange-50 px-5 py-2 text-xs font-bold uppercase tracking-wider text-amber-600 shadow-sm">
-              <BookOpen size={14} />
-              {copy.historyEyebrow}
-            </span>
-            <h2 className="mb-4 bg-gradient-to-r from-slate-900 via-amber-800 to-orange-700 bg-clip-text text-4xl font-black text-transparent lg:text-6xl">
-              {copy.historyServiceTitle}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-500">
-              {copy.historyServiceText}
-            </p>
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              <button
+                type="button"
+                onClick={goToPreviousTimelineItem}
+                aria-label={
+                  language === "en" ? "Previous period" : "Periodo anterior"
+                }
+                className="grid h-11 w-11 place-items-center rounded-full border border-ink/15 bg-white text-ink transition hover:border-ember hover:text-ember"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <span className="px-3 text-sm font-bold text-slate-500">
+                {activeTimelineIndex + 1} / {homeCareTimeline.length}
+              </span>
+              <button
+                type="button"
+                onClick={goToNextTimelineItem}
+                aria-label={
+                  language === "en" ? "Next period" : "Siguiente periodo"
+                }
+                className="grid h-11 w-11 place-items-center rounded-full bg-ink text-white transition hover:bg-ember"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
           </div>
 
-          <div className="mx-auto max-w-6xl">
-            <div className="relative">
-              <div className="absolute left-1/2 hidden h-full w-1 -translate-x-px bg-gradient-to-b from-amber-200 via-amber-400 to-amber-200 lg:block">
-                <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 animate-pulse rounded-full bg-amber-400" />
-                <div className="absolute bottom-0 left-1/2 h-3 w-3 -translate-x-1/2 animate-pulse rounded-full bg-amber-400" />
+          {/* Selector de etapas */}
+          <div className="no-scrollbar mt-8 flex gap-2.5 overflow-x-auto pb-3">
+            {homeCareTimeline.map((item, index) => {
+              const isActive = index === activeTimelineIndex;
+              return (
+                <button
+                  key={item.period}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setActiveTimelineIndex(index)}
+                  className={`shrink-0 rounded-full px-5 py-2.5 text-xs font-bold transition ${
+                    isActive
+                      ? "bg-ember text-white shadow-md shadow-ember/25"
+                      : "bg-white text-slate-600 hover:bg-cream hover:text-ink"
+                  }`}
+                >
+                  {item.period} · {item.stat}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-2 h-1 overflow-hidden rounded-full bg-white">
+            <div
+              className="h-full rounded-full bg-ember transition-all duration-500"
+              style={{ width: `${timelineProgress}%` }}
+            />
+          </div>
+
+          {/* Tarjeta principal con fotografía protagonista completa */}
+          <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <PhotoGrid
+                photos={activeTimelinePhoto ? [activeTimelinePhoto] : []}
+                getLabel={getPhotoLabel}
+                gridClassName="grid grid-cols-1 h-full"
+                itemClassName="min-h-[340px] sm:min-h-[420px] h-full"
+                contain
+              />
+            </div>
+
+            <div className="soft-card flex flex-col justify-between lg:col-span-5">
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-ember">
+                    {activeTimelineItem.period}
+                  </span>
+                  <span className="rounded-full bg-sand px-3.5 py-1 text-xs font-bold text-ink">
+                    {activeTimelineItem.stat}
+                  </span>
+                </div>
+
+                <h3 className="mt-3 font-display text-2xl font-semibold leading-snug text-ink sm:text-3xl">
+                  {activeTimelineItem.title}
+                </h3>
+
+                <p className="mt-4 text-base leading-7 text-slate-600">
+                  {activeTimelineItem.text}
+                </p>
+
+                {showTimelineDetails && (
+                  <ul className="mt-5 space-y-3 border-t border-ink/5 pt-5">
+                    {activeTimelineItem.details.map((detail) => (
+                      <li
+                        key={detail}
+                        className="flex gap-3 text-sm leading-6 text-slate-700"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setShowTimelineDetails((prev) => !prev)}
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-ember hover:text-ember-dark"
+                >
+                  {showTimelineDetails ? copy.readLess : copy.readMore}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${
+                      showTimelineDetails ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
               </div>
 
-              <div className="relative space-y-16">
-                {homeCareTimeline.map((item, index) => {
-                  const isEven = index % 2 === 0;
-                  const periodPhoto = timelinePhotos[index];
-
-                  const textCard = (
-                    <div className="group relative rounded-2xl border border-amber-100 bg-white p-7 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-amber-300 hover:shadow-2xl">
-                      <div className="absolute right-0 top-0 -mr-16 -mt-16 h-32 w-32 rounded-full bg-gradient-to-br from-amber-100/30 to-orange-100/30" />
-                      <span className="relative inline-block rounded-full bg-amber-50 px-3 py-1 text-sm font-bold tracking-wider text-amber-500">
-                        {item.period}
-                      </span>
-                      <h3 className="relative mt-2 text-xl font-bold text-slate-900">
-                        {item.title}
-                      </h3>
-                      <p className="relative mt-2 leading-relaxed text-slate-600">
-                        {item.text}
-                      </p>
-                      <ul className="relative mt-4 space-y-2 text-sm leading-6 text-slate-600">
-                        {item.details.map((detail) => (
-                          <li key={detail} className="flex items-start gap-2">
-                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 shadow-sm" />
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <span className="relative mt-4 inline-flex rounded-full border border-amber-200/50 bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-amber-700">
-                        {item.stat}
-                      </span>
-                    </div>
-                  );
-
-                  const photosBlock = (
-                    <PhotoGrid
-                      photos={periodPhoto ? [periodPhoto] : []}
-                      gridClassName="grid grid-cols-2 gap-3"
-                      itemClassName="h-56 sm:h-64 lg:h-72"
-                      placeholderCount={1}
-                    />
-                  );
-
-                  return (
-                    <div
-                      key={item.period}
-                      className="flex flex-col items-center gap-8 lg:flex-row lg:gap-12"
-                    >
-                      <div
-                        className={[
-                          "lg:w-1/2",
-                          isEven ? "lg:pr-8 lg:text-right" : "lg:pl-8",
-                        ].join(" ")}
-                      >
-                        {isEven ? textCard : photosBlock}
-                      </div>
-
-                      <div className="relative z-10 flex-shrink-0">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-orange-500 shadow-lg shadow-amber-300/50 ring-4 ring-white">
-                          <div className="h-4 w-4 rounded-full bg-white" />
-                        </div>
-                      </div>
-
-                      <div className="lg:w-1/2">
-                        {!isEven ? textCard : photosBlock}
-                      </div>
-                    </div>
-                  );
-                })}
+              <div className="mt-8 flex items-center justify-between border-t border-ink/5 pt-4">
+                <button
+                  type="button"
+                  onClick={goToPreviousTimelineItem}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-600 hover:text-ink"
+                >
+                  <ChevronLeft size={16} />
+                  {language === "en" ? "Previous" : "Anterior"}
+                </button>
+                <button
+                  type="button"
+                  onClick={goToNextTimelineItem}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-ember hover:text-ember-dark"
+                >
+                  {language === "en" ? "Next" : "Siguiente"}
+                  <ChevronRight size={16} />
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== IMPACTO ===================== */}
+      {/* ===================== IMPACTO / TONELADAS REPARTIDAS ===================== */}
       <section
         id="toneladas-repartidas"
-        className="section-shell scroll-mt-28 relative overflow-hidden bg-gradient-to-b from-white via-emerald-50/30 to-white"
+        className="section-shell scroll-mt-28 bg-ink text-white"
       >
-        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent" />
-        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-emerald-200/10 blur-3xl" />
-
-        <div className="relative mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200/50 bg-gradient-to-r from-emerald-50 to-teal-50 px-5 py-2 text-xs font-bold uppercase tracking-wider text-emerald-600 shadow-sm">
-              <TrendingUp size={14} />
+        <div className="mx-auto max-w-7xl">
+          <div className="reveal max-w-3xl">
+            <span className="kicker kicker-light">
               {copy.impactMetricsEyebrow}
             </span>
-            <h2 className="mb-4 bg-gradient-to-r from-slate-900 via-emerald-800 to-teal-700 bg-clip-text text-4xl font-black text-transparent lg:text-6xl">
-              {copy.tonsTitle}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-500">
+            <h2 className="title-lg mt-3 text-white">{copy.tonsTitle}</h2>
+            <p className="mt-4 text-lg leading-8 text-white/80">
               {copy.tonsText}
             </p>
           </div>
 
-          <div className="mx-auto mb-10 grid max-w-5xl gap-4 sm:grid-cols-3">
+          <div className="reveal mt-12 grid gap-6 sm:grid-cols-3">
             {[
               {
                 value: "500+",
                 label: copy.familiesHelped,
                 icon: Heart,
-                color: "from-rose-400 to-pink-500",
               },
               {
                 value: "2.5T",
                 label: copy.tonsDistributed,
                 icon: PackageCheck,
-                color: "from-emerald-400 to-teal-500",
               },
               {
                 value: "12",
                 label: copy.activeCommunities,
                 icon: MapPinned,
-                color: "from-blue-400 to-indigo-500",
               },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden rounded-2xl border-2 border-slate-100 bg-gradient-to-br from-white to-slate-50 p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl"
-              >
+            ].map((stat) => {
+              const Icon = stat.icon;
+              return (
                 <div
-                  className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${stat.color} shadow-lg transition-transform duration-300 group-hover:scale-110`}
+                  key={stat.label}
+                  className="rounded-[1.5rem] border border-white/10 bg-white/5 p-7 backdrop-blur-sm"
                 >
-                  <stat.icon size={22} className="text-white" />
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/20 text-ember-light">
+                    <Icon size={22} />
+                  </span>
+                  <p className="mt-5 font-display text-5xl font-semibold text-white">
+                    {stat.value}
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-white/75">
+                    {stat.label}
+                  </p>
                 </div>
-                <p className="text-4xl font-black text-slate-900 transition-colors group-hover:text-emerald-700">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-sm font-medium text-slate-500">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div className="grid items-stretch gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-            <PhotoGrid
-              photos={impactPhotos}
-              gridClassName="grid grid-cols-2 gap-3 sm:grid-cols-3"
-              itemClassName="h-48 sm:h-64"
-              placeholderCount={1}
-            />
+          <div className="reveal mt-12 grid items-center gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <PhotoGrid
+                photos={impactPhotos}
+                getLabel={getPhotoLabel}
+                gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
+                itemClassName="h-72 sm:h-80"
+              />
+            </div>
 
-            <div className="flex flex-col justify-center rounded-[1.75rem] border border-emerald-100 bg-white p-7 shadow-lg sm:p-9">
-              <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-700">
-                <Heart size={14} className="fill-emerald-600" />
-                {language === "en" ? "Every visit matters" : "Cada visita importa"}
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-8 lg:col-span-5">
+              <span className="kicker kicker-light">
+                {language === "en"
+                  ? "Every visit matters"
+                  : "Cada visita importa"}
               </span>
-              <p className="mt-3 text-2xl font-black leading-tight text-slate-900 sm:text-3xl">
+              <h3 className="mt-3 font-display text-2xl font-semibold leading-snug text-white sm:text-3xl">
                 {copy.impactLeadTitle}
+              </h3>
+              <p className="mt-4 text-base leading-7 text-white/80">
+                {copy.impactLeadText}
               </p>
-              <p className="mt-4 leading-7 text-slate-600">{copy.impactLeadText}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== ACTIVIDADES ===================== */}
+      {/* ===================== ACTIVIDADES DOMICILIARES ===================== */}
       <section
         id="actividades-domiciliares"
-        className="section-shell relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50"
+        className="section-shell scroll-mt-28 bg-cream"
       >
-        <div className="relative mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-5 py-2 text-xs font-bold uppercase tracking-wider text-emerald-600 shadow-sm">
-              <Camera size={14} />
-              {copy.activityPhotosEyebrow}
-            </span>
-            <h2 className="mb-4 text-4xl font-black leading-tight text-slate-900 lg:text-5xl">
-              {copy.activityPhotosTitle}
-            </h2>
-          </div>
+        <div className="mx-auto max-w-7xl">
+          <div className="reveal grid items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <span className="kicker">{copy.activityPhotosEyebrow}</span>
+              <h2 className="title-lg mt-3">{copy.activityPhotosTitle}</h2>
 
-          <div className="mb-12">
-            <PhotoGrid
-              photos={activityPhotos}
-              gridClassName="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
-              itemClassName="h-44 sm:h-56 lg:h-64"
-              placeholderCount={2}
-            />
-          </div>
-
-          <div className="mx-auto max-w-4xl">
-            <div className="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-2xl">
-              <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-emerald-100/20" />
-              <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-teal-100/20" />
-
-              <div className="relative mb-6 flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-lg shadow-emerald-300/40 transition-transform duration-300 group-hover:scale-110">
-                  <ClipboardList size={22} className="text-white" />
+              <div className="soft-card mt-8">
+                <div className="mb-6 flex items-center gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                    <ClipboardList size={22} />
+                  </span>
+                  <h3 className="font-display text-2xl font-semibold text-ink">
+                    {t("homeCare.activities")}
+                  </h3>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
-                  {t("homeCare.activities")}
-                </h3>
-              </div>
 
-              <ul className="relative grid gap-3 sm:grid-cols-2">
-                {dictionary.homeCare.activityItems.map((item, index) => (
-                  <li
-                    key={item}
-                    className="group/item flex items-center gap-4 rounded-xl border border-transparent bg-gradient-to-r from-emerald-50/50 to-white p-4 font-medium text-slate-700 shadow-sm transition-all duration-300 hover:border-emerald-200 hover:from-emerald-100/50 hover:to-emerald-50/50 hover:shadow-md"
-                  >
-                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-100 to-teal-100 text-sm font-bold text-emerald-600 transition-colors group-hover/item:from-emerald-200 group-hover/item:to-teal-200">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+                <ul className="space-y-3.5">
+                  {dictionary.homeCare.activityItems.map((item, index) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-4 rounded-2xl bg-cream/70 p-4 text-sm leading-6 text-slate-700"
+                    >
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-white font-display text-xs font-semibold text-ember shadow-sm">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-medium text-ink">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="reveal lg:col-span-6">
+              <PhotoGrid
+                photos={activityPhotos}
+                getLabel={getPhotoLabel}
+                gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
+                itemClassName="h-80 sm:h-[420px]"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===================== DONACIÓN ===================== */}
-      <section
-        id="donar"
-        className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-950 py-20 sm:py-28"
-      >
-        <div className="absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-amber-400/10 blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-rose-400/10 blur-3xl" />
-        </div>
-
-        <div className="section-shell relative">
-          <div className="mx-auto max-w-5xl text-center">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300 backdrop-blur">
-              <Sparkles size={14} />
-              {copy.donateEyebrow}
-            </span>
-            <h2 className="mb-5 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-              {copy.donateTitle}
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/70">
-              {copy.donateText}
-            </p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-amber-400/10 px-4 py-2 text-sm font-bold text-amber-300">
-              <Heart size={14} className="fill-amber-300" />
+      {/* ===================== APADRINAMIENTO Y LLAMADO EMOCIONAL FINAL ===================== */}
+      <section id="donar" className="section-shell scroll-mt-28 bg-white">
+        <div id="donar-form" className="mx-auto max-w-7xl">
+          <div className="reveal mx-auto max-w-3xl text-center">
+            <span className="kicker">{copy.donateEyebrow}</span>
+            <h2 className="title-lg mt-3">{copy.donateTitle}</h2>
+            <p className="lead mt-4">{copy.donateText}</p>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-sand px-5 py-2 text-sm font-semibold text-ink">
+              <Heart size={15} className="fill-ember text-ember" />
               {copy.donateUrgency}
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
+          <div className="reveal mt-12 grid gap-6 md:grid-cols-3">
             {[
               {
                 amount: "$250",
@@ -1078,69 +1151,75 @@ export default function HomeCare() {
                 desc: copy.donateTier3Desc,
                 highlight: false,
               },
-            ].map((tier, i) => (
+            ].map((tier) => (
               <div
-                key={i}
-                className={`relative flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 ${
+                key={tier.amount}
+                className={`relative flex flex-col justify-between rounded-[1.75rem] p-8 transition duration-300 hover:-translate-y-1 ${
                   tier.highlight
-                    ? "border-emerald-400/50 bg-emerald-500/10 shadow-2xl shadow-emerald-500/20 backdrop-blur-lg"
-                    : "border-white/10 bg-white/5 backdrop-blur-lg hover:border-white/20"
+                    ? "bg-ink text-white shadow-photo ring-2 ring-ember"
+                    : "border border-ink/10 bg-cream/60 text-ink shadow-soft"
                 }`}
               >
                 {tier.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-lg">
+                  <span className="absolute -top-3.5 left-8 rounded-full bg-ember px-4 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-md">
                     {tier.badge}
                   </span>
                 )}
-                <div className="mb-1 flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-white">
-                    {tier.amount}
-                  </span>
-                  <span className="text-sm font-bold text-white/60">
-                    {copy.donatePerMonth}
-                  </span>
+
+                <div>
+                  <div className="flex items-baseline gap-2">
+                    <span
+                      className={`font-display text-4xl font-semibold sm:text-5xl ${
+                        tier.highlight ? "text-white" : "text-ink"
+                      }`}
+                    >
+                      {tier.amount}
+                    </span>
+                    <span
+                      className={`text-sm font-medium ${
+                        tier.highlight ? "text-white/70" : "text-slate-500"
+                      }`}
+                    >
+                      {copy.donatePerMonth}
+                    </span>
+                  </div>
+
+                  <h3
+                    className={`mt-4 font-display text-2xl font-semibold ${
+                      tier.highlight ? "text-ember-light" : "text-ink"
+                    }`}
+                  >
+                    {tier.title}
+                  </h3>
+
+                  <p
+                    className={`mt-2 text-sm leading-6 ${
+                      tier.highlight ? "text-white/80" : "text-slate-600"
+                    }`}
+                  >
+                    {tier.desc}
+                  </p>
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-emerald-300">
-                  {tier.title}
-                </h3>
-                <p className="mb-6 flex-1 text-sm leading-6 text-white/60">
-                  {tier.desc}
-                </p>
-                <a
-                  href="#donar-form"
-                  className={`group inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-black transition-all ${
+
+                <Link
+                  to="/donaciones#donaciones"
+                  className={
                     tier.highlight
-                      ? "bg-white text-slate-900 shadow-lg hover:bg-emerald-50"
-                      : "border border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10"
-                  }`}
+                      ? "btn-primary mt-8 w-full"
+                      : "btn-secondary mt-8 w-full"
+                  }
                 >
                   {copy.donateCta}
-                  <ArrowRight
-                    size={16}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </a>
+                  <ArrowRight size={16} />
+                </Link>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col items-center gap-4 text-center">
-            <a
-              href="#donar-form"
-              className="group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-black text-white shadow-2xl shadow-emerald-500/40 transition-all hover:-translate-y-0.5 hover:from-emerald-400 hover:to-teal-400 hover:shadow-emerald-500/60"
-            >
-              <Heart size={20} className="fill-white" />
-              {copy.donateCta}
-              <ArrowRight
-                size={20}
-                className="transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <p className="flex items-center gap-2 text-xs font-semibold text-white/50">
-              <ShieldCheck size={14} />
-              {copy.donateTrust}
-            </p>
-          </div>
+          <p className="mt-8 flex items-center justify-center gap-2 text-center text-xs font-semibold text-slate-500">
+            <ShieldCheck size={16} className="text-ember" />
+            {copy.donateTrust}
+          </p>
         </div>
       </section>
     </>

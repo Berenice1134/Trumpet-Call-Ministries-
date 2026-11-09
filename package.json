@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --nojekyll"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

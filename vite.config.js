@@ -14,4 +14,14 @@ const githubPagesSpaFallback = {
 export default defineConfig({
   plugins: [react(), githubPagesSpaFallback],
   base: '/Trumpet-Call-Ministries-/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
+  },
 })

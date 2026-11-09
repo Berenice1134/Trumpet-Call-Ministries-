@@ -1,88 +1,80 @@
 import {
-  Camera,
+  BookOpen,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Church,
+  Crown,
+  GraduationCap,
+  HandHeart,
+  Heart,
   HeartHandshake,
+  HeartPulse,
+  Leaf,
+  Maximize2,
   MessageSquareHeart,
+  Pause,
+  Play,
   Quote,
-  Repeat,
   Sparkles,
   TrendingUp,
   Users,
   X,
-  Star,
-  ChevronRight,
-  ChevronLeft,
-  Maximize2,
-  Play,
-  Pause,
-  Calendar,
-  Heart,
-  HandHeart,
-  GraduationCap,
-  BookOpen,
-  Leaf,
-  Crown,
-  HeartPulse,
 } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import InfoCard from "../components/InfoCard.jsx";
-import PageHeader from "../components/PageHeader.jsx";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
 
 const volunteerPhotos = [
   {
     key: "teamBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`,
     alt: "Equipo de voluntarios con despensas",
   },
   {
     key: "youngTeam",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`,
     alt: "Jóvenes voluntarios",
   },
   {
     key: "ricePacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`,
     alt: "Empacando arroz",
   },
   {
     key: "tablePrep",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`,
     alt: "Preparando mesa de trabajo",
   },
   {
     key: "bagFilling",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`,
     alt: "Llenando bolsas",
   },
   {
     key: "supplies",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`,
     alt: "Organizando suministros",
   },
   {
     key: "familiesPacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`,
     alt: "Familias empacando",
   },
   {
     key: "waving",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`,
     alt: "Voluntarios saludando",
   },
   {
     key: "childrenBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`, // Recurso estático del grupo mostrado en esta tarjeta.
+    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`,
     alt: "Niños con bolsas",
   },
 ];
 
-const featuredVolunteerPhotoKeys = [
-  "teamBags",
-  "youngTeam",
-  "bagFilling",
-];
+const featuredVolunteerPhotoKeys = ["teamBags", "youngTeam", "bagFilling"];
 
 const featuredVolunteerPhotos = featuredVolunteerPhotoKeys
   .map((key) => volunteerPhotos.find((photo) => photo.key === key))
@@ -96,10 +88,14 @@ const volunteerGroups = [
     titleEn: "English Center Volunteers",
     subtitle: "Estudiantes que sirven cada medio año",
     subtitleEn: "Students serving every six months",
-    description: "Los estudiantes del English Center se suman al ministerio cada medio año para ayudar a empacar despensas. Su participación une aprendizaje, disciplina, formación de carácter y amor práctico por las familias que reciben apoyo.",
-    descriptionEn: "English Center students join the ministry every six months to help pack food pantry packages. Their participation brings together learning, discipline, character formation, and practical love for the families receiving support.",
-    impact: "El English Center Tlaxcala nació en junio de 2021 con el propósito de fortalecer a estudiantes mexicanos por medio del inglés. El 100% de sus ganancias apoya la compra de alimentos y el acompañamiento a familias en crisis.",
-    impactEn: "English Center Tlaxcala began in June 2021 to empower Mexican students through English learning. 100% of its profits support food purchases and care for families in crisis.",
+    description:
+      "Los estudiantes del English Center se suman al ministerio cada medio año para ayudar a empacar despensas. Su participación une aprendizaje, disciplina, formación de carácter y amor práctico por las familias que reciben apoyo.",
+    descriptionEn:
+      "English Center students join the ministry every six months to help pack food pantry packages. Their participation brings together learning, discipline, character formation, and practical love for the families receiving support.",
+    impact:
+      "El English Center Tlaxcala nació en junio de 2021 con el propósito de fortalecer a estudiantes mexicanos por medio del inglés. El 100% de sus ganancias apoya la compra de alimentos y el acompañamiento a familias en crisis.",
+    impactEn:
+      "English Center Tlaxcala began in June 2021 to empower Mexican students through English learning. 100% of its profits support food purchases and care for families in crisis.",
     stats: ["Cada medio año", "Estudiantes", "Empaque de despensas"],
     statsEn: ["Every six months", "Students", "Pantry packing"],
     color: "from-blue-500 to-indigo-600",
@@ -120,10 +116,14 @@ const volunteerGroups = [
     titleEn: "Senda de Vida Volunteers",
     subtitle: "Servicio desde la fe y la comunidad",
     subtitleEn: "Service rooted in faith and community",
-    description: "Este grupo representa a personas que comparten la visión de llevar esperanza a familias vulnerables. Su ayuda fortalece la preparación, organización y entrega de despensas.",
-    descriptionEn: "This group represents people who share the vision of bringing hope to vulnerable families. Their help strengthens the preparation, organization, and delivery of pantry packages.",
-    impact: "Su servicio recuerda que el ministerio no solo entrega alimento: también ofrece oración, escucha y acompañamiento a quienes atraviesan necesidad.",
-    impactEn: "Their service reminds visitors that the ministry does more than deliver food: it also offers prayer, listening, and accompaniment to those in need.",
+    description:
+      "Este grupo representa a personas que comparten la visión de llevar esperanza a familias vulnerables. Su ayuda fortalece la preparación, organización y entrega de despensas.",
+    descriptionEn:
+      "This group represents people who share the vision of bringing hope to vulnerable families. Their help strengthens the preparation, organization, and delivery of pantry packages.",
+    impact:
+      "Su servicio recuerda que el ministerio no solo entrega alimento: también ofrece oración, escucha y acompañamiento a quienes atraviesan necesidad.",
+    impactEn:
+      "Their service reminds visitors that the ministry does more than deliver food: it also offers prayer, listening, and accompaniment to those in need.",
     stats: ["Fe en acción", "Apoyo comunitario", "Oración"],
     statsEn: ["Faith in action", "Community support", "Prayer"],
     color: "from-emerald-500 to-teal-600",
@@ -145,10 +145,14 @@ const volunteerGroups = [
     titleEn: "Leoncitas Volunteers",
     subtitle: "Amistad, convivencia y servicio con propósito",
     subtitleEn: "Friendship, fellowship, and purposeful service",
-    description: "Leoncitas nació de la amistad, la convivencia y el deseo de servir juntas. Con el tiempo, ese vínculo se transformó en un grupo oficial de voluntarios que participa con alegría en el empaque, la preparación y el acompañamiento del ministerio.",
-    descriptionEn: "Leoncitas grew out of friendship, fellowship, and the desire to serve together. Over time, that bond became an official volunteer group that joyfully participates in packing, preparation, and ministry support.",
-    impact: "Su historia recuerda que Dios también forma equipos a través de relaciones sencillas: amistades que crecen, se organizan y terminan llevando esperanza a otras familias.",
-    impactEn: "Their story shows how God can form teams through simple relationships: friendships that grow, become organized, and end up carrying hope to other families.",
+    description:
+      "Leoncitas nació de la amistad, la convivencia y el deseo de servir juntas. Con el tiempo, ese vínculo se transformó en un grupo oficial de voluntarios que participa con alegría en el empaque, la preparación y el acompañamiento del ministerio.",
+    descriptionEn:
+      "Leoncitas grew out of friendship, fellowship, and the desire to serve together. Over time, that bond became an official volunteer group that joyfully participates in packing, preparation, and ministry support.",
+    impact:
+      "Su historia recuerda que Dios también forma equipos a través de relaciones sencillas: amistades que crecen, se organizan y terminan llevando esperanza a otras familias.",
+    impactEn:
+      "Their story shows how God can form teams through simple relationships: friendships that grow, become organized, and end up carrying hope to other families.",
     stats: ["Amistad", "Convivencia", "Grupo oficial"],
     statsEn: ["Friendship", "Fellowship", "Official group"],
     color: "from-amber-400 to-orange-500",
@@ -170,10 +174,14 @@ const volunteerGroups = [
     titleEn: "Messages of Life Volunteers",
     subtitle: "Voluntarios de iglesia sirviendo con fe",
     subtitleEn: "Church volunteers serving with faith",
-    description: "Mensajes de Vida reúne voluntarios de la iglesia que se suman al ministerio para preparar despensas, apoyar la logística y servir a las familias con un corazón dispuesto.",
-    descriptionEn: "Messages of Life brings together church volunteers who join the ministry to prepare pantry packages, support logistics, and serve families with willing hearts.",
-    impact: "Su participación une la ayuda material con el ánimo espiritual, recordando a cada familia que la iglesia también puede ser presencia, oración y compañía en tiempos difíciles.",
-    impactEn: "Their participation connects material help with spiritual encouragement, reminding each family that the church can also be present through prayer, care, and companionship in difficult seasons.",
+    description:
+      "Mensajes de Vida reúne voluntarios de la iglesia que se suman al ministerio para preparar despensas, apoyar la logística y servir a las familias con un corazón dispuesto.",
+    descriptionEn:
+      "Messages of Life brings together church volunteers who join the ministry to prepare pantry packages, support logistics, and serve families with willing hearts.",
+    impact:
+      "Su participación une la ayuda material con el ánimo espiritual, recordando a cada familia que la iglesia también puede ser presencia, oración y compañía en tiempos difíciles.",
+    impactEn:
+      "Their participation connects material help with spiritual encouragement, reminding each family that the church can also be present through prayer, care, and companionship in difficult seasons.",
     stats: ["Evangelio", "Ánimo", "Acompañamiento"],
     statsEn: ["Gospel", "Encouragement", "Accompaniment"],
     color: "from-sky-500 to-indigo-600",
@@ -193,10 +201,14 @@ const volunteerGroups = [
     titleEn: "Beneficiaries Who Also Volunteer",
     subtitle: "Recibir ayuda y convertirla en servicio",
     subtitleEn: "Receiving help and turning it into service",
-    description: "Algunos beneficiarios también participan como voluntarios. Esta reciprocidad refleja una comunidad viva: quienes han recibido apoyo también encuentran formas de bendecir a otros.",
-    descriptionEn: "Some beneficiaries also participate as volunteers. This reciprocity reflects a living community: those who have received support also find ways to bless others.",
-    impact: "El ministerio acompaña a viudas, huérfanos, personas con discapacidad, adultos mayores abandonados, familias vulnerables y personas con padecimientos crónicos o crisis temporales.",
-    impactEn: "The ministry accompanies widows, orphans, people with disabilities, abandoned older adults, vulnerable families, and people facing chronic illness or temporary crisis.",
+    description:
+      "Algunos beneficiarios también participan como voluntarios. Esta reciprocidad refleja una comunidad viva: quienes han recibido apoyo también encuentran formas de bendecir a otros.",
+    descriptionEn:
+      "Some beneficiaries also participate as volunteers. This reciprocity reflects a living community: those who have received support also find ways to bless others.",
+    impact:
+      "El ministerio acompaña a viudas, huérfanos, personas con discapacidad, adultos mayores abandonados, familias vulnerables y personas con padecimientos crónicos o crisis temporales.",
+    impactEn:
+      "The ministry accompanies widows, orphans, people with disabilities, abandoned older adults, vulnerable families, and people facing chronic illness or temporary crisis.",
     stats: ["Reciprocidad", "Comunidad", "Esperanza compartida"],
     statsEn: ["Reciprocity", "Community", "Shared hope"],
     color: "from-fuchsia-500 to-rose-600",
@@ -227,6 +239,7 @@ const testimonialGroups = [
     eyebrow: "Servir con amor",
     eyebrowEn: "Serving with love",
     accent: "from-blue-500 to-indigo-600",
+    photo: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`,
     icon: HeartHandshake,
     quotes: [
       {
@@ -247,6 +260,7 @@ const testimonialGroups = [
     eyebrow: "Esperanza en casa",
     eyebrowEn: "Hope at home",
     accent: "from-emerald-500 to-teal-600",
+    photo: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-08.jpeg`,
     icon: Users,
     quotes: [
       {
@@ -297,6 +311,7 @@ const testimonialGroups = [
     eyebrow: "Generosidad que multiplica",
     eyebrowEn: "Generosity that multiplies",
     accent: "from-amber-400 to-orange-500",
+    photo: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`,
     icon: HandHeart,
     quotes: [
       {
@@ -343,6 +358,8 @@ const testimonialTextEn = {
     "I joined the ministry because of my love for the principles it longs for and carries out. I am proud to be part of serving and helping under the Word of God our Lord. In that way, it makes me one more servant of the Lord, showing that God our Lord is present. Likewise, through the ministry, may the objective be fulfilled and multiplied, which makes one feel committed and devoted. Thankfully, may this reach more people who truly need it.",
   Xochil:
     "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
+  "Xochil X.":
+    "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
   "Claudia V.":
     "Since we started receiving help until now, we do not go to bed without eating. Thankfully, may God bless the founders of this noble cause.",
   "Arturo I.":
@@ -350,6 +367,8 @@ const testimonialTextEn = {
   "Araceli C.":
     "Good afternoon, Mrs. María de Lourdes. My testimony is that God sent His angels to my family when we were lacking food because of many situations, but Dr. Mónica and you were here to support us. You have helped us so much, and now our stomachs have food. Each reflection helps us feel God with us and know that He is always by our side. May God always bless you and all those angels who are supporting us. Thank you.",
   "Maria Bertha R.":
+    "Receiving the pantry package every month is like a hug to the heart. Knowing that there are people who think about us and care that we have the basics at home is priceless. It is a gesture that fills us with hope and gives us strength to keep going. I feel very fortunate to be part of this ministry family, where we all support and care for one another. It is a place where we find understanding and affection, and where we know we can count on others in difficult moments. It is an enormous blessing. Knowing that we are part of something greater and that we are not alone on this path is something I am deeply grateful for.",
+  "María Benita R.":
     "Receiving the pantry package every month is like a hug to the heart. Knowing that there are people who think about us and care that we have the basics at home is priceless. It is a gesture that fills us with hope and gives us strength to keep going. I feel very fortunate to be part of this ministry family, where we all support and care for one another. It is a place where we find understanding and affection, and where we know we can count on others in difficult moments. It is an enormous blessing. Knowing that we are part of something greater and that we are not alone on this path is something I am deeply grateful for.",
   "Concepción O.":
     "Receiving the pantry package has honestly helped me so much. I have had very difficult days, and thanks to God's blessing, which through you blesses me with sacred food, I have seen God's grace through you. Above all, I have had a lot of time to read the reflections you give me with the pantry package, and I have concluded that God's grace comes through people outside my family, and that there are still good people who seek to help their neighbor. I send you a warm hug, and may God bless you and the whole ministry. May your reward be greater than the support you give.",
@@ -368,7 +387,7 @@ const testimonialTextEn = {
   "Susana P.":
     "My mission has always been to follow the Word of God, to share, to think, and to take action in helping whoever needs it.",
   "Guillermina C.":
-    "At my age, I consider myself a person very blessed by my life and family. I am grateful to have the opportunity to collaborate with the ministry and to be able to help someone who is in need, and to contribute help toward the realization of this program. As long as I can, you can count on me. Many, many thanks and many blessings always.",
+    "At my age, I consider myself a person very blessed by my life and family. I am grateful to have the opportunity to collaborate with the ministry and to be able to help someone who is in need, and to contribute help toward the realization of this programa. As long as I can, you can count on me. Many, many thanks and many blessings always.",
   "Adelina M.":
     "Good afternoon. I want to give you a small testimony about why I became a donor. It is something I feel in my heart when I see need. I had already been doing this before: I bought pantry packages and we went out to traffic lights or streets and gave them to people we saw had the need for a pantry package. But above all, it is love, the love that Jesus places in our hearts, because we have learned biblically that it is better to give than to receive. There is also a word that says: blessing, I will bless you. This means that with one pantry package I can bless a family, and God blesses me. I also want to give that testimony: I do not contribute an amount because I have extra, but because I feel it in my heart. I wish I could contribute much more because I know there are so many people who need it, but the little I give, I give with all my heart. I have seen God's hand in my finances; God surprises me many times because I give from the heart, and God gives to me in such a way that I can see how God helps and provides for me. That is one of the reasons I became a donor, because Christ places in me both the desire and the action; it is always His will. I know His will is that those of us who have a plate of food, a secure blanket, and a roof that covers us should choose something to give to those who have nothing. God blesses us greatly because He sees the heart full of love with which we let go of what we have in order to support some families. Thank God I met Andy, and I know the Trumpet ministry is doing good work. We keep moving forward; if tomorrow I can donate a little more, I will gladly do it, because I know more and more people need to receive a pantry package so they can have a secure plate of food. That is my testimony. I hope it is useful, and may God bless all who are part of this Trumpet ministry.",
   "Ofelia R.":
@@ -396,6 +415,14 @@ const volunteerPageCopy = {
     groups: "Grupos de voluntarios",
     fiveWays: "Cinco formas de servir, una misma misión",
     chooseGroup: "Selecciona un grupo para conocer su historia",
+    exploreGroups: "Conocer a los grupos",
+    communityEyebrow: "Manos que multiplican",
+    impactMore: "Conocer más sobre su impacto",
+    impactLess: "Ocultar detalle de impacto",
+    ctaEyebrow: "Súmate a la misión",
+    ctaTitle: "Cada mano que empaca y cada oración compartida transforma un hogar",
+    ctaText:
+      "Detrás de cada despensa entregada en Tlaxcala hay estudiantes, familias, iglesias, donadores y beneficiarios sirviendo unidos por amor al prójimo.",
   },
   en: {
     testimony: "Testimony",
@@ -417,6 +444,14 @@ const volunteerPageCopy = {
     groups: "Volunteer groups",
     fiveWays: "Five ways to serve, one shared mission",
     chooseGroup: "Select a group to learn its story",
+    exploreGroups: "Explore volunteer groups",
+    communityEyebrow: "Hands that multiply hope",
+    impactMore: "Learn more about their impact",
+    impactLess: "Hide impact details",
+    ctaEyebrow: "Join the mission",
+    ctaTitle: "Every hand that packs and every shared prayer transforms a home",
+    ctaText:
+      "Behind every pantry package delivered in Tlaxcala are students, families, churches, donors, and beneficiaries serving together out of love for their neighbor.",
   },
 };
 
@@ -438,7 +473,7 @@ function getTestimonialPreview(text) {
 }
 
 // Carrusel con estado local para índice activo y reproducción automática.
-const PhotoCarousel = ({ photos }) => {
+const PhotoCarousel = ({ photos, language }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -472,8 +507,8 @@ const PhotoCarousel = ({ photos }) => {
   }, [isPlaying, totalSlides]);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-2xl">
-      <div className="relative h-[320px] overflow-hidden sm:h-[380px] lg:h-[420px] xl:h-[460px]">
+    <div className="photo-frame relative overflow-hidden bg-ink">
+      <div className="relative h-[300px] overflow-hidden sm:h-[360px] lg:h-[400px]">
         <div
           className="flex h-full transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -481,58 +516,69 @@ const PhotoCarousel = ({ photos }) => {
           {photos.map((photo, index) => (
             <div
               key={`${photo.key}-${index}`}
-              className="relative min-w-full h-full flex-shrink-0"
+              className="relative h-full min-w-full flex-shrink-0 overflow-hidden bg-ink"
             >
               <img
                 src={photo.src}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-35"
+                loading="lazy"
+              />
+              <img
+                src={photo.src}
                 alt={photo.alt || `Voluntarios ${index + 1}`}
-                className="h-full w-full object-cover object-center sm:object-[50%_35%]"
+                className="relative z-10 h-full w-full object-contain p-2"
                 loading={index === 0 ? "eager" : "lazy"}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
+              <div className="photo-overlay z-20" />
             </div>
           ))}
         </div>
 
         {/* Controles para recorrer las imágenes en ambas direcciones. */}
         <button
+          type="button"
           onClick={prevSlide}
-          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2.5 text-white backdrop-blur-sm transition hover:bg-black/70 hover:scale-110"
-          aria-label="Imagen anterior"
+          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-ink/60 p-2.5 text-white backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+          aria-label={language === "en" ? "Previous image" : "Imagen anterior"}
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={20} />
         </button>
         <button
+          type="button"
           onClick={nextSlide}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2.5 text-white backdrop-blur-sm transition hover:bg-black/70 hover:scale-110"
-          aria-label="Siguiente imagen"
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-ink/60 p-2.5 text-white backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+          aria-label={language === "en" ? "Next image" : "Siguiente imagen"}
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={20} />
         </button>
 
         {/* Indicadores sincronizados con el índice de la imagen activa. */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
           {photos.map((_, index) => (
             <button
               key={index}
+              type="button"
               onClick={() => goToSlide(index)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? "w-6 bg-amber-400"
-                  : "w-1.5 bg-white/40 hover:bg-white/60"
+                  ? "w-7 bg-ember"
+                  : "w-2 bg-white/45 hover:bg-white/75"
               }`}
-              aria-label={`Ir a imagen ${index + 1}`}
+              aria-label={`${language === "en" ? "Go to image" : "Ir a imagen"} ${index + 1}`}
             />
           ))}
         </div>
 
         {/* Permite alternar la reproducción automática del carrusel. */}
         <button
+          type="button"
           onClick={togglePlay}
-          className="absolute top-3 right-3 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
-          aria-label={isPlaying ? "Pausar" : "Reproducir"}
+          className="absolute right-3 top-3 rounded-full bg-ink/60 p-2 text-white backdrop-blur-sm transition hover:bg-ink/85"
+          aria-label={isPlaying ? (language === "en" ? "Pause" : "Pausar") : (language === "en" ? "Play" : "Reproducir")}
         >
-          {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         </button>
       </div>
     </div>
@@ -584,113 +630,130 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
 
   return (
     <>
-    <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-xl lg:ml-auto">
-      <div className="relative h-[330px] overflow-hidden sm:h-[380px] lg:h-[420px] xl:h-[450px]">
-        <img
-          src={currentPhoto.src}
-          alt={`${title} ${currentIndex + 1}`}
-          className="h-full w-full object-contain p-2"
-          loading={currentIndex === 0 ? "eager" : "lazy"}
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-5 pb-5 pt-16">
-          <p className="text-sm font-bold text-white">
-            {title}
-          </p>
-          <p className="mt-1 text-xs font-semibold text-white/65">
-            {currentIndex + 1} / {totalSlides}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={prevSlide}
-          className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75"
-          aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
-        >
-          <ChevronLeft size={23} />
-        </button>
-        <button
-          type="button"
-          onClick={nextSlide}
-          className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75"
-          aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
-        >
-          <ChevronRight size={23} />
-        </button>
-        <button
-          type="button"
-          onClick={() => setIsFullscreen(true)}
-          className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur transition hover:scale-105 hover:bg-black/75"
-          aria-label={language === "en" ? "View fullscreen" : "Ver en pantalla completa"}
-        >
-          <Maximize2 size={20} />
-        </button>
-      </div>
+      <div className="space-y-3">
+        <figure className="photo-frame relative h-[360px] w-full overflow-hidden bg-ink sm:h-[440px] lg:h-[480px]">
+          <img
+            src={currentPhoto.src}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-35"
+          />
+          <img
+            key={currentPhoto.src}
+            src={currentPhoto.src}
+            alt={`${title} ${currentIndex + 1}`}
+            className="gallery-photo-enter relative z-10 h-full w-full object-contain p-2 sm:p-4"
+            loading={currentIndex === 0 ? "eager" : "lazy"}
+          />
+          <div className="photo-overlay z-20" />
 
-      <div className="flex gap-2 overflow-x-auto border-t border-white/10 bg-slate-900 p-3">
-        {photos.map((photo, index) => (
-          <button
-            key={photo.key}
-            type="button"
-            onClick={() => goToSlide(index)}
-            className={`h-14 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition ${
-              index === currentIndex
-                ? "border-amber-400 opacity-100"
-                : "border-white/10 opacity-60 hover:opacity-90"
-            }`}
-            aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`}
-          >
-            <img
-              src={photo.src}
-              alt=""
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </button>
-        ))}
-      </div>
-    </div>
-    {isFullscreen &&
-      createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 sm:p-6">
-          <button
-            type="button"
-            onClick={() => setIsFullscreen(false)}
-            className="absolute right-4 top-4 z-20 grid h-11 w-11 place-items-center rounded-full bg-white/12 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:h-12 sm:w-12"
-            aria-label={language === "en" ? "Close fullscreen" : "Cerrar pantalla completa"}
-          >
-            <X size={26} />
-          </button>
+          <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
+            <div>
+              <p className="font-display text-lg font-semibold text-white sm:text-xl">
+                {title}
+              </p>
+              <p className="mt-0.5 text-xs font-medium text-white/75">
+                {language === "en" ? "Photo" : "Fotografía"} {currentIndex + 1} / {totalSlides}
+              </p>
+            </div>
+            <span className="rounded-full bg-white/15 px-3.5 py-1 text-xs font-bold text-white backdrop-blur-md">
+              {currentIndex + 1} / {totalSlides}
+            </span>
+          </figcaption>
+
           <button
             type="button"
             onClick={prevSlide}
-            className="absolute left-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/12 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:left-5 sm:h-14 sm:w-14"
+            className="absolute left-3.5 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
             aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={22} />
           </button>
-
-          <figure className="flex h-full max-h-[calc(100vh-5.5rem)] w-full max-w-[calc(100vw-2rem)] items-center justify-center sm:max-h-[calc(100vh-6.5rem)] sm:max-w-[calc(100vw-8rem)]">
-            <img
-              src={currentPhoto.src}
-              alt={`${title} ${currentIndex + 1}`}
-              className="max-h-full max-w-full rounded-xl object-contain shadow-2xl"
-            />
-          </figure>
-
           <button
             type="button"
             onClick={nextSlide}
-            className="absolute right-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/12 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:right-5 sm:h-14 sm:w-14"
+            className="absolute right-3.5 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
             aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
           >
-            <ChevronRight size={32} />
+            <ChevronRight size={22} />
           </button>
-          <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/12 px-4 py-2 text-sm font-bold text-white shadow-lg backdrop-blur">
-            {currentIndex + 1} / {totalSlides}
-          </div>
-        </div>,
-        document.body
-      )}
+          <button
+            type="button"
+            onClick={() => setIsFullscreen(true)}
+            className="absolute right-3.5 top-3.5 grid h-10 w-10 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+            aria-label={language === "en" ? "View fullscreen" : "Ver en pantalla completa"}
+          >
+            <Maximize2 size={18} />
+          </button>
+        </figure>
+
+        {/* Miniaturas de la galería del grupo */}
+        <div className="no-scrollbar flex gap-2.5 overflow-x-auto pb-1">
+          {photos.map((photo, index) => (
+            <button
+              key={photo.key}
+              type="button"
+              onClick={() => goToSlide(index)}
+              className={`h-16 w-20 shrink-0 overflow-hidden rounded-2xl border-2 transition duration-200 ${
+                index === currentIndex
+                  ? "border-ember shadow-md opacity-100"
+                  : "border-transparent opacity-60 hover:opacity-95"
+              }`}
+              aria-label={`${language === "en" ? "View photo" : "Ver foto"} ${index + 1}`}
+            >
+              <img
+                src={photo.src}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {isFullscreen &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md sm:p-6">
+            <button
+              type="button"
+              onClick={() => setIsFullscreen(false)}
+              className="absolute right-4 top-4 z-20 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:h-12 sm:w-12"
+              aria-label={language === "en" ? "Close fullscreen" : "Cerrar pantalla completa"}
+            >
+              <X size={24} />
+            </button>
+            <button
+              type="button"
+              onClick={prevSlide}
+              className="absolute left-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:left-5 sm:h-14 sm:w-14"
+              aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
+            >
+              <ChevronLeft size={30} />
+            </button>
+
+            <figure className="flex h-full max-h-[calc(100vh-5.5rem)] w-full max-w-[calc(100vw-2rem)] items-center justify-center sm:max-h-[calc(100vh-6.5rem)] sm:max-w-[calc(100vw-8rem)]">
+              <img
+                src={currentPhoto.src}
+                alt={`${title} ${currentIndex + 1}`}
+                className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+              />
+            </figure>
+
+            <button
+              type="button"
+              onClick={nextSlide}
+              className="absolute right-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur transition hover:bg-white/25 sm:right-5 sm:h-14 sm:w-14"
+              aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
+            >
+              <ChevronRight size={30} />
+            </button>
+            <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/15 px-4 py-2 text-sm font-bold text-white shadow-lg backdrop-blur">
+              {currentIndex + 1} / {totalSlides}
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 };
@@ -700,7 +763,7 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupTitle = language === "en" ? group.titleEn : group.title;
   const groupEyebrow = language === "en" ? group.eyebrowEn : group.eyebrow;
-  const activeQuote = group.quotes[activeIndex];
+  const activeQuote = group.quotes[activeIndex] ?? group.quotes[0];
   const activeText = getLocalizedTestimonialText(activeQuote, language);
   const previewText = getTestimonialPreview(activeText);
   const hasLongText = activeText.length > previewText.length;
@@ -715,135 +778,180 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
   };
 
   return (
-    <div className="mb-12 last:mb-0">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex min-w-0 items-center gap-4">
-          <div className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${group.accent} text-white shadow-lg`}>
-            <Icon size={24} />
+    <div className="grid items-stretch gap-8 lg:grid-cols-12">
+      {/* Tarjeta de insignia con la letra inicial del testimonio activo (sin fotografía) */}
+      <div className="relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[380px] sm:p-9 lg:col-span-5">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-ember/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -left-12 h-64 w-64 rounded-full bg-ministry-teal/20 blur-3xl" />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-8 right-4 select-none font-display text-[11rem] font-bold leading-none text-white/[0.05] sm:text-[13rem]"
+        >
+          {activeQuote.name.charAt(0).toUpperCase()}
+        </span>
+
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-ember-light ring-1 ring-white/15 backdrop-blur-md">
+            <Icon size={14} />
+            {groupEyebrow}
+          </span>
+          <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/80">
+            {activeIndex + 1} / {group.quotes.length}
+          </span>
+        </div>
+
+        <div className="relative z-10 my-6 flex flex-col items-center text-center">
+          <div
+            key={activeQuote.name}
+            className="gallery-photo-enter grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-ember via-rose-500 to-amber-500 font-display text-4xl font-bold text-white shadow-xl shadow-ember/30 ring-4 ring-white/15 sm:h-28 sm:w-28 sm:text-5xl"
+          >
+            {activeQuote.name.charAt(0).toUpperCase()}
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
-              {groupEyebrow}
-            </p>
-            <h3 className="mt-1 text-3xl font-black leading-tight text-slate-900 sm:text-4xl">{groupTitle}</h3>
+          <h3 className="mt-4 font-display text-2xl font-semibold text-white sm:text-3xl">
+            {activeQuote.name}
+          </h3>
+          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+            {groupTitle}
+          </p>
+        </div>
+
+        {/* Selector rápido por inicial de cada testimonio del grupo */}
+        <div className="relative z-10 border-t border-white/10 pt-4">
+          <p className="mb-2.5 text-center text-[0.7rem] font-bold uppercase tracking-[0.18em] text-white/60">
+            {group.quotes.length} {copy.testimonials}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {group.quotes.map((quote, index) => {
+              const isSelected = activeIndex === index;
+              return (
+                <button
+                  key={`avatar-${quote.name}`}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  title={quote.name}
+                  aria-label={quote.name}
+                  className={`grid h-9 w-9 place-items-center rounded-full font-display text-sm font-bold transition ${
+                    isSelected
+                      ? "scale-110 bg-white text-ember shadow-md ring-2 ring-ember-light"
+                      : "bg-white/10 text-white/80 hover:bg-white/25 hover:text-white"
+                  }`}
+                >
+                  {quote.name.charAt(0).toUpperCase()}
+                </button>
+              );
+            })}
           </div>
         </div>
-        <span className="w-fit rounded-full bg-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
-          {group.quotes.length} {copy.testimonials}
-        </span>
       </div>
 
-      <div className="relative mx-auto max-w-6xl py-4">
-        <div className="absolute -left-6 top-10 hidden h-72 w-72 rounded-full bg-amber-200/30 blur-3xl lg:block" />
-        <div className="absolute -right-6 bottom-0 hidden h-72 w-72 rounded-full bg-emerald-200/20 blur-3xl lg:block" />
-
-        <div className="relative grid items-center gap-6 lg:grid-cols-[220px_1fr] xl:grid-cols-[250px_1fr]">
-          <div className="relative mx-auto h-36 w-36 sm:h-44 sm:w-44 lg:h-52 lg:w-52 xl:h-56 xl:w-56">
-            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${group.accent} p-2 shadow-2xl`}>
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-5xl font-black text-slate-800 sm:text-6xl">
-                {activeQuote.name.charAt(0)}
+      {/* Tarjeta editorial del testimonio */}
+      <div className="soft-card flex flex-col justify-between lg:col-span-7">
+        <div>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/5 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-ember to-rose-500 font-display text-lg font-bold text-white shadow-sm">
+                {activeQuote.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <h4 className="font-display text-xl font-semibold text-ink">
+                  {activeQuote.name}
+                </h4>
+                <p className="text-xs font-medium text-slate-500">
+                  {groupTitle} • {copy.testimony} {activeIndex + 1} / {group.quotes.length}
+                </p>
               </div>
             </div>
-            <div className={`absolute -bottom-2 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full border-4 border-white bg-gradient-to-br ${group.accent} text-white shadow-xl sm:h-16 sm:w-16`}>
-              <Icon size={23} />
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={previous}
+                aria-label={language === "en" ? "Previous testimony" : "Testimonio anterior"}
+                className="grid h-10 w-10 place-items-center rounded-full border border-ink/15 bg-white text-ink transition hover:border-ember hover:text-ember"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label={language === "en" ? "Next testimony" : "Siguiente testimonio"}
+                className="grid h-10 w-10 place-items-center rounded-full bg-ink text-white transition hover:bg-ember"
+              >
+                <ChevronRight size={18} />
+              </button>
             </div>
           </div>
 
-          <article className="relative min-w-0 overflow-hidden rounded-3xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70 sm:p-7 lg:p-8">
-            <Quote className="absolute right-5 top-5 text-emerald-200/40" size={56} />
-            <div className="relative">
-              <div className="mb-5 flex gap-1 text-amber-400">
-                {[...Array(5)].map((_, index) => (
-                  <Star key={index} size={20} className="fill-amber-400" />
-                ))}
-              </div>
+          <div className="mt-6">
+            <Quote size={28} className="mb-3 text-ember/60" />
+            <p className="font-display text-xl italic leading-relaxed text-ink sm:text-2xl">
+              “{previewText}”
+            </p>
 
-              <p className="min-h-28 break-words text-base font-medium italic leading-7 text-slate-700 sm:text-lg sm:leading-8">
-                "{previewText}"
-              </p>
-              {hasLongText && (
-                <button
-                  type="button"
-                  className="mt-4 text-sm font-black text-blue-600 underline-offset-4 transition hover:text-emerald-600 hover:underline"
-                  onClick={() =>
-                    onOpenTestimonial({
-                      name: activeQuote.name,
-                      fullText: activeText,
-                      eyebrow: groupEyebrow,
-                      group: groupTitle,
-                    })
-                  }
-                >
-                  {copy.readFull}
-                </button>
-              )}
-
-              <div className="my-6 h-px bg-slate-200" />
-
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br ${group.accent} text-xl font-black text-white`}>
-                    {activeQuote.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-black text-slate-900">{activeQuote.name}</h4>
-                    <p className="text-sm font-semibold text-slate-500">
-                      {copy.testimony} {activeIndex + 1} / {group.quotes.length}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className={`w-fit rounded-full bg-gradient-to-r ${group.accent} px-6 py-2.5 text-sm font-black text-white shadow-lg transition hover:scale-105 hover:shadow-xl`}
-                  onClick={() =>
-                    onOpenTestimonial({
-                      name: activeQuote.name,
-                      fullText: activeText,
-                      eyebrow: groupEyebrow,
-                      group: groupTitle,
-                    })
-                  }
-                >
-                  {copy.readFull}
-                </button>
-              </div>
-            </div>
-          </article>
+            {hasLongText && (
+              <button
+                type="button"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-ember transition hover:text-ember-dark"
+                onClick={() =>
+                  onOpenTestimonial({
+                    name: activeQuote.name,
+                    fullText: activeText,
+                    eyebrow: groupEyebrow,
+                    group: groupTitle,
+                  })
+                }
+              >
+                {copy.readFull}
+                <ChevronRight size={16} />
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="mx-auto mt-8 flex w-fit items-center gap-4 rounded-full border border-slate-100 bg-white px-5 py-3 shadow-xl shadow-slate-200/60">
-          <button
-            type="button"
-            className="grid h-11 w-11 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-blue-600"
-            onClick={previous}
-          >
-            <ChevronLeft size={22} />
-          </button>
+        {/* Selector directo de personas dentro del grupo con ícono de inicial */}
+        <div className="mt-8 border-t border-ink/5 pt-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap gap-1.5">
+              {group.quotes.map((quote, index) => (
+                <button
+                  key={quote.name}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  className={`inline-flex items-center gap-2 rounded-full py-1 pl-1.5 pr-3.5 text-xs font-bold transition ${
+                    activeIndex === index
+                      ? "bg-ink text-white shadow-sm"
+                      : "bg-cream text-slate-600 hover:bg-sand hover:text-ink"
+                  }`}
+                >
+                  <span
+                    className={`grid h-5 w-5 place-items-center rounded-full text-[0.65rem] font-bold ${
+                      activeIndex === index
+                        ? "bg-ember text-white"
+                        : "bg-ink/10 text-ink"
+                    }`}
+                  >
+                    {quote.name.charAt(0).toUpperCase()}
+                  </span>
+                  {quote.name}
+                </button>
+              ))}
+            </div>
 
-          <div className="flex items-center gap-2">
-            {group.quotes.map((quote, index) => (
-              <button
-                key={quote.name}
-                type="button"
-                className={[
-                  "h-2.5 rounded-full transition-all",
-                  activeIndex === index
-                    ? "w-8 bg-emerald-500"
-                    : "w-2.5 bg-slate-200 hover:bg-amber-400",
-                ].join(" ")}
-                onClick={() => setActiveIndex(index)}
-              />
-            ))}
+            <button
+              type="button"
+              className="btn-secondary !px-5 !py-2 text-xs"
+              onClick={() =>
+                onOpenTestimonial({
+                  name: activeQuote.name,
+                  fullText: activeText,
+                  eyebrow: groupEyebrow,
+                  group: groupTitle,
+                })
+              }
+            >
+              {copy.readFull}
+            </button>
           </div>
-
-          <button
-            type="button"
-            className="grid h-11 w-11 place-items-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-blue-600"
-            onClick={next}
-          >
-            <ChevronRight size={22} />
-          </button>
         </div>
       </div>
     </div>
@@ -854,51 +962,61 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
 const TestimonialModal = ({ testimonial, onClose, copy }) => {
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
-    window.addEventListener('keydown', handleEsc);
-    document.body.style.overflow = 'hidden';
+    window.addEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden";
     return () => {
-      window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'unset';
+      window.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "unset";
     };
   }, [onClose]);
 
-  return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-sm">
-      <article className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-white shadow-2xl">
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-slate-200 bg-white p-6 rounded-t-3xl">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-ink/80 px-4 py-6 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <article
+        className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-ink/10 bg-white/95 px-6 py-5 backdrop-blur">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-emerald-600">
-              {testimonial.eyebrow} / {testimonial.group}
-            </p>
-            <h3 className="mt-1 text-2xl font-black text-slate-900">
+            <span className="kicker">
+              {testimonial.eyebrow} • {testimonial.group}
+            </span>
+            <h3 className="mt-1 font-display text-2xl font-semibold text-ink sm:text-3xl">
               {testimonial.name}
             </h3>
           </div>
           <button
             type="button"
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-slate-200"
+            aria-label={copy.closeTestimony}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-cream text-ink transition hover:bg-sand"
             onClick={onClose}
           >
             <X size={20} />
           </button>
         </div>
         <div className="p-6 sm:p-8">
-          <Quote className="mb-4 text-emerald-200/40" size={40} />
-          <p className="whitespace-pre-line text-lg font-medium leading-8 text-slate-700">
-            "{testimonial.fullText}"
+          <Quote className="mb-4 text-ember/50" size={34} />
+          <p className="whitespace-pre-line font-display text-lg italic leading-8 text-ink/90 sm:text-xl">
+            “{testimonial.fullText}”
           </p>
-          <button
-            type="button"
-            className="mt-8 rounded-full bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-3 text-sm font-black text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
-            onClick={onClose}
-          >
-            {copy.close}
-          </button>
+          <div className="mt-8 flex justify-end border-t border-ink/5 pt-5">
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={onClose}
+            >
+              {copy.close}
+            </button>
+          </div>
         </div>
       </article>
-    </div>
+    </div>,
+    document.body
   );
 };
 
@@ -907,6 +1025,8 @@ export default function Volunteers() {
   const copy = volunteerPageCopy[language] ?? volunteerPageCopy.es;
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(volunteerGroups[0]);
+  const [showGroupImpact, setShowGroupImpact] = useState(false);
+  const [activeTestimonialCategory, setActiveTestimonialCategory] = useState(0);
 
   const getGroupContent = (group) => {
     const isEn = language === "en";
@@ -920,83 +1040,200 @@ export default function Volunteers() {
   };
 
   const content = getGroupContent(selectedGroup);
+  const ActiveGroupIcon = selectedGroup.icon;
+  const activeTestimonialGroup =
+    testimonialGroups[activeTestimonialCategory] ?? testimonialGroups[0];
 
   return (
     <>
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative overflow-hidden bg-slate-900 text-white">
-        <div className="absolute inset-0">
-          <img
-            src={`${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`}
-            alt="Voluntarios"
-            className="h-full w-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-blue-900/50" />
-        </div>
-        <div className="section-shell relative grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-amber-400 backdrop-blur">
-              <HeartHandshake size={16} />
-              {t("volunteers.carouselLabel")}
+      {/* ===== HERO DIVIDIDO: HISTORIA Y ROSTROS COMPLETOS ===== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white">
+        <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-ember/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-teal/15 blur-3xl" />
+
+        <div className="section-shell relative z-10 w-full py-12 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="motion-rise lg:col-span-6">
+              <span className="kicker kicker-light">
+                <HeartHandshake size={15} />
+                {t("volunteers.carouselLabel")}
+              </span>
+
+              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-white sm:text-5xl lg:text-6xl">
+                {t("volunteers.title")}
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/85 sm:text-xl">
+                {t("volunteers.text")}
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <a href="#grupos" className="btn-primary">
+                  <Users size={16} />
+                  {copy.exploreGroups}
+                </a>
+                <a href="#testimonios" className="btn-ghost-light">
+                  <MessageSquareHeart size={16} />
+                  {copy.voices}
+                </a>
+              </div>
+
+              {/* Cifras rápidas en la base del hero */}
+              <div className="mt-10 grid gap-6 border-t border-white/15 pt-7 sm:grid-cols-3">
+                <div>
+                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">48</p>
+                  <p className="mt-1 text-xs font-medium text-white/75 sm:text-sm">
+                    {language === "en" ? "Active volunteers" : "Voluntarios activos"}
+                  </p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-semibold text-ember-light sm:text-4xl">5</p>
+                  <p className="mt-1 text-xs font-medium text-white/75 sm:text-sm">
+                    {language === "en" ? "Volunteer groups" : "Grupos de voluntarios"}
+                  </p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
+                    {testimonialGroups.reduce((acc, g) => acc + g.quotes.length, 0)}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-white/75 sm:text-sm">
+                    {copy.voices}
+                  </p>
+                </div>
+              </div>
             </div>
-            <h1 className="mt-6 text-4xl font-black leading-tight sm:text-6xl lg:text-7xl">
-              {t("volunteers.title")}
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">
-              {t("volunteers.text")}
-            </p>
+
+            <div className="lg:col-span-6">
+              <figure className="photo-frame aspect-[4/3] w-full shadow-2xl ring-1 ring-white/15">
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`}
+                  alt={t("volunteers.title")}
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="photo-overlay" />
+                <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white">
+                  {t("volunteers.carouselLabel")}
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== MOSAICO VISUAL Y ESPÍRITU DE RECIPROCIDAD ===== */}
+      <section className="section-shell bg-cream">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="reveal grid gap-4 sm:grid-cols-12">
+            <figure className="photo-frame h-80 sm:col-span-7 sm:h-[430px]">
+              <img
+                src={featuredVolunteerPhotos[0]?.src}
+                alt={t("volunteers.photoLabels.teamBags")}
+                loading="lazy"
+              />
+              <div className="photo-overlay" />
+              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
+                {t("volunteers.galleryTitle")}
+              </figcaption>
+            </figure>
+
+            <div className="grid gap-4 sm:col-span-5">
+              <figure className="photo-frame h-52 sm:h-[207px]">
+                <img
+                  src={featuredVolunteerPhotos[1]?.src}
+                  alt={t("volunteers.photoLabels.youngTeam")}
+                  loading="lazy"
+                />
+              </figure>
+              <figure className="photo-frame h-52 sm:h-[207px]">
+                <img
+                  src={featuredVolunteerPhotos[2]?.src}
+                  alt={t("volunteers.photoLabels.bagFilling")}
+                  loading="lazy"
+                />
+              </figure>
+            </div>
           </div>
 
-          {/* Galería destacada de la página de voluntariado. */}
-          <div>
-            <PhotoCarousel photos={featuredVolunteerPhotos} />
+          <div className="reveal space-y-6">
+            <span className="kicker">{copy.communityEyebrow}</span>
+            <h2 className="title-lg">{t("volunteers.galleryTitle")}</h2>
+            <p className="lead">{t("volunteers.placeholder")}</p>
+
+            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
+              <Sparkles size={20} className="mb-2 text-ember" />
+              <p className="font-display text-lg italic leading-snug text-ink sm:text-xl">
+                {t("volunteers.reciprocalText")}
+              </p>
+            </blockquote>
+
+            <div className="pt-1">
+              <PhotoCarousel photos={volunteerPhotos} language={language} />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===== GRUPOS DE VOLUNTARIOS ===== */}
-      <section id="grupos" className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-slate-50/50 to-white">
+      <section id="grupos" className="section-shell scroll-mt-28 bg-white">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-blue-700 border border-blue-200">
-              <Users size={15} />
-              {copy.groups}
+          <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <span className="kicker">{copy.groups}</span>
+              <h2 className="title-lg mt-3">{copy.fiveWays}</h2>
             </div>
-            <h2 className="mt-6 text-4xl font-black text-slate-900 sm:text-5xl">
-              {copy.fiveWays}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="max-w-md text-base leading-7 text-slate-600">
               {copy.chooseGroup}
             </p>
           </div>
 
-          {/* Selector que determina el contenido de la sección siguiente. */}
-          <div className="grid gap-3 md:grid-cols-5 mb-8">
+          {/* Tarjetas selectoras de grupo con miniatura fotográfica */}
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {volunteerGroups.map((group) => {
               const Icon = group.icon;
               const isActive = group.id === selectedGroup.id;
               const groupTitle = language === "en" ? group.titleEn : group.title;
+              const coverPhoto = group.photos[0]?.src;
 
               return (
                 <button
                   key={group.id}
                   type="button"
-                  onClick={() => setSelectedGroup(group)}
-                  className={`group relative overflow-hidden rounded-2xl border p-4 text-left transition-all duration-300 hover:-translate-y-1 ${
+                  onClick={() => {
+                    setSelectedGroup(group);
+                    setShowGroupImpact(false);
+                  }}
+                  aria-pressed={isActive}
+                  className={`group relative flex items-center gap-3.5 overflow-hidden rounded-2xl border p-3 text-left transition duration-300 hover:-translate-y-0.5 ${
                     isActive
-                      ? `border-${group.color.split(' ')[0].replace('from-', '')} bg-slate-900 text-white shadow-xl`
-                      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:shadow-md'
+                      ? "border-ink bg-ink text-white shadow-soft"
+                      : "border-ink/10 bg-cream/60 text-ink hover:border-ember/40 hover:bg-white"
                   }`}
                 >
-                  <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${group.color} ${isActive ? '' : 'opacity-0 group-hover:opacity-100'}`} />
-                  <div className={`flex items-center gap-3 ${isActive ? '' : ''}`}>
-                    <div className={`grid h-10 w-10 place-items-center rounded-xl transition ${
-                      isActive ? 'bg-white/15 text-amber-400' : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
-                    }`}>
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                    <img
+                      src={coverPhoto}
+                      alt=""
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-ink/35 text-white">
                       <Icon size={18} />
                     </div>
-                    <span className={`text-sm font-bold leading-tight ${isActive ? 'text-white' : 'text-slate-700'}`}>
+                  </div>
+                  <div className="min-w-0">
+                    <span
+                      className={`block text-sm font-bold leading-snug ${
+                        isActive ? "text-white" : "text-ink"
+                      }`}
+                    >
                       {groupTitle}
+                    </span>
+                    <span
+                      className={`mt-1 block text-xs ${
+                        isActive ? "text-ember-light" : "text-slate-500"
+                      }`}
+                    >
+                      {group.photos.length} {language === "en" ? "photos" : "fotos"}
                     </span>
                   </div>
                 </button>
@@ -1004,126 +1241,236 @@ export default function Volunteers() {
             })}
           </div>
 
-          {/* Detalle derivado del grupo activo en el selector. */}
-          <div className="overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-100">
-            <div className={`bg-gradient-to-r ${selectedGroup.color} p-6 md:p-8 text-white`}>
-              <div className="flex items-center gap-4">
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-white/20 text-2xl">
-                  <selectedGroup.icon size={28} />
-                </div>
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-white/70">
-                    {language === "en" ? "Volunteer Group" : "Grupo de voluntarios"}
-                  </p>
-                  <h3 className="text-2xl md:text-3xl font-black">{content.title}</h3>
-                </div>
-              </div>
+          {/* Panel principal del grupo seleccionado con fotografía protagonista */}
+          <div
+            id={selectedGroup.id}
+            className="mt-8 grid items-start gap-8 rounded-[2rem] border border-ink/5 bg-cream p-6 shadow-soft sm:p-8 lg:grid-cols-12 lg:p-10"
+          >
+            {/* Galería grande a la izquierda/derecha */}
+            <div className="lg:col-span-7">
+              <GroupPhotoCarousel
+                photos={selectedGroup.photos}
+                title={content.title}
+                language={language}
+              />
             </div>
 
-            <div className="p-6 md:p-8">
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,0.95fr)] xl:grid-cols-[minmax(0,1.1fr)_minmax(440px,0.9fr)]">
-                <div>
-                  <p className="text-lg font-medium text-slate-700 leading-relaxed">
-                    {content.subtitle}
-                  </p>
-                  <p className="mt-4 text-slate-600 leading-relaxed">
-                    {content.description}
-                  </p>
-                  <div className="mt-6 rounded-2xl bg-slate-50 p-5 border border-slate-100">
-                    <p className="text-sm font-semibold text-slate-700">
-                      <span className="text-emerald-600">✦</span> {content.impact}
+            {/* Información editorial del grupo con divulgación progresiva */}
+            <div className="flex flex-col justify-between space-y-6 lg:col-span-5">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-ember/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-ember">
+                  <ActiveGroupIcon size={15} />
+                  {language === "en" ? "Volunteer Group" : "Grupo de voluntarios"}
+                </div>
+
+                <h3 className="mt-4 font-display text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+                  {content.title}
+                </h3>
+
+                <p className="mt-2 font-display text-lg italic text-ember-dark">
+                  {content.subtitle}
+                </p>
+
+                <p className="mt-5 text-base leading-7 text-slate-600">
+                  {content.description}
+                </p>
+
+                {/* Etiquetas clave */}
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {content.stats.map((stat) => (
+                    <span
+                      key={stat}
+                      className="rounded-full border border-ink/10 bg-white px-4 py-1.5 text-xs font-bold text-ink shadow-sm"
+                    >
+                      {stat}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Divulgación progresiva del texto de impacto para no saturar */}
+                <div className="mt-6 border-t border-ink/10 pt-5">
+                  <button
+                    type="button"
+                    onClick={() => setShowGroupImpact((prev) => !prev)}
+                    className="inline-flex items-center gap-2 text-sm font-bold text-ember transition hover:text-ember-dark"
+                  >
+                    <span>{showGroupImpact ? copy.impactLess : copy.impactMore}</span>
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-300 ${
+                        showGroupImpact ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {showGroupImpact && (
+                    <div className="mt-4 rounded-2xl border border-ink/5 bg-white p-5 shadow-sm">
+                      <p className="text-sm leading-7 text-slate-700">
+                        {content.impact}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-white p-5 border border-ink/5">
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  {t("volunteers.gallery")}
+                </p>
+                <p className="mt-1 text-sm text-slate-600">
+                  {t("volunteers.galleryIntro")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== TESTIMONIOS (CON PESTAÑAS POR CATEGORÍA PARA EVITAR SATURACIÓN) ===== */}
+      <section id="testimonios" className="section-shell scroll-mt-28 bg-sand/60">
+        <div className="mx-auto max-w-7xl">
+          <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <span className="kicker">
+                <MessageSquareHeart size={14} />
+                {copy.voices}
+              </span>
+              <h2 className="title-lg mt-3">{copy.title}</h2>
+              <p className="mt-3 text-base leading-7 text-slate-600">
+                {copy.intro}
+              </p>
+            </div>
+
+            {/* Pestañas para alternar entre Voluntarios, Beneficiarios y Donadores */}
+            <div className="inline-flex flex-wrap gap-1.5 rounded-full bg-cream p-1.5 shadow-sm">
+              {testimonialGroups.map((group, idx) => {
+                const Icon = group.icon;
+                const isSelected = activeTestimonialCategory === idx;
+                const label = language === "en" ? group.titleEn : group.title;
+                return (
+                  <button
+                    key={group.title}
+                    type="button"
+                    onClick={() => setActiveTestimonialCategory(idx)}
+                    className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition ${
+                      isSelected
+                        ? "bg-ink text-white shadow-sm"
+                        : "text-slate-600 hover:text-ink"
+                    }`}
+                  >
+                    <Icon size={16} />
+                    <span>{label}</span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs ${
+                        isSelected ? "bg-white/20 text-white" : "bg-sand text-slate-600"
+                      }`}
+                    >
+                      {group.quotes.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <TestimonialGroup
+              key={activeTestimonialGroup.title}
+              group={activeTestimonialGroup}
+              copy={copy}
+              language={language}
+              onOpenTestimonial={setSelectedTestimonial}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== IMPACTO EN NÚMEROS (SECCIÓN OSCURA DE IMPACTO) ===== */}
+      <section className="section-shell bg-ink text-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <span className="kicker kicker-light">
+                <TrendingUp size={14} />
+                {language === "en" ? "Impact in numbers" : "Impacto en números"}
+              </span>
+              <h2 className="mt-3 font-display text-3xl font-semibold text-white sm:text-4xl">
+                {language === "en" ? "The ministry in figures" : "El ministerio en cifras"}
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-7 text-white/80">
+                {t("volunteers.placeholder")}
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2">
+              {[
+                {
+                  value: "48",
+                  label: language === "en" ? "Active volunteers" : "Voluntarios activos",
+                  icon: HeartHandshake,
+                },
+                {
+                  value: "5",
+                  label: language === "en" ? "Volunteer groups" : "Grupos de voluntarios",
+                  icon: Church,
+                },
+              ].map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={stat.label}
+                    className="rounded-[1.5rem] border border-white/10 bg-white/5 p-7 backdrop-blur-sm"
+                  >
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/20 text-ember-light">
+                      <Icon size={22} />
+                    </div>
+                    <p className="font-display text-5xl font-semibold text-white">
+                      {stat.value}
+                    </p>
+                    <p className="mt-2 text-sm font-medium text-white/75">
+                      {stat.label}
                     </p>
                   </div>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                    {content.stats.map((stat) => (
-                      <div key={stat} className="rounded-xl bg-slate-50 p-4 text-center border border-slate-100">
-                        <p className="text-sm font-bold text-slate-800">{stat}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
 
-                {/* Fotografías asociadas al grupo activo. */}
-                <div>
-                  <p className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">
-                    {language === "en" ? "Gallery" : "Galería"}
-                  </p>
-                  <GroupPhotoCarousel
-                    photos={selectedGroup.photos}
-                    title={content.title}
-                    language={language}
-                  />
-                  <p className="mt-3 text-xs text-slate-400 text-center">
-                    {selectedGroup.photos.length} {language === "en" ? "photos" : "fotos"}
-                  </p>
-                </div>
+      {/* ===== LLAMADO EMOCIONAL FINAL ===== */}
+      <section className="section-shell bg-cream">
+        <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#0D2B52] to-ink text-white shadow-photo">
+          <div className="grid items-center gap-8 p-6 sm:p-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <span className="kicker kicker-light">{copy.ctaEyebrow}</span>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
+                {copy.ctaTitle}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">
+                {copy.ctaText}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a href="#grupos" className="btn-primary">
+                  <Users size={16} />
+                  {copy.exploreGroups}
+                </a>
+                <Link to="/misiones" className="btn-ghost-light">
+                  {t("nav.hospital")}
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TESTIMONIOS ===== */}
-      <section id="testimonios" className="section-shell scroll-mt-28 bg-gradient-to-b from-white via-emerald-50/30 to-white">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-5 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-emerald-700 border border-emerald-200">
-              <MessageSquareHeart size={15} />
-              {copy.voices}
+            <div className="lg:col-span-5">
+              <figure className="photo-frame aspect-[4/3] w-full ring-1 ring-white/15">
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-13.jpeg`}
+                  alt={copy.ctaTitle}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="photo-overlay" />
+              </figure>
             </div>
-            <h2 className="mt-6 text-4xl font-black text-slate-900 sm:text-5xl">
-              {copy.title}
-            </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-              {copy.intro}
-            </p>
-          </div>
-
-          <div className="rounded-3xl bg-white/80 backdrop-blur-sm border border-slate-100 p-6 shadow-xl sm:p-8">
-            {testimonialGroups.map((group) => (
-              <TestimonialGroup
-                key={group.title}
-                group={group}
-                copy={copy}
-                language={language}
-                onOpenTestimonial={setSelectedTestimonial}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== STATS SECTION ===== */}
-      <section className="section-shell bg-slate-900">
-        <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-amber-400 border border-white/10">
-              <TrendingUp size={15} />
-              {language === "en" ? "Impact in numbers" : "Impacto en números"}
-            </span>
-            <h2 className="mt-4 text-3xl font-black text-white sm:text-4xl">
-              {language === "en" ? "The ministry in figures" : "El ministerio en cifras"}
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              { value: "48", label: language === "en" ? "Active volunteers" : "Voluntarios activos", icon: HeartHandshake },
-              { value: "5", label: language === "en" ? "Volunteer groups" : "Grupos de voluntarios", icon: Church },
-            ].map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={stat.label}
-                  className="group rounded-2xl bg-white/10 p-6 text-center backdrop-blur-sm border border-white/10 transition hover:bg-white/15 hover:scale-105"
-                >
-                  <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400/20 text-amber-400">
-                    <Icon size={24} />
-                  </div>
-                  <p className="text-4xl font-black text-white">{stat.value}</p>
-                  <p className="mt-1 text-sm font-semibold text-white/60">{stat.label}</p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>
@@ -1136,7 +1483,6 @@ export default function Volunteers() {
           copy={copy}
         />
       )}
-
     </>
   );
 }

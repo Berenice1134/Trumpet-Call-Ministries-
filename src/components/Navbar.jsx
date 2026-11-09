@@ -153,7 +153,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink/5 bg-cream/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-2 sm:px-6 lg:px-8">
         
         {/* Mantiene el logotipo visible en móvil y oculta el nombre cuando falta espacio horizontal. */}
@@ -186,7 +186,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => navigate(group.path)}
-                className={`inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-white hover:text-ember ${isCurrent ? "text-ember" : "text-slate-700"}`}
+                className={`inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold transition hover:bg-slate-100 hover:text-ember ${isCurrent ? "bg-rose-50 text-ember" : "text-slate-700"}`}
               >
                 {group.label}
                 <ChevronDown
@@ -195,7 +195,7 @@ export default function Navbar() {
                 />
               </button>
               <div className="pointer-events-none absolute left-0 top-full min-w-64 translate-y-2 pt-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
-                <div className="rounded-2xl border border-ink/5 bg-white p-2 shadow-soft">
+                <div className="rounded-2xl border border-slate-200/80 bg-white p-2 shadow-soft">
                 {group.items.map((item) => (
                   <a
                     key={item.id}
@@ -203,7 +203,7 @@ export default function Navbar() {
                     onClick={(event) =>
                       handleAnchorClick(event, group.path, item.id)
                     }
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-cream hover:text-ember"
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-rose-50 hover:text-ember"
                   >
                     {item.label}
                   </a>
@@ -215,27 +215,43 @@ export default function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center gap-2">
-          <select
+        <div className="flex items-center gap-2.5">
+          {/* Selector de idioma moderno tipo píldora segmentada (sin <select> nativo) */}
+          <div
+            role="group"
             aria-label="Language selector"
-            className="rounded-full border border-ink/10 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/20"
-            value={language}
-            onChange={(event) => setLanguage(event.target.value)}
+            className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 p-0.5"
           >
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-          </select>
+            {["es", "en"].map((lang) => {
+              const active = language === lang;
+              return (
+                <button
+                  key={lang}
+                  type="button"
+                  onClick={() => setLanguage(lang)}
+                  aria-pressed={active}
+                  className={`rounded-full px-2.5 py-1 text-xs font-bold uppercase transition ${
+                    active
+                      ? "bg-ink text-white shadow-sm"
+                      : "text-slate-600 hover:text-ink"
+                  }`}
+                >
+                  {lang}
+                </button>
+              );
+            })}
+          </div>
           <NavLink
             to="/donaciones#donaciones"
             onClick={() => setIsOpen(false)}
-            className="hidden items-center gap-1.5 rounded-full bg-ember px-4 py-2 text-sm font-bold text-white shadow-md shadow-ember/30 transition hover:bg-ember-dark sm:inline-flex"
+            className="hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-4 py-2 text-sm font-bold text-white shadow-md shadow-ember/25 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ember/35 sm:inline-flex"
           >
             <Heart size={15} className="fill-white" />
             {t("common.donateNow")}
           </NavLink>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-ink/10 bg-white text-slate-700 lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 lg:hidden"
             aria-label={t("nav.menu")}
             onClick={() => setIsOpen((value) => !value)}
           >

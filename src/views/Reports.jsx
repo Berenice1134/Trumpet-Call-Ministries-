@@ -78,10 +78,61 @@ const donorSources2026 = [
 ];
 
 const hospitalDonationMix = [
-  { key: "hygieneKits", value: 43, color: "from-ink to-ministry-blue", hex: "#0A1E3C", icon: PackageCheck, description: "Kits de higiene personal" },
-  { key: "pajamas", value: 18, color: "from-ministry-teal to-teal-600", hex: "#06B6D4", icon: Heart, description: "Pijamas para niños" },
-  { key: "sandals", value: 6, color: "from-amber-400 to-amber-600", hex: "#F59E0B", icon: ClipboardList, description: "Chanclas y calzado" },
-  { key: "activities", value: 33, color: "from-ember to-ember-dark", hex: "#E11D48", icon: Sparkles, description: "Actividades recreativas" },
+  {
+    key: "hygieneKits",
+    value: 29.9,
+    color: "from-violet-600 to-purple-700",
+    hex: "#7C3AED",
+    icon: PackageCheck,
+    description: {
+      es: "Kits de higiene y aseo personal para pacientes",
+      en: "Personal hygiene kits for patients",
+    },
+  },
+  {
+    key: "medicalSupplies",
+    value: 25.52,
+    color: "from-ember to-ember-dark",
+    hex: "#E11D48",
+    icon: ClipboardList,
+    description: {
+      es: "Insumos y material médico para tratamiento",
+      en: "Medical supplies for treatment",
+    },
+  },
+  {
+    key: "treatmentClothing",
+    value: 17.95,
+    color: "from-ministry-blue to-sky-600",
+    hex: "#0284C7",
+    icon: Heart,
+    description: {
+      es: "Pijamas, ropa cómoda y calzado para sesiones en el hospital",
+      en: "Comfortable treatment clothing and footwear for hospital sessions",
+    },
+  },
+  {
+    key: "pantry",
+    value: 14.4,
+    color: "from-amber-400 to-amber-600",
+    hex: "#F59E0B",
+    icon: HandHeart,
+    description: {
+      es: "Apoyo alimentario y despensa para las familias",
+      en: "Food support and pantry bags for families",
+    },
+  },
+  {
+    key: "activities",
+    value: 12.4,
+    color: "from-emerald-500 to-teal-600",
+    hex: "#10B981",
+    icon: Sparkles,
+    description: {
+      es: "Actividades recreativas y acompañamiento a los niños",
+      en: "Recreational activities and companionship for children",
+    },
+  },
 ];
 
 const missionDonations = [
@@ -182,9 +233,10 @@ const reportsCopy = {
       kermes: "Kermés",
     },
     hospitalLabels: {
-      hygieneKits: "Kits de aseo",
-      pajamas: "Pijamas",
-      sandals: "Chanclas",
+      hygieneKits: "Kits de aseo personal",
+      medicalSupplies: "Material Médico",
+      treatmentClothing: "Ropa de tratamiento",
+      pantry: "Despensa",
       activities: "Actividades",
     },
     pdfTitle: "Infografías por periodo",
@@ -245,9 +297,10 @@ const reportsCopy = {
       kermes: "Kermés",
     },
     hospitalLabels: {
-      hygieneKits: "Hygiene kits",
-      pajamas: "Pajamas",
-      sandals: "Sandals",
+      hygieneKits: "Personal hygiene kits",
+      medicalSupplies: "Medical supplies",
+      treatmentClothing: "Treatment clothing",
+      pantry: "Pantry",
       activities: "Activities",
     },
     pdfTitle: "Infographics by period",
@@ -1061,7 +1114,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
 }
 
 // ===== DONUT CHART =====
-function DonutChart({ title, items, labels, expandLabel }) {
+function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const total = items.reduce((sum, item) => sum + item.value, 0);
   const radius = 42;
@@ -1074,6 +1127,11 @@ function DonutChart({ title, items, labels, expandLabel }) {
   // El centro muestra la sección seleccionada; si no hay selección, la más grande.
   const focusItem = selectedItem ?? largest;
   const FocusIcon = focusItem.icon;
+  const selectedDescription = selectedItem
+    ? typeof selectedItem.description === "object"
+      ? selectedItem.description[language] ?? selectedItem.description.es
+      : selectedItem.description
+    : "";
 
   let acc = 0;
   const segments = items.map((item) => {
@@ -1089,8 +1147,9 @@ function DonutChart({ title, items, labels, expandLabel }) {
         <svg viewBox="0 0 100 100" className="-rotate-90">
           <circle cx="50" cy="50" r="40" fill="none" stroke="#F3EADF" strokeWidth="14" />
           {items.map((item, i) => {
-            const before = items.slice(0, i).reduce((s, d) => s + d.value, 0);
-            const after = before + item.value;
+            const before =
+              (items.slice(0, i).reduce((s, d) => s + d.value, 0) / total) * 100;
+            const segPct = (item.value / total) * 100;
             return (
               <circle
                 key={item.key}
@@ -1101,7 +1160,7 @@ function DonutChart({ title, items, labels, expandLabel }) {
                 stroke={item.hex}
                 strokeWidth="14"
                 pathLength="100"
-                strokeDasharray={`${Math.max(0, after - before - 1.5)} 100`}
+                strokeDasharray={`${Math.max(0, segPct - 1.2)} 100`}
                 strokeDashoffset={-before}
                 className="transition-all duration-500"
               />
@@ -1114,7 +1173,7 @@ function DonutChart({ title, items, labels, expandLabel }) {
           </span>
         </span>
       </span>
-      <span className="flex min-w-0 flex-1 flex-col gap-2">
+      <span className="flex min-w-0 flex-1 flex-col gap-1.5">
         {items.map((item) => (
           <span key={item.key} className="flex items-center gap-2">
             <span
@@ -1136,7 +1195,7 @@ function DonutChart({ title, items, labels, expandLabel }) {
   return (
     <ChartShell
       title={title}
-      subtitle={`${total}%`}
+      subtitle="100%"
       icon={PieChart}
       preview={preview}
       expandLabel={expandLabel}
@@ -1155,11 +1214,16 @@ function DonutChart({ title, items, labels, expandLabel }) {
               <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 {labels[selectedItem.key]}
               </p>
-              <p className="font-display text-2xl font-semibold text-ember">{selectedItem.value}%</p>
+              <p
+                className="font-display text-2xl font-semibold"
+                style={{ color: selectedItem.hex }}
+              >
+                {selectedItem.value}%
+              </p>
             </div>
             <div className="max-w-[55%] text-right">
               <p className="text-sm font-medium text-slate-700">
-                {selectedItem.description || "—"}
+                {selectedDescription || "—"}
               </p>
             </div>
             <button
@@ -1235,7 +1299,7 @@ function DonutChart({ title, items, labels, expandLabel }) {
                 >
                   <div className="flex items-center justify-between gap-4">
                     <span className="flex items-center gap-3 text-sm font-bold text-ink">
-                      <Icon size={16} className="text-ember" />
+                      <Icon size={16} style={{ color: item.hex }} />
                       {labels[item.key]}
                     </span>
                     <span className="font-display text-lg font-semibold text-ink">{item.value}%</span>
@@ -1383,154 +1447,40 @@ export default function Reports() {
 
   return (
     <>
-      {/* ========== HERO DIVIDIDO: CIFRAS CON ROSTRO HUMANO COMPLETO ========== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] text-white">
-        <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-ember/20 blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-teal/15 blur-3xl" />
-
-        <div className="section-shell relative z-10 w-full py-12 lg:py-20">
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="motion-rise lg:col-span-7">
-              <span className="kicker kicker-light">{copy.eyebrow}</span>
-              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-white sm:text-5xl lg:text-6xl">
-                {t("reports.title")}
-              </h1>
-              <p className="mt-5 font-display text-xl italic text-ember-light sm:text-2xl">
-                “{copy.heroQuote}”
-              </p>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-white/85 sm:text-lg">
-                {copy.intro}
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a href="#graficos-ministerio" className="btn-primary">
-                  {copy.heroCtaCharts}
-                  <ChevronDown size={18} />
-                </a>
-                <a href="#pdf-institucional" className="btn-ghost-light">
-                  <FileText size={16} />
-                  {copy.heroCtaPdfs}
-                </a>
-              </div>
-
-              {/* Cifras humanas destacadas sobre la portada */}
-              <div className="mt-10 grid gap-6 border-t border-white/15 pt-7 sm:grid-cols-3">
-                <button
-                  type="button"
-                  onClick={() => handleStatClick("pantries")}
-                  className="group text-left transition hover:opacity-95"
-                >
-                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
-                    {formatNumber(totalPantries)}
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
-                    {copy.stats.pantries} (2021–2026) →
-                  </p>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleStatClick("food")}
-                  className="group text-left transition hover:opacity-95"
-                >
-                  <p className="font-display text-3xl font-semibold text-ember-light sm:text-4xl">
-                    {formatNumber(totalFoodKg / 1000, 1)} t
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
-                    {copy.tonsDelivered} ({formatNumber(totalFoodKg, 2)} kg) →
-                  </p>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleStatClick("beneficiaries")}
-                  className="group text-left transition hover:opacity-95"
-                >
-                  <p className="font-display text-3xl font-semibold text-white sm:text-4xl">
-                    {formatNumber(totalBeneficiaries)}
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-white/80 group-hover:text-ember-light sm:text-sm">
-                    {copy.stats.beneficiaries} →
-                  </p>
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5">
-              <figure className="photo-frame mx-auto max-w-md aspect-[3/4] shadow-2xl ring-1 ring-white/15">
-                <img
-                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
-                  alt={
-                    language === "en"
-                      ? "Ministry pantry delivery and family accompaniment in Tlaxcala"
-                      : "Entrega de despensa y acompañamiento familiar en Tlaxcala"
-                  }
-                  className="h-full w-full object-cover object-top"
-                />
-                <div className="photo-overlay" />
-                <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white">
-                  {copy.tenTons} · 2021–2026
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========== GRÁFICOS DEL MINISTERIO ========== */}
+      {/* ========== GRÁFICOS DEL MINISTERIO (PROTAGONISTA DESDE EL INICIO) ========== */}
       <section
         id="graficos-ministerio"
-        className="section-shell scroll-mt-28 bg-cream"
+        className="section-shell scroll-mt-28 bg-cream pt-10 sm:pt-14"
       >
         <div className="mx-auto max-w-7xl">
-          {/* Intro humana con fotografía */}
-          <div className="reveal mb-14 grid items-center gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <span className="kicker">{copy.humanNoteEyebrow}</span>
-              <h2 className="title-lg mt-3">{copy.humanNoteTitle}</h2>
-              <p className="lead mt-4">{copy.humanNoteText}</p>
+          {/* Encabezado compacto para dar protagonismo inmediato a las gráficas */}
+          <div className="mb-10 flex flex-col justify-between gap-6 border-b border-ink/10 pb-8 lg:flex-row lg:items-end">
+            <div className="max-w-3xl">
+              <span className="kicker">
+                <BarChart3 size={14} />
+                {copy.eyebrow}
+              </span>
+              <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+                {t("reports.title")}
+              </h1>
+              <p className="mt-3 text-base leading-7 text-slate-600 sm:text-lg">
+                {copy.intro}
+              </p>
             </div>
-            <figure className="photo-frame h-64 sm:h-72 lg:col-span-5">
-              <img
-                src={asset("home/home-pantry-display.png")}
-                alt={copy.stats.pantries}
-                loading="lazy"
-              />
-              <div className="photo-overlay" />
-              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
-                {copy.tenTons} · 2021–2026
-              </figcaption>
-            </figure>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <a href="#pdf-institucional" className="btn-secondary">
+                <FileText size={16} />
+                {copy.heroCtaPdfs}
+              </a>
+              <a href="#linea-tiempo-ministerio" className="btn-secondary">
+                <CalendarDays size={16} />
+                {copy.timelineEyebrow}
+              </a>
+            </div>
           </div>
 
-          {/* Tarjetas de impacto interactivas */}
-          <div className="reveal grid gap-6 sm:grid-cols-3">
-            <StatCard
-              icon={PackageCheck}
-              label={copy.stats.pantries}
-              value={formatNumber(totalPantries)}
-              detail="2021–2026"
-              expandLabel={copy.tapToExpand}
-              onClick={() => handleStatClick("pantries")}
-            />
-            <StatCard
-              icon={Scale}
-              value={`${formatNumber(totalFoodKg / 1000, 1)} t`}
-              label={copy.tonsDelivered}
-              detail={`${formatNumber(totalFoodKg, 2)} kg`}
-              expandLabel={copy.tapToExpand}
-              onClick={() => handleStatClick("food")}
-            />
-            <StatCard
-              icon={Users}
-              label={copy.stats.beneficiaries}
-              value={formatNumber(totalBeneficiaries)}
-              detail="2021–2026"
-              expandLabel={copy.tapToExpand}
-              onClick={() => handleStatClick("beneficiaries")}
-            />
-          </div>
-
-          {/* Gráfica principal de alimentos */}
-          <div className="reveal mt-8">
+          {/* Gráfica principal protagonista al inicio */}
+          <div className="reveal">
             <AreaLineChartBlock
               title={copy.foodTitle}
               data={yearlySupport}
@@ -1556,6 +1506,7 @@ export default function Reports() {
               items={donorSources2026}
               labels={copy.sourceLabels}
               expandLabel={copy.tapToExpand}
+              language={language}
             />
           </div>
 
@@ -1575,6 +1526,35 @@ export default function Reports() {
               items={hospitalDonationMix}
               labels={copy.hospitalLabels}
               expandLabel={copy.tapToExpand}
+              language={language}
+            />
+          </div>
+
+          {/* Tarjetas de totales detallados por año */}
+          <div className="reveal mt-6 grid gap-6 sm:grid-cols-3">
+            <StatCard
+              icon={PackageCheck}
+              label={copy.stats.pantries}
+              value={formatNumber(totalPantries)}
+              detail="2021–2026"
+              expandLabel={copy.tapToExpand}
+              onClick={() => handleStatClick("pantries")}
+            />
+            <StatCard
+              icon={Scale}
+              value={`${formatNumber(totalFoodKg / 1000, 1)} t`}
+              label={copy.tonsDelivered}
+              detail={`${formatNumber(totalFoodKg, 2)} kg`}
+              expandLabel={copy.tapToExpand}
+              onClick={() => handleStatClick("food")}
+            />
+            <StatCard
+              icon={Users}
+              label={copy.stats.beneficiaries}
+              value={formatNumber(totalBeneficiaries)}
+              detail="2021–2026"
+              expandLabel={copy.tapToExpand}
+              onClick={() => handleStatClick("beneficiaries")}
             />
           </div>
 

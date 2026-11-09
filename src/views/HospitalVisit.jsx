@@ -383,7 +383,7 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
       </span>
 
       <div
-        className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-16 sm:px-20 sm:py-20"
+        className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-16 sm:px-20 sm:py-20"
         onClick={onClose}
       >
         <button
@@ -392,7 +392,7 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             e.stopPropagation();
             goPrev();
           }}
-          className="absolute left-2 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:left-6 sm:h-14 sm:w-14"
+          className="absolute left-2 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:left-6 sm:h-14 sm:w-14"
           aria-label="Anterior"
         >
           <ChevronLeft size={24} />
@@ -404,21 +404,27 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             e.stopPropagation();
             goNext();
           }}
-          className="absolute right-2 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:right-6 sm:h-14 sm:w-14"
+          className="absolute right-2 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:right-6 sm:h-14 sm:w-14"
           aria-label="Siguiente"
         >
           <ChevronRight size={24} />
         </button>
 
         <figure
-          className="relative flex h-full w-full max-w-5xl items-center justify-center"
+          className="relative flex h-[62vh] w-full max-w-4xl items-center justify-center overflow-hidden rounded-2xl bg-ink/80 shadow-2xl ring-1 ring-white/15 sm:h-[70vh]"
           onClick={(e) => e.stopPropagation()}
         >
+          <img
+            src={photo.src}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+          />
           <img
             key={photo.src}
             src={photo.src}
             alt={photo.label}
-            className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl ring-1 ring-white/10"
+            className="relative z-10 h-full w-full object-contain p-2 sm:p-4"
           />
         </figure>
       </div>
@@ -496,7 +502,7 @@ function InteractiveGallery({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:aspect-[16/11]">
+      <div className="relative h-[320px] w-full overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[400px] lg:h-[440px]">
         <img
           src={activePhoto.src}
           alt=""
@@ -803,7 +809,7 @@ export default function HospitalVisit() {
             </div>
 
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame aspect-[3/4] max-h-[540px] w-full ring-2 ring-white/15">
+              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={hospitalPhotos[5].src}
                   alt={t("hospital.photoLabels.hospitalNew06")}
@@ -1021,7 +1027,7 @@ export default function HospitalVisit() {
               onClick={() =>
                 openLightbox(milestonePhotosDisplay, activeMilestoneIndex)
               }
-              className="group relative min-h-[340px] cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:min-h-[420px] lg:col-span-7"
+              className="group relative h-[320px] w-full cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[400px] lg:col-span-7 lg:h-[440px]"
             >
               <img
                 src={activeMilestonePhoto.src}
@@ -1261,7 +1267,7 @@ export default function HospitalVisit() {
               </div>
             </div>
 
-            <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
                 src={`${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-03.jpeg`}
                 alt={copy.ctaTitle}

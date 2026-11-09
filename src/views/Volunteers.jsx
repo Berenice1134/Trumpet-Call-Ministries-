@@ -509,7 +509,7 @@ const PhotoCarousel = ({ photos, language }) => {
 
   return (
     <div className="photo-frame relative overflow-hidden bg-ink">
-      <div className="relative h-[300px] overflow-hidden sm:h-[360px] lg:h-[400px]">
+      <div className="relative h-[320px] w-full overflow-hidden sm:h-[400px] lg:h-[440px]">
         <div
           className="flex h-full transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -632,7 +632,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
   return (
     <>
       <div className="space-y-3">
-        <figure className="photo-frame relative h-[360px] w-full overflow-hidden bg-ink sm:h-[440px] lg:h-[480px]">
+        <figure className="photo-frame relative h-[320px] w-full overflow-hidden bg-ink sm:h-[400px] lg:h-[440px]">
           <img
             src={currentPhoto.src}
             alt=""
@@ -733,11 +733,17 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
               <ChevronLeft size={30} />
             </button>
 
-            <figure className="flex h-full max-h-[calc(100vh-5.5rem)] w-full max-w-[calc(100vw-2rem)] items-center justify-center sm:max-h-[calc(100vh-6.5rem)] sm:max-w-[calc(100vw-8rem)]">
+            <figure className="relative flex h-[62vh] w-full max-w-4xl items-center justify-center overflow-hidden rounded-2xl bg-ink/80 shadow-2xl ring-1 ring-white/15 sm:h-[70vh]">
+              <img
+                src={currentPhoto.src}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+              />
               <img
                 src={currentPhoto.src}
                 alt={`${title} ${currentIndex + 1}`}
-                className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+                className="relative z-10 h-full w-full object-contain p-2 sm:p-4"
               />
             </figure>
 
@@ -1475,7 +1481,7 @@ export default function Volunteers() {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <figure className="photo-frame aspect-[4/3] w-full ring-1 ring-white/15">
+              <figure className="photo-frame h-[280px] w-full ring-1 ring-white/15 sm:h-[340px]">
                 <img
                   src={`${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-13.jpeg`}
                   alt={copy.ctaTitle}

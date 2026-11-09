@@ -123,12 +123,16 @@ select {
   @apply relative overflow-hidden rounded-[1.75rem] bg-slate-900 shadow-photo ring-1 ring-ink/5;
 }
 
-.photo-frame img {
+:where(.photo-frame) > img:not(.object-contain) {
   @apply h-full w-full object-cover transition duration-[900ms] ease-out;
   object-position: center 18%;
 }
 
-.photo-frame:hover img {
+:where(.photo-frame) > img.object-contain {
+  object-position: center center;
+}
+
+.photo-frame:hover > img:not(.object-contain):not(.pointer-events-none) {
   transform: scale(1.04);
 }
 

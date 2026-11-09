@@ -219,12 +219,18 @@ function KermesPhotoCarousel({ photos, copy, language }) {
 
   return (
     <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink/80 shadow-photo">
-      <div className="relative aspect-[4/3] overflow-hidden bg-black/40 sm:aspect-[16/10] lg:aspect-[21/11]">
+      <div className="relative h-[320px] w-full overflow-hidden bg-ink sm:h-[400px] lg:h-[440px]">
+        <img
+          src={currentPhoto.src}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
+        />
         <img
           key={currentPhoto.key}
           src={currentPhoto.src}
           alt={`${copy.kermesTitle} ${currentIndex + 1}`}
-          className="gallery-photo-enter h-full w-full object-contain p-2 sm:p-4"
+          className="gallery-photo-enter relative z-10 h-full w-full object-contain p-2 sm:p-4"
           loading={currentIndex === 0 ? "eager" : "lazy"}
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent px-6 pb-6 pt-20 text-white">
@@ -461,7 +467,7 @@ export default function Donations() {
 
             {/* Fotografía vertical completa, sin recortar las cabezas */}
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame aspect-[3/4] max-h-[540px] w-full ring-2 ring-white/15">
+              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
                   alt={
@@ -784,7 +790,7 @@ export default function Donations() {
 
             {/* Columna derecha: Impacto visual de la donación (#impacto) */}
             <div id="impacto" className="scroll-mt-28 space-y-6">
-              <figure className="photo-frame h-72 sm:h-80">
+              <figure className="photo-frame h-[280px] w-full sm:h-[320px]">
                 <img
                   src={asset("home/home-pantry-display.png")}
                   alt={
@@ -836,7 +842,7 @@ export default function Donations() {
           <div className="mt-12 grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr]">
             {/* Retrato de la directora */}
             <aside className="reveal space-y-6">
-              <figure className="photo-frame aspect-[4/5] w-full">
+              <figure className="photo-frame h-[360px] w-full sm:h-[420px]">
                 <img
                   src={asset("directora/andrea-byrn.png")}
                   alt={
@@ -1009,7 +1015,7 @@ export default function Donations() {
               </div>
             </div>
 
-            <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
                 src={asset("donaciones/kermes-invierno-magico/kermes-invierno-magico-02.jpeg")}
                 alt={copy.kermesTitle}

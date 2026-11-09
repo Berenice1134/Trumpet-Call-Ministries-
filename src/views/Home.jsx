@@ -21,8 +21,11 @@ import {
   PackageCheck,
   Sparkles,
   Award,
+  Maximize2,
+  X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
@@ -595,7 +598,22 @@ export default function Home() {
   const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
   const [activeObjectiveTab, setActiveObjectiveTab] = useState("mission");
   const [openContextIndex, setOpenContextIndex] = useState(0);
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false);
   const timelinePillRefs = useRef([]);
+
+  useEffect(() => {
+    if (!isMapFullscreen) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setIsMapFullscreen(false);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMapFullscreen]);
 
   const activeTimelineItem = ministryTimeline[activeTimelineIndex] ?? ministryTimeline[0];
   const ActiveTimelineIcon = timelineIcons[activeTimelineIndex % timelineIcons.length];
@@ -659,9 +677,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Collage fotográfico sin recortes de rostros */}
+            {/* Collage fotográfico con dimensiones uniformes */}
             <div className="grid grid-cols-12 items-center gap-4">
-              <figure className="photo-frame col-span-7 aspect-[3/4] ring-2 ring-white/15">
+              <figure className="photo-frame col-span-7 h-[320px] w-full ring-2 ring-white/15 sm:h-[420px]">
                 <img
                   src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
                   alt={language === "en" ? "Warm embrace during pantry delivery" : "Abrazo cálido durante entrega de despensa"}
@@ -674,14 +692,14 @@ export default function Home() {
               </figure>
 
               <div className="col-span-5 grid gap-4">
-                <figure className="photo-frame aspect-[4/5] ring-2 ring-white/15">
+                <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
                     src={asset("misiones/espanita-02.jpeg")}
                     alt={language === "en" ? "Sharing with older adults" : "Compartiendo con adultos mayores"}
                     className="h-full w-full object-cover object-top"
                   />
                 </figure>
-                <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+                <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
                     src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
                     alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
@@ -742,11 +760,10 @@ export default function Home() {
           </div>
 
           <figure className="reveal mt-12 overflow-hidden rounded-[2rem] bg-white p-2 shadow-[0_40px_100px_-30px_rgba(10,30,60,0.65)] ring-1 ring-white/30 sm:p-4">
-            <a
-              href={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block overflow-hidden rounded-[1.5rem]"
+            <button
+              type="button"
+              onClick={() => setIsMapFullscreen(true)}
+              className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[1.5rem] text-left"
               aria-label={language === "en" ? "Open full-size map" : "Abrir mapa en tamaño completo"}
             >
               <img
@@ -759,11 +776,11 @@ export default function Home() {
                 className="h-auto w-full transition duration-700 group-hover:scale-[1.02]"
                 decoding="async"
               />
-              <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-3.5 py-1.5 text-xs font-bold text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
-                <MapPin size={13} />
+              <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink/85 px-3.5 py-1.5 text-xs font-bold text-white shadow-md backdrop-blur transition group-hover:bg-ember">
+                <Maximize2 size={13} />
                 {language === "en" ? "View full size" : "Ver en grande"}
               </span>
-            </a>
+            </button>
             <figcaption className="flex flex-wrap items-center justify-center gap-2 px-3 pb-1 pt-4 text-center text-sm font-medium text-slate-500">
               <MapPin size={15} className="text-ember" />
               {language === "en"
@@ -774,13 +791,57 @@ export default function Home() {
         </div>
       </section>
 
+      {isMapFullscreen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-ink/95 p-3 backdrop-blur-md sm:p-6"
+            onClick={() => setIsMapFullscreen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={
+              language === "en"
+                ? "Support areas map in Tlaxcala"
+                : "Mapa de zonas de apoyo en Tlaxcala"
+            }
+          >
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMapFullscreen(false);
+              }}
+              className="absolute right-4 top-4 z-30 inline-flex items-center gap-2 rounded-full bg-ember px-4 py-2.5 text-xs font-bold text-white shadow-2xl transition hover:scale-105 hover:bg-ember-dark sm:right-6 sm:top-6 sm:text-sm"
+              aria-label={language === "en" ? "Close map" : "Cerrar mapa"}
+            >
+              <X size={18} strokeWidth={2.5} />
+              <span>{language === "en" ? "Close" : "Cerrar"}</span>
+            </button>
+
+            <div
+              className="relative flex max-h-[85vh] w-full max-w-6xl items-center justify-center overflow-auto rounded-2xl bg-white p-2 shadow-2xl sm:p-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
+                alt={
+                  language === "en"
+                    ? "Map of all Trumpet Call Ministries support areas in Tlaxcala"
+                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala"
+                }
+                className="max-h-[80vh] w-auto max-w-full rounded-xl object-contain"
+              />
+            </div>
+          </div>,
+          document.body
+        )}
+
       <div id="sobre-nosotros" className="scroll-mt-28" />
 
       {/* ========== MOSAICO VISUAL Y PROPÓSITO ========== */}
       <section className="section-shell bg-cream">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="reveal grid grid-cols-12 gap-4">
-            <figure className="photo-frame col-span-12 aspect-[4/3] sm:col-span-7 sm:aspect-[3/4]">
+            <figure className="photo-frame col-span-12 h-[300px] w-full sm:col-span-7 sm:h-[420px]">
               <img
                 src={asset("hospital-infantil/hospital-nuevo-06.jpeg")}
                 alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
@@ -794,7 +855,7 @@ export default function Home() {
             </figure>
 
             <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-5 sm:grid-cols-1">
-              <figure className="photo-frame aspect-[4/3]">
+              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
                 <img
                   src={asset("voluntarios/voluntarios-04.jpeg")}
                   alt={language === "en" ? "Young volunteers preparing food bags" : "Jóvenes voluntarios preparando despensas"}
@@ -802,7 +863,7 @@ export default function Home() {
                   className="h-full w-full object-cover object-top"
                 />
               </figure>
-              <figure className="photo-frame aspect-[4/3]">
+              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
                 <img
                   src={asset("misiones/dia-caridad-caritas-03.jpeg")}
                   alt={language === "en" ? "Community mission in Tlaxcala" : "Misión comunitaria en Tlaxcala"}
@@ -891,7 +952,7 @@ export default function Home() {
       <section id="objetivo" className="section-shell scroll-mt-28 bg-sand">
         <div className="mx-auto max-w-6xl">
           <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-            <figure className="photo-frame h-[400px] sm:h-[500px]">
+            <figure className="photo-frame h-[320px] w-full sm:h-[420px]">
               <img
                 src={
                   activeObjectiveTab === "mission"
@@ -1205,7 +1266,7 @@ export default function Home() {
               </div>
             </div>
 
-            <figure className="photo-frame aspect-[4/3] ring-2 ring-white/15">
+            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
                 src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
                 alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}

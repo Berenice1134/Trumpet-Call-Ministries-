@@ -212,19 +212,20 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
       )}
 
       <figure
-        className="flex max-h-[88vh] max-w-[90vw] flex-col items-center justify-center"
+        className="relative flex h-[62vh] w-full max-w-4xl items-center justify-center overflow-hidden rounded-2xl bg-ink/80 shadow-2xl ring-1 ring-white/15 sm:h-[70vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <img
           src={activePhoto.src}
-          alt={caption}
-          className="max-h-[78vh] max-w-[88vw] rounded-2xl object-contain shadow-2xl"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-2xl"
         />
-        {caption && (
-          <figcaption className="mt-3 max-w-xl text-center font-display text-base text-white/95">
-            {caption}
-          </figcaption>
-        )}
+        <img
+          src={activePhoto.src}
+          alt={caption}
+          className="relative z-10 h-full w-full object-contain p-2 sm:p-4"
+        />
       </figure>
 
       {photos.length > 1 && (
@@ -555,12 +556,12 @@ const serviceCommunities = [
 
 /* Patrón equilibrado de 3 columnas para que las fotografías verticales y horizontales luzcan centradas */
 const gallerySpans = [
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
-  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
+  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
 ];
 
 /* ============================================================
@@ -637,7 +638,7 @@ export default function HomeCare() {
             </div>
 
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame aspect-[4/3] w-full ring-2 ring-white/15">
+              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={
                     findPhoto("homeVisitLivingRoomTeam")?.src ??
@@ -718,7 +719,7 @@ export default function HomeCare() {
               <AutoImageCarousel
                 photos={heroPhotos}
                 language={language}
-                heightClassName="h-[340px] sm:h-[420px]"
+                heightClassName="h-[320px] sm:h-[400px] lg:h-[440px]"
               />
             </div>
           </div>
@@ -727,7 +728,7 @@ export default function HomeCare() {
             <PhotoGrid
               photos={galleryPhotos}
               gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-12"
-              itemClassName="h-72"
+              itemClassName="h-[280px] sm:h-[320px]"
               spanPattern={gallerySpans}
             />
           </div>
@@ -784,7 +785,7 @@ export default function HomeCare() {
                 <PhotoGrid
                   photos={zonasPhotos}
                   gridClassName="grid grid-cols-1"
-                  itemClassName="h-64 sm:h-72"
+                  itemClassName="h-[280px] sm:h-[320px] w-full"
                 />
               </div>
             </div>
@@ -909,8 +910,8 @@ export default function HomeCare() {
               <PhotoGrid
                 photos={activeTimelinePhoto ? [activeTimelinePhoto] : []}
                 getLabel={getPhotoLabel}
-                gridClassName="grid grid-cols-1 h-full"
-                itemClassName="min-h-[340px] sm:min-h-[420px] h-full"
+                gridClassName="grid grid-cols-1"
+                itemClassName="h-[320px] sm:h-[400px] lg:h-[440px] w-full"
                 contain
               />
             </div>
@@ -1045,7 +1046,7 @@ export default function HomeCare() {
               <PhotoGrid
                 photos={impactPhotos}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
-                itemClassName="h-72 sm:h-80"
+                itemClassName="h-[280px] sm:h-[320px] w-full"
               />
             </div>
 
@@ -1107,7 +1108,7 @@ export default function HomeCare() {
               <PhotoGrid
                 photos={activityPhotos}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
-                itemClassName="h-80 sm:h-[420px]"
+                itemClassName="h-[280px] sm:h-[320px] w-full"
               />
             </div>
           </div>

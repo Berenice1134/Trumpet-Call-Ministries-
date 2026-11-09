@@ -90,7 +90,7 @@ const menuGroupsByLanguage = {
         { label: "HIT", id: "hospital-infantil-tlaxcala" },
         { label: "Cartolandia", id: "cartolandia" },
         { label: "Charity Day", id: "dia-caridad" },
-        { label: "Españita", id: "espanita" },
+        { label: "Asilo de San Judas", id: "espanita" },
       ],
     },
     {

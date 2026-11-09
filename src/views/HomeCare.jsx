@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import {
   ClipboardList,
@@ -180,9 +181,9 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
   const activePhoto = photos[index];
   const caption = getLabel ? getLabel(activePhoto) : "";
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-ink/95 p-4 backdrop-blur-md sm:p-6"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -190,7 +191,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
+        className="absolute right-4 top-4 z-20 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-ember sm:right-6 sm:top-6"
         aria-label="Cerrar"
       >
         <X size={22} />
@@ -203,7 +204,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
             e.stopPropagation();
             onPrev();
           }}
-          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:left-4"
+          className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/25 sm:left-6"
           aria-label="Anterior"
         >
           <ChevronLeft size={24} />
@@ -211,16 +212,16 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
       )}
 
       <figure
-        className="flex max-h-[88vh] max-w-[92vw] flex-col items-center"
+        className="flex max-h-[88vh] max-w-[90vw] flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <img
           src={activePhoto.src}
           alt={caption}
-          className="max-h-[80vh] max-w-[92vw] rounded-2xl object-contain shadow-2xl"
+          className="max-h-[78vh] max-w-[88vw] rounded-2xl object-contain shadow-2xl"
         />
         {caption && (
-          <figcaption className="mt-3 max-w-xl text-center font-display text-base text-white/90">
+          <figcaption className="mt-3 max-w-xl text-center font-display text-base text-white/95">
             {caption}
           </figcaption>
         )}
@@ -233,17 +234,18 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
             e.stopPropagation();
             onNext();
           }}
-          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-4"
+          className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/25 sm:right-6"
           aria-label="Siguiente"
         >
           <ChevronRight size={24} />
         </button>
       )}
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white/80 backdrop-blur">
+      <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-bold text-white backdrop-blur">
         {index + 1} / {photos.length}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -551,14 +553,14 @@ const serviceCommunities = [
   "San Diego Metepec, Tlax.",
 ];
 
-/* Patrón asimétrico editorial para las 6 fotografías de la galería principal */
+/* Patrón equilibrado de 3 columnas para que las fotografías verticales y horizontales luzcan centradas */
 const gallerySpans = [
-  "sm:col-span-7 sm:h-[420px]",
-  "sm:col-span-5 sm:h-[420px]",
-  "sm:col-span-4 sm:h-[320px]",
-  "sm:col-span-4 sm:h-[320px]",
-  "sm:col-span-4 sm:h-[320px]",
-  "sm:col-span-12 sm:h-[380px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
+  "sm:col-span-6 lg:col-span-4 sm:h-[360px]",
 ];
 
 /* ============================================================
@@ -715,7 +717,6 @@ export default function HomeCare() {
             <div className="lg:col-span-6">
               <AutoImageCarousel
                 photos={heroPhotos}
-                getLabel={getPhotoLabel}
                 language={language}
                 heightClassName="h-[340px] sm:h-[420px]"
               />
@@ -725,7 +726,6 @@ export default function HomeCare() {
           <div className="reveal mt-12">
             <PhotoGrid
               photos={galleryPhotos}
-              getLabel={getPhotoLabel}
               gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-12"
               itemClassName="h-72"
               spanPattern={gallerySpans}
@@ -783,7 +783,6 @@ export default function HomeCare() {
               <div className="mt-6">
                 <PhotoGrid
                   photos={zonasPhotos}
-                  getLabel={getPhotoLabel}
                   gridClassName="grid grid-cols-1"
                   itemClassName="h-64 sm:h-72"
                 />
@@ -1011,7 +1010,7 @@ export default function HomeCare() {
                 icon: Heart,
               },
               {
-                value: "2.5T",
+                value: language === "en" ? "10 tons" : "10 toneladas",
                 label: copy.tonsDistributed,
                 icon: PackageCheck,
               },
@@ -1045,7 +1044,6 @@ export default function HomeCare() {
             <div className="lg:col-span-7">
               <PhotoGrid
                 photos={impactPhotos}
-                getLabel={getPhotoLabel}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
                 itemClassName="h-72 sm:h-80"
               />
@@ -1108,7 +1106,6 @@ export default function HomeCare() {
             <div className="reveal lg:col-span-6">
               <PhotoGrid
                 photos={activityPhotos}
-                getLabel={getPhotoLabel}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
                 itemClassName="h-80 sm:h-[420px]"
               />

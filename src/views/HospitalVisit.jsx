@@ -127,17 +127,13 @@ const otherMissions = [
     title: "Asilo de San Judas",
     titleEn: "Asilo de San Judas",
     icon: Target,
-    description:
-      "Espacio para información de la misión en el Asilo de San Judas, necesidades y próximos pasos.",
-    descriptionEn:
-      "Space for Asilo de San Judas mission information, needs, and next steps.",
+    description: "",
+    descriptionEn: "",
     stats: [
       { value: "80+", label: "Familias", labelEn: "Families" },
       { value: "1", label: "Misiones", labelEn: "Missions" },
       { value: "75kg", label: "Repartidos", labelEn: "Distributed" },
     ],
-    placeholder: "[Insertar información de Asilo de San Judas]",
-    placeholderEn: "[Insert Asilo de San Judas information]",
     photos: [
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-01.jpeg`, label: "Preparación de alimentos y apoyos" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Entrega cercana a beneficiarios" },
@@ -242,7 +238,7 @@ const hospitalMilestones = [
     textEn:
       "The ministry received a new calling to accompany vulnerable children and their families in the nephrology area of the Children's Hospital of Tlaxcala.",
     icon: Star,
-    photoIndex: 0,
+    photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-01-enero.jpg`,
   },
   {
     dateEs: "27 de febrero",
@@ -254,7 +250,7 @@ const hospitalMilestones = [
     textEn:
       "The ministry served children with kidney failure for the first time, shared the plan of salvation with their families, and delivered hygiene kits with a Bible reflection.",
     icon: Gift,
-    photoIndex: 2,
+    photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-02-febrero.jpg`,
   },
   {
     dateEs: "13 de marzo",
@@ -266,7 +262,7 @@ const hospitalMilestones = [
     textEn:
       "The ministry attended the kermes organized at the hospital, accompanying families and joining the community activity.",
     icon: HandHeart,
-    photoIndex: 8,
+    photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-03-marzo-kermes-hit.jpg`,
   },
   {
     dateEs: "22 de marzo",
@@ -278,7 +274,7 @@ const hospitalMilestones = [
     textEn:
       "Trumpet Call Ministries held a kermes to raise support for the children at the Children's Hospital of Tlaxcala.",
     icon: Sparkles,
-    photoIndex: 14,
+    photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-04-marzo-kermes-tcm.jpg`,
   },
   {
     dateEs: "30 de abril",
@@ -290,7 +286,7 @@ const hospitalMilestones = [
     textEn:
       "The ministry held a small Children's Day event, creating a space of joy, play, and encouragement for the patients.",
     icon: Heart,
-    photoIndex: 16,
+    photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-05-abril-dia-nino.jpg`,
   },
   {
     dateEs: "29 de mayo",
@@ -431,10 +427,6 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
         className="relative z-20 border-t border-white/10 bg-ink/90 px-4 py-3 backdrop-blur sm:px-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="mb-3 text-center font-display text-sm font-medium text-white sm:text-base">
-          {photo.label}
-        </p>
-
         <div className="no-scrollbar flex justify-center gap-2 overflow-x-auto pb-1">
           {photos.map((p, i) => (
             <button
@@ -569,15 +561,6 @@ function InteractiveGallery({
             </button>
           </>
         )}
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-7">
-          <p className="font-display text-lg font-medium leading-snug text-white drop-shadow sm:text-2xl">
-            {activePhoto.label || (isEnglish ? `Photo ${activeIndex + 1}` : `Foto ${activeIndex + 1}`)}
-          </p>
-          <p className="mt-1 text-xs font-medium text-white/75">
-            {isEnglish ? "Click photo to view full screen" : "Haz clic en la foto para ampliar"}
-          </p>
-        </div>
       </div>
 
       {/* Controles y miniaturas */}
@@ -753,10 +736,20 @@ export default function HospitalVisit() {
     label: t(`hospital.photoLabels.${p.key}`),
   }));
 
+  const milestonePhotosDisplay = hospitalMilestones.map((m) => {
+    if (m.photoSrc) {
+      return {
+        src: m.photoSrc,
+        label: language === "en" ? m.titleEn : m.titleEs,
+      };
+    }
+    return hospitalPhotosDisplay[m.photoIndex] ?? hospitalPhotosDisplay[0];
+  });
+
   const activeMilestone = hospitalMilestones[activeMilestoneIndex] ?? hospitalMilestones[0];
   const ActiveMilestoneIcon = activeMilestone.icon;
   const activeMilestonePhoto =
-    hospitalPhotosDisplay[activeMilestone.photoIndex] ?? hospitalPhotosDisplay[0];
+    milestonePhotosDisplay[activeMilestoneIndex] ?? milestonePhotosDisplay[0];
   const milestoneProgress = ((activeMilestoneIndex + 1) / hospitalMilestones.length) * 100;
 
   const goPrevMilestone = () =>
@@ -1026,7 +1019,7 @@ export default function HospitalVisit() {
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
             <figure
               onClick={() =>
-                openLightbox(hospitalPhotosDisplay, activeMilestone.photoIndex)
+                openLightbox(milestonePhotosDisplay, activeMilestoneIndex)
               }
               className="group relative min-h-[340px] cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:min-h-[420px] lg:col-span-7"
             >
@@ -1174,9 +1167,11 @@ export default function HospitalVisit() {
                     {language === "en" ? mission.titleEn : mission.title}
                   </h2>
 
-                  <p className="lead">
-                    {language === "en" ? mission.descriptionEn : mission.description}
-                  </p>
+                  {(language === "en" ? mission.descriptionEn : mission.description) && (
+                    <p className="lead">
+                      {language === "en" ? mission.descriptionEn : mission.description}
+                    </p>
+                  )}
 
                   {/* Cifras de impacto en font-display */}
                   <div className="grid grid-cols-3 gap-4 border-y border-ink/10 py-6">

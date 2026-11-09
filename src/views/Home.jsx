@@ -603,8 +603,16 @@ export default function Home() {
 
   useEffect(() => {
     const activeButton = timelinePillRefs.current[activeTimelineIndex];
-    if (activeButton) {
-      activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const container = activeButton?.parentElement;
+    if (activeButton && container) {
+      const targetLeft =
+        activeButton.offsetLeft -
+        container.clientWidth / 2 +
+        activeButton.clientWidth / 2;
+      container.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: "smooth",
+      });
     }
   }, [activeTimelineIndex]);
 

@@ -12,6 +12,7 @@ import {
   Heart,
   Home,
   Hospital,
+  MessageCircle,
   Quote,
   Share2,
   Snowflake,
@@ -744,20 +745,38 @@ export default function Donations() {
                       </div>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={shareTransferDetails}
-                      className="btn-secondary mt-6 w-full"
-                    >
-                      {copiedField === "transfer-details" ? (
-                        <Check size={18} className="text-emerald-600" />
-                      ) : (
-                        <Share2 size={18} />
-                      )}
-                      {copiedField === "transfer-details"
-                        ? copy.transferShared
-                        : copy.shareBankDetails}
-                    </button>
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={shareTransferDetails}
+                        className="btn-secondary w-full"
+                      >
+                        {copiedField === "transfer-details" ? (
+                          <Check size={18} className="text-emerald-600" />
+                        ) : (
+                          <Share2 size={18} />
+                        )}
+                        {copiedField === "transfer-details"
+                          ? copy.transferShared
+                          : copy.shareBankDetails}
+                      </button>
+
+                      <a
+                        href={`https://wa.me/522463307994?text=${encodeURIComponent(
+                          language === "en"
+                            ? `Hello! I would like to support Trumpet Call Ministries (${selectedConcept}).`
+                            : `¡Hola! Me gustaría apoyar a Trumpet Call Ministries (${selectedConcept}).`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#1ebe5d]"
+                      >
+                        <MessageCircle size={18} className="fill-white/20" />
+                        {language === "en"
+                          ? "Questions or receipt via WhatsApp"
+                          : "Dudas o comprobante por WhatsApp"}
+                      </a>
+                    </div>
                   </div>
                 );
               })}

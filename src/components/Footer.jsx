@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -106,6 +106,21 @@ export default function Footer() {
                 {copy.email}
               </a>
             </span>
+            <div className="pt-1">
+              <a
+                href={`https://wa.me/522463307994?text=${encodeURIComponent(
+                  language === "en"
+                    ? "Hello! I would like to contact Trumpet Call Ministries."
+                    : "¡Hola! Me gustaría ponerme en contacto con Trumpet Call Ministries."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-[#1ebe5d]"
+              >
+                <MessageCircle size={16} className="fill-white/20" />
+                {language === "en" ? "Chat on WhatsApp" : "Escribir por WhatsApp"}
+              </a>
+            </div>
           </div>
         </div>
         <p className="mt-10 text-center text-xs text-white/45">

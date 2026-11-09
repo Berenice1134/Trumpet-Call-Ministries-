@@ -36,8 +36,8 @@ const yearlySupport = [
   { year: 2022, months: "12", beneficiaries: 17, foodKg: 1799, pantries: 136, cumulativePantries: 208, cumulativeFoodKg: 2518 },
   { year: 2023, months: "12", beneficiaries: 13, foodKg: 1416, pantries: 130, cumulativePantries: 338, cumulativeFoodKg: 3934 },
   { year: 2024, months: "7", beneficiaries: 20, foodKg: 1177, pantries: 140, cumulativePantries: 478, cumulativeFoodKg: 5111 },
-  { year: 2025, months: "12", beneficiaries: 38, foodKg: 3285.68, pantries: 456, cumulativePantries: 934, cumulativeFoodKg: 8396.68 },
-  { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10096.68 },
+  { year: 2025, months: "12", beneficiaries: 38, foodKg: 3286, pantries: 456, cumulativePantries: 934, cumulativeFoodKg: 8397 },
+  { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10097 },
 ];
 
 const infographicPeriods = [
@@ -80,7 +80,7 @@ const donorSources2026 = [
 const hospitalDonationMix = [
   {
     key: "hygieneKits",
-    value: 29.9,
+    value: 30,
     color: "from-violet-600 to-purple-700",
     hex: "#7C3AED",
     icon: PackageCheck,
@@ -91,7 +91,7 @@ const hospitalDonationMix = [
   },
   {
     key: "medicalSupplies",
-    value: 25.52,
+    value: 26,
     color: "from-ember to-ember-dark",
     hex: "#E11D48",
     icon: ClipboardList,
@@ -102,7 +102,7 @@ const hospitalDonationMix = [
   },
   {
     key: "treatmentClothing",
-    value: 17.95,
+    value: 18,
     color: "from-ministry-blue to-sky-600",
     hex: "#0284C7",
     icon: Heart,
@@ -113,7 +113,7 @@ const hospitalDonationMix = [
   },
   {
     key: "pantry",
-    value: 14.4,
+    value: 14,
     color: "from-amber-400 to-amber-600",
     hex: "#F59E0B",
     icon: HandHeart,
@@ -124,7 +124,7 @@ const hospitalDonationMix = [
   },
   {
     key: "activities",
-    value: 12.4,
+    value: 12,
     color: "from-emerald-500 to-teal-600",
     hex: "#10B981",
     icon: Sparkles,
@@ -701,7 +701,7 @@ function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, second
 }
 
 // ===== AREA LINE CHART (HERO — Toneladas) =====
-function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel }) {
+function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel, tonsWord = "toneladas" }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const W = 1000;
@@ -747,7 +747,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
   } Z`;
 
   const ticks = [0, 2000, 4000, 6000, 8000, 10000, 12000];
-  const totalTons = (data.at(-1).cumulativeFoodKg / 1000).toFixed(1);
+  const totalTons = Math.round(data.at(-1).cumulativeFoodKg / 1000);
   const latestAnnual = data.at(-1).foodKg;
   const active = activeIndex !== null ? data[activeIndex] : null;
 
@@ -768,7 +768,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
               {totalDonated}
             </p>
             <p className="mt-0.5 font-display text-2xl font-semibold leading-tight sm:text-3xl">
-              {totalTons} t
+              {totalTons} {tonsWord}
             </p>
           </div>
           <div className="rounded-2xl border border-ink/10 bg-cream px-5 py-3.5 text-ink">
@@ -954,10 +954,10 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel })
               {active.year}
             </p>
             <p className="mt-1 text-sm font-semibold">
-              {formatNumber(active.foodKg, 2)} {kgLabel} · {annualLabel}
+              {formatNumber(active.foodKg)} {kgLabel} · {annualLabel}
             </p>
             <p className="text-sm font-semibold text-white/85">
-              {formatNumber(active.cumulativeFoodKg, 2)} {kgLabel} · {totalDonated}
+              {formatNumber(active.cumulativeFoodKg)} {kgLabel} · {totalDonated}
             </p>
           </div>
         )}
@@ -1422,10 +1422,10 @@ export default function Reports() {
         title = copy.stats.food;
         data = yearlySupport.map((item) => ({
           label: item.year,
-          value: `${formatNumber(item.foodKg, 2)} kg`,
+          value: `${formatNumber(item.foodKg)} kg`,
           percentage: Math.round((item.foodKg / totalFoodKg) * 100),
         }));
-        total = `${formatNumber(totalFoodKg, 2)} kg`;
+        total = `${formatNumber(totalFoodKg)} kg`;
         break;
       case "beneficiaries":
         title = copy.stats.beneficiaries;
@@ -1487,6 +1487,7 @@ export default function Reports() {
               annualLabel={copy.annualLabel}
               totalDonated={copy.totalDonated}
               kgLabel={copy.kg}
+              tonsWord={language === "en" ? "tons" : "toneladas"}
             />
           </div>
 
@@ -1542,9 +1543,9 @@ export default function Reports() {
             />
             <StatCard
               icon={Scale}
-              value={`${formatNumber(totalFoodKg / 1000, 1)} t`}
+              value={`${Math.round(totalFoodKg / 1000)} ${language === "en" ? "tons" : "toneladas"}`}
               label={copy.tonsDelivered}
-              detail={`${formatNumber(totalFoodKg, 2)} kg`}
+              detail={`${formatNumber(totalFoodKg)} kg`}
               expandLabel={copy.tapToExpand}
               onClick={() => handleStatClick("food")}
             />
@@ -1759,10 +1760,19 @@ export default function Reports() {
                     </p>
                   </div>
                   <div className="flex shrink-0 flex-wrap gap-2.5">
+                    <a
+                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-secondary !px-5 !py-2.5 !text-xs md:hidden"
+                    >
+                      <Eye size={15} />
+                      {language === "en" ? "Open PDF" : "Abrir infografía"}
+                    </a>
                     <button
                       type="button"
                       onClick={() => setShowFullscreen(true)}
-                      className="btn-secondary !px-5 !py-2.5 !text-xs"
+                      className="btn-secondary !hidden !px-5 !py-2.5 !text-xs md:!inline-flex"
                     >
                       <Eye size={15} />
                       {language === "en" ? "Fullscreen" : "Pantalla completa"}
@@ -1777,12 +1787,52 @@ export default function Reports() {
                     </a>
                   </div>
                 </div>
+
+                {/* Vista móvil adaptable: evita que el visor PDF interno deforme el ancho de la pantalla en celulares */}
+                <div className="flex flex-col items-center justify-center bg-gradient-to-b from-cream/70 to-white px-6 py-12 text-center md:hidden">
+                  <div className="grid h-16 w-16 place-items-center rounded-2xl bg-ember/10 text-ember shadow-sm">
+                    <FileText size={32} />
+                  </div>
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-ink">
+                    {selectedPeriod.months[language] ?? selectedPeriod.months.es}{" "}
+                    {selectedPeriod.year}
+                  </h3>
+                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-ember">
+                    {selectedDocumentLanguage === "es" ? copy.spanish : copy.english} · PDF
+                  </p>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600">
+                    {language === "en"
+                      ? "Open the infographic in your phone's full-screen reader to zoom comfortably without deforming the page, or download a copy."
+                      : "Abre la infografía en el lector de tu celular para hacer zoom cómodamente sin deformar la página, o descárgala directamente."}
+                  </p>
+                  <div className="mt-6 flex w-full max-w-xs flex-col gap-3">
+                    <a
+                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary w-full justify-center"
+                    >
+                      <Eye size={16} />
+                      {language === "en" ? "Open infographic" : "Ver infografía completa"}
+                    </a>
+                    <a
+                      href={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                      download
+                      className="btn-secondary w-full justify-center"
+                    >
+                      <Download size={16} />
+                      {language === "en" ? "Download PDF" : "Descargar PDF"}
+                    </a>
+                  </div>
+                </div>
+
+                {/* Visor embebido exclusivamente en pantallas medianas y grandes */}
                 <iframe
                   title={`${
                     selectedPeriod.months[language] ?? selectedPeriod.months.es
                   } ${selectedPeriod.year} — ${selectedDocumentLanguage}`}
-                  className="h-[76vh] min-h-[540px] max-h-[1080px] w-full bg-white"
-                  src={`${import.meta.env.BASE_URL}${selectedInfographic}`}
+                  className="hidden h-[76vh] min-h-[540px] max-h-[1080px] w-full bg-white md:block"
+                  src={`${import.meta.env.BASE_URL}${selectedInfographic}#view=FitH`}
                 />
               </>
             ) : (

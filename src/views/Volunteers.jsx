@@ -12,6 +12,7 @@ import {
   HeartPulse,
   Leaf,
   Maximize2,
+  MessageCircle,
   MessageSquareHeart,
   Pause,
   Play,
@@ -1451,6 +1452,19 @@ export default function Volunteers() {
                 {copy.ctaText}
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
+                <a
+                  href={`https://wa.me/522463307994?text=${encodeURIComponent(
+                    language === "en"
+                      ? "Hello! I would like to join as a volunteer at Trumpet Call Ministries."
+                      : "¡Hola! Me gustaría sumarme como voluntario en Trumpet Call Ministries."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#1ebe5d]"
+                >
+                  <MessageCircle size={18} className="fill-white/20" />
+                  {language === "en" ? "Join via WhatsApp" : "Sumarme por WhatsApp"}
+                </a>
                 <a href="#grupos" className="btn-primary">
                   <Users size={16} />
                   {copy.exploreGroups}

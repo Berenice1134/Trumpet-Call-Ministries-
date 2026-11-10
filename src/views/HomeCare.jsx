@@ -136,12 +136,11 @@ const galleryPhotoKeys = [
 
 const zonasPhotoKeys = ["homeVisitVolunteersBags"];
 
-// 1 foto por período (4 períodos), todas únicas
-const timelinePhotoKeys = [
-  "carBags",
-  "homeVisitTableSupport",
-  "homeVisitFamilyKitchen",
-  "homeFamily",
+const homeCareTimelineIcons = [
+  PackageCheck,
+  Calendar,
+  TrendingUp,
+  MapPinned,
 ];
 
 const impactPhotoKeys = ["pantryDisplay", "singlePantry"];
@@ -151,7 +150,6 @@ const activityPhotoKeys = ["twoBags", "elderPantry"];
 const heroPhotos = heroPhotoKeys.map(findPhoto).filter(Boolean);
 const galleryPhotos = galleryPhotoKeys.map(findPhoto).filter(Boolean);
 const zonasPhotos = zonasPhotoKeys.map(findPhoto).filter(Boolean);
-const timelinePhotos = timelinePhotoKeys.map(findPhoto).filter(Boolean);
 const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
 const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
 
@@ -577,13 +575,10 @@ export default function HomeCare() {
   const [showTimelineDetails, setShowTimelineDetails] = useState(false);
   const [showAllCommunities, setShowAllCommunities] = useState(false);
 
-  const getPhotoLabel = (photo) =>
-    photo ? t(`homeCare.photoLabels.${photo.key}`) : "";
-
   const activeTimelineItem =
     homeCareTimeline[activeTimelineIndex] ?? homeCareTimeline[0];
-  const activeTimelinePhoto =
-    timelinePhotos[activeTimelineIndex % timelinePhotos.length];
+  const ActiveTimelineIcon =
+    homeCareTimelineIcons[activeTimelineIndex % homeCareTimelineIcons.length];
   const timelineProgress =
     ((activeTimelineIndex + 1) / homeCareTimeline.length) * 100;
 
@@ -904,16 +899,65 @@ export default function HomeCare() {
             />
           </div>
 
-          {/* Tarjeta principal con fotografía protagonista completa */}
+          {/* Tarjeta principal con ícono protagonista (sin fotografías) */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <PhotoGrid
-                photos={activeTimelinePhoto ? [activeTimelinePhoto] : []}
-                getLabel={getPhotoLabel}
-                gridClassName="grid grid-cols-1"
-                itemClassName="h-[320px] sm:h-[400px] lg:h-[440px] w-full"
-                contain
+            <div className="relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[380px] sm:p-10 lg:col-span-7">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
+              <ActiveTimelineIcon
+                aria-hidden="true"
+                strokeWidth={1}
+                className="pointer-events-none absolute -bottom-10 -right-8 h-64 w-64 text-white/[0.06] sm:h-72 sm:w-72"
               />
+
+              <div className="relative z-10 flex items-start justify-between gap-4">
+                <span
+                  key={activeTimelineIndex}
+                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ember via-rose-500 to-amber-500 shadow-lg shadow-ember/30 sm:h-24 sm:w-24"
+                >
+                  <ActiveTimelineIcon size={40} strokeWidth={1.75} />
+                </span>
+                <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white ring-1 ring-white/15 backdrop-blur">
+                  {activeTimelineItem.stat}
+                </span>
+              </div>
+
+              <div className="relative z-10 mt-8">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-ember-light">
+                  {language === "en" ? "Stage" : "Etapa"} {String(activeTimelineIndex + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-6xl">
+                  {activeTimelineItem.period}
+                </p>
+
+                <div className="mt-7 flex flex-wrap gap-2.5">
+                  {homeCareTimeline.map((item, index) => {
+                    const DotIcon =
+                      homeCareTimelineIcons[index % homeCareTimelineIcons.length];
+                    const isActive = index === activeTimelineIndex;
+                    const isPast = index < activeTimelineIndex;
+                    return (
+                      <button
+                        key={`dot-${item.period}`}
+                        type="button"
+                        onClick={() => setActiveTimelineIndex(index)}
+                        aria-label={item.period}
+                        title={`${item.period} · ${item.stat}`}
+                        className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
+                          isActive
+                            ? "scale-105 bg-white text-ember shadow-lg"
+                            : isPast
+                              ? "bg-ember/30 text-white hover:bg-ember/50"
+                              : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                        }`}
+                      >
+                        <DotIcon size={15} />
+                        <span>{item.period}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             <div className="soft-card flex flex-col justify-between lg:col-span-5">

@@ -82,16 +82,8 @@ const homeCarePhotos = [
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`,
   },
   {
-    key: "homeVisitConversation",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-03.jpeg`,
-  },
-  {
     key: "homeVisitFamilyKitchen",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg`,
-  },
-  {
-    key: "homeVisitPrayerCare",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg`,
   },
   {
     key: "homeVisitVolunteersBags",
@@ -118,7 +110,7 @@ const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
    ============================================================ */
 const heroPhotoKeys = [
   "homeVisitElderlyWomanBag",
-  "homeVisitPrayerCare",
+  "homeVisitTableSupport",
   "familySupport",
   "homeVisitChildMilk",
   "carTeam",
@@ -126,7 +118,7 @@ const heroPhotoKeys = [
 ];
 
 const galleryPhotoKeys = [
-  "homeVisitConversation",
+  "carBags",
   "personalDelivery",
   "tablePantry",
   "homeVisitFamilyBag",
@@ -636,15 +628,15 @@ export default function HomeCare() {
               <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={
-                    findPhoto("homeVisitLivingRoomTeam")?.src ??
-                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg`
+                    findPhoto("homeVisitTableSupport")?.src ??
+                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`
                   }
-                  alt={t("homeCare.photoLabels.homeVisitLivingRoomTeam")}
+                  alt={t("homeCare.photoLabels.homeVisitTableSupport")}
                   className="h-full w-full object-cover object-center"
                 />
                 <div className="photo-overlay" />
                 <figcaption className="absolute bottom-4 left-5 right-5 text-sm font-semibold text-white/95">
-                  {t("homeCare.photoLabels.homeVisitLivingRoomTeam")}
+                  {t("homeCare.photoLabels.homeVisitTableSupport")}
                 </figcaption>
               </figure>
             </div>

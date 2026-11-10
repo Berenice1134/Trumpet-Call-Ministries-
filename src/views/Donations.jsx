@@ -347,7 +347,7 @@ export default function Donations() {
       description: t("donations.homeText"),
       amount: "$250",
       subtitle: copy.perMonth,
-      image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg"),
+      image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg"),
       imageAlt:
         language === "en"
           ? "Monthly home care pantry delivery"

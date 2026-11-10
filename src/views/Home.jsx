@@ -701,7 +701,7 @@ export default function Home() {
                 </figure>
                 <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
-                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
+                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
                     alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
                     className="h-full w-full object-cover object-center"
                   />
@@ -1268,7 +1268,7 @@ export default function Home() {
 
             <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
-                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-05.jpeg")}
+                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg")}
                 alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}
                 loading="lazy"
                 className="h-full w-full object-cover object-center"

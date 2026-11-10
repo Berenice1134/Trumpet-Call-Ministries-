@@ -159,7 +159,7 @@ export default function Navbar() {
         {/* Mantiene el logotipo visible en móvil y oculta el nombre cuando falta espacio horizontal. */}
         <NavLink
           to="/"
-          className="flex min-w-0 items-center gap-2 sm:gap-3"
+          className="flex shrink-0 items-center gap-2 sm:gap-2.5"
           onClick={() => setIsOpen(false)}
         >
           {/* El contenedor no se contrae para conservar la proporción del logotipo. */}
@@ -168,30 +168,30 @@ export default function Navbar() {
               src={`${import.meta.env.BASE_URL}assets/tcm-logo.jpeg`}
               alt={t("brand")}
               /* La altura escala por breakpoint; el ancho automático conserva la proporción original. */
-              className="h-11 w-auto object-contain sm:h-14 lg:h-16"
+              className="h-10 w-auto object-contain sm:h-12 xl:h-14"
             />
           </span>
           
           {/* La marca textual se habilita desde el breakpoint sm para priorizar controles en móvil. */}
-          <span className="hidden font-display text-lg font-semibold leading-tight text-ink sm:block xl:text-xl">
+          <span className="hidden whitespace-nowrap font-display text-base font-semibold leading-tight text-ink sm:block lg:text-[15px] xl:text-lg">
             {t("brand")}
           </span>
         </NavLink>
 
-        <div className="hidden items-center gap-0.5 lg:flex">
+        <div className="hidden items-center gap-0.5 lg:flex xl:gap-1">
           {menuGroups.map((group) => {
             const isCurrent = location.pathname === group.path || (group.path === "/misiones" && location.pathname === "/hospital-infantil");
             return (
-            <div key={group.label} className="group relative">
+            <div key={group.label} className="group relative shrink-0">
               <button
                 type="button"
                 onClick={() => navigate(group.path)}
-                className={`inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold transition hover:bg-slate-100 hover:text-ember ${isCurrent ? "bg-rose-50 text-ember" : "text-slate-700"}`}
+                className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-[13.5px] font-semibold leading-none transition hover:bg-slate-100 hover:text-ember xl:px-3.5 xl:text-[14.5px] ${isCurrent ? "bg-rose-50 text-ember" : "text-slate-700"}`}
               >
-                {group.label}
+                <span>{group.label}</span>
                 <ChevronDown
-                  size={14}
-                  className="opacity-60 transition group-hover:rotate-180"
+                  size={13}
+                  className="shrink-0 opacity-60 transition group-hover:rotate-180"
                 />
               </button>
               <div className="pointer-events-none absolute left-0 top-full min-w-64 translate-y-2 pt-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
@@ -215,12 +215,12 @@ export default function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2 xl:gap-2.5">
           {/* Selector de idioma moderno tipo píldora segmentada (sin <select> nativo) */}
           <div
             role="group"
             aria-label="Language selector"
-            className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 p-0.5"
+            className="inline-flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-100 p-0.5"
           >
             {["es", "en"].map((lang) => {
               const active = language === lang;
@@ -230,7 +230,7 @@ export default function Navbar() {
                   type="button"
                   onClick={() => setLanguage(lang)}
                   aria-pressed={active}
-                  className={`rounded-full px-2.5 py-1 text-xs font-bold uppercase transition ${
+                  className={`rounded-full px-2.5 py-1 text-[12px] font-bold uppercase leading-none transition ${
                     active
                       ? "bg-ink text-white shadow-sm"
                       : "text-slate-600 hover:text-ink"
@@ -244,10 +244,10 @@ export default function Navbar() {
           <NavLink
             to="/donaciones#donaciones"
             onClick={() => setIsOpen(false)}
-            className="hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-4 py-2 text-sm font-bold text-white shadow-md shadow-ember/25 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ember/35 sm:inline-flex"
+            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-4 py-2.5 text-[13.5px] font-bold leading-none text-white shadow-md shadow-ember/25 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ember/35 sm:inline-flex xl:px-5 xl:text-[14px]"
           >
-            <Heart size={15} className="fill-white" />
-            {t("common.donateNow")}
+            <Heart size={14} className="shrink-0 fill-white" />
+            <span>{t("common.donateNow")}</span>
           </NavLink>
           <button
             type="button"

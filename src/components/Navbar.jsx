@@ -244,9 +244,9 @@ export default function Navbar() {
           <NavLink
             to="/donaciones#donaciones"
             onClick={() => setIsOpen(false)}
-            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-4 py-2.5 text-[13.5px] font-bold leading-none text-white shadow-md shadow-ember/25 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ember/35 sm:inline-flex xl:px-5 xl:text-[14px]"
+            className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-5 py-3 text-[15px] font-bold leading-none text-white shadow-lg shadow-ember/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ember/40 sm:inline-flex xl:px-6 xl:py-3.5"
           >
-            <Heart size={14} className="shrink-0 fill-white" />
+            <Heart size={16} className="shrink-0 fill-white" />
             <span>{t("common.donateNow")}</span>
           </NavLink>
           <button

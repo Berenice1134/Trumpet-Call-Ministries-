@@ -117,21 +117,21 @@ const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
    Selecciones derivadas por sección; cada clave se asigna a una sola colección.
    ============================================================ */
 const heroPhotoKeys = [
-  "homeVisitElderlyWomanBag",
   "homeVisitDoorwayCare",
   "homeVisitWheelchairCare",
+  "homeFamily",
+  "homeVisitElderlyWomanBag",
   "homeVisitChildMilk",
-  "familySupport",
   "carTeam",
 ];
 
 const galleryPhotoKeys = [
+  "homeVisitPantryTable",
   "homeFamily",
-  "personalDelivery",
-  "tablePantry",
+  "homeVisitDoorwayCare",
+  "homeVisitWheelchairCare",
   "homeVisitFamilyBag",
   "outdoorFamily",
-  "homeVisitFlorDelivery",
 ];
 
 const zonasPhotoKeys = ["homeVisitVolunteersBags"];

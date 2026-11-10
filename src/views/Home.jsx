@@ -38,7 +38,7 @@ const dashboardItems = [
     to: "/servicio-domiciliar",
     key: "homeCare",
     icon: HomeIcon,
-    image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg"),
+    image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg"),
   },
   {
     to: "/misiones",
@@ -701,9 +701,9 @@ export default function Home() {
                 </figure>
                 <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
-                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-07.jpeg")}
+                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-12.jpeg")}
                     alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full object-cover object-top"
                   />
                 </figure>
               </div>

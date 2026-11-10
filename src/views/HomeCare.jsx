@@ -71,15 +71,11 @@ const homeCarePhotos = [
   },
   {
     key: "homeFamily",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-12.png`,
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-11.jpeg`,
   },
   {
     key: "homeVisitElderlyWomanBag",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-01.jpeg`,
-  },
-  {
-    key: "homeVisitTableSupport",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`,
   },
   {
     key: "homeVisitFamilyKitchen",
@@ -101,6 +97,18 @@ const homeCarePhotos = [
     key: "homeVisitFlorDelivery",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg`,
   },
+  {
+    key: "homeVisitPantryTable",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`,
+  },
+  {
+    key: "homeVisitDoorwayCare",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-12.jpeg`,
+  },
+  {
+    key: "homeVisitWheelchairCare",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-13.jpeg`,
+  },
 ];
 
 const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
@@ -110,15 +118,15 @@ const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
    ============================================================ */
 const heroPhotoKeys = [
   "homeVisitElderlyWomanBag",
-  "homeVisitTableSupport",
-  "familySupport",
+  "homeVisitDoorwayCare",
+  "homeVisitWheelchairCare",
   "homeVisitChildMilk",
+  "familySupport",
   "carTeam",
-  "coupleVisit",
 ];
 
 const galleryPhotoKeys = [
-  "carBags",
+  "homeFamily",
   "personalDelivery",
   "tablePantry",
   "homeVisitFamilyBag",
@@ -628,15 +636,15 @@ export default function HomeCare() {
               <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={
-                    findPhoto("homeVisitTableSupport")?.src ??
-                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg`
+                    findPhoto("homeVisitPantryTable")?.src ??
+                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`
                   }
-                  alt={t("homeCare.photoLabels.homeVisitTableSupport")}
-                  className="h-full w-full object-cover object-center"
+                  alt={t("homeCare.photoLabels.homeVisitPantryTable")}
+                  className="h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
                 <figcaption className="absolute bottom-4 left-5 right-5 text-sm font-semibold text-white/95">
-                  {t("homeCare.photoLabels.homeVisitTableSupport")}
+                  {t("homeCare.photoLabels.homeVisitPantryTable")}
                 </figcaption>
               </figure>
             </div>

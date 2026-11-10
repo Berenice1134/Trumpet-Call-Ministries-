@@ -183,6 +183,9 @@ export const translations = {
         homeVisitChildMilk: "A child receiving food at home",
         homeVisitFamilyBag: "Beneficiary family with a pantry bag",
         homeVisitFlorDelivery: "Volunteer carrying pantry bags",
+        homeVisitPantryTable: "Food pantry delivered with care at home",
+        homeVisitDoorwayCare: "Personal visit and accompaniment at home",
+        homeVisitWheelchairCare: "Home visit and support for a beneficiary with disability",
       },
       carousel: [
         {
@@ -581,6 +584,9 @@ export const translations = {
         homeVisitChildMilk: "Niña recibiendo alimento en casa",
         homeVisitFamilyBag: "Familia beneficiaria con despensa",
         homeVisitFlorDelivery: "Voluntaria llevando despensas",
+        homeVisitPantryTable: "Entrega de despensa y acompañamiento en el hogar",
+        homeVisitDoorwayCare: "Visita personal y escucha en el hogar",
+        homeVisitWheelchairCare: "Acompañamiento domiciliar a beneficiario con discapacidad",
       },
       carousel: [
         {

@@ -72,8 +72,8 @@ const infographicPeriods = [
 
 const donorSources2026 = [
   { key: "mexico", value: 37, color: "from-ink to-ministry-blue", hex: "#0A1E3C", icon: Globe, description: "Donaciones desde México" },
-  { key: "englishCenter", value: 2, color: "from-ministry-teal to-teal-600", hex: "#06B6D4", icon: GraduationCap, description: "Ingresos del English Center" },
-  { key: "usd", value: 55, color: "from-ember to-ember-dark", hex: "#E11D48", icon: Building2, description: "Donaciones en USD" },
+  { key: "englishCenter", value: 2, color: "from-ministry-teal to-cyan-600", hex: "#06B6D4", icon: GraduationCap, description: "Ingresos del English Center" },
+  { key: "usd", value: 55, color: "from-ministry-blue to-sky-500", hex: "#0284C7", icon: Building2, description: "Donaciones en USD" },
   { key: "kermes", value: 6, color: "from-amber-400 to-amber-600", hex: "#F59E0B", icon: Heart, description: "Recaudación por kermés" },
 ];
 
@@ -81,8 +81,8 @@ const hospitalDonationMix = [
   {
     key: "hygieneKits",
     value: 30,
-    color: "from-violet-600 to-purple-700",
-    hex: "#7C3AED",
+    color: "from-ink to-ministry-blue",
+    hex: "#0A1E3C",
     icon: PackageCheck,
     description: {
       es: "Kits de higiene y aseo personal para pacientes",
@@ -92,8 +92,8 @@ const hospitalDonationMix = [
   {
     key: "medicalSupplies",
     value: 26,
-    color: "from-ember to-ember-dark",
-    hex: "#E11D48",
+    color: "from-ministry-blue to-sky-500",
+    hex: "#0284C7",
     icon: ClipboardList,
     description: {
       es: "Insumos y material médico para tratamiento",
@@ -103,8 +103,8 @@ const hospitalDonationMix = [
   {
     key: "treatmentClothing",
     value: 18,
-    color: "from-ministry-blue to-sky-600",
-    hex: "#0284C7",
+    color: "from-ministry-teal to-cyan-600",
+    hex: "#06B6D4",
     icon: Heart,
     description: {
       es: "Pijamas, ropa cómoda y calzado para sesiones en el hospital",
@@ -125,8 +125,8 @@ const hospitalDonationMix = [
   {
     key: "activities",
     value: 12,
-    color: "from-emerald-500 to-teal-600",
-    hex: "#10B981",
+    color: "from-sky-400 to-ministry-blue",
+    hex: "#38BDF8",
     icon: Sparkles,
     description: {
       es: "Actividades recreativas y acompañamiento a los niños",
@@ -661,7 +661,7 @@ function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, second
                       <span
                         className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
                           delta >= 0
-                            ? "bg-emerald-50 text-emerald-700"
+                            ? "bg-ministry-sky text-ministry-blue"
                             : "bg-amber-50 text-amber-800"
                         }`}
                       >
@@ -803,8 +803,8 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel, t
         >
           <defs>
             <linearGradient id="barGradWarm" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#E11D48" stopOpacity="0.92" />
-              <stop offset="100%" stopColor="#FB7185" stopOpacity="0.45" />
+              <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.92" />
+              <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.45" />
             </linearGradient>
             <linearGradient id="areaGradWarm" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="#0A1E3C" stopOpacity="0.22" />
@@ -875,7 +875,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel, t
               x2={xFor(activeIndex)}
               y1={padT}
               y2={padT + innerH}
-              stroke="#E11D48"
+              stroke="#0284C7"
               strokeWidth="1.5"
               strokeDasharray="4 4"
               opacity="0.7"
@@ -899,7 +899,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel, t
                   cx={x}
                   cy={y}
                   r={isActive ? 4.5 : 2.5}
-                  fill="#E11D48"
+                  fill="#F59E0B"
                   className="transition-all duration-300"
                 />
               </g>
@@ -1145,7 +1145,7 @@ function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
     <span className="flex items-center gap-5">
       <span className="relative h-24 w-24 shrink-0">
         <svg viewBox="0 0 100 100" className="-rotate-90">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#F3EADF" strokeWidth="14" />
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#E0F2FE" strokeWidth="14" />
           {items.map((item, i) => {
             const before =
               (items.slice(0, i).reduce((s, d) => s + d.value, 0) / total) * 100;
@@ -1238,7 +1238,7 @@ function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
         <div className="mt-6 grid gap-8 sm:grid-cols-[220px_1fr] sm:items-center">
           <div className="relative mx-auto h-52 w-52">
             <svg viewBox="0 0 100 100" className="-rotate-90">
-              <circle cx="50" cy="50" r={radius} fill="none" stroke="#F3EADF" strokeWidth="12" />
+              <circle cx="50" cy="50" r={radius} fill="none" stroke="#E0F2FE" strokeWidth="12" />
               {segments.map((s) => {
                 const gap = 1.5;
                 const isSelected = selectedKey === s.key;

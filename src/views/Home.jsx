@@ -141,7 +141,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "12 familias",
       icon: "🌟",
-      color: "from-emerald-400 to-emerald-600",
+      color: "from-ministry-teal to-ministry-blue",
     },
     {
       year: "Junio 2021",
@@ -154,7 +154,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "English Center",
       icon: "📚",
-      color: "from-blue-400 to-blue-600",
+      color: "from-ministry-blue to-ink",
     },
     {
       year: "Julio 2021",
@@ -167,7 +167,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Loma Bonita",
       icon: "🏠",
-      color: "from-teal-400 to-teal-600",
+      color: "from-ministry-teal to-cyan-600",
     },
     {
       year: "Agosto 2021",
@@ -180,7 +180,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "English Center",
       icon: "🎓",
-      color: "from-indigo-400 to-indigo-600",
+      color: "from-ink to-ministry-blue",
     },
     {
       year: "Octubre 2021",
@@ -193,7 +193,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "3 voluntarias",
       icon: "🤝",
-      color: "from-purple-400 to-purple-600",
+      color: "from-sky-400 to-ministry-blue",
     },
     {
       year: "Enero 2022",
@@ -206,7 +206,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Donadores USA",
       icon: "🇺🇸",
-      color: "from-red-400 to-red-600",
+      color: "from-ministry-blue to-ministry-teal",
     },
     {
       year: "Julio 2023",
@@ -219,7 +219,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "47 familias",
       icon: "🚐",
-      color: "from-orange-400 to-orange-600",
+      color: "from-amber-400 to-ministry-gold",
     },
     {
       year: "Agosto 2023",
@@ -245,7 +245,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Donación mensual",
       icon: "🎄",
-      color: "from-rose-400 to-rose-600",
+      color: "from-ministry-teal to-sky-500",
     },
     {
       year: "Febrero 2025",
@@ -258,7 +258,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "35 familias",
       icon: "💚",
-      color: "from-green-400 to-green-600",
+      color: "from-ministry-teal to-ministry-blue",
     },
     {
       year: "Marzo 2025",
@@ -284,7 +284,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Hospital Infantil",
       icon: "🏥",
-      color: "from-pink-400 to-pink-600",
+      color: "from-sky-400 to-ministry-blue",
     },
     {
       year: "Marzo 2026",
@@ -297,7 +297,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Loma Bonita",
       icon: "🍲",
-      color: "from-yellow-400 to-yellow-600",
+      color: "from-yellow-400 to-amber-500",
     },
     {
       year: "Julio 2026",
@@ -310,7 +310,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "5 años de servicio",
       icon: "🎉",
-      color: "from-fuchsia-400 to-fuchsia-600",
+      color: "from-ministry-blue to-ministry-teal",
     },
   ],
   en: [
@@ -325,7 +325,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "12 beneficiaries",
       icon: "🌟",
-      color: "from-emerald-400 to-emerald-600",
+      color: "from-ministry-teal to-ministry-blue",
     },
     {
       year: "June 2021",
@@ -338,7 +338,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "English Center",
       icon: "📚",
-      color: "from-blue-400 to-blue-600",
+      color: "from-ministry-blue to-ink",
     },
     {
       year: "July 2021",
@@ -351,7 +351,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Loma Bonita",
       icon: "🏠",
-      color: "from-teal-400 to-teal-600",
+      color: "from-ministry-teal to-cyan-600",
     },
     {
       year: "August 2021",
@@ -364,7 +364,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "First center",
       icon: "🎓",
-      color: "from-indigo-400 to-indigo-600",
+      color: "from-ink to-ministry-blue",
     },
     {
       year: "October 2021",
@@ -377,7 +377,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "3 volunteers",
       icon: "🤝",
-      color: "from-purple-400 to-purple-600",
+      color: "from-sky-400 to-ministry-blue",
     },
     {
       year: "January 2022",
@@ -390,7 +390,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "USA donors",
       icon: "🇺🇸",
-      color: "from-red-400 to-red-600",
+      color: "from-ministry-blue to-ministry-teal",
     },
     {
       year: "July 2023",
@@ -403,7 +403,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "47 families",
       icon: "🚐",
-      color: "from-orange-400 to-orange-600",
+      color: "from-amber-400 to-ministry-gold",
     },
     {
       year: "August 2023",
@@ -429,7 +429,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Monthly donor",
       icon: "🎄",
-      color: "from-rose-400 to-rose-600",
+      color: "from-ministry-teal to-sky-500",
     },
     {
       year: "February 2025",
@@ -442,7 +442,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "35 families",
       icon: "💚",
-      color: "from-green-400 to-green-600",
+      color: "from-ministry-teal to-ministry-blue",
     },
     {
       year: "March 2025",
@@ -468,7 +468,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Children's Hospital",
       icon: "🏥",
-      color: "from-pink-400 to-pink-600",
+      color: "from-sky-400 to-ministry-blue",
     },
     {
       year: "March 2026",
@@ -481,7 +481,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "Loma Bonita",
       icon: "🍲",
-      color: "from-yellow-400 to-yellow-600",
+      color: "from-yellow-400 to-amber-500",
     },
     {
       year: "July 2026",
@@ -494,7 +494,7 @@ const ministryTimelineByLanguage = {
       ],
       stat: "5 years of service",
       icon: "🎉",
-      color: "from-fuchsia-400 to-fuchsia-600",
+      color: "from-ministry-blue to-ministry-teal",
     },
   ],
 };
@@ -1122,7 +1122,7 @@ export default function Home() {
                   className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition ${
                     isActive
                       ? "bg-ember text-white shadow-md shadow-ember/25"
-                      : "bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-ember"
+                      : "bg-slate-100 text-slate-600 hover:bg-ministry-sky hover:text-ministry-blue"
                   }`}
                 >
                   <PillIcon size={14} />
@@ -1134,7 +1134,7 @@ export default function Home() {
 
           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-ember to-amber-500 transition-all duration-500"
+              className="h-full rounded-full bg-gradient-to-r from-ministry-blue via-ministry-teal to-ministry-gold transition-all duration-500"
               style={{ width: `${timelineProgress}%` }}
             />
           </div>
@@ -1153,7 +1153,7 @@ export default function Home() {
               <div className="relative z-10 flex items-start justify-between gap-4">
                 <span
                   key={activeTimelineIndex}
-                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ember via-rose-500 to-amber-500 shadow-lg shadow-ember/30 sm:h-24 sm:w-24"
+                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 shadow-lg shadow-ministry-blue/30 sm:h-24 sm:w-24"
                 >
                   <ActiveTimelineIcon size={40} strokeWidth={1.75} />
                 </span>

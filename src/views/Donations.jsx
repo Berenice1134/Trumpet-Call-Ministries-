@@ -624,8 +624,8 @@ export default function Donations() {
                           >
                             {copiedField === `account-${index}` ? (
                               <>
-                                <Check size={14} className="text-emerald-600" />
-                                <span className="text-emerald-700">{copy.copied}</span>
+                                <Check size={14} className="text-ministry-teal" />
+                                <span className="text-ministry-blue">{copy.copied}</span>
                               </>
                             ) : (
                               <>
@@ -653,8 +653,8 @@ export default function Donations() {
                           >
                             {copiedField === `clabe-${index}` ? (
                               <>
-                                <Check size={14} className="text-emerald-600" />
-                                <span className="text-emerald-700">{copy.copied}</span>
+                                <Check size={14} className="text-ministry-teal" />
+                                <span className="text-ministry-blue">{copy.copied}</span>
                               </>
                             ) : (
                               <>
@@ -680,12 +680,12 @@ export default function Donations() {
                             onClick={() =>
                               copyToClipboard(selectedConcept, `concept-${index}`, false)
                             }
-                            className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3.5 py-1.5 text-xs font-bold text-ember transition hover:bg-ember hover:text-white"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-ministry-sky px-3.5 py-1.5 text-xs font-bold text-ember transition hover:bg-ember hover:text-white"
                           >
                             {copiedField === `concept-${index}` ? (
                               <>
-                                <Check size={14} className="text-emerald-600" />
-                                <span className="text-emerald-700">{copy.copied}</span>
+                                <Check size={14} className="text-ministry-teal" />
+                                <span className="text-ministry-blue">{copy.copied}</span>
                               </>
                             ) : (
                               <>
@@ -729,7 +729,7 @@ export default function Donations() {
                                 onClick={() => setSelectedSupport(option.value)}
                                 className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm font-bold transition ${
                                   isSelected
-                                    ? "border-ember bg-rose-50/80 text-ink shadow-sm ring-1 ring-ember"
+                                    ? "border-ember bg-ministry-sky/60 text-ink shadow-sm ring-1 ring-ember"
                                     : "border-slate-200 bg-slate-50/60 text-slate-700 hover:border-ember/40 hover:bg-white"
                                 }`}
                               >
@@ -758,7 +758,7 @@ export default function Donations() {
                         className="btn-secondary w-full"
                       >
                         {copiedField === "transfer-details" ? (
-                          <Check size={18} className="text-emerald-600" />
+                          <Check size={18} className="text-ministry-teal" />
                         ) : (
                           <Share2 size={18} />
                         )}
@@ -775,7 +775,7 @@ export default function Donations() {
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#1ebe5d]"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ministry-teal px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-ministry-blue"
                       >
                         <MessageCircle size={18} className="fill-white/20" />
                         {language === "en"
@@ -909,7 +909,7 @@ export default function Donations() {
                 <button
                   type="button"
                   onClick={() => setIsLetterExpanded((prev) => !prev)}
-                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-rose-50 px-5 py-2.5 text-sm font-bold text-ember transition hover:bg-ember hover:text-white"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-ministry-sky px-5 py-2.5 text-sm font-bold text-ember transition hover:bg-ember hover:text-white"
                 >
                   {isLetterExpanded ? copy.readLessLetter : copy.readFullLetter}
                   <ChevronDown

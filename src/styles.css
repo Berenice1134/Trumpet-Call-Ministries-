@@ -107,7 +107,7 @@ select {
 
 /* Botones de llamada a la acción. */
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-ember/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ember/45 focus:outline-none focus-visible:ring-4 focus-visible:ring-ember/30;
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ministry-blue via-ministry-teal to-sky-400 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-ministry-blue/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ministry-teal/45 focus:outline-none focus-visible:ring-4 focus-visible:ring-ministry-teal/30;
 }
 
 .btn-secondary {

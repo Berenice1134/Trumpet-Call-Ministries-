@@ -43,7 +43,7 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-ink text-white">
-      <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-ember/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-ministry-teal/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-24 h-96 w-96 rounded-full bg-ministry-blue/25 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-14 sm:px-6 lg:px-8">
@@ -115,7 +115,7 @@ export default function Footer() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-[#1ebe5d]"
+                className="inline-flex items-center gap-2 rounded-full bg-ministry-teal px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-ministry-blue"
               >
                 <MessageCircle size={16} className="fill-white/20" />
                 {language === "en" ? "Chat on WhatsApp" : "Escribir por WhatsApp"}

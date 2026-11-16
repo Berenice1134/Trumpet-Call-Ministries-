@@ -913,7 +913,7 @@ export default function HomeCare() {
               <div className="relative z-10 flex items-start justify-between gap-4">
                 <span
                   key={activeTimelineIndex}
-                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ember via-rose-500 to-amber-500 shadow-lg shadow-ember/30 sm:h-24 sm:w-24"
+                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 shadow-lg shadow-ministry-blue/30 sm:h-24 sm:w-24"
                 >
                   <ActiveTimelineIcon size={40} strokeWidth={1.75} />
                 </span>

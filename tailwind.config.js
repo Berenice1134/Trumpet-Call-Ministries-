@@ -4,24 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Azul real profundo y rico para textos principales y bloques de alto impacto.
+        // Azul marino profundo del ministerio para textos principales y bloques de alto impacto.
         ink: "#0A1E3C",
         ministry: {
+          navy: "#0A1E3C",
           blue: "#0284C7",
           teal: "#06B6D4",
           gold: "#F59E0B",
-          red: "#E11D48",
+          yellow: "#FACC15",
           mist: "#F0F9FF",
           sky: "#E0F2FE",
         },
-        // Fondos luminosos que hacen destacar las fotografías a todo color.
+        // Fondos luminosos en tonos azul cielo muy suave.
         cream: "#F8FAFC",
-        sand: "#EFF6FF",
-        // Acento emocional vibrante (carmesí/coral corazón) para despertar empatía y acción.
+        sand: "#E0F2FE",
+        // Acentos principales mapeados a la paleta oficial (azul cielo, amarillo y azul marino).
         ember: {
-          DEFAULT: "#E11D48",
-          light: "#FB7185",
-          dark: "#BE123C",
+          DEFAULT: "#0284C7",
+          light: "#FACC15",
+          dark: "#0369A1",
         },
       },
       fontFamily: {

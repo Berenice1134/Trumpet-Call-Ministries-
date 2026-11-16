@@ -26,7 +26,7 @@ export default function BackToTop() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex h-12 items-center gap-2.5 rounded-full bg-[#25D366] px-4 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#1ebe5d]"
+        className="group flex h-12 items-center gap-2.5 rounded-full bg-ministry-teal px-4 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-ministry-blue"
         aria-label={isEnglish ? "Contact via WhatsApp" : "Contactar por WhatsApp"}
       >
         <MessageCircle size={22} className="fill-white/20 shrink-0" />

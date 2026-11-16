@@ -99,7 +99,7 @@ const volunteerGroups = [
       "English Center Tlaxcala began in June 2021 to empower Mexican students through English learning. 100% of its profits support food purchases and care for families in crisis.",
     stats: ["Cada medio año", "Estudiantes", "Empaque de despensas"],
     statsEn: ["Every six months", "Students", "Pantry packing"],
-    color: "from-blue-500 to-indigo-600",
+    color: "from-ministry-blue to-ink",
     photos: [
       { key: "ec1", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg` },
       { key: "ec2", src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-01.jpeg` },
@@ -127,7 +127,7 @@ const volunteerGroups = [
       "Their service reminds visitors that the ministry does more than deliver food: it also offers prayer, listening, and accompaniment to those in need.",
     stats: ["Fe en acción", "Apoyo comunitario", "Oración"],
     statsEn: ["Faith in action", "Community support", "Prayer"],
-    color: "from-emerald-500 to-teal-600",
+    color: "from-ministry-teal to-ministry-blue",
     photos: [
       { key: "sd1", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg` },
       { key: "sd2", src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-02.jpeg` },
@@ -156,7 +156,7 @@ const volunteerGroups = [
       "Their story shows how God can form teams through simple relationships: friendships that grow, become organized, and end up carrying hope to other families.",
     stats: ["Amistad", "Convivencia", "Grupo oficial"],
     statsEn: ["Friendship", "Fellowship", "Official group"],
-    color: "from-amber-400 to-orange-500",
+    color: "from-amber-400 to-ministry-gold",
     photos: [
       { key: "l1", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg` },
       { key: "l2", src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-02.jpeg` },
@@ -185,7 +185,7 @@ const volunteerGroups = [
       "Their participation connects material help with spiritual encouragement, reminding each family that the church can also be present through prayer, care, and companionship in difficult seasons.",
     stats: ["Evangelio", "Ánimo", "Acompañamiento"],
     statsEn: ["Gospel", "Encouragement", "Accompaniment"],
-    color: "from-sky-500 to-indigo-600",
+    color: "from-sky-400 to-ministry-blue",
     photos: [
       { key: "mv1", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg` },
       { key: "mv2", src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-02.jpeg` },
@@ -212,7 +212,7 @@ const volunteerGroups = [
       "The ministry accompanies widows, orphans, people with disabilities, abandoned older adults, vulnerable families, and people facing chronic illness or temporary crisis.",
     stats: ["Reciprocidad", "Comunidad", "Esperanza compartida"],
     statsEn: ["Reciprocity", "Community", "Shared hope"],
-    color: "from-fuchsia-500 to-rose-600",
+    color: "from-ministry-teal to-cyan-600",
     photos: [
       { key: "bv1", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg` },
       { key: "bv2", src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg` },
@@ -239,7 +239,7 @@ const testimonialGroups = [
     titleEn: "Volunteers",
     eyebrow: "Servir con amor",
     eyebrowEn: "Serving with love",
-    accent: "from-blue-500 to-indigo-600",
+    accent: "from-ministry-blue to-ink",
     photo: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`,
     icon: HeartHandshake,
     quotes: [
@@ -260,7 +260,7 @@ const testimonialGroups = [
     titleEn: "Beneficiaries",
     eyebrow: "Esperanza en casa",
     eyebrowEn: "Hope at home",
-    accent: "from-emerald-500 to-teal-600",
+    accent: "from-ministry-teal to-ministry-blue",
     photo: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-08.jpeg`,
     icon: Users,
     quotes: [
@@ -311,7 +311,7 @@ const testimonialGroups = [
     titleEn: "Donors",
     eyebrow: "Generosidad que multiplica",
     eyebrowEn: "Generosity that multiplies",
-    accent: "from-amber-400 to-orange-500",
+    accent: "from-amber-400 to-ministry-gold",
     photo: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`,
     icon: HandHeart,
     quotes: [
@@ -810,7 +810,7 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
         <div className="relative z-10 my-6 flex flex-col items-center text-center">
           <div
             key={activeQuote.name}
-            className="gallery-photo-enter grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-ember via-rose-500 to-amber-500 font-display text-4xl font-bold text-white shadow-xl shadow-ember/30 ring-4 ring-white/15 sm:h-28 sm:w-28 sm:text-5xl"
+            className="gallery-photo-enter grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 font-display text-4xl font-bold text-white shadow-xl shadow-ministry-blue/30 ring-4 ring-white/15 sm:h-28 sm:w-28 sm:text-5xl"
           >
             {activeQuote.name.charAt(0).toUpperCase()}
           </div>
@@ -856,7 +856,7 @@ const TestimonialGroup = ({ group, copy, language, onOpenTestimonial }) => {
         <div>
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/5 pb-4">
             <div className="flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-ember to-rose-500 font-display text-lg font-bold text-white shadow-sm">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-ministry-blue to-ministry-teal font-display text-lg font-bold text-white shadow-sm">
                 {activeQuote.name.charAt(0).toUpperCase()}
               </div>
               <div>
@@ -1466,7 +1466,7 @@ export default function Volunteers() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#1ebe5d]"
+                  className="inline-flex items-center gap-2 rounded-full bg-ministry-teal px-6 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-ministry-blue"
                 >
                   <MessageCircle size={18} className="fill-white/20" />
                   {language === "en" ? "Join via WhatsApp" : "Sumarme por WhatsApp"}

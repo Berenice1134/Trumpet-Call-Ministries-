@@ -186,7 +186,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => navigate(group.path)}
-                className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-[13.5px] font-semibold leading-none transition hover:bg-slate-100 hover:text-ember xl:px-3.5 xl:text-[14.5px] ${isCurrent ? "bg-rose-50 text-ember" : "text-slate-700"}`}
+                className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-[13.5px] font-semibold leading-none transition hover:bg-ministry-mist hover:text-ministry-blue xl:px-3.5 xl:text-[14.5px] ${isCurrent ? "bg-ministry-sky text-ministry-blue" : "text-slate-700"}`}
               >
                 <span>{group.label}</span>
                 <ChevronDown
@@ -203,7 +203,7 @@ export default function Navbar() {
                     onClick={(event) =>
                       handleAnchorClick(event, group.path, item.id)
                     }
-                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-rose-50 hover:text-ember"
+                    className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-ministry-sky/60 hover:text-ministry-blue"
                   >
                     {item.label}
                   </a>
@@ -244,9 +244,9 @@ export default function Navbar() {
           <NavLink
             to="/donaciones#donaciones"
             onClick={() => setIsOpen(false)}
-            className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-ember via-rose-500 to-amber-500 px-5 py-3 text-[15px] font-bold leading-none text-white shadow-lg shadow-ember/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ember/40 sm:inline-flex xl:px-6 xl:py-3.5"
+            className="hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-ministry-blue via-ministry-teal to-sky-400 px-5 py-3 text-[15px] font-bold leading-none text-white shadow-lg shadow-ministry-blue/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ministry-teal/40 sm:inline-flex xl:px-6 xl:py-3.5"
           >
-            <Heart size={16} className="shrink-0 fill-white" />
+            <Heart size={16} className="shrink-0 fill-ministry-yellow text-ministry-yellow" />
             <span>{t("common.donateNow")}</span>
           </NavLink>
           <button

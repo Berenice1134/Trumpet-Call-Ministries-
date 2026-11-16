@@ -94,8 +94,8 @@ export default function HelpRequestForm() {
         <p
           className={`rounded-lg px-4 py-3 text-sm font-semibold ${
             status === "error"
-              ? "bg-red-50 text-red-700"
-              : "bg-emerald-50 text-emerald-700"
+              ? "bg-amber-50 text-amber-800"
+              : "bg-ministry-sky text-ministry-blue"
           }`}
         >
           {feedback}

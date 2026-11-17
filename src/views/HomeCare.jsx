@@ -337,19 +337,19 @@ const homeCarePageCopy = {
   es: {
     currentSupportAreasTitle: "Zonas que reciben apoyo hoy",
     currentSupportAreasText:
-      "El visitas a domicilio acompaña a familias de estas comunidades con despensa, oración y seguimiento cercano.",
+      "Las visitas a domicilio ofrecen despensa, oración y apoyo cercano a familias de estas comunidades.",
     currentSupportAreasLegend:
       "Municipios y comunidades donde actualmente se brinda apoyo domiciliar:",
-    serviceCoverageEyebrow: "Cobertura del Servicio",
+    serviceCoverageEyebrow: "Zonas donde ayudamos",
     historyEyebrow: "Nuestra Trayectoria",
-    historyServiceTitle: "Historia del visitas a domicilio",
+    historyServiceTitle: "Historia de las visitas a domicilio",
     historyServiceText:
-      "El visitas a domicilio ha crecido paso a paso, desde las primeras familias atendidas hasta una cobertura mensual organizada en comunidades de Estado de Tlaxcala.",
-    impactMetricsEyebrow: "Métricas de Impacto",
+      "Las visitas a domicilio han crecido paso a paso: comenzaron con las primeras familias y ahora llegan cada mes a varias comunidades del Estado de Tlaxcala.",
+    impactMetricsEyebrow: "Resultados",
     tonsTitle: "Toneladas repartidas",
     tonsText:
       "Detrás de cada kilo de alimento hay una historia de esperanza. Cada despensa lleva consigo el mensaje: «No estás solo».",
-    familiesHelped: "Familias beneficiadas",
+    familiesHelped: "Familias apoyadas",
     tonsDistributed: "Toneladas repartidas",
     activeCommunities: "Comunidades activas",
     viewCoverage: "Conoce las zonas de apoyo",
@@ -370,7 +370,7 @@ const homeCarePageCopy = {
     donateEyebrow: "Sé parte de esta historia",
     donateTitle: "Tu donación se convierte en esperanza",
     donateText:
-      "Con $250 al mes, una familia en Estado de Tlaxcala recibe despensa, oración y una visita que les recuerda que no están solos. Tú puedes ser esa mano amiga que estaban esperando.",
+      "Con $250 al mes, una familia en el Estado de Tlaxcala recibe despensa, oración y una visita que les recuerda que no están solos. Tú puedes ser esa mano amiga que estaban esperando.",
     donateTier1Title: "Apadrina 1 familia",
     donateTier1Desc: "Despensa mensual, visita y oración para una familia.",
     donateTier2Title: "Apadrina 2 familias",
@@ -382,7 +382,7 @@ const homeCarePageCopy = {
     donateCta: "Quiero donar ahora",
     donateTrust: "100% de tu donación llega a las familias. Cada peso cuenta.",
     donateUrgency:
-      "Hay familias esperando tu ayuda este mes en 12 comunidades de Estado de Tlaxcala.",
+      "Hay familias esperando tu ayuda este mes en 12 comunidades del Estado de Tlaxcala.",
     readMore: "Ver detalles",
     readLess: "Ocultar detalles",
     volunteering: "Ser voluntario",
@@ -399,7 +399,7 @@ const homeCarePageCopy = {
     historyEyebrow: "Our Journey",
     historyServiceTitle: "Home Care Service History",
     historyServiceText:
-      "Home care service has grown step by step, from the first families served to organized monthly coverage across communities in Estado de Tlaxcala.",
+      "Home care service has grown step by step, from the first families served to organized monthly coverage across communities in the State of Tlaxcala.",
     impactMetricsEyebrow: "Impact Metrics",
     tonsTitle: "Tons Distributed",
     tonsText:
@@ -421,7 +421,7 @@ const homeCarePageCopy = {
     donateEyebrow: "Be part of this story",
     donateTitle: "Your donation becomes hope",
     donateText:
-      "With $250 a month, a family in Estado de Tlaxcala receives a pantry, prayer, and a visit that reminds them they are not alone. You can be the helping hand they were waiting for.",
+      "With $250 a month, a family in the State of Tlaxcala receives a pantry, prayer, and a visit that reminds them they are not alone. You can be the helping hand they were waiting for.",
     donateTier1Title: "Sponsor 1 family",
     donateTier1Desc: "Monthly pantry, visit, and prayer for one family.",
     donateTier2Title: "Sponsor 2 families",
@@ -433,7 +433,7 @@ const homeCarePageCopy = {
     donateCta: "Donate now",
     donateTrust: "100% of your donation reaches the families. Every gift counts.",
     donateUrgency:
-      "Families are waiting for your help this month in 12 communities of Estado de Tlaxcala.",
+      "Families are waiting for your help this month in 12 communities in the State of Tlaxcala.",
     readMore: "View details",
     readLess: "Hide details",
     volunteering: "Become a volunteer",
@@ -447,7 +447,7 @@ const homeCareTimelineByLanguage = {
     {
       period: "2021",
       title: "Comienzo del apoyo alimentario",
-      text: "El visitas a domicilio inició como una respuesta directa a familias que necesitaban alimento, acompañamiento y una visita cercana.",
+      text: "Las visitas a domicilio comenzaron para llevar alimento y apoyo cercano a familias que lo necesitaban.",
       details: [
         "Se comenzó con 12 familias apoyadas y entregas de despensa durante los primeros meses.",
         "Cada visita buscaba conocer la situación familiar, no solo entregar productos.",
@@ -469,7 +469,7 @@ const homeCareTimelineByLanguage = {
     {
       period: "2024-2025",
       title: "Expansión del alcance",
-      text: "El programa amplió su alcance hacia más zonas de Estado de Tlaxcala y comenzó a reflejar un crecimiento más claro en familias apoyadas y alimentos entregados.",
+      text: "El programa amplió su alcance hacia más zonas del Estado de Tlaxcala y comenzó a reflejar un crecimiento más claro en familias apoyadas y alimentos entregados.",
       details: [
         "Se incrementaron las familias acompañadas y la organización de entregas mensuales.",
         "En 2025 se registró el mayor número de familias apoyadas: 38 familias.",
@@ -479,14 +479,14 @@ const homeCareTimelineByLanguage = {
     },
     {
       period: "2026",
-      title: "Cobertura activa en Estado de Tlaxcala",
-      text: "Actualmente el visitas a domicilio funciona como un programa mensual con comunidades identificadas, seguimiento constante y apoyo alimentario organizado.",
+      title: "Visitas a domicilio en el Estado de Tlaxcala",
+      text: "Hoy las visitas a domicilio llegan cada mes a comunidades del Estado de Tlaxcala y llevan alimentos y apoyo a las familias.",
       details: [
-        "La cobertura activa conecta comunidades y municipios de Estado de Tlaxcala.",
+        "Las visitas llegan a distintas comunidades y municipios del Estado de Tlaxcala.",
         "Cada familia recibe despensa mensual, oración y acompañamiento según sus necesidades.",
         "El programa supera las 1,165 despensas entregadas en total y mantiene la entrega mensual de alimentos.",
       ],
-      stat: "Cobertura en Estado de Tlaxcala",
+      stat: "Cobertura en el Estado de Tlaxcala",
     },
   ],
   en: [
@@ -495,7 +495,7 @@ const homeCareTimelineByLanguage = {
       title: "Beginning of food support",
       text: "Home care service began as a direct response to families who needed food, accompaniment, and a personal visit.",
       details: [
-        "The program began with 12 beneficiaries and pantry deliveries during the first months.",
+        "The program began by delivering food to 12 families.",
         "Each visit sought to understand the family's situation, not only deliver products.",
         "The program recorded 72 pantry packages delivered during this first stage.",
       ],
@@ -515,24 +515,24 @@ const homeCareTimelineByLanguage = {
     {
       period: "2024-2025",
       title: "Expanded reach",
-      text: "The program expanded into more areas of Estado de Tlaxcala and began to show clearer growth in beneficiaries and food delivered.",
+      text: "The program reached more areas of the State of Tlaxcala and served more families with food support.",
       details: [
         "The number of accompanied families and monthly delivery organization increased.",
-        "In 2025, the ministry recorded its highest number of beneficiaries: 38 families.",
+        "In 2025, the ministry supported its largest number of families: 38.",
         "That same year, 456 pantry packages and more than 3,285 kg of food were delivered.",
       ],
       stat: "38 families",
     },
     {
       period: "2026",
-      title: "Active coverage in Estado de Tlaxcala",
+      title: "Where we help in the State of Tlaxcala",
       text: "Today, home care operates as a monthly program with identified communities, consistent follow-up, and organized food support.",
       details: [
-        "Active coverage connects communities and municipalities in Estado de Tlaxcala.",
+        "Visits reach communities and municipalities across the State of Tlaxcala.",
         "Each family receives monthly pantry support, prayer, and accompaniment according to their needs.",
         "The program has surpassed 1,165 cumulative pantry packages and continues monthly food deliveries.",
       ],
-      stat: "Coverage in Estado de Tlaxcala",
+      stat: "Support across the State of Tlaxcala",
     },
   ],
 };
@@ -1055,7 +1055,7 @@ export default function HomeCare() {
                 icon: Heart,
               },
               {
-                value: language === "en" ? "More than 10 tons" : "Más de 10 toneladas",
+                value: language === "en" ? "+10 tons" : "+10 toneladas",
                 label: copy.tonsDistributed,
                 icon: PackageCheck,
               },

@@ -198,12 +198,12 @@ const volunteerGroups = [
   {
     id: "beneficiarios-voluntarios",
     icon: HeartPulse,
-    title: "Beneficiarios que también son voluntarios",
+    title: "Personas que reciben apoyo y también son voluntarias",
     titleEn: "Beneficiaries Who Also Volunteer",
     subtitle: "Recibir ayuda y convertirla en servicio",
     subtitleEn: "Receiving help and turning it into service",
     description:
-      "Algunos beneficiarios también participan como voluntarios. Esta reciprocidad refleja una comunidad viva: quienes han recibido apoyo también encuentran formas de bendecir a otros.",
+      "Algunas personas que reciben apoyo también participan como voluntarias y encuentran formas de ayudar a otras familias.",
     descriptionEn:
       "Some beneficiaries also participate as volunteers. This reciprocity reflects a living community: those who have received support also find ways to bless others.",
     impact:
@@ -251,12 +251,12 @@ const testimonialGroups = [
       {
         name: "Xochil X.",
         fullText:
-          "Cuando conocí a mi amiga Andy y me di cuenta de la obra que está realizando, apoyando con víveres a familias de bajos recursos, de inmediato me conmovió y recordé la gran misericordia de Dios para con nosotros, y me he marcado en apoyarla. Haciendo una pregunta: ella aquí en este estado realizando esto. Y me dije: yo también lo puedo hacer, ya que con mucha razón yo soy originaria de aquí de Estado de Tlaxcala. Por tal ejemplo que vi, me encuentro apoyando hasta que Dios me lo permita. Cada vez que acudo a apoyar, mi corazón crece de amor para los necesitados y me siento feliz de poder ayudar de esta manera. Dios la bendiga siempre en su ardua labor y seguirá contando conmigo. Dios quede con ella siempre.",
+          "Cuando conocí a mi amiga Andy y me di cuenta de la obra que está realizando, apoyando con víveres a familias de bajos recursos, de inmediato me conmovió y recordé la gran misericordia de Dios para con nosotros, y me he marcado en apoyarla. Haciendo una pregunta: ella aquí en este estado realizando esto. Y me dije: yo también lo puedo hacer, ya que con mucha razón yo soy originaria del Estado de Tlaxcala. Por tal ejemplo que vi, me encuentro apoyando hasta que Dios me lo permita. Cada vez que acudo a apoyar, mi corazón crece de amor para los necesitados y me siento feliz de poder ayudar de esta manera. Dios la bendiga siempre en su ardua labor y seguirá contando conmigo. Dios quede con ella siempre.",
       },
     ],
   },
   {
-    title: "Beneficiarios",
+    title: "Personas apoyadas",
     titleEn: "Beneficiaries",
     eyebrow: "Esperanza en casa",
     eyebrowEn: "Hope at home",
@@ -409,7 +409,7 @@ const volunteerPageCopy = {
     voices: "Voces del ministerio",
     title: "Testimonios que animan a seguir sirviendo",
     intro:
-      "Historias reales de voluntarios, beneficiarios y donadores que muestran cómo una despensa, una visita y una palabra de esperanza pueden tocar una vida.",
+      "Historias reales de voluntarios, personas apoyadas y donadores que muestran cómo una despensa, una visita y una palabra de esperanza pueden tocar una vida.",
     closeTestimony: "Cerrar testimonio",
     close: "Cerrar",
     carouselLabel: "Galería de voluntarios",
@@ -423,7 +423,7 @@ const volunteerPageCopy = {
     ctaEyebrow: "Súmate a la misión",
     ctaTitle: "Cada mano que empaca y cada oración compartida transforma un hogar",
     ctaText:
-      "Detrás de cada despensa entregada en Estado de Tlaxcala hay estudiantes, familias, iglesias, donadores y beneficiarios sirviendo unidos por amor al prójimo.",
+      "Detrás de cada despensa entregada en el Estado de Tlaxcala hay estudiantes, familias, iglesias, donadores y personas apoyadas que sirven unidas por amor al prójimo.",
   },
   en: {
     testimony: "Testimony",

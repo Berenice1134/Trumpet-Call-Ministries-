@@ -34,7 +34,7 @@ export const translations = {
       missionText:
         "Share the love of God, bringing hope with the Gospel of the Lord, and thus support low-income and vulnerable families with food pantry packages.",
       visionText:
-        "We long to see communities transformed by the love of God, where families find not only help for their material needs, but also restoration, strength, and purpose for their lives. Our vision is to expand this ministry of compassion and faith, reaching more homes, forming a network of committed volunteers, and being a constant reflection of the grace of Christ. We dream of a future where every act of service plants hope, every word of encouragement strengthens hearts, and every life reached can experience the inexhaustible love of God.",
+        "Our vision is for vulnerable families throughout the State of Tlaxcala to have food, support, and hope. We want to grow alongside a caring community of volunteers and donors, sharing Christ's love through service.",
       missionVisionTagline:
         "\"Bringing God's love to every home, sharing hope to transform lives.\"",
       historyTitle: "Ministry History",
@@ -87,7 +87,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Ministry founded in July" },
         { value: "80+", label: "Families reached" },
-        { value: "More than 10 tons", label: "Food distributed" },
+        { value: "+10 tons", label: "Food distributed" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Ministry areas",
@@ -256,6 +256,11 @@ export const translations = {
         hospitalNew19: "Messages of encouragement displayed for families",
         hospitalNew20: "A family receives toys and practical support at HIT",
         hospitalNew21: "Children participate in a celebration at HIT",
+        "hit-visita-agosto-01": "A family receives toys and supplies during the hospital visit",
+        "hit-visita-agosto-02": "A volunteer plays with a child during the hospital visit",
+        "hit-visita-agosto-03": "Families receive supplies during a hospital visit",
+        "hit-visita-junio-01": "Children take part in a creative activity",
+        "hit-visita-junio-02": "A volunteer shares a moment with a child",
         img_2675: "Memory from a ministry activity at HIT",
         img_2659: "Time together during the HIT visit",
         img_2596: "Families gathered during an HIT visit",
@@ -280,19 +285,19 @@ export const translations = {
           kicker: "Hope",
           title: "A visit that brings joy inside the hospital",
           text: "The team creates playful moments for children and families during hospital care.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-01.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-01.jpeg`,
         },
         {
           kicker: "Children",
           title: "Colorful activities and encouragement",
           text: "Costumes, games, and shared attention help create a lighter day for families.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-09.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-02.jpeg`,
         },
         {
           kicker: "Tlaxcala",
           title: "Serving at Hospital Infantil de Tlaxcala",
           text: "The section is prepared for dates, needs, testimonies, and future visit reports.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-06.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-03.jpeg`,
         },
       ],
     },
@@ -480,7 +485,7 @@ export const translations = {
       missionText:
         "Compartir el amor de Dios, llevando esperanza con el evangelio del Señor, y así apoyar con despensas a las familias de escasos recursos y vulnerables.",
       visionText:
-        "Anhelamos ver comunidades transformadas por el amor de Dios, donde las familias encuentren no solo ayuda para sus necesidades materiales, sino también restauración, fortaleza y propósito para sus vidas. Nuestra visión es expandir este ministerio de compasión y fe, alcanzar más hogares, formar una red de voluntarios comprometidos y ser un reflejo constante de la gracia de Cristo. Soñamos con un futuro donde cada acto de servicio siembre esperanza, cada palabra de aliento fortalezca corazones y cada vida alcanzada pueda experimentar el amor inagotable de Dios.",
+        "Nuestra visión es que las familias vulnerables de todo el Estado de Tlaxcala tengan alimento, apoyo y esperanza. Queremos crecer junto a una comunidad solidaria de voluntarios y donantes, compartiendo el amor de Cristo por medio del servicio.",
       missionVisionTagline:
         "\"Llevando el amor de Dios a cada hogar, compartiendo esperanza para transformar vidas.\"",
       historyTitle: "Historia del Ministerio",
@@ -516,7 +521,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Fundación del ministerio en julio" },
         { value: "80+", label: "Familias alcanzadas" },
-        { value: "Más de 10 toneladas", label: "Alimentos distribuidos" },
+        { value: "+10 toneladas", label: "Alimentos distribuidos" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Áreas del ministerio",
@@ -652,6 +657,11 @@ export const translations = {
         hospitalNew19: "Mensajes de ánimo para las familias",
         hospitalNew20: "Una familia recibe juguetes y apoyo práctico en el HIT",
         hospitalNew21: "Niños participan en una celebración en el HIT",
+        "hit-visita-agosto-01": "Una familia recibe juguetes y artículos durante la visita al hospital",
+        "hit-visita-agosto-02": "Una voluntaria juega con un niño durante la visita al hospital",
+        "hit-visita-agosto-03": "Familias reciben artículos durante la visita al hospital",
+        "hit-visita-junio-01": "Niños participan en una actividad creativa",
+        "hit-visita-junio-02": "Una voluntaria comparte un momento con un niño",
         img_2675: "Recuerdo de una actividad de la misión en el HIT",
         img_2659: "Momento de convivencia durante la visita al HIT",
         img_2596: "Familias reunidas durante una visita al HIT",
@@ -676,19 +686,19 @@ export const translations = {
           kicker: "Esperanza",
           title: "Una visita que lleva alegría dentro del hospital",
           text: "El equipo crea momentos de juego para niños y familias durante la atención hospitalaria.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-01.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-01.jpeg`,
         },
         {
           kicker: "Niños",
           title: "Actividades coloridas y palabras de ánimo",
           text: "Disfraces, juegos y atención compartida ayudan a crear un día más ligero para las familias.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-09.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-02.jpeg`,
         },
         {
           kicker: "Tlaxcala",
           title: "Sirviendo en el Hospital Infantil de Tlaxcala",
           text: "La sección queda lista para fechas, necesidades, testimonios y reportes futuros de visitas.",
-          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-06.jpeg`,
+          image: `${import.meta.env.BASE_URL}assets/hospital-infantil/hit-visita-agosto-03.jpeg`,
         },
       ],
     },
@@ -786,10 +796,10 @@ export const translations = {
     donations: {
       title: "Donaciones e Impacto",
       text: "Elige el área que quieres apoyar y usa el concepto correspondiente al realizar tu transferencia.",
-      monthlyHome: "Opción Mensual Domiciliaria",
+      monthlyHome: "Apoyo mensual para visitas a domicilio",
       monthlyHospital: "Opción Mensual Hospital",
       gift: "Opción Regalo",
-      homeText: "Contribución mensual fija para asistencia domiciliar.",
+      homeText: "Contribución mensual fija para visitas a domicilio.",
       hospitalText: "Contribución mensual fija para visitas al hospital.",
       giftText: "Ingresa un monto voluntario.",
       impactNote:

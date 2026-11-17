@@ -42,7 +42,7 @@ const dashboardItems = [
     to: "/misiones",
     key: "hospital",
     icon: HeartPulse,
-    image: asset("hospital-infantil/hospital-nuevo-06.jpeg"),
+    image: asset("hospital-infantil/hit-visita-agosto-02.jpeg"),
   },
   {
     to: "/voluntarios",
@@ -84,7 +84,7 @@ const homePageCopy = {
     serviceEyebrow: "Navegación interna",
     serviceTitle: "Área de servicio",
     serviceText:
-      "Actualmente, el ministerio apoya a comunidades de Estado de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento cercano.",
+      "Actualmente, el ministerio apoya a comunidades del Estado de Tlaxcala mediante visitas a domicilio, despensas mensuales y acompañamiento cercano.",
     storyTitle: "Detrás de cada despensa hay una familia con nombre e historia",
     storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
     workEyebrow: "Cómo trabajamos",
@@ -95,7 +95,7 @@ const homePageCopy = {
     readLess: "Ver menos",
     ctaTitle: "Tu ayuda llega a una mesa, a un hogar y a un corazón",
     ctaText:
-      "Con tu donativo o tu tiempo, una familia de Estado de Tlaxcala recibe alimento, compañía y la certeza de que no está sola.",
+      "Con tu donativo o tu tiempo, una familia del Estado de Tlaxcala recibe alimento, compañía y la certeza de que no está sola.",
   },
   en: {
     mission: "Mission",
@@ -161,7 +161,7 @@ const ministryTimelineByLanguage = {
       details: [
         "Las familias empezaron a recibir apoyo alimentario de manera constante.",
         "Cada visita incluyó escucha, reflexión bíblica y oración.",
-        "La relación con los beneficiarios comenzó a construirse desde la confianza, la fe y el amor.",
+        "La relación con las familias comenzó a construirse desde la confianza, la fe y el amor.",
       ],
       stat: "Loma Bonita",
       icon: "🏠",
@@ -265,7 +265,7 @@ const ministryTimelineByLanguage = {
       details: [
         "La ayuda respondió a necesidades concretas de alimento y abrigo.",
         "El equipo sirvió con cercanía a personas que necesitaban acompañamiento y provisión.",
-        "Esta misión amplió el alcance hacia nuevas comunidades de Estado de Tlaxcala.",
+        "Esta misión amplió el alcance hacia nuevas comunidades del Estado de Tlaxcala.",
       ],
       stat: "75 kg • 50 cobijas",
       icon: "🧥",
@@ -276,7 +276,7 @@ const ministryTimelineByLanguage = {
       title: "Misión al Hospital Infantil de Tlaxcala",
       text: "Inició el patrocinio mensual a niños con enfermedad renal en el Hospital Infantil de Tlaxcala.",
       details: [
-        "El ministerio comenzó a servir a niños que reciben diálisis o hemodiálisis.",
+        "El ministerio comenzó a servir a niños que reciben tratamiento para sus riñones.",
         "Se preparan kits, actividades y apoyos prácticos según necesidades aprobadas por el hospital.",
         "La misión busca llevar amor, esperanza y ánimo a los niños y a sus familias.",
       ],
@@ -807,7 +807,7 @@ export default function Home() {
           <div className="reveal grid grid-cols-12 gap-4">
             <figure className="photo-frame col-span-12 h-[300px] w-full sm:col-span-7 sm:h-[420px]">
               <img
-                src={asset("hospital-infantil/hospital-nuevo-06.jpeg")}
+                src={asset("hospital-infantil/hit-visita-junio-01.jpeg")}
                 alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
                 loading="lazy"
                 className="h-full w-full object-cover object-top"
@@ -921,7 +921,7 @@ export default function Home() {
                 src={
                   activeObjectiveTab === "mission"
                     ? asset("misiones/cartolandia-03.jpeg")
-                    : asset("hospital-infantil/hospital-nuevo-06.jpeg")
+                    : asset("hospital-infantil/hit-visita-junio-02.jpeg")
                 }
                 alt={activeObjectiveTab === "mission" ? copy.mission : copy.vision}
                 loading="lazy"

@@ -40,7 +40,7 @@ const yearlySupport = [
   { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10097 },
 ];
 
-const infographicPeriods = [
+const visual summaryPeriods = [
   {
     id: "2026-jan-feb",
     months: { es: "Enero–febrero", en: "January–February" },
@@ -168,7 +168,7 @@ const missionDonations = [
   },
 ];
 
-const infographicTimeline = {
+const visual summaryTimeline = {
   es: [
     { date: "Junio 2021", title: "Apertura de English Center", text: "English Center Tlaxcala abre camino como primer soporte del ministerio.", icon: GraduationCap },
     { date: "Julio 2021", title: "Inicio del programa domiciliar", text: "Comienzan las distribuciones mensuales en Loma Bonita, atendiendo a 12 familias.", icon: PackageCheck },
@@ -192,12 +192,12 @@ const infographicTimeline = {
 const reportsCopy = {
   es: {
     eyebrow: "Gráficos del ministerio",
-    intro: "Detrás de cada cifra hay una mesa servida, una oración compartida y una familia acompañada con constancia en Estado de Tlaxcala.",
+    intro: "Detrás de cada cifra hay una mesa servida, una oración compartida y una familia acompañada con constancia en el Estado de Tlaxcala.",
     heroQuote: "Cada número es una familia con nombre, rostro e historia",
     heroCtaCharts: "Explorar impacto",
-    heroCtaPdfs: "Ver boletines e infografías",
+    heroCtaPdfs: "Ver resúmenes visuales",
     humanNoteEyebrow: "Transparencia con rostro humano",
-    humanNoteTitle: "Más de diez toneladas de alimento convertidas en abrazos y esperanza",
+    humanNoteTitle: "+10 toneladas de alimento convertidas en abrazos y esperanza",
     humanNoteText: "Cada despensa entregada desde 2021 representa visitas mensuales a hogares vulnerables y escucha atenta.",
     stats: {
       pantries: "Despensas donadas",
@@ -212,20 +212,20 @@ const reportsCopy = {
     hospitalTitle: "Apoyos entregados en el hospital",
     missionTitle: "Apoyos entregados en las misiones",
     timelineEyebrow: "Sucesos relevantes del ministerio",
-    timelineTitle: "5 años transformando Estado de Tlaxcala",
+    timelineTitle: "5 años transformando el Estado de Tlaxcala",
     timelineText: "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
-    tenTons: "Más de 10 toneladas",
+    tenTons: "+10 toneladas",
     archiveEyebrow: "Documentos institucionales",
     archiveText: "Consulta los tres periodos más recientes: cada uno incluye un resumen visual en español y otro en inglés.",
     spanish: "Español",
     english: "Inglés",
-    pending: "Espacio reservado. La infografía se agregará cuando esté disponible.",
+    pending: "Este espacio se completará cuando el siguiente resumen esté listo.",
     kg: "kg",
     months: "meses",
-    beneficiariesWord: "beneficiarios",
+    beneficiariesWord: "personas",
     donated: "donado",
-    cumulative: "acumulado",
+    cumulative: "en total",
     sourceLabels: {
       mexico: "México",
       englishCenter: "English Center",
@@ -239,7 +239,7 @@ const reportsCopy = {
       pantry: "Despensa",
       activities: "Actividades",
     },
-    pdfTitle: "Infografías por periodo",
+    pdfTitle: "Resúmenes visuales por periodo",
     annualLabel: "Alimentos",
     totalDonated: "Total de alimentos donados",
     clickToView: "Haz clic para ver detalles",
@@ -250,7 +250,7 @@ const reportsCopy = {
     showAllMilestones: "Ver los 7 sucesos relevantes",
     showLessMilestones: "Mostrar resumen",
     ctaEyebrow: "¿Cómo puedes ayudar?",
-    ctaTitle: "Sé parte del próximo reporte de esperanza en Estado de Tlaxcala",
+    ctaTitle: "Sé parte del próximo reporte de esperanza en el Estado de Tlaxcala",
     ctaText: "Tu donativo o voluntariado se transforma directamente en despensas mensuales, visitas al hospital y misiones comunitarias.",
     volunteering: "Voluntariado",
   },
@@ -259,9 +259,9 @@ const reportsCopy = {
     intro: "Annual food support, pantry deliveries, and ministry outreach at a glance — where every number represents a family accompanied with love.",
     heroQuote: "Every number is a family with a name, a face, and a story",
     heroCtaCharts: "Explore impact",
-    heroCtaPdfs: "View newsletters & infographics",
+    heroCtaPdfs: "View visual summaries",
     humanNoteEyebrow: "Transparency with a human heart",
-    humanNoteTitle: "Over ten tons of food turned into embraces and hope",
+    humanNoteTitle: "+10 tons of food turned into embraces and hope",
     humanNoteText: "Every pantry bag delivered since 2021 represents monthly visits to vulnerable homes and attentive listening.",
     stats: {
       pantries: "Pantries donated",
@@ -279,17 +279,17 @@ const reportsCopy = {
     timelineTitle: "Five years transforming the State of Tlaxcala",
     timelineText: "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
-    tenTons: "More than 10 tons",
+    tenTons: "+10 tons",
     archiveEyebrow: "Institutional documents",
     archiveText: "Browse the three most recent periods. Each includes a visual summary in Spanish and one in English.",
     spanish: "Spanish",
     english: "English",
-    pending: "Reserved space. The infographic will be added when it is available.",
+    pending: "This space will be updated when the next summary is ready.",
     kg: "kg",
     months: "months",
-    beneficiariesWord: "beneficiaries",
+    beneficiariesWord: "people",
     donated: "donated",
-    cumulative: "cumulative",
+    cumulative: "in total",
     sourceLabels: {
       mexico: "México",
       englishCenter: "English Center",
@@ -303,7 +303,7 @@ const reportsCopy = {
       pantry: "Pantry",
       activities: "Activities",
     },
-    pdfTitle: "Infographics by period",
+    pdfTitle: "Visual summaries by period",
     annualLabel: "Food",
     totalDonated: "Total food donated",
     clickToView: "Click to view details",
@@ -1365,7 +1365,7 @@ function MissionCard({ item }) {
 export default function Reports() {
   const { language, t } = useLanguage();
   const copy = reportsCopy[language] ?? reportsCopy.es;
-  const timelineItems = infographicTimeline[language] ?? infographicTimeline.es;
+  const timelineItems = visual summaryTimeline[language] ?? visual summaryTimeline.es;
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-aug");
   const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(
@@ -1375,10 +1375,10 @@ export default function Reports() {
   const [showAllMilestones, setShowAllMilestones] = useState(false);
 
   const selectedPeriod =
-    infographicPeriods.find((period) => period.id === selectedPeriodId) ??
-    infographicPeriods.at(-1);
+    visual summaryPeriods.find((period) => period.id === selectedPeriodId) ??
+    visual summaryPeriods.at(-1);
   const selectedInfographic = selectedPeriod.files[selectedDocumentLanguage];
-  const visibleInfographicPeriods = infographicPeriods.slice(-3);
+  const visibleInfographicPeriods = visual summaryPeriods.slice(-3);
 
   useEffect(() => {
     if (!showFullscreen) return undefined;
@@ -1593,7 +1593,7 @@ export default function Reports() {
         />
       )}
 
-      {/* ========== HITOS DEL MINISTERIO (SECCIÓN OSCURA CON DIVULGACIÓN PROGRESIVA) ========== */}
+      {/* ========== SUCESOS RELEVANTES DEL MINISTERIO (SECCIÓN OSCURA CON DIVULGACIÓN PROGRESIVA) ========== */}
       <section
         id="linea-tiempo-ministerio"
         className="section-shell scroll-mt-28 bg-ink text-white"
@@ -1767,7 +1767,7 @@ export default function Reports() {
                       className="btn-secondary !px-5 !py-2.5 !text-xs md:hidden"
                     >
                       <Eye size={15} />
-                      {language === "en" ? "Open PDF" : "Abrir infografía"}
+                      {language === "en" ? "Open PDF" : "Abrir resumen visual"}
                     </a>
                     <button
                       type="button"
@@ -1802,8 +1802,8 @@ export default function Reports() {
                   </p>
                   <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600">
                     {language === "en"
-                      ? "Open the infographic in your phone's full-screen reader to zoom comfortably without deforming the page, or download a copy."
-                      : "Abre la infografía en el lector de tu celular para hacer zoom cómodamente sin deformar la página, o descárgala directamente."}
+                      ? "Open the visual summary in your phone's full-screen reader to zoom comfortably without deforming the page, or download a copy."
+                      : "Abre el resumen en tu celular para acercar la imagen o descárgalo."}
                   </p>
                   <div className="mt-6 flex w-full max-w-xs flex-col gap-3">
                     <a
@@ -1813,7 +1813,7 @@ export default function Reports() {
                       className="btn-primary w-full justify-center"
                     >
                       <Eye size={16} />
-                      {language === "en" ? "Open infographic" : "Ver infografía completa"}
+                      {language === "en" ? "Open visual summary" : "Ver resumen completo"}
                     </a>
                     <a
                       href={`${import.meta.env.BASE_URL}${selectedInfographic}`}

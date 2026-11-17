@@ -26,9 +26,23 @@ import {
 import { useLanguage } from "../context/useLanguage.js";
 
 const hospitalPhotos = [
-  ...Array.from({ length: 21 }, (_, index) => ({
+  ...Array.from({ length: 5 }, (_, index) => ({
     key: `hospitalNew${String(index + 1).padStart(2, "0")}`,
     src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-${String(index + 1).padStart(2, "0")}.jpeg`,
+  })),
+  ...[
+    "hit-visita-agosto-01",
+    "hit-visita-agosto-02",
+    "hit-visita-agosto-03",
+    "hit-visita-junio-01",
+    "hit-visita-junio-02",
+  ].map((name) => ({
+    key: name,
+    src: `${import.meta.env.BASE_URL}assets/hospital-infantil/${name}.jpeg`,
+  })),
+  ...Array.from({ length: 16 }, (_, index) => ({
+    key: `hospitalNew${String(index + 6).padStart(2, "0")}`,
+    src: `${import.meta.env.BASE_URL}assets/hospital-infantil/hospital-nuevo-${String(index + 6).padStart(2, "0")}.jpeg`,
   })),
   ...["img_2675", "img_2659", "img_2596", "img_2668"].map((name) => ({
     key: name,
@@ -73,7 +87,7 @@ const otherMissions = [
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-04.jpeg`, label: "Oración y acompañamiento durante la visita" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-05.jpeg`, label: "Familias recibiendo apoyo y seguimiento" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-06.jpeg`, label: "Despensas entregadas desde la ruta de visita" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Acompañamiento cercano a beneficiarios" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-07.jpeg`, label: "Apoyo cercano a las familias" },
     ],
     photosEn: [
       { src: `${import.meta.env.BASE_URL}assets/misiones/cartolandia-01.jpeg`, label: "Housing conditions in Cartolandia" },
@@ -136,7 +150,7 @@ const otherMissions = [
     ],
     photos: [
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-01.jpeg`, label: "Preparación de alimentos y apoyos" },
-      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Entrega cercana a beneficiarios" },
+      { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-02.jpeg`, label: "Entrega de apoyo a las familias" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-03.jpeg`, label: "Equipo de servicio en Españita" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-04.jpeg`, label: "Acompañamiento y apoyo comunitario" },
       { src: `${import.meta.env.BASE_URL}assets/misiones/espanita-05.jpeg`, label: "Acompañamiento a una residente del Asilo de San Judas" },
@@ -178,7 +192,7 @@ const hospitalPageCopy = {
     ctaEyebrow: "¿Cómo puedes ayudar?",
     ctaTitle: "Cada misión lleva alivio, alimento y esperanza a quien más lo necesita",
     ctaText:
-      "Con tu donativo o tu servicio como voluntario, podemos seguir acompañando a niños en el Hospital Infantil y a familias vulnerables en comunidades de Estado de Tlaxcala.",
+      "Con tu donativo o tu servicio como voluntario, podemos seguir acompañando a niños en el Hospital Infantil y a familias vulnerables en comunidades del Estado de Tlaxcala.",
     volunteerCta: "Ser voluntario",
   },
   en: {
@@ -197,7 +211,7 @@ const hospitalPageCopy = {
     ctaEyebrow: "How can you help?",
     ctaTitle: "Every mission brings relief, food, and hope to those who need it most",
     ctaText:
-      "With your gift or volunteer service, we can continue accompanying children at the Children's Hospital and vulnerable families across Estado de Tlaxcala.",
+      "With your gift or volunteer service, we can continue accompanying children at the Children's Hospital and vulnerable families across the State of Tlaxcala.",
     volunteerCta: "Volunteer with us",
   },
 };
@@ -243,8 +257,8 @@ const hospitalMilestones = [
   {
     dateEs: "27 de febrero",
     dateEn: "February 27",
-    titleEs: "Primera visita a niños de nefrología",
-    titleEn: "First visit with nephrology children",
+    titleEs: "Primera visita a niños que reciben tratamiento renal",
+    titleEn: "First visit with children receiving kidney treatment",
     textEs:
       "El ministerio sirvió por primera vez a niños con enfermedad renal, compartió el plan de salvación con sus familias y entregó kits de aseo personal con una reflexión bíblica.",
     textEn:
@@ -319,7 +333,7 @@ const hospitalStoryByLanguage = {
     eyebrow: "Un acto de amor que transforma",
     title: "Acompañando a niños que luchan cada semana por su salud",
     paragraphs: [
-      "El Hospital Infantil de Tlaxcala abrió una puerta para que Trumpet Call Ministries México acompañara a niños vulnerables y a sus familias en el área de atención renal. Muchos de ellos reciben diálisis o hemodiálisis, y cada tratamiento representa una carga económica y emocional muy fuerte para el hogar.",
+      "El Hospital Infantil de Tlaxcala abrió una puerta para que Trumpet Call Ministries México acompañara a niños vulnerables y a sus familias en el área de atención renal. Muchos de ellos reciben tratamiento para sus riñones, y cada tratamiento representa una carga económica y emocional muy fuerte para el hogar.",
       "El ministerio busca servir con sensibilidad: entregar articulos de higiene, ropa adaptada para sus tratamientos, calzado y actividades con fundamento en la fe. Más que llevar cosas, el objetivo es llevar amor, esperanza, ánimo y oración en un proceso que muchas familias enfrentan con cansancio y necesidad.",
       "El equipo permanece en comunicacion con el personal del hospital para entender mejor como servir a esta comunidad y preparar apoyos mensuales que respondan a necesidades reales y aprobadas.",
     ],
@@ -812,7 +826,7 @@ export default function HospitalVisit() {
               <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
                   src={hospitalPhotos[5].src}
-                  alt={t("hospital.photoLabels.hospitalNew06")}
+                  alt={t("hospital.photoLabels.hit-visita-agosto-01")}
                   className="h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
@@ -971,7 +985,7 @@ export default function HospitalVisit() {
                 <button
                   type="button"
                   onClick={goPrevMilestone}
-                  aria-label={language === "en" ? "Previous milestone" : "Fecha anterior"}
+                  aria-label={language === "en" ? "Previous key event" : "Fecha anterior"}
                   className="grid h-11 w-11 place-items-center rounded-full border border-ink/15 bg-white text-ink transition hover:border-ember hover:text-ember"
                 >
                   <ChevronLeft size={20} />
@@ -982,7 +996,7 @@ export default function HospitalVisit() {
                 <button
                   type="button"
                   onClick={goNextMilestone}
-                  aria-label={language === "en" ? "Next milestone" : "Siguiente fecha"}
+                  aria-label={language === "en" ? "Next key event" : "Siguiente fecha"}
                   className="grid h-11 w-11 place-items-center rounded-full bg-ink text-white transition hover:bg-ember"
                 >
                   <ChevronRight size={20} />
@@ -1262,7 +1276,7 @@ export default function HospitalVisit() {
                   <ArrowRight size={16} />
                 </Link>
                 <Link to="/servicio-domiciliar" className="btn-ghost-light">
-                  {language === "en" ? "Explore Home Care" : "Conocer Servicio Domiciliar"}
+                  {language === "en" ? "Explore Home Care" : "Conocer las visitas a domicilio"}
                 </Link>
               </div>
             </div>

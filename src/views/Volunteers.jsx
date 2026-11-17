@@ -14,72 +14,15 @@ import {
   Maximize2,
   MessageCircle,
   MessageSquareHeart,
-  Pause,
-  Play,
   Quote,
-  Sparkles,
   TrendingUp,
   Users,
   X,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
-
-const volunteerPhotos = [
-  {
-    key: "teamBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/english-center/english-center-02.jpeg`,
-    alt: "Equipo de voluntarios con despensas",
-  },
-  {
-    key: "youngTeam",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/senda-de-vida/senda-de-vida-01.jpeg`,
-    alt: "Jóvenes voluntarios",
-  },
-  {
-    key: "ricePacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/leoncitas/leoncitas-01.jpeg`,
-    alt: "Empacando arroz",
-  },
-  {
-    key: "tablePrep",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/mensajes-de-vida/mensajes-de-vida-01.jpeg`,
-    alt: "Preparando mesa de trabajo",
-  },
-  {
-    key: "bagFilling",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-01.jpeg`,
-    alt: "Llenando bolsas",
-  },
-  {
-    key: "supplies",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-02.jpeg`,
-    alt: "Organizando suministros",
-  },
-  {
-    key: "familiesPacking",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-03.jpeg`,
-    alt: "Familias empacando",
-  },
-  {
-    key: "waving",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-04.jpeg`,
-    alt: "Voluntarios saludando",
-  },
-  {
-    key: "childrenBags",
-    src: `${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-05.jpeg`,
-    alt: "Niños con bolsas",
-  },
-];
-
-const featuredVolunteerPhotoKeys = ["teamBags", "youngTeam", "bagFilling"];
-
-const featuredVolunteerPhotos = featuredVolunteerPhotoKeys
-  .map((key) => volunteerPhotos.find((photo) => photo.key === key))
-  .filter(Boolean);
 
 const volunteerGroups = [
   {
@@ -417,7 +360,6 @@ const volunteerPageCopy = {
     fiveWays: "Cinco formas de servir, una misma misión",
     chooseGroup: "Selecciona un grupo para conocer su historia",
     exploreGroups: "Conocer a los grupos",
-    communityEyebrow: "Manos que multiplican",
     impactMore: "Conocer más sobre su impacto",
     impactLess: "Ocultar detalle de impacto",
     ctaEyebrow: "Súmate a la misión",
@@ -446,7 +388,6 @@ const volunteerPageCopy = {
     fiveWays: "Five ways to serve, one shared mission",
     chooseGroup: "Select a group to learn its story",
     exploreGroups: "Explore volunteer groups",
-    communityEyebrow: "Hands that multiply hope",
     impactMore: "Learn more about their impact",
     impactLess: "Hide impact details",
     ctaEyebrow: "Join the mission",
@@ -472,119 +413,6 @@ function getTestimonialPreview(text) {
   );
   return `${shortText.slice(0, sentenceEnd > 140 ? sentenceEnd + 1 : 250)}...`;
 }
-
-// Carrusel con estado local para índice activo y reproducción automática.
-const PhotoCarousel = ({ photos, language }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const timerRef = useRef(null);
-
-  const totalSlides = photos.length;
-
-  const goToSlide = (index) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentIndex((index + totalSlides) % totalSlides);
-    window.setTimeout(() => setIsTransitioning(false), 500);
-  };
-
-  const nextSlide = () => goToSlide(currentIndex + 1);
-  const prevSlide = () => goToSlide(currentIndex - 1);
-
-  const togglePlay = () => setIsPlaying(!isPlaying);
-
-  useEffect(() => {
-    if (isPlaying) {
-      timerRef.current = window.setInterval(() => {
-        setIsTransitioning(true);
-        setCurrentIndex((index) => (index + 1) % totalSlides);
-        window.setTimeout(() => setIsTransitioning(false), 500);
-      }, 5000);
-    } else {
-      window.clearInterval(timerRef.current);
-    }
-    return () => window.clearInterval(timerRef.current);
-  }, [isPlaying, totalSlides]);
-
-  return (
-    <div className="photo-frame relative overflow-hidden bg-ink">
-      <div className="relative h-[320px] w-full overflow-hidden sm:h-[400px] lg:h-[440px]">
-        <div
-          className="flex h-full transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {photos.map((photo, index) => (
-            <div
-              key={`${photo.key}-${index}`}
-              className="relative h-full min-w-full flex-shrink-0 overflow-hidden bg-ink"
-            >
-              <img
-                src={photo.src}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover blur-2xl opacity-35"
-                loading="lazy"
-              />
-              <img
-                src={photo.src}
-                alt={photo.alt || `Voluntarios ${index + 1}`}
-                className="relative z-10 h-full w-full object-contain p-2"
-                loading={index === 0 ? "eager" : "lazy"}
-              />
-              <div className="photo-overlay z-20" />
-            </div>
-          ))}
-        </div>
-
-        {/* Controles para recorrer las imágenes en ambas direcciones. */}
-        <button
-          type="button"
-          onClick={prevSlide}
-          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-ink/60 p-2.5 text-white backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
-          aria-label={language === "en" ? "Previous image" : "Imagen anterior"}
-        >
-          <ChevronLeft size={20} />
-        </button>
-        <button
-          type="button"
-          onClick={nextSlide}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-ink/60 p-2.5 text-white backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
-          aria-label={language === "en" ? "Next image" : "Siguiente imagen"}
-        >
-          <ChevronRight size={20} />
-        </button>
-
-        {/* Indicadores sincronizados con el índice de la imagen activa. */}
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-          {photos.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => goToSlide(index)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? "w-7 bg-ember"
-                  : "w-2 bg-white/45 hover:bg-white/75"
-              }`}
-              aria-label={`${language === "en" ? "Go to image" : "Ir a imagen"} ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Permite alternar la reproducción automática del carrusel. */}
-        <button
-          type="button"
-          onClick={togglePlay}
-          className="absolute right-3 top-3 rounded-full bg-ink/60 p-2 text-white backdrop-blur-sm transition hover:bg-ink/85"
-          aria-label={isPlaying ? (language === "en" ? "Pause" : "Pausar") : (language === "en" ? "Play" : "Reproducir")}
-        >
-          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-        </button>
-      </div>
-    </div>
-  );
-};
 
 const GroupPhotoCarousel = ({ photos, title, language }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -1122,59 +950,6 @@ export default function Volunteers() {
                   {t("volunteers.carouselLabel")}
                 </figcaption>
               </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== MOSAICO VISUAL Y ESPÍRITU DE RECIPROCIDAD ===== */}
-      <section className="section-shell bg-cream">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="reveal grid gap-4 sm:grid-cols-12">
-            <figure className="photo-frame h-80 sm:col-span-7 sm:h-[430px]">
-              <img
-                src={featuredVolunteerPhotos[0]?.src}
-                alt={t("volunteers.photoLabels.teamBags")}
-                loading="lazy"
-              />
-              <div className="photo-overlay" />
-              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
-                {t("volunteers.galleryTitle")}
-              </figcaption>
-            </figure>
-
-            <div className="grid gap-4 sm:col-span-5">
-              <figure className="photo-frame h-52 sm:h-[207px]">
-                <img
-                  src={featuredVolunteerPhotos[1]?.src}
-                  alt={t("volunteers.photoLabels.youngTeam")}
-                  loading="lazy"
-                />
-              </figure>
-              <figure className="photo-frame h-52 sm:h-[207px]">
-                <img
-                  src={featuredVolunteerPhotos[2]?.src}
-                  alt={t("volunteers.photoLabels.bagFilling")}
-                  loading="lazy"
-                />
-              </figure>
-            </div>
-          </div>
-
-          <div className="reveal space-y-6">
-            <span className="kicker">{copy.communityEyebrow}</span>
-            <h2 className="title-lg">{t("volunteers.galleryTitle")}</h2>
-            <p className="lead">{t("volunteers.placeholder")}</p>
-
-            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
-              <Sparkles size={20} className="mb-2 text-ember" />
-              <p className="font-display text-lg italic leading-snug text-ink sm:text-xl">
-                {t("volunteers.reciprocalText")}
-              </p>
-            </blockquote>
-
-            <div className="pt-1">
-              <PhotoCarousel photos={volunteerPhotos} language={language} />
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ const yearlySupport = [
   { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10097 },
 ];
 
-const visual summaryPeriods = [
+const reportPeriods = [
   {
     id: "2026-jan-feb",
     months: { es: "Enero–febrero", en: "January–February" },
@@ -168,7 +168,7 @@ const missionDonations = [
   },
 ];
 
-const visual summaryTimeline = {
+const reportTimeline = {
   es: [
     { date: "Junio 2021", title: "Apertura de English Center", text: "English Center Tlaxcala abre camino como primer soporte del ministerio.", icon: GraduationCap },
     { date: "Julio 2021", title: "Inicio del programa domiciliar", text: "Comienzan las distribuciones mensuales en Loma Bonita, atendiendo a 12 familias.", icon: PackageCheck },
@@ -1365,7 +1365,7 @@ function MissionCard({ item }) {
 export default function Reports() {
   const { language, t } = useLanguage();
   const copy = reportsCopy[language] ?? reportsCopy.es;
-  const timelineItems = visual summaryTimeline[language] ?? visual summaryTimeline.es;
+  const timelineItems = reportTimeline[language] ?? reportTimeline.es;
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [selectedPeriodId, setSelectedPeriodId] = useState("2026-may-aug");
   const [selectedDocumentLanguage, setSelectedDocumentLanguage] = useState(
@@ -1375,10 +1375,10 @@ export default function Reports() {
   const [showAllMilestones, setShowAllMilestones] = useState(false);
 
   const selectedPeriod =
-    visual summaryPeriods.find((period) => period.id === selectedPeriodId) ??
-    visual summaryPeriods.at(-1);
+    reportPeriods.find((period) => period.id === selectedPeriodId) ??
+    reportPeriods.at(-1);
   const selectedInfographic = selectedPeriod.files[selectedDocumentLanguage];
-  const visibleInfographicPeriods = visual summaryPeriods.slice(-3);
+  const visibleInfographicPeriods = reportPeriods.slice(-3);
 
   useEffect(() => {
     if (!showFullscreen) return undefined;

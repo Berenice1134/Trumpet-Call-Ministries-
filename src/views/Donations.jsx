@@ -88,7 +88,7 @@ const donationPageCopy = {
     transferShared: "Datos de transferencia copiados",
     impactTitle: "Impacto de tu donación",
     supportOptions: [
-      { value: "home", label: "Servicio domiciliar", concept: "SERVICIO DOMICILIAR" },
+      { value: "home", label: "Visitas a domicilio", concept: "VISITAS A DOMICILIO" },
       { value: "hospital", label: "Hospital Infantil de Tlaxcala", concept: "HOSPITAL INFANTIL DE TLAXCALA" },
       { value: "general", label: "General / personalizado", concept: "GENERAL" },
     ],
@@ -97,11 +97,11 @@ const donationPageCopy = {
     founderLetterIntro:
       "Bienvenidos a nuestro sitio web y gracias por tu interés en Trumpet Call Ministries México.",
     founderLetterParagraphs: [
-      "Esta pequeña organización basada en la fe es un proyecto del corazón, nacido del deseo de servir a los vulnerables en mi comunidad en Tlaxcala, México. El propósito es compartir el amor de Jesucristo con familias vulnerables en todo el estado de Tlaxcala mediante la distribución de suministros básicos de alimentos. Y al hacerlo, también compartimos la esperanza que tenemos en Jesús a través de las enseñanzas que se encuentran en la Santa Biblia.",
-      "Las clases de inglés y la generosidad de donantes en México y Estados Unidos han sostenido la entrega de alimentos básicos a familias de Tlaxcala.",
-      "Trabajando con iglesias de la zona, Trumpet Call Ministries México también proporcionó alimentos y ropa en comunidades de todo el estado. Sin embargo, a partir de enero de 2026, iniciamos un nuevo proyecto para apoyar a los niños con insuficiencia renal y a sus familias en el Hospital Infantil de Tlaxcala. Cada mes, apoyamos a estas familias con suministros necesarios que les ayudan a manejar su cuidado, así como con actividades basadas en la fe para fortalecerlas en Jesucristo y que puedan enfrentar su enfermedad desde una posición de fortaleza espiritual y emocional.",
-      "Eres bienvenido a visitarnos a nuestra oficina en Loma Bonita, Tlaxcala. Me encantaría tener la oportunidad de darte un recorrido por nuestras instalaciones, presentarte a nuestro personal y beneficiarios de nuestros servicios.",
-      "Por favor, considera unirte a nosotros para atender a familias en dificultades en Tlaxcala. Según las Escrituras, servirles es servir al Señor mismo. Cuando lo hacemos, Dios Padre promete bendecirnos.",
+      "Esta pequeña organización basada en la fe es un proyecto del corazón, nacido del deseo de servir a los vulnerables en mi comunidad en Estado de Tlaxcala, México. El propósito es compartir el amor de Jesucristo con familias vulnerables en todo el Estado de Tlaxcala mediante la distribución de suministros básicos de alimentos. Y al hacerlo, también compartimos la esperanza que tenemos en Jesús a través de las enseñanzas que se encuentran en la Santa Biblia.",
+      "Las clases de inglés y la generosidad de donantes en México y Estados Unidos han sostenido la entrega de alimentos básicos a familias de Estado de Tlaxcala.",
+      "Trabajando con iglesias de la zona, Trumpet Call Ministries México también proporcionó alimentos y ropa en comunidades de todo el estado. Sin embargo, a partir de enero de 2026, iniciamos un nuevo proyecto para apoyar a los niños con insuficiencia renal y a sus familias en el Hospital Infantil de Tlaxcala. Cada mes, apoyamos a estas familias con suministros necesarios que les ayudan a manejar su cuidado, así como con actividades basadas en la fe para fortalecerlas en Jesucristo y que puedan enfrentar su enfermedad desde una posición de fortaleza emocional.",
+      "Te invitamos a visitarnos en nuestra oficina de Loma Bonita, Estado de Tlaxcala. Me encantará mostrarte nuestras instalaciones y presentarte al equipo y a las familias que reciben nuestro apoyo.",
+      "Por favor, considera unirte a nosotros para atender a familias en dificultades en Estado de Tlaxcala. Según las Escrituras, servirles es servir al Señor mismo. Cuando lo hacemos, Dios Padre promete bendecirnos.",
     ],
     founderLetterVerse:
       "Proverbios 11:25 dice: “Una persona generosa prosperará; quien refresque a otros será renovado.”",
@@ -116,12 +116,12 @@ const donationPageCopy = {
     impactHighlights: [
       { value: "80+", label: "Familias acompañadas cada mes" },
       { value: "12 kg", label: "De alimento básico en cada despensa" },
-      { value: "HIT", label: "Kits, insumos y apoyo en hemodiálisis" },
+      { value: "HIT", label: "Kits, artículos y apoyo para tratamientos renales" },
     ],
     ctaEyebrow: "Tu generosidad transforma vidas",
     ctaTitle: "Hoy puedes poner alimento en una mesa y esperanza en un corazón",
     ctaText:
-      "Cada transferencia se convierte en despensas, insumos médicos para niños con insuficiencia renal y visitas llenas de fe en Tlaxcala.",
+      "Cada transferencia se convierte en despensas, insumos médicos para niños con insuficiencia renal y visitas llenas de fe en el Estado de Tlaxcala.",
     ctaVolunteer: "Quiero ser voluntario",
   },
   en: {
@@ -166,11 +166,11 @@ const donationPageCopy = {
     founderLetterIntro:
       "Welcome to our website, and thank you for your interest in Trumpet Call Ministries Mexico.",
     founderLetterParagraphs: [
-      "This small faith-based organization is a project of the heart, birthed from the desire to serve the vulnerable in my community in Tlaxcala, Mexico. The purpose is to share the love of Jesus Christ with vulnerable families around the state of Tlaxcala through the distribution of basic food supplies. And in so doing, we also share the hope we have in Jesus through the teachings found in the Holy Bible.",
-      "English classes and the generosity of donors in Mexico and the United States have helped sustain food support for families across Tlaxcala.",
-      "Working with area churches, Trumpet Call Ministries Mexico has provided food and clothes in communities around the state as well. Starting in January 2026, we began a new project to support children with renal failure and their families at the Children's Hospital of Tlaxcala. Each month, we support these families with needed supplies that help them manage their care, as well as faith-based activities to build them up in Jesus Christ so they are able to battle their illness from a position of spiritual and emotional strength.",
-      "You are welcome to come visit us at our office in Loma Bonita, Tlaxcala. I would enjoy the opportunity to give you a tour of our facilities, introduce you to our staff, and introduce you to beneficiaries of our services.",
-      "Please consider joining us to serve struggling families in Tlaxcala. According to the Scriptures, serving them is serving the Lord himself. When we do, God the Father promises to bless us.",
+      "This small faith-based organization is a project of the heart, birthed from the desire to serve the vulnerable in my community en el Estado de Tlaxcala, Mexico. The purpose is to share the love of Jesus Christ with vulnerable families around the State of Tlaxcala through the distribution of basic food supplies. And in so doing, we also share the hope we have in Jesus through the teachings found in the Holy Bible.",
+      "English classes and the generosity of donors in Mexico and the United States have helped sustain food support for families en el Estado de Tlaxcala.",
+      "Working with area churches, Trumpet Call Ministries Mexico has provided food and clothes in communities around the state as well. Starting in January 2026, we began a new project to support children with renal failure and their families at the Children's Hospital of Tlaxcala. Each month, we support these families with needed supplies that help them manage their care, as well as faith-based activities to build them up in Jesus Christ so they are able to battle their illness from a position of emotional strength.",
+      "You are welcome to come visit us at our office in Loma Bonita, Estado de Tlaxcala. I would enjoy the opportunity to give you a tour of our facilities, introduce you to our staff, and introduce you to beneficiaries of our services.",
+      "Please consider joining us to serve struggling families en el Estado de Tlaxcala. According to the Scriptures, serving them is serving the Lord himself. When we do, God the Father promises to bless us.",
     ],
     founderLetterVerse:
       "Proverbs 11:25 says: “A generous person will prosper; whoever refreshes others will be refreshed.”",
@@ -190,7 +190,7 @@ const donationPageCopy = {
     ctaEyebrow: "Your generosity transforms lives",
     ctaTitle: "Today you can place food on a table and hope in a heart",
     ctaText:
-      "Every transfer becomes food pantries, medical supplies for children with kidney failure, and faith-filled visits across Tlaxcala.",
+      "Every transfer becomes food pantries, medical supplies for children with kidney failure, and faith-filled visits en el Estado de Tlaxcala.",
     ctaVolunteer: "Become a volunteer",
   },
 };
@@ -351,7 +351,7 @@ export default function Donations() {
       imageAlt:
         language === "en"
           ? "Monthly home care pantry delivery"
-          : "Entrega mensual de despensa en servicio domiciliar",
+          : "Entrega mensual de despensa durante una visita a domicilio",
       featured: false,
     },
     {
@@ -472,16 +472,16 @@ export default function Donations() {
                   src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
                   alt={
                     language === "en"
-                      ? "Warm embrace during a ministry food delivery in Tlaxcala"
-                      : "Abrazo cálido durante la entrega de alimento en Tlaxcala"
+                      ? "Warm embrace during a ministry food delivery en el Estado de Tlaxcala"
+                      : "Abrazo cálido durante la entrega de alimento en Estado de Tlaxcala"
                   }
                   className="h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
                 <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white/95">
                   {language === "en"
-                    ? "Every gift reaches a real family in Tlaxcala."
-                    : "Cada donativo llega directamente a una familia real en Tlaxcala."}
+                    ? "Every gift reaches a real family en el Estado de Tlaxcala."
+                    : "Cada donativo llega directamente a una familia real en Estado de Tlaxcala."}
                 </figcaption>
               </figure>
             </div>
@@ -886,7 +886,7 @@ export default function Donations() {
                   {language === "en" ? "A Personal Letter" : "Carta Personal"}
                 </span>
                 <span className="text-xs font-semibold text-slate-400">
-                  Loma Bonita, Tlaxcala
+                  Loma Bonita, Estado de Tlaxcala
                 </span>
               </div>
 

@@ -30,11 +30,11 @@ export const translations = {
       aboutTitle: "Ministry Objective and Story",
       objectiveTitle: "Ministry Objective",
       objectiveText:
-        "Share God's love, bring hope through the Gospel of the Lord, and support vulnerable families with food pantry packages.",
+        "Share God's love, bring hope through the Gospel of the Lord, and support low-income and vulnerable families with food pantry packages.",
       missionText:
-        "At Trumpet Call Ministries, our mission is to reflect the love of Christ through service, bringing hope, comfort, and faith to those facing moments of need. We believe every family deserves to be heard, accompanied, and encouraged, so we share the transforming message of the Gospel while providing food support and close care to the most vulnerable communities. Our purpose is to be instruments of God, reminding each person that they are not alone and that there is always hope in Him.",
+        "Share the love of God, bringing hope with the Gospel of the Lord, and thus support low-income and vulnerable families with food pantry packages.",
       visionText:
-        "We long to see communities transformed by the love of God, where families find not only help for their material needs, but also spiritual restoration, strength, and purpose for their lives. Our vision is to expand this ministry of compassion and faith, reaching more homes, forming a network of committed volunteers, and being a constant reflection of the grace of Christ. We dream of a future where every act of service plants hope, every word of encouragement strengthens hearts, and every life reached can experience the inexhaustible love of God.",
+        "We long to see communities transformed by the love of God, where families find not only help for their material needs, but also restoration, strength, and purpose for their lives. Our vision is to expand this ministry of compassion and faith, reaching more homes, forming a network of committed volunteers, and being a constant reflection of the grace of Christ. We dream of a future where every act of service plants hope, every word of encouragement strengthens hearts, and every life reached can experience the inexhaustible love of God.",
       missionVisionTagline:
         "\"Bringing God's love to every home, sharing hope to transform lives.\"",
       historyTitle: "Ministry History",
@@ -87,7 +87,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Ministry founded in July" },
         { value: "80+", label: "Families reached" },
-        { value: "10 Toneladas", label: "Food distributed" },
+        { value: "More than 10 tons", label: "Food distributed" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Ministry areas",
@@ -232,7 +232,7 @@ export const translations = {
       stats: [
         { value: "HIT", label: "Hospital Infantil de Tlaxcala" },
         { value: "Joy", label: "Activities and encouragement" },
-        { value: "Prayer", label: "Spiritual and emotional care" },
+        { value: "Prayer", label: "Emotional care" },
       ],
       photoLabels: {
         hospitalNew01: "Group photo during the HIT visit",
@@ -449,7 +449,7 @@ export const translations = {
     brand: "Trumpet Call Ministries",
     nav: {
       home: "Inicio",
-      homeCare: "Servicio Domiciliar",
+      homeCare: "Visitas a domicilio",
       hospital: "Hospital Infantil",
       volunteers: "Voluntarios",
       donations: "Donaciones",
@@ -459,7 +459,7 @@ export const translations = {
     common: {
       learnMore: "Ver más",
       donateNow: "Donar ahora",
-      placeholder: "Las infografías aparecerán aquí cuando estén disponibles.",
+      placeholder: "Los resúmenes visuales aparecerán aquí cuando estén disponibles.",
       fullName: "Nombre completo",
       phone: "Teléfono",
       message: "Mensaje",
@@ -476,11 +476,11 @@ export const translations = {
       aboutTitle: "Objetivo e Historia del Ministerio",
       objectiveTitle: "Objetivo del Ministerio",
       objectiveText:
-        "Compartir el amor de Dios, llevar esperanza con el Evangelio del Señor y apoyar con despensas a las familias vulnerables.",
+        "Compartir el amor de Dios, llevando esperanza con el evangelio del Señor, y así apoyar con despensas a las familias de escasos recursos y vulnerables.",
       missionText:
-        "En Trumpet Call Ministries, nuestra misión es reflejar el amor de Cristo a través del servicio, llevando esperanza, consuelo y fe a quienes enfrentan momentos de necesidad. Creemos que cada familia merece ser escuchada, acompañada y animada, por lo que compartimos el mensaje transformador del Evangelio mientras brindamos apoyo alimentario y atención cercana a las comunidades más vulnerables. Nuestro propósito es ser instrumentos de Dios para recordar a cada persona que no está sola y que siempre hay esperanza en Él.",
+        "Compartir el amor de Dios, llevando esperanza con el evangelio del Señor, y así apoyar con despensas a las familias de escasos recursos y vulnerables.",
       visionText:
-        "Anhelamos ver comunidades transformadas por el amor de Dios, donde las familias encuentren no solo ayuda para sus necesidades materiales, sino también restauración espiritual, fortaleza y propósito para sus vidas. Nuestra visión es expandir este ministerio de compasión y fe, alcanzar más hogares, formar una red de voluntarios comprometidos y ser un reflejo constante de la gracia de Cristo. Soñamos con un futuro donde cada acto de servicio siembre esperanza, cada palabra de aliento fortalezca corazones y cada vida alcanzada pueda experimentar el amor inagotable de Dios.",
+        "Anhelamos ver comunidades transformadas por el amor de Dios, donde las familias encuentren no solo ayuda para sus necesidades materiales, sino también restauración, fortaleza y propósito para sus vidas. Nuestra visión es expandir este ministerio de compasión y fe, alcanzar más hogares, formar una red de voluntarios comprometidos y ser un reflejo constante de la gracia de Cristo. Soñamos con un futuro donde cada acto de servicio siembre esperanza, cada palabra de aliento fortalezca corazones y cada vida alcanzada pueda experimentar el amor inagotable de Dios.",
       missionVisionTagline:
         "\"Llevando el amor de Dios a cada hogar, compartiendo esperanza para transformar vidas.\"",
       historyTitle: "Historia del Ministerio",
@@ -509,14 +509,14 @@ export const translations = {
         {
           kicker: "Comunidad",
           title: "Un ministerio sostenido por donadores y voluntarios",
-          text: "Estudiantes, padres, vecinos, iglesias, grupos privados y beneficiarios ayudan a hacer posible la misión.",
+          text: "Estudiantes, padres, vecinos, iglesias, grupos privados y personas que reciben apoyo ayudan a hacer posible esta labor.",
           image: `${import.meta.env.BASE_URL}assets/voluntarios/voluntarios-04.jpeg`,
         },
       ],
       stats: [
         { value: "2021", label: "Fundación del ministerio en julio" },
         { value: "80+", label: "Familias alcanzadas" },
-        { value: "10 Toneladas", label: "Alimentos distribuidos" },
+        { value: "Más de 10 toneladas", label: "Alimentos distribuidos" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Áreas del ministerio",
@@ -525,12 +525,12 @@ export const translations = {
     },
     cards: {
       homeCare: {
-        title: "Servicio Domiciliar",
+        title: "Visitas a domicilio",
         text: "Actividades de asistencia para familias y personas atendidas en casa.",
       },
       hospital: {
         title: "Visita al Hospital Infantil",
-        text: "Apoyo enfocado en niños con hemodiálisis y diálisis.",
+        text: "Apoyo para niños que reciben tratamiento para sus riñones.",
       },
       volunteers: {
         title: "Voluntarios y Comunidad",
@@ -538,15 +538,15 @@ export const translations = {
       },
       donations: {
         title: "Donaciones e Impacto",
-        text: "Opciones de donación para servicio domiciliar, hospital y regalos voluntarios.",
+        text: "Opciones para apoyar las visitas a domicilio, el hospital y otras actividades.",
       },
       reports: {
-        title: "Infografía y Reportes",
-        text: "Consulta las infografías del ministerio organizadas por periodo e idioma.",
+        title: "Resúmenes y reportes",
+        text: "Consulta los resúmenes visuales del ministerio por periodo e idioma.",
       },
     },
     homeCare: {
-      title: "Servicio Domiciliar",
+      title: "Visitas a domicilio",
       text: "El equipo de voluntarios visita el hogar del beneficiario una vez al mes con despensas, comparte el Evangelio, ora por sus necesidades y conoce a la familia a largo plazo.",
       activities: "Actividades",
       activityItems: [
@@ -555,15 +555,15 @@ export const translations = {
         "Mensaje del Evangelio, oración y seguimiento personal",
         "Entrevistas para identificar situaciones de viudez u orfandad, discapacidad, abandono de adultos mayores, enfermedades crónicas, indigencia y crisis familiares.",
       ],
-      carouselLabel: "Galería de servicio domiciliar",
-      gallery: "Galería de visitas domiciliares",
+      carouselLabel: "Galería de visitas a domicilio",
+      gallery: "Galería de visitas a domicilio",
       galleryTitle: "Visitas al hogar, despensas y familias reales",
       galleryIntro:
         "Un recorrido visual por la preparación, entrega y acompañamiento personal en hogares.",
       monthlyCost: "Costo mensual por familia",
       monthlyVisit: "Visita mensual al hogar",
       photoLabels: {
-        carTeam: "Equipo listo para la visita domiciliar",
+        carTeam: "Equipo listo para la visita a domicilio",
         carBags: "Despensas cargadas para distribución",
         pantryDisplay: "Despensa preparada para familias",
         coupleVisit: "Visita al hogar con adultos mayores",
@@ -571,34 +571,34 @@ export const translations = {
         tablePantry: "Despensa entregada dentro del hogar",
         singlePantry: "Apoyo alimentario sobre la mesa familiar",
         outdoorFamily: "Familia recibiendo bolsas de despensa",
-        twoBags: "Beneficiarios recibiendo bolsas del ministerio",
+        twoBags: "Personas recibiendo apoyo del ministerio",
         personalDelivery: "Entrega personal y presencia con oración",
         elderPantry: "Apoyo alimentario para adulto mayor",
         homeFamily: "Acompañamiento familiar dentro del hogar",
-        homeVisitElderlyWomanBag: "Entrega de despensa en visita domiciliar",
+        homeVisitElderlyWomanBag: "Entrega de despensa durante una visita a domicilio",
         homeVisitTableSupport: "Apoyo alimentario entregado en casa",
         homeVisitConversation: "Acompañamiento cercano durante la visita",
         homeVisitFamilyKitchen: "Familia recibiendo apoyo en su hogar",
-        homeVisitPrayerCare: "Oración y cuidado en visita domiciliar",
+        homeVisitPrayerCare: "Oración y cuidado durante una visita a domicilio",
         homeVisitVolunteersBags: "Voluntarias con bolsas de apoyo",
         homeVisitChildMilk: "Niña recibiendo alimento en casa",
         homeVisitFamilyBag: "Familia beneficiaria con despensa",
         homeVisitFlorDelivery: "Voluntaria llevando despensas",
         homeVisitPantryTable: "Entrega de despensa y acompañamiento en el hogar",
         homeVisitDoorwayCare: "Visita personal y escucha en el hogar",
-        homeVisitWheelchairCare: "Acompañamiento domiciliar a beneficiario con discapacidad",
+        homeVisitWheelchairCare: "Apoyo en casa a una persona con discapacidad",
       },
       carousel: [
         {
           kicker: "Ritmo mensual",
           title: "Una visita cada mes",
-          text: "Cada visita domiciliar busca conocer personalmente a la familia y dar seguimiento a sus necesidades.",
+          text: "Cada visita a domicilio permite conocer mejor a la familia y sus necesidades.",
           image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`,
         },
         {
           kicker: "12 kilos",
           title: "Apoyo con despensa",
-          text: "La despensa domiciliar se prepara como apoyo práctico para familias vulnerables.",
+          text: "La despensa se prepara como apoyo práctico para familias que lo necesitan.",
           image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-03.png`,
         },
         {
@@ -619,7 +619,7 @@ export const translations = {
         "Agrega testimonios de doctores, familias, cuidadores o voluntarios que participaron en la visita al hospital.",
       calendarText: "[Insertar fechas, frecuencia y equipos responsables]",
       needsText:
-        "Son niños con insuficiencias renales que reciben diálisis o hemodiálisis. Muchas familias también viven una situación económica poco favorable, por eso el ministerio acompaña con ánimo, apoyo práctico y necesidades aprobadas por el hospital.",
+        "Son niños con enfermedades de los riñones que reciben tratamiento. Muchas familias también enfrentan dificultades económicas, por eso el ministerio ofrece ánimo y ayuda práctica con artículos acordados con el hospital.",
       carouselLabel: "Momentos del Hospital Infantil",
       gallery: "Galería de visitas al hospital",
       galleryTitle: "Color, esperanza y cuidado para niños",
@@ -628,7 +628,7 @@ export const translations = {
       stats: [
         { value: "HIT", label: "Hospital Infantil de Tlaxcala" },
         { value: "Alegría", label: "Actividades y ánimo" },
-        { value: "Oración", label: "Cuidado espiritual y emocional" },
+        { value: "Oración", label: "Cuidado emocional" },
       ],
       photoLabels: {
         hospitalNew01: "Foto de grupo durante la visita al HIT",
@@ -697,12 +697,12 @@ export const translations = {
       text: "Coordina grupos de voluntarios, material visual de misiones, historias de reciprocidad e información de la iglesia aliada.",
       groups: "Grupos de voluntarios activos",
       gallery: "Galería de fotos de las misiones",
-      reciprocal: "Beneficiarios que también son voluntarios",
+      reciprocal: "Personas que reciben apoyo y también son voluntarias",
       testimonies: "Testimonios de voluntarios",
       placeholder:
-        "Los voluntarios incluyen estudiantes, padres, vecinos, iglesias, grupos privados y beneficiarios. Colaboran empacando, pesando, embolsando y distribuyendo alimentos; también comparten el Evangelio y oran con las familias.",
+        "Entre los voluntarios hay estudiantes, padres, vecinos, iglesias, grupos privados y personas que también reciben apoyo. Empacan y reparten alimentos; además, comparten el Evangelio y oran con las familias.",
       reciprocalText:
-        "Algunos beneficiarios también sirven como voluntarios, convirtiendo el apoyo recibido en ayuda práctica para otras familias.",
+        "Algunas personas que reciben apoyo también sirven como voluntarias y ayudan a otras familias.",
       carouselLabel: "Galería de misiones voluntarias",
       galleryTitle: "Momentos reales de servicio",
       galleryIntro:
@@ -772,12 +772,12 @@ export const translations = {
         {
           kicker: "Entrega",
           title: "Las familias reciben apoyo en persona",
-          text: "Los voluntarios distribuyen alimentos, comparten el Evangelio y oran con los beneficiarios.",
+          text: "Los voluntarios reparten alimentos, comparten el Evangelio y oran con las familias.",
           image: `${import.meta.env.BASE_URL}assets/voluntarios/voluntarios-04.jpeg`,
         },
         {
           kicker: "Servicio compartido",
-          title: "Beneficiarios que también son voluntarios",
+          title: "Personas que reciben apoyo y también son voluntarias",
           text: "La reciprocidad es parte de la cultura del ministerio: quienes reciben también pueden servir.",
           image: `${import.meta.env.BASE_URL}assets/voluntarios/voluntarios-01.jpeg`,
         },
@@ -796,11 +796,11 @@ export const translations = {
         "Tu apoyo ayuda a más de 80 familias mediante visitas mensuales y entrega de despensas. En el Hospital Infantil de Tlaxcala, los niños y sus familias reciben kits de aseo personal, artículos médicos, despensas y acompañamiento continuo.",
     },
     reports: {
-      title: "Infografías y reportes",
-      text: "Consulta las infografías más recientes del ministerio, organizadas por periodo e idioma.",
-      viewerTitle: "Visor de infografías del ministerio",
+      title: "Resúmenes y reportes",
+      text: "Consulta los resúmenes visuales más recientes del ministerio, por periodo e idioma.",
+      viewerTitle: "Resúmenes visuales del ministerio",
       note: "Espacios reservados para las tres ediciones bimestrales más recientes, en español e inglés.",
-      placeholder: "Este espacio está reservado para una infografía que se agregará cuando esté disponible.",
+      placeholder: "Este espacio está reservado para un resumen visual que se agregará cuando esté disponible.",
     },
   },
 };

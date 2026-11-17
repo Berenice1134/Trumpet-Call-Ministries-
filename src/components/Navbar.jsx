@@ -15,7 +15,7 @@ const menuGroupsByLanguage = {
       ],
     },
     {
-      label: "Servicio Domiciliar",
+      label: "Visitas a domicilio",
       path: "/servicio-domiciliar",
       items: [
         { label: "Zonas con apoyo actual", id: "area-servicio-domiciliar" },
@@ -57,7 +57,7 @@ const menuGroupsByLanguage = {
       path: "/reportes",
       items: [
         { label: "Gráficos del ministerio", id: "graficos-ministerio" },
-        { label: "Infografías", id: "pdf-institucional" },
+        { label: "Resúmenes visuales", id: "pdf-institucional" },
       ],
     },
   ],

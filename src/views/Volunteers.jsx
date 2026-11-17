@@ -180,9 +180,9 @@ const volunteerGroups = [
     descriptionEn:
       "Messages of Life brings together church volunteers who join the ministry to prepare pantry packages, support logistics, and serve families with willing hearts.",
     impact:
-      "Su participación une la ayuda material con el ánimo espiritual, recordando a cada familia que la iglesia también puede ser presencia, oración y compañía en tiempos difíciles.",
+      "Su participación une la ayuda material con el ánimo, recordando a cada familia que la iglesia también puede ser presencia, oración y compañía en tiempos difíciles.",
     impactEn:
-      "Their participation connects material help with spiritual encouragement, reminding each family that the church can also be present through prayer, care, and companionship in difficult seasons.",
+      "Their participation connects material help with encouragement, reminding each family that the church can also be present through prayer, care, and companionship in difficult seasons.",
     stats: ["Evangelio", "Ánimo", "Acompañamiento"],
     statsEn: ["Gospel", "Encouragement", "Accompaniment"],
     color: "from-sky-400 to-ministry-blue",
@@ -251,7 +251,7 @@ const testimonialGroups = [
       {
         name: "Xochil X.",
         fullText:
-          "Cuando conocí a mi amiga Andy y me di cuenta de la obra que está realizando, apoyando con víveres a familias de bajos recursos, de inmediato me conmovió y recordé la gran misericordia de Dios para con nosotros, y me he marcado en apoyarla. Haciendo una pregunta: ella aquí en este estado realizando esto. Y me dije: yo también lo puedo hacer, ya que con mucha razón yo soy originaria de aquí de Tlaxcala. Por tal ejemplo que vi, me encuentro apoyando hasta que Dios me lo permita. Cada vez que acudo a apoyar, mi corazón crece de amor para los necesitados y me siento feliz de poder ayudar de esta manera. Dios la bendiga siempre en su ardua labor y seguirá contando conmigo. Dios quede con ella siempre.",
+          "Cuando conocí a mi amiga Andy y me di cuenta de la obra que está realizando, apoyando con víveres a familias de bajos recursos, de inmediato me conmovió y recordé la gran misericordia de Dios para con nosotros, y me he marcado en apoyarla. Haciendo una pregunta: ella aquí en este estado realizando esto. Y me dije: yo también lo puedo hacer, ya que con mucha razón yo soy originaria de aquí de Estado de Tlaxcala. Por tal ejemplo que vi, me encuentro apoyando hasta que Dios me lo permita. Cada vez que acudo a apoyar, mi corazón crece de amor para los necesitados y me siento feliz de poder ayudar de esta manera. Dios la bendiga siempre en su ardua labor y seguirá contando conmigo. Dios quede con ella siempre.",
       },
     ],
   },
@@ -358,9 +358,9 @@ const testimonialTextEn = {
   "Judith M.":
     "I joined the ministry because of my love for the principles it longs for and carries out. I am proud to be part of serving and helping under the Word of God our Lord. In that way, it makes me one more servant of the Lord, showing that God our Lord is present. Likewise, through the ministry, may the objective be fulfilled and multiplied, which makes one feel committed and devoted. Thankfully, may this reach more people who truly need it.",
   Xochil:
-    "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
+    "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in the State of Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
   "Xochil X.":
-    "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
+    "When I met my friend Andy and realized the work she is doing, supporting low-income families with food, I was immediately moved and remembered God's great mercy toward us, and I decided to support her. I asked myself: she is here in this state doing this. And I said to myself: I can do it too, especially because I am originally from here in the State of Tlaxcala. Because of the example I saw, I am supporting as long as God allows me to. Every time I go to help, my heart grows in love for those in need and I feel happy to be able to help in this way. May God always bless her in her hard work, and she will continue to count on me. May God remain with her always.",
   "Claudia V.":
     "Since we started receiving help until now, we do not go to bed without eating. Thankfully, may God bless the founders of this noble cause.",
   "Arturo I.":
@@ -423,7 +423,7 @@ const volunteerPageCopy = {
     ctaEyebrow: "Súmate a la misión",
     ctaTitle: "Cada mano que empaca y cada oración compartida transforma un hogar",
     ctaText:
-      "Detrás de cada despensa entregada en Tlaxcala hay estudiantes, familias, iglesias, donadores y beneficiarios sirviendo unidos por amor al prójimo.",
+      "Detrás de cada despensa entregada en Estado de Tlaxcala hay estudiantes, familias, iglesias, donadores y beneficiarios sirviendo unidos por amor al prójimo.",
   },
   en: {
     testimony: "Testimony",
@@ -452,7 +452,7 @@ const volunteerPageCopy = {
     ctaEyebrow: "Join the mission",
     ctaTitle: "Every hand that packs and every shared prayer transforms a home",
     ctaText:
-      "Behind every pantry package delivered in Tlaxcala are students, families, churches, donors, and beneficiaries serving together out of love for their neighbor.",
+      "Behind every pantry package delivered in the State of Tlaxcala are students, families, churches, donors, and beneficiaries serving together out of love for their neighbor.",
   },
 };
 

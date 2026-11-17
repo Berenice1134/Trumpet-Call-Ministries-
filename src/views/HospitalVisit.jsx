@@ -178,7 +178,7 @@ const hospitalPageCopy = {
     ctaEyebrow: "¿Cómo puedes ayudar?",
     ctaTitle: "Cada misión lleva alivio, alimento y esperanza a quien más lo necesita",
     ctaText:
-      "Con tu donativo o tu servicio como voluntario, podemos seguir acompañando a niños en el Hospital Infantil y a familias vulnerables en comunidades de Tlaxcala.",
+      "Con tu donativo o tu servicio como voluntario, podemos seguir acompañando a niños en el Hospital Infantil y a familias vulnerables en comunidades de Estado de Tlaxcala.",
     volunteerCta: "Ser voluntario",
   },
   en: {
@@ -197,7 +197,7 @@ const hospitalPageCopy = {
     ctaEyebrow: "How can you help?",
     ctaTitle: "Every mission brings relief, food, and hope to those who need it most",
     ctaText:
-      "With your gift or volunteer service, we can continue accompanying children at the Children's Hospital and vulnerable families across Tlaxcala.",
+      "With your gift or volunteer service, we can continue accompanying children at the Children's Hospital and vulnerable families across Estado de Tlaxcala.",
     volunteerCta: "Volunteer with us",
   },
 };
@@ -209,7 +209,7 @@ const hospitalTimelineCopy = {
     timelineEyebrow: "Fechas importantes",
     timelineTitle: "Momentos que han llevado alegría y apoyo al Hospital Infantil",
     timelineText:
-      "Estos hitos documentan entregas, eventos y actividades que fortalecen el acompañamiento a niños con hemodiálisis, diálisis y sus familias.",
+      "Estos sucesos relevantes muestran las entregas, eventos y actividades para apoyar a los niños que reciben tratamiento renal y a sus familias.",
     completedEvents: "acciones realizadas",
     impactLabel: "Apoyo directo",
     monthlyVisit: "Visita mensual",
@@ -220,7 +220,7 @@ const hospitalTimelineCopy = {
     timelineEyebrow: "Important dates",
     timelineTitle: "Moments that brought joy and support to the Children's Hospital",
     timelineText:
-      "These milestones document deliveries, events, and activities that strengthen support for children receiving hemodialysis, dialysis, and their families.",
+      "These key events show the deliveries, activities, and other support for children receiving kidney treatment and their families.",
     completedEvents: "completed actions",
     impactLabel: "Direct support",
     monthlyVisit: "Monthly visit",
@@ -234,9 +234,9 @@ const hospitalMilestones = [
     titleEs: "Inicio de la misión al Hospital Infantil",
     titleEn: "Beginning of the Children's Hospital mission",
     textEs:
-      "El ministerio recibió una nueva llamada para acompañar a niños vulnerables y sus familias en el área de nefrología del Hospital Infantil de Tlaxcala.",
+      "El ministerio recibió una nueva llamada para acompañar a niños vulnerables y sus familias en el área de atención renal del Hospital Infantil de Tlaxcala.",
     textEn:
-      "The ministry received a new calling to accompany vulnerable children and their families in the nephrology area of the Children's Hospital of Tlaxcala.",
+      "The ministry received a new calling to accompany vulnerable children and their families in the kidney care unit of the Children's Hospital of Tlaxcala.",
     icon: Star,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-01-enero.jpg`,
   },
@@ -246,9 +246,9 @@ const hospitalMilestones = [
     titleEs: "Primera visita a niños de nefrología",
     titleEn: "First visit with nephrology children",
     textEs:
-      "El ministerio sirvió por primera vez a niños con insuficiencia renal, compartió el plan de salvación con sus familias y entregó kits de aseo personal con una reflexión bíblica.",
+      "El ministerio sirvió por primera vez a niños con enfermedad renal, compartió el plan de salvación con sus familias y entregó kits de aseo personal con una reflexión bíblica.",
     textEn:
-      "The ministry served children with kidney failure for the first time, shared the plan of salvation with their families, and delivered hygiene kits with a Bible reflection.",
+      "The ministry served children with kidney disease for the first time, shared the plan of salvation with their families, and delivered hygiene kits with a Bible reflection.",
     icon: Gift,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-02-febrero.jpg`,
   },
@@ -319,7 +319,7 @@ const hospitalStoryByLanguage = {
     eyebrow: "Un acto de amor que transforma",
     title: "Acompañando a niños que luchan cada semana por su salud",
     paragraphs: [
-      "El Hospital Infantil de Tlaxcala abrió una puerta para que Trumpet Call Ministries México acompañara a niños vulnerables y a sus familias en el área de nefrología. Muchos de ellos reciben diálisis o hemodiálisis, y cada tratamiento representa una carga económica y emocional muy fuerte para el hogar.",
+      "El Hospital Infantil de Tlaxcala abrió una puerta para que Trumpet Call Ministries México acompañara a niños vulnerables y a sus familias en el área de atención renal. Muchos de ellos reciben diálisis o hemodiálisis, y cada tratamiento representa una carga económica y emocional muy fuerte para el hogar.",
       "El ministerio busca servir con sensibilidad: entregar articulos de higiene, ropa adaptada para sus tratamientos, calzado y actividades con fundamento en la fe. Más que llevar cosas, el objetivo es llevar amor, esperanza, ánimo y oración en un proceso que muchas familias enfrentan con cansancio y necesidad.",
       "El equipo permanece en comunicacion con el personal del hospital para entender mejor como servir a esta comunidad y preparar apoyos mensuales que respondan a necesidades reales y aprobadas.",
     ],
@@ -328,7 +328,7 @@ const hospitalStoryByLanguage = {
     eyebrow: "An act of love that transforms",
     title: "Accompanying children who fight for their health every week",
     paragraphs: [
-      "The Children's Hospital of Tlaxcala opened a door for Trumpet Call Ministries Mexico to accompany vulnerable children and their families in the nephrology area. Many of them receive dialysis or hemodialysis, and each treatment brings a heavy financial and emotional burden to the home.",
+      "The Children's Hospital of Tlaxcala opened a door for Trumpet Call Ministries Mexico to accompany vulnerable children and their families in the kidney care unit. Many of them receive dialysis or hemodialysis, and each treatment brings a heavy financial and emotional burden to the home.",
       "The ministry seeks to serve with sensitivity: delivering hygiene items, adapted clothing for treatments, footwear, and faith-based activities. More than bringing supplies, the goal is to bring love, hope, encouragement, and prayer during a process many families face with exhaustion and need.",
       "The team remains in communication with hospital staff to better understand how to serve this community and prepare monthly support that responds to real, approved needs.",
     ],
@@ -1021,7 +1021,7 @@ export default function HospitalVisit() {
             />
           </div>
 
-          {/* Hito activo con fotografía protagonista completa */}
+          {/* Suceso relevante activo con fotografía protagonista completa */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
             <figure
               onClick={() =>

@@ -6,15 +6,15 @@ const footerCopy = {
   es: {
     summary:
       "Ministerio de Jesucristo que reparte despensas a familias en situaciones vulnerables y acompaña con oración, esperanza y cuidado práctico.",
-    location: "Calle Herreros 53 esq. con Pintores, Col. Loma Bonita, Tlaxcala, México C.P 90090",
+    location: "Calle Herreros 53 esq. con Pintores, Col. Loma Bonita, Estado de Tlaxcala, México C.P 90090",
     email: "MxTCMinistries@gmail.com",
     explore: "Explorar el ministerio",
     links: [
-      { label: "Servicio Domiciliar", to: "/servicio-domiciliar" },
+      { label: "Visitas a domicilio", to: "/servicio-domiciliar" },
       { label: "Misiones y Hospital Infantil", to: "/misiones" },
       { label: "Voluntariado", to: "/voluntarios" },
       { label: "Donaciones", to: "/donaciones" },
-      { label: "Reportes e Infografías", to: "/reportes" },
+      { label: "Reportes y resúmenes", to: "/reportes" },
     ],
   },
   en: {

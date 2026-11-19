@@ -116,6 +116,7 @@ const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
 /* ============================================================
    Selecciones derivadas por sección; cada clave se asigna a una sola colección.
    ============================================================ */
+const zonasPhotoKeys = ["homeVisitFamilyBag"];
 const heroPhotoKeys = [
   "homeVisitDoorwayCare",
   "homeVisitWheelchairCare",
@@ -124,17 +125,6 @@ const heroPhotoKeys = [
   "homeVisitChildMilk",
   "carTeam",
 ];
-
-const galleryPhotoKeys = [
-  "homeVisitPantryTable",
-  "homeFamily",
-  "homeVisitDoorwayCare",
-  "homeVisitWheelchairCare",
-  "homeVisitFamilyBag",
-  "outdoorFamily",
-];
-
-const zonasPhotoKeys = ["homeVisitVolunteersBags"];
 
 const homeCareTimelineIcons = [
   PackageCheck,
@@ -148,7 +138,6 @@ const impactPhotoKeys = ["pantryDisplay", "singlePantry"];
 const activityPhotoKeys = ["twoBags", "elderPantry"];
 
 const heroPhotos = heroPhotoKeys.map(findPhoto).filter(Boolean);
-const galleryPhotos = galleryPhotoKeys.map(findPhoto).filter(Boolean);
 const zonasPhotos = zonasPhotoKeys.map(findPhoto).filter(Boolean);
 const impactPhotos = impactPhotoKeys.map(findPhoto).filter(Boolean);
 const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
@@ -353,7 +342,6 @@ const homeCarePageCopy = {
     tonsDistributed: "Toneladas repartidas",
     activeCommunities: "Comunidades activas",
     viewCoverage: "Conoce las zonas de apoyo",
-    // Galería
     galleryEyebrow: "Galería de Historias",
     galleryTitle: "El rostro de nuestra misión",
     galleryText:
@@ -552,16 +540,6 @@ const serviceCommunities = [
   "San Diego Metepec, Tlax.",
 ];
 
-/* Patrón equilibrado de 3 columnas para que las fotografías verticales y horizontales luzcan centradas */
-const gallerySpans = [
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-  "sm:col-span-6 lg:col-span-4 h-[280px] sm:h-[320px] w-full",
-];
-
 /* ============================================================
    Vista del visitas a domicilio: cobertura, historia, resultados y actividades.
    ============================================================ */
@@ -690,7 +668,7 @@ export default function HomeCare() {
         </div>
       </section>
 
-      {/* ===================== GALERÍA DE HISTORIAS ===================== */}
+      {/* ===================== GALERÍA CAMBIANTE DE HISTORIAS ===================== */}
       <section
         id="galeria-domiciliar"
         className="section-shell scroll-mt-28 bg-cream"
@@ -717,15 +695,6 @@ export default function HomeCare() {
                 heightClassName="h-[320px] sm:h-[400px] lg:h-[440px]"
               />
             </div>
-          </div>
-
-          <div className="reveal mt-12">
-            <PhotoGrid
-              photos={galleryPhotos}
-              gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-12"
-              itemClassName="h-[280px] sm:h-[320px]"
-              spanPattern={gallerySpans}
-            />
           </div>
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 rounded-[1.75rem] bg-sand/70 px-6 py-8 text-center sm:flex-row sm:px-10 sm:text-left">

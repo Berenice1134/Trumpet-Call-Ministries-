@@ -68,9 +68,7 @@ const menuGroupsByLanguage = {
       items: [
         { label: "About Us", id: "objetivo" },
         { label: "History", id: "historia" },
-        { label: "Service Area", id: "area-servicio" },
         { label: "Objective", id: "objetivo" },
-        { label: "How the Ministry Is Supported", id: "como-se-sostiene" },
       ],
     },
     {
@@ -87,7 +85,7 @@ const menuGroupsByLanguage = {
       label: "Missions",
       path: "/misiones",
       items: [
-        { label: "HIT", id: "hospital-infantil-tlaxcala" },
+        { label: "Children's Hospital of Tlaxcala (HIT)", id: "hospital-infantil-tlaxcala" },
         { label: "Cartolandia", id: "cartolandia" },
         { label: "Charity Day", id: "dia-caridad" },
         { label: "Asilo de San Judas", id: "espanita" },

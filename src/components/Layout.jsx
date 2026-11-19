@@ -43,9 +43,14 @@ export default function Layout() {
     ].join(", ");
 
     const rawElements = Array.from(root.querySelectorAll(selectors));
-    // Evita animar dos veces un padre y su hijo directo al mismo tiempo si ambos coinciden
+    // Evita animar dos veces un padre y su hijo directo al mismo tiempo si ambos coinciden,
+    // y excluye elementos dentro de contenedores sticky o marcados con data-no-reveal.
     const elements = rawElements.filter(
-      (el) => !el.closest(".fixed") && !el.querySelector(".reveal")
+      (el) =>
+        !el.closest(".fixed") &&
+        !el.closest(".sticky") &&
+        !el.closest("[data-no-reveal]") &&
+        !el.querySelector(".reveal")
     );
 
     // Asigna un retraso escalonado suave a elementos hermanos dentro de cuadrículas
@@ -69,7 +74,7 @@ export default function Layout() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            entry.target.setAttribute("data-scroll-reveal", "visible");
             observer.unobserve(entry.target);
           }
         });
@@ -81,11 +86,11 @@ export default function Layout() {
     );
 
     elements.forEach((el) => {
-      el.setAttribute("data-scroll-reveal", "");
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
-        el.classList.add("is-visible");
+        el.setAttribute("data-scroll-reveal", "visible");
       } else {
+        el.setAttribute("data-scroll-reveal", "hidden");
         observer.observe(el);
       }
     });

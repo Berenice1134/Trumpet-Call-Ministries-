@@ -139,7 +139,7 @@ const donationPageCopy = {
     transfers: "Transfers",
     impact: "Impact",
     kermesEyebrow: "Charity event",
-    kermesTitle: "Magical Winter Charity Kermés",
+    kermesTitle: "Magical Winter Charity Fair",
     kermesIntro:
       "Moments of fellowship, support, and generosity that help sustain service to vulnerable families.",
     kermesCounter: "photo",
@@ -147,7 +147,7 @@ const donationPageCopy = {
     bankDetails: "Bank details",
     bankText: "This is the only authorized method for bank transfers. Choose the area you want to support and use the matching concept.",
     accountNumber: "Account number",
-    clabe: "Interbank Clave interbancaria para transferencias",
+    clabe: "Interbank CLABE",
     transferConcept: "Concept",
     copy: "Copy",
     copied: "Copied",
@@ -217,7 +217,7 @@ function KermesPhotoCarousel({ photos, copy, language }) {
 
   return (
     <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink/80 shadow-photo">
-      <div className="relative h-[320px] w-full overflow-hidden bg-ink sm:h-[400px] lg:h-[440px]">
+      <div className="relative h-[360px] w-full overflow-hidden bg-ink sm:h-[440px] lg:h-[500px]">
         <img
           src={currentPhoto.src}
           alt=""
@@ -228,7 +228,7 @@ function KermesPhotoCarousel({ photos, copy, language }) {
           key={currentPhoto.key}
           src={currentPhoto.src}
           alt={`${copy.kermesTitle} ${currentIndex + 1}`}
-          className="gallery-photo-enter relative z-10 h-full w-full object-contain p-2 sm:p-4"
+          className="gallery-photo-enter relative z-10 h-full w-full object-contain p-1 sm:p-2"
           loading={currentIndex === 0 ? "eager" : "lazy"}
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent px-6 pb-6 pt-20 text-white">
@@ -244,7 +244,7 @@ function KermesPhotoCarousel({ photos, copy, language }) {
         <button
           type="button"
           onClick={previousSlide}
-          className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/70 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
+          className="absolute left-4 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/80 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
           aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
         >
           <ChevronLeft size={22} />
@@ -252,7 +252,7 @@ function KermesPhotoCarousel({ photos, copy, language }) {
         <button
           type="button"
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/70 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
+          className="absolute right-4 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-ink/80 text-white shadow-lg backdrop-blur-md transition hover:scale-105 hover:bg-ember"
           aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
         >
           <ChevronRight size={22} />
@@ -313,7 +313,7 @@ export default function Donations() {
   const shareTransferDetails = async () => {
     const account = bankAccounts[0];
     const details = [
-      `Banco: ${account.bank}`,
+      `${language === "en" ? "Bank" : "Banco"}: ${account.bank}`,
       `${copy.accountNumber}: ${account.accountNumber}`,
       `${copy.clabe}: ${account.clabe}`,
       `${copy.transferConcept}: ${selectedConcept}`,
@@ -465,7 +465,7 @@ export default function Donations() {
                   alt={
                     language === "en"
                       ? "Warm embrace during a ministry food delivery in the State of Tlaxcala"
-                      : "Abrazo cálido durante la entrega de alimento in the State of Tlaxcala"
+                      : "Abrazo cálido durante la entrega de alimento en el Estado de Tlaxcala"
                   }
                   className="h-full w-full object-cover object-top"
                 />
@@ -473,7 +473,7 @@ export default function Donations() {
                 <figcaption className="absolute bottom-5 left-5 right-5 text-sm font-semibold text-white/95">
                   {language === "en"
                     ? "Every gift reaches a real family in the State of Tlaxcala."
-                    : "Cada donativo llega directamente a una familia real in the State of Tlaxcala."}
+                    : "Cada donativo llega directamente a una familia real en el Estado de Tlaxcala."}
                 </figcaption>
               </figure>
             </div>
@@ -878,7 +878,9 @@ export default function Donations() {
                   {language === "en" ? "A Personal Letter" : "Carta Personal"}
                 </span>
                 <span className="text-xs font-semibold text-slate-400">
-                  Loma Bonita, State of Tlaxcala
+                  {language === "en"
+                    ? "Loma Bonita, State of Tlaxcala"
+                    : "Loma Bonita, Estado de Tlaxcala"}
                 </span>
               </div>
 

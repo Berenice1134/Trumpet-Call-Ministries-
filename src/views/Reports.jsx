@@ -71,10 +71,50 @@ const reportPeriods = [
 ];
 
 const donorSources2026 = [
-  { key: "mexico", value: 37, color: "from-ink to-ministry-blue", hex: "#0A1E3C", icon: Globe, description: "Donaciones desde México" },
-  { key: "englishCenter", value: 2, color: "from-ministry-teal to-cyan-600", hex: "#06B6D4", icon: GraduationCap, description: "Ingresos del English Center" },
-  { key: "usd", value: 55, color: "from-ministry-blue to-sky-500", hex: "#0284C7", icon: Building2, description: "Donaciones en USD" },
-  { key: "kermes", value: 6, color: "from-amber-400 to-amber-600", hex: "#F59E0B", icon: Heart, description: "Recaudación por kermés" },
+  {
+    key: "mexico",
+    value: 37,
+    color: "from-ink to-ministry-blue",
+    hex: "#0A1E3C",
+    icon: Globe,
+    description: {
+      es: "Donaciones desde México",
+      en: "Donations from Mexico",
+    },
+  },
+  {
+    key: "englishCenter",
+    value: 2,
+    color: "from-ministry-teal to-cyan-600",
+    hex: "#06B6D4",
+    icon: GraduationCap,
+    description: {
+      es: "Ingresos del English Center",
+      en: "English Center income",
+    },
+  },
+  {
+    key: "usd",
+    value: 55,
+    color: "from-ministry-blue to-sky-500",
+    hex: "#0284C7",
+    icon: Building2,
+    description: {
+      es: "Donaciones en USD",
+      en: "Donations in USD",
+    },
+  },
+  {
+    key: "kermes",
+    value: 6,
+    color: "from-amber-400 to-amber-600",
+    hex: "#F59E0B",
+    icon: Heart,
+    description: {
+      es: "Recaudación por kermés",
+      en: "Charity fair fundraising",
+    },
+  },
 ];
 
 const hospitalDonationMix = [
@@ -138,32 +178,32 @@ const hospitalDonationMix = [
 const missionDonations = [
   {
     year: 2023,
-    month: "Jun",
+    month: { es: "Jun", en: "Jun" },
     place: "Cartolandia",
     value: 28,
     icon: Church,
     color: "from-ember to-ember-dark",
-    description: "47 familias apoyadas",
+    description: { es: "47 familias apoyadas", en: "47 families supported" },
     photo: asset("misiones/cartolandia-primera-14.jpeg"),
   },
   {
     year: 2023,
-    month: "Ago",
+    month: { es: "Ago", en: "Aug" },
     place: "Cáritas",
     value: 30,
     icon: HandHeart,
     color: "from-ink to-ministry-blue",
-    description: "53 familias apoyadas",
+    description: { es: "53 familias apoyadas", en: "53 families supported" },
     photo: asset("misiones/dia-caridad-caritas-03.jpeg"),
   },
   {
     year: 2025,
-    month: "Mar",
+    month: { es: "Mar", en: "Mar" },
     place: "San Judas",
     value: 42,
     icon: Church,
     color: "from-ministry-teal to-teal-600",
-    description: "75 kg + 50 cobijas",
+    description: { es: "75 kg + 50 cobijas", en: "75 kg + 50 blankets" },
     photo: asset("misiones/espanita-02.jpeg"),
   },
 ];
@@ -291,10 +331,10 @@ const reportsCopy = {
     donated: "donated",
     cumulative: "in total",
     sourceLabels: {
-      mexico: "México",
+      mexico: "Mexico",
       englishCenter: "English Center",
       usd: "USD",
-      kermes: "Kermés",
+      kermes: "Charity Fair",
     },
     hospitalLabels: {
       hygieneKits: "Personal hygiene kits",
@@ -327,7 +367,7 @@ const formatNumber = (value, decimals = 0) =>
   }).format(value);
 
 // ===== MODAL DE DETALLE (COMPACTO) =====
-function DetailModal({ isOpen, onClose, title, data, total, totalLabel, hintLabel }) {
+function DetailModal({ isOpen, onClose, title, data, total, totalLabel, hintLabel, closeLabel = "Cerrar" }) {
   useEffect(() => {
     if (!isOpen) return undefined;
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -359,7 +399,7 @@ function DetailModal({ isOpen, onClose, title, data, total, totalLabel, hintLabe
             <h3 className="truncate font-display text-xl font-semibold leading-tight text-white">{title}</h3>
             <button
               onClick={onClose}
-              aria-label="Cerrar"
+              aria-label={closeLabel}
               className="shrink-0 rounded-full bg-white/15 p-2 text-white transition-colors hover:bg-white/25"
             >
               <X size={16} />
@@ -452,6 +492,7 @@ function ChartShell({
   preview,
   children,
   expandLabel = "Ver detalles",
+  closeLabel = "Cerrar",
 }) {
   const [open, setOpen] = useState(false);
 
@@ -496,7 +537,7 @@ function ChartShell({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Cerrar gráfica"
+                aria-label={closeLabel}
                 className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-white transition hover:bg-ember"
               >
                 <X size={18} />
@@ -551,7 +592,7 @@ function ChartShell({
 }
 
 // ===== BAR CHART (Beneficiarios) =====
-function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, secondaryLabel, expandLabel }) {
+function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, secondaryLabel, expandLabel, closeLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
@@ -589,6 +630,7 @@ function BarChartBlock({ title, data, valueKey, valueLabel, secondaryKey, second
       icon={BarChart3}
       preview={preview}
       expandLabel={expandLabel}
+      closeLabel={closeLabel}
     >
       <article tabIndex={0} className="soft-card">
         <div className="flex items-start justify-between gap-4">
@@ -967,7 +1009,7 @@ function AreaLineChartBlock({ title, data, annualLabel, totalDonated, kgLabel, t
 }
 
 // ===== COLUMN CHART (Despensas) =====
-function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel, expandLabel }) {
+function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, secondaryLabel, expandLabel, closeLabel }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const maxValue = Math.max(...data.map((item) => item[valueKey]));
   const total = data.reduce((sum, d) => sum + d[valueKey], 0);
@@ -1005,6 +1047,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
       icon={PackageCheck}
       preview={preview}
       expandLabel={expandLabel}
+      closeLabel={closeLabel}
     >
       <article tabIndex={0} className="soft-card">
         <div className="flex items-start justify-between gap-4">
@@ -1114,7 +1157,7 @@ function ColumnChartBlock({ title, data, valueKey, secondaryKey, valueLabel, sec
 }
 
 // ===== DONUT CHART =====
-function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
+function DonutChart({ title, items, labels, expandLabel, closeLabel, language = "es" }) {
   const [selectedKey, setSelectedKey] = useState(null);
   const total = items.reduce((sum, item) => sum + item.value, 0);
   const radius = 42;
@@ -1199,6 +1242,7 @@ function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
       icon={PieChart}
       preview={preview}
       expandLabel={expandLabel}
+      closeLabel={closeLabel}
     >
       <article tabIndex={0} className="soft-card">
         <div className="flex items-start justify-between gap-4">
@@ -1321,8 +1365,14 @@ function DonutChart({ title, items, labels, expandLabel, language = "es" }) {
 }
 
 // ===== MISSION CARDS =====
-function MissionCard({ item }) {
+function MissionCard({ item, language = "es" }) {
   const Icon = item.icon;
+  const monthLabel =
+    typeof item.month === "object" ? item.month[language] ?? item.month.es : item.month;
+  const descriptionLabel =
+    typeof item.description === "object"
+      ? item.description[language] ?? item.description.es
+      : item.description;
   return (
     <article className="group overflow-hidden rounded-[1.5rem] border border-ink/5 bg-cream/60 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
       <figure className="photo-frame relative h-56 overflow-hidden rounded-none bg-ink">
@@ -1343,14 +1393,14 @@ function MissionCard({ item }) {
         <figcaption className="absolute bottom-3 left-4 right-4 z-30 flex items-center justify-between text-white">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold backdrop-blur-md">
             <Icon size={13} />
-            {item.month} {item.year}
+            {monthLabel} {item.year}
           </span>
           <span className="font-display text-2xl font-semibold text-white">{item.value}%</span>
         </figcaption>
       </figure>
       <div className="p-5">
         <h4 className="font-display text-xl font-semibold text-ink">{item.place}</h4>
-        <p className="mt-1 text-sm text-slate-600">{item.description}</p>
+        <p className="mt-1 text-sm text-slate-600">{descriptionLabel}</p>
         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-sand">
           <div
             className="h-full rounded-full bg-ember transition-all duration-700"
@@ -1373,6 +1423,10 @@ export default function Reports() {
   );
   const [detailModal, setDetailModal] = useState(null);
   const [showAllMilestones, setShowAllMilestones] = useState(false);
+
+  useEffect(() => {
+    setSelectedDocumentLanguage(language === "en" ? "en" : "es");
+  }, [language]);
 
   const selectedPeriod =
     reportPeriods.find((period) => period.id === selectedPeriodId) ??
@@ -1501,12 +1555,14 @@ export default function Reports() {
               secondaryKey="months"
               secondaryLabel={copy.months}
               expandLabel={copy.tapToExpand}
+              closeLabel={copy.close}
             />
             <DonutChart
               title={copy.donorTitle}
               items={donorSources2026}
               labels={copy.sourceLabels}
               expandLabel={copy.tapToExpand}
+              closeLabel={copy.close}
               language={language}
             />
           </div>
@@ -1521,12 +1577,14 @@ export default function Reports() {
               secondaryKey="cumulativePantries"
               secondaryLabel={copy.cumulative}
               expandLabel={copy.tapToExpand}
+              closeLabel={copy.close}
             />
             <DonutChart
               title={copy.hospitalTitle}
               items={hospitalDonationMix}
               labels={copy.hospitalLabels}
               expandLabel={copy.tapToExpand}
+              closeLabel={copy.close}
               language={language}
             />
           </div>
@@ -1574,7 +1632,7 @@ export default function Reports() {
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
               {missionDonations.map((item) => (
-                <MissionCard key={`${item.year}-${item.place}`} item={item} />
+                <MissionCard key={`${item.year}-${item.place}`} item={item} language={language} />
               ))}
             </div>
           </article>
@@ -1590,6 +1648,7 @@ export default function Reports() {
           total={detailModal.total}
           totalLabel={copy.total}
           hintLabel={copy.clickToView}
+          closeLabel={copy.close}
         />
       )}
 
@@ -1680,7 +1739,7 @@ export default function Reports() {
             <p className="lead mt-4">{copy.archiveText}</p>
           </div>
 
-          <div className="sticky top-20 z-30 -mx-4 mt-10 bg-cream/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+          <div data-no-reveal className="sticky top-20 z-30 -mx-4 mt-10 bg-cream/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div className="no-scrollbar flex gap-4 overflow-x-auto md:grid md:grid-cols-3 md:gap-5" aria-label={copy.pdfTitle}>
               {visibleInfographicPeriods.map((period, idx) => {
               const isSelected = selectedPeriodId === period.id;

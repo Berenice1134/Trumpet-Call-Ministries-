@@ -250,7 +250,7 @@ const hospitalMilestones = [
     textEs:
       "El Hospital Infantil de Tlaxcala pidió que el ministerio apadrinara al área de Nefrologia, porque es un área olvidada.",
     textEn:
-      "The ministry received a new calling to accompany vulnerable children and their families in the kidney care unit of the Children's Hospital of Tlaxcala.",
+      "The Children's Hospital of Tlaxcala asked the ministry to sponsor the nephrology area, as it is often overlooked.",
     icon: Star,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-01-enero.jpg`,
   },
@@ -270,11 +270,11 @@ const hospitalMilestones = [
     dateEs: "13 de marzo",
     dateEn: "March 13",
     titleEs: "Participación en la kermés del hospital",
-    titleEn: "Participation in the hospital kermes",
+    titleEn: "Participation in the hospital charity fair",
     textEs:
       "El ministerio asistió a la kermés organizada en el hospital, acompañando a las familias y sumándose a la actividad comunitaria.",
     textEn:
-      "The ministry attended the kermes organized at the hospital, accompanying families and joining the community activity.",
+      "The ministry attended the charity fair organized at the hospital, accompanying families and joining the community activity.",
     icon: HandHeart,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-03-marzo-kermes-hit.jpg`,
   },
@@ -282,11 +282,11 @@ const hospitalMilestones = [
     dateEs: "22 de marzo",
     dateEn: "March 22",
     titleEs: "Kermés a los niños del área de Nefrología HIT",
-    titleEn: "Trumpet Call Ministries kermes",
+    titleEn: "Charity fair for HIT Nephrology children",
     textEs:
       "Trumpet Call Ministries realizó una kermés para recaudar apoyo y destinarlo a los niños del Hospital Infantil de Tlaxcala.",
     textEn:
-      "Trumpet Call Ministries held a kermes to raise support for the children at the Children's Hospital of Tlaxcala.",
+      "Trumpet Call Ministries held a charity fair to raise support for the children at the Children's Hospital of Tlaxcala.",
     icon: Sparkles,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-04-marzo-kermes-tcm.jpg`,
   },
@@ -298,7 +298,7 @@ const hospitalMilestones = [
     textEs:
       "El ministerio participó en un pequeño evento por el Día del Niño, creando un espacio de alegría, juego y ánimo para los pacientes.",
     textEn:
-      "The ministry held a small Children's Day event, creating a space of joy, play, and encouragement for the patients.",
+      "The ministry joined a small Children's Day event, creating a space of joy, play, and encouragement for the patients.",
     icon: Heart,
     photoSrc: `${import.meta.env.BASE_URL}assets/hospital-infantil/hito-05-abril-dia-nino.jpg`,
   },
@@ -306,11 +306,11 @@ const hospitalMilestones = [
     dateEs: "29 de mayo",
     dateEn: "May 29",
     titleEs: "Pijamas especiales, sandalias y cintas Hypafix",
-    titleEn: "Special pajamas, sandals, and catheter bands",
+    titleEn: "Special pajamas, sandals, and Hypafix tape",
     textEs:
       "Se repartieron pijamas especiales que cubren el cuerpo sin necesidad de quitar toda la ropa, permitiendo descubrir solo la zona del catéter; también se entregaron sandalias y cintas para sostener el catéter.",
     textEn:
-      "Special pajamas were distributed to cover the body without needing to remove all clothing, allowing only the catheter area to be uncovered; sandals and bands to hold the catheter were also delivered.",
+      "Special pajamas were distributed to cover the body without needing to remove all clothing, allowing only the catheter area to be uncovered; sandals and Hypafix bands to secure the catheter were also delivered.",
     icon: HeartPulse,
     photoIndex: 4,
   },
@@ -352,7 +352,8 @@ const hospitalStoryByLanguage = {
 /* ============================================================
    PhotoLightbox — modal con React Portal
    ============================================================ */
-function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Cerrar" }) {
+function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Cerrar", language = "es" }) {
+  const isEnglish = language === "en";
   useEffect(() => {
     const handleKey = (event) => {
       if (event.key === "Escape") onClose();
@@ -407,7 +408,7 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             goPrev();
           }}
           className="absolute left-2 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:left-6 sm:h-14 sm:w-14"
-          aria-label="Anterior"
+          aria-label={isEnglish ? "Previous" : "Anterior"}
         >
           <ChevronLeft size={24} />
         </button>
@@ -419,7 +420,7 @@ function PhotoLightbox({ photos, index, onIndexChange, onClose, closeLabel = "Ce
             goNext();
           }}
           className="absolute right-2 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/25 sm:right-6 sm:h-14 sm:w-14"
-          aria-label="Siguiente"
+          aria-label={isEnglish ? "Next" : "Siguiente"}
         >
           <ChevronRight size={24} />
         </button>
@@ -1301,6 +1302,7 @@ export default function HospitalVisit() {
           onIndexChange={(i) => setLightbox((prev) => (prev ? { ...prev, index: i } : prev))}
           onClose={() => setLightbox(null)}
           closeLabel={copy.close}
+          language={language}
         />
       )}
     </>

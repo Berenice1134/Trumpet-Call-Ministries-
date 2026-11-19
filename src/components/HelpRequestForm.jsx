@@ -18,16 +18,19 @@ export default function HelpRequestForm() {
     success:
       language === "en"
         ? "Request received. The team will review it and contact you soon."
-        : "Solicitud recibida. El equipo la revisara y se pondra en contacto pronto.",
+        : "Solicitud recibida. El equipo la revisará y se pondrá en contacto pronto.",
     localSuccess:
       language === "en"
         ? "Request saved locally. Configure the database to receive it automatically."
-        : "Solicitud guardada localmente. Configura la base de datos para recibirla automaticamente.",
+        : "Solicitud guardada localmente. Configura la base de datos para recibirla automáticamente.",
     error:
       language === "en"
         ? "We could not send the request. Please try again."
-        : "No pudimos enviar la solicitud. Intentalo nuevamente.",
+        : "No pudimos enviar la solicitud. Inténtalo nuevamente.",
     sending: language === "en" ? "Sending..." : "Enviando...",
+    namePlaceholder: language === "en" ? "Enter your full name" : "Ingresa tu nombre completo",
+    phonePlaceholder: language === "en" ? "Enter your phone number" : "Ingresa tu teléfono",
+    messagePlaceholder: language === "en" ? "Describe your need" : "Describe tu necesidad",
   };
 
   const updateField = (event) => {
@@ -63,7 +66,7 @@ export default function HelpRequestForm() {
           required
           autoComplete="name"
           className="rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-ministry-teal focus:ring-2 focus:ring-ministry-teal/20"
-          placeholder="[Insertar nombre]"
+          placeholder={copy.namePlaceholder}
         />
       </label>
       <label className="grid gap-2 text-sm font-semibold text-slate-700">
@@ -76,7 +79,7 @@ export default function HelpRequestForm() {
           inputMode="tel"
           autoComplete="tel"
           className="rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-ministry-teal focus:ring-2 focus:ring-ministry-teal/20"
-          placeholder="[Insertar teléfono]"
+          placeholder={copy.phonePlaceholder}
         />
       </label>
       <label className="grid gap-2 text-sm font-semibold text-slate-700">
@@ -87,7 +90,7 @@ export default function HelpRequestForm() {
           onChange={updateField}
           required
           className="min-h-32 rounded-md border border-slate-300 px-3 py-2 outline-none focus:border-ministry-teal focus:ring-2 focus:ring-ministry-teal/20"
-          placeholder="[Describir necesidad]"
+          placeholder={copy.messagePlaceholder}
         />
       </label>
       {feedback ? (

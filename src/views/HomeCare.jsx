@@ -147,7 +147,8 @@ const activityPhotos = activityPhotoKeys.map(findPhoto).filter(Boolean);
    ============================================================ */
 
 /* --- Lightbox / visualizador grande --- */
-function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
+function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel, language = "es" }) {
+  const isEnglish = language === "en";
   useEffect(() => {
     if (index === null) return;
     const handler = (e) => {
@@ -179,7 +180,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
         type="button"
         onClick={onClose}
         className="absolute right-4 top-4 z-20 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-ember sm:right-6 sm:top-6"
-        aria-label="Cerrar"
+        aria-label={isEnglish ? "Close" : "Cerrar"}
       >
         <X size={22} />
       </button>
@@ -192,7 +193,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
             onPrev();
           }}
           className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/25 sm:left-6"
-          aria-label="Anterior"
+          aria-label={isEnglish ? "Previous" : "Anterior"}
         >
           <ChevronLeft size={24} />
         </button>
@@ -223,7 +224,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
             onNext();
           }}
           className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/25 sm:right-6"
-          aria-label="Siguiente"
+          aria-label={isEnglish ? "Next" : "Siguiente"}
         >
           <ChevronRight size={24} />
         </button>
@@ -238,14 +239,14 @@ function Lightbox({ photos, index, onClose, onPrev, onNext, getLabel }) {
 }
 
 /* --- Foto clickable con estética editorial --- */
-function PhotoFrame({ photo, label, onClick, className = "", contain = false }) {
+function PhotoFrame({ photo, label, onClick, className = "", contain = false, language = "es" }) {
   if (!photo) return null;
   return (
     <button
       type="button"
       onClick={onClick}
       className={`photo-frame group text-left ${className}`}
-      aria-label={label || "Ampliar imagen"}
+      aria-label={label || (language === "en" ? "Enlarge image" : "Ampliar imagen")}
     >
       {contain && (
         <img
@@ -286,6 +287,7 @@ function PhotoGrid({
   itemClassName = "h-64 sm:h-72",
   spanPattern = [],
   contain = false,
+  language = "es",
 }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
@@ -299,6 +301,7 @@ function PhotoGrid({
             label={getLabel ? getLabel(photo) : ""}
             className={`${itemClassName} ${spanPattern[i] || ""}`}
             contain={contain}
+            language={language}
             onClick={() => setLightboxIndex(i)}
           />
         ))}
@@ -307,6 +310,7 @@ function PhotoGrid({
         photos={photos}
         index={lightboxIndex}
         getLabel={getLabel}
+        language={language}
         onClose={() => setLightboxIndex(null)}
         onPrev={() =>
           setLightboxIndex((i) => (i > 0 ? i - 1 : photos.length - 1))
@@ -748,6 +752,7 @@ export default function HomeCare() {
               <div className="mt-6">
                 <PhotoGrid
                   photos={zonasPhotos}
+                  language={language}
                   gridClassName="grid grid-cols-1"
                   itemClassName="h-[280px] sm:h-[320px] w-full"
                 />
@@ -1058,6 +1063,7 @@ export default function HomeCare() {
             <div className="lg:col-span-7">
               <PhotoGrid
                 photos={impactPhotos}
+                language={language}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
                 itemClassName="h-[280px] sm:h-[320px] w-full"
               />
@@ -1120,6 +1126,7 @@ export default function HomeCare() {
             <div className="reveal lg:col-span-6">
               <PhotoGrid
                 photos={activityPhotos}
+                language={language}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
                 itemClassName="h-[280px] sm:h-[320px] w-full"
               />

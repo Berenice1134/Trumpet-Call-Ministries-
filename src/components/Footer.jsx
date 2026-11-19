@@ -20,7 +20,7 @@ const footerCopy = {
   en: {
     summary:
       "A ministry of Jesus Christ that delivers food pantry support to vulnerable families and accompanies them with prayer, hope, and practical care.",
-    location: "Calle Herreros 53 corner with Pintores, Col. Loma Bonita, Tlaxcala, México C.P 90090",
+    location: "Calle Herreros 53 corner with Pintores, Col. Loma Bonita, Tlaxcala, Mexico, C.P. 90090",
     email: "MxTCMinistries@gmail.com",
     explore: "Explore the ministry",
     links: [
@@ -124,7 +124,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="mt-10 text-center text-xs text-white/45">
-          © {new Date().getFullYear()} {t("brand")} México
+          © {new Date().getFullYear()} {t("brand")} {language === "en" ? "Mexico" : "México"}
         </p>
       </div>
     </footer>

@@ -323,7 +323,7 @@ const ministryTimelineByLanguage = {
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
         "That small beginning shaped the ministry's identity: serving Christ by serving families.",
       ],
-      stat: "12 beneficiaries",
+      stat: "12 families",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -362,7 +362,7 @@ const ministryTimelineByLanguage = {
         "The community could see that the ministry did not only give help; it wanted to sustain it.",
         "This step prepared the way for new people to join.",
       ],
-      stat: "First center",
+      stat: "English Center",
       icon: "🎓",
       color: "from-ink to-ministry-blue",
     },
@@ -395,7 +395,7 @@ const ministryTimelineByLanguage = {
     {
       year: "July 2023",
       title: "First mission to Cartolandia",
-      text: "The first Cartolandia mission served 47 families in collaboration with Iglesia de la Inmaculada Concepcion.",
+      text: "The first Cartolandia mission served 47 families in collaboration with Iglesia de la Inmaculada Concepción.",
       details: [
         "The ministry stepped beyond its first home visit route.",
         "Church collaboration made it possible to reach families with very visible needs.",
@@ -407,8 +407,8 @@ const ministryTimelineByLanguage = {
     },
     {
       year: "August 2023",
-      title: "Mission with Caritas at San Jose",
-      text: "The ministry supported 53 families together with Caritas, hosted at San Jose Parish.",
+      title: "Mission with Cáritas at San José",
+      text: "The ministry supported 53 families together with Cáritas, hosted at San José Parish.",
       details: [
         "The partnership helped organize delivery and care for families in the community.",
         "The service combined pantry support, presence, and collaboration with a recognized aid institution.",
@@ -427,7 +427,7 @@ const ministryTimelineByLanguage = {
         "Local generosity joined the monthly work of pantry support and accompaniment.",
         "This step helped bring more stability to the home visit program.",
       ],
-      stat: "Monthly donor",
+      stat: "Monthly donation",
       icon: "🎄",
       color: "from-ministry-teal to-sky-500",
     },
@@ -446,8 +446,8 @@ const ministryTimelineByLanguage = {
     },
     {
       year: "March 2025",
-      title: "Mission to San Judas Tadeo in Espanita",
-      text: "In Espanita, 75 kg of food and 50 blankets were delivered as direct community support.",
+      title: "Mission to San Judas Tadeo in Españita",
+      text: "In Españita, 75 kg of food and 50 blankets were delivered as direct community support.",
       details: [
         "The support responded to concrete food and warmth needs.",
         "The team served closely with people who needed accompaniment and provision.",
@@ -561,7 +561,7 @@ const ministryContextByLanguage = {
     {
       title: "The reality many families face",
       text:
-        "The institutional material describes a great need for food and hope in Tlaxcala. Many families face illness, abandonment, job loss, lack of family support, or economic crises that have continued since the pandemic.",
+        "Many families face illness, abandonment, job loss, lack of family support, or economic crises that have continued since the pandemic.",
       points: [
         "Older adults, widows, and people with serious illnesses.",
         "Single mothers and families caring for vulnerable children or relatives.",

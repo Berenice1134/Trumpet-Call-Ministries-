@@ -152,7 +152,7 @@ select {
 }
 
 /* Aparición suave y escalonada al hacer scroll en todos los navegadores. */
-[data-scroll-reveal] {
+[data-scroll-reveal="hidden"] {
   opacity: 0;
   transform: translateY(36px) scale(0.985);
   transition:
@@ -162,9 +162,13 @@ select {
   will-change: opacity, transform;
 }
 
-[data-scroll-reveal].is-visible {
+[data-scroll-reveal="visible"] {
   opacity: 1;
   transform: none;
+  transition:
+    opacity 750ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 /* Zoom lento tipo "Ken Burns" para fotografías de portada. */

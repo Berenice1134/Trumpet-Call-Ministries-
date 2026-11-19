@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { translations } from "../data/translations";
 import { LanguageContext } from "./languageContext.js";
 
@@ -8,6 +8,10 @@ function getNestedValue(source, key) {
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState("es");
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const value = useMemo(() => {
     const t = (key) => getNestedValue(translations[language], key) ?? key;

@@ -9,7 +9,6 @@ import {
   ChevronLeft,
   ChevronRight,
   MapPin,
-  Quote,
   Sprout,
   BookOpen,
   GraduationCap,
@@ -25,7 +24,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -64,11 +62,6 @@ const dashboardItems = [
   },
 ];
 
-const homeHeroPhotos = [
-  { key: "pantry", src: `${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`, label: "Despensa del ministerio", labelEn: "Ministry food pantry" },
-  { key: "opening", src: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`, label: "Apertura del ministerio", labelEn: "Ministry opening" },
-];
-
 const homePageCopy = {
   es: {
     mission: "Misión",
@@ -84,12 +77,11 @@ const homePageCopy = {
     serviceEyebrow: "Navegación interna",
     serviceTitle: "Área de servicio",
     serviceText:
-      "Actualmente, el ministerio apoya a comunidades del Estado de Tlaxcala mediante visitas a domicilio, despensas mensuales y acompañamiento cercano.",
-    storyTitle: "Detrás de cada despensa hay una familia con nombre e historia",
+      "Actualmente, el ministerio apoya a comunidades del Estado de Tlaxcala mediante visitas a domicilio y entrega de despensas mensuales.",
     storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
     workEyebrow: "Cómo trabajamos",
-    workTitle: "Un ministerio construido alrededor de familias y necesidades reales",
-    workText: "El ministerio une apoyo alimentario, atención personal y seguimiento personal.",
+    workTitle: "Cada gesto de ayuda puede devolver la esperanza",
+    workText: "Cada despensa y cada visita llevan un mensaje: ninguna familia tiene que enfrentar sus dificultades sola.",
     areasEyebrow: "Lo que hacemos",
     readMore: "Ver más",
     readLess: "Ver menos",
@@ -112,11 +104,10 @@ const homePageCopy = {
     serviceTitle: "Service Area",
     serviceText:
       "The ministry currently supports communities in the State of Tlaxcala through home visits, monthly pantry support, and personal support.",
-    storyTitle: "Behind every pantry bag is a family with a name and a story",
     storyCaption: "Every visit is an embrace, a prayer, and a table with food.",
     workEyebrow: "How we work",
-    workTitle: "A ministry built around real families and real needs",
-    workText: "The ministry combines food support, personal care, and personal follow-up.",
+    workTitle: "Every act of care can bring hope back",
+    workText: "Every pantry and every visit carries a message: no family has to face hardship alone.",
     areasEyebrow: "What we do",
     readMore: "Read more",
     readLess: "Read less",
@@ -131,14 +122,14 @@ const ministryTimelineByLanguage = {
     {
       year: "Inicio",
       title: "Un comienzo pequeño con una carga grande en el corazón",
-      text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
+      text: "El ministerio comenzó entregando 12 despensas en Loma Bonita, con el apoyo de 3 voluntarias.",
       video: "home/ministerio-inicio.mp4",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
         "Ese pequeño inicio marcó la identidad del ministerio: servir a Cristo sirviendo a las familias.",
       ],
-      stat: "12 familias",
+      stat: "12 despensas",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -318,14 +309,14 @@ const ministryTimelineByLanguage = {
     {
       year: "Beginning",
       title: "A small beginning with a great burden in the heart",
-      text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
+      text: "The ministry began by delivering 12 pantry packages in Loma Bonita, with the support of 3 volunteers.",
       video: "home/ministerio-inicio.mp4",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
         "That small beginning shaped the ministry's identity: serving Christ by serving families.",
       ],
-      stat: "12 beneficiaries",
+      stat: "12 pantry packages",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -506,9 +497,9 @@ const ministryTimelineByLanguage = {
 const ministryContextByLanguage = {
   es: [
     {
-      title: "Cómo se identifican las necesidades",
+      title: "Cada historia merece ser escuchada",
       text:
-        "El ministerio trabaja con delegaciones, iglesias locales, vecinos y amigos para identificar familias que podrían beneficiarse del apoyo. Después se realiza una visita domiciliar para confirmar la necesidad y conocer mejor la situación familiar:",
+        "Detrás de cada necesidad hay una familia con nombre, rostro e historia. Escuchamos con respeto, confirmamos cómo podemos ayudar y respondemos con alimento, esperanza y dignidad:",
       points: [
         "Viudez",
         "Huérfanos",
@@ -524,9 +515,9 @@ const ministryContextByLanguage = {
   ],
   en: [
     {
-      title: "How needs are identified",
+      title: "Every story deserves to be heard",
       text:
-        "The ministry works with neighborhood delegations, local churches, neighbors, and friends to identify families who may benefit from support. A home visit then helps confirm the need and understand each family's situation more personally:",
+        "Behind every need is a family with a name, a face, and a story. We listen with respect, learn how we can help, and respond with food, hope, and dignity:",
       points: [
         "Widows and widowers",
         "Orphans",
@@ -804,69 +795,6 @@ export default function Home() {
           document.body
         )}
 
-      <div id="sobre-nosotros" className="scroll-mt-28" />
-
-      {/* ========== MOSAICO VISUAL Y PROPÓSITO ========== */}
-      <section className="section-shell bg-cream">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="reveal grid grid-cols-12 gap-4">
-            <figure className="photo-frame col-span-12 h-[300px] w-full sm:col-span-7 sm:h-[420px]">
-              <img
-                src={asset("hospital-infantil/hit-visita-junio-01.jpeg")}
-                alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
-                loading="lazy"
-                className="h-full w-full object-cover object-top"
-              />
-              <div className="photo-overlay" />
-              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
-                {copy.storyCaption}
-              </figcaption>
-            </figure>
-
-            <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-5 sm:grid-cols-1">
-              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
-                <img
-                  src={asset("voluntarios/voluntarios-04.jpeg")}
-                  alt={language === "en" ? "Young volunteers preparing food bags" : "Jóvenes voluntarios preparando despensas"}
-                  loading="lazy"
-                  className="h-full w-full object-cover object-top"
-                />
-              </figure>
-              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
-                <img
-                  src={asset("misiones/dia-caridad-caritas-03.jpeg")}
-                  alt={language === "en" ? "Community mission in the State of Tlaxcala" : "Misión comunitaria en el Estado de Tlaxcala"}
-                  loading="lazy"
-                  className="h-full w-full object-cover object-top"
-                />
-              </figure>
-            </div>
-          </div>
-
-          <div className="reveal space-y-6">
-            <span className="kicker">{t("home.aboutEyebrow")}</span>
-            <h2 className="title-lg">{copy.storyTitle}</h2>
-            <p className="lead">{t("home.objectiveText")}</p>
-
-            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
-              <Quote size={22} className="mb-2 text-ember" />
-              <p className="font-display text-xl italic leading-snug text-ink">
-                {t("home.missionVisionTagline")}
-              </p>
-            </blockquote>
-
-            <div className="pt-2">
-              <AutoImageCarousel
-                photos={homeHeroPhotos}
-                getLabel={(photo) => (language === "en" ? photo.labelEn : photo.label)}
-                language={language}
-                heightClassName="h-60 sm:h-64"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ========== ÁREAS DEL MINISTERIO (TARJETAS FOTOGRÁFICAS) ========== */}
       <section id="areas-ministerio" className="section-shell scroll-mt-28 bg-white">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -986,13 +914,13 @@ export default function Home() {
       {/* ========== CONTEXTO DEL MINISTERIO (DIVULGACIÓN PROGRESIVA) ========== */}
       <section id="como-se-sostiene" className="section-shell scroll-mt-28 bg-cream">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
+          <div className="mx-auto max-w-4xl text-center">
             <span className="kicker">{copy.workEyebrow}</span>
             <h2 className="title-lg mt-3">{copy.workTitle}</h2>
-            <p className="lead mt-4">{copy.workText}</p>
+            <p className="lead mx-auto mt-4 max-w-3xl">{copy.workText}</p>
           </div>
 
-          <div className="mt-10 max-w-4xl">
+          <div className="mt-10 w-full">
             {ministryContext.map((item, index) => {
               const Icon = item.icon;
               const isOpen = openContextIndex === index;
@@ -1000,16 +928,16 @@ export default function Home() {
               return (
                 <article key={item.title} className="soft-card flex flex-col justify-between">
                   <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
                       <Icon size={22} />
                     </div>
-                    <h3 className="mt-5 font-display text-2xl font-semibold text-ink">{item.title}</h3>
-                    <p className="mt-3 text-base leading-7 text-slate-600">{item.text}</p>
+                    <h3 className="mt-5 text-center font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                    <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-7 text-slate-600">{item.text}</p>
 
                     {isOpen && (
-                      <ul className="mt-5 grid gap-2.5 border-t border-slate-100 pt-4 sm:grid-cols-2">
+                      <ul className="mt-5 grid justify-items-center gap-2.5 border-t border-slate-100 pt-4 sm:grid-cols-2 lg:grid-cols-4">
                         {item.points.map((point) => (
-                          <li key={point} className="flex items-center gap-3 text-sm font-medium leading-6 text-slate-700">
+                          <li key={point} className="flex items-center justify-center gap-3 text-center text-sm font-medium leading-6 text-slate-700">
                             <span className="h-2 w-2 shrink-0 rounded-full bg-ember" />
                             <span>{point}</span>
                           </li>
@@ -1021,7 +949,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setOpenContextIndex(isOpen ? -1 : index)}
-                    className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-bold text-ember hover:text-ember-dark"
+                    className="mt-6 inline-flex items-center gap-1.5 self-center text-sm font-bold text-ember hover:text-ember-dark"
                   >
                     {isOpen ? copy.readLess : copy.readMore}
                     <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -1034,8 +962,8 @@ export default function Home() {
           <div className="mt-12 rounded-[1.75rem] bg-gradient-to-r from-ink via-[#0D2B52] to-ink px-6 py-10 text-center text-white shadow-soft sm:px-12">
             <p className="mx-auto max-w-3xl font-display text-2xl italic leading-snug text-white/95 sm:text-3xl">
               {language === "en"
-                ? "\u201cCarry each other\u2019s burdens, and in this way you will fulfill the law of Christ.\u201d \u2014 Galatians 6:2"
-                : "\u201cSobrellevad los unos las cargas de los otros, y cumplid as\u00ed la ley de Cristo.\u201d \u2014 G\u00e1latas 6:2"}
+                ? "\u201cFor I was hungry and you gave me something to eat.\u201d \u2014 Matthew 25:35"
+                : "\u201cPorque tuve hambre, y me disteis de comer.\u201d \u2014 Mateo 25:35"}
             </p>
           </div>
         </div>

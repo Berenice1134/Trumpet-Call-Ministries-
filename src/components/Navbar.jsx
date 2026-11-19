@@ -9,7 +9,7 @@ const menuGroupsByLanguage = {
       label: "Inicio",
       path: "/",
       items: [
-        { label: "Sobre nosotros", id: "sobre-nosotros" },
+        { label: "Sobre nosotros", id: "objetivo" },
         { label: "Historia", id: "historia" },
         { label: "Objetivo", id: "objetivo" },
       ],
@@ -66,7 +66,7 @@ const menuGroupsByLanguage = {
       label: "Home",
       path: "/",
       items: [
-        { label: "About Us", id: "sobre-nosotros" },
+        { label: "About Us", id: "objetivo" },
         { label: "History", id: "historia" },
         { label: "Service Area", id: "area-servicio" },
         { label: "Objective", id: "objetivo" },

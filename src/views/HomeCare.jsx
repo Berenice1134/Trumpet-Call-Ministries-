@@ -337,7 +337,7 @@ const homeCarePageCopy = {
   es: {
     currentSupportAreasTitle: "Zonas que reciben apoyo hoy",
     currentSupportAreasText:
-      "Las visitas a domicilio ofrecen despensa, oración y apoyo cercano a familias de estas comunidades.",
+      "Las visitas a domicilio ofrecen despensas y oración a familias de estas comunidades.",
     currentSupportAreasLegend:
       "Municipios y comunidades donde actualmente se brinda apoyo domiciliar:",
     serviceCoverageEyebrow: "Zonas donde ayudamos",
@@ -392,7 +392,7 @@ const homeCarePageCopy = {
   en: {
     currentSupportAreasTitle: "Where support is reaching families today",
     currentSupportAreasText:
-      "The home care service accompanies families in these communities with food support, prayer, and close follow-up.",
+      "The home care service provides families in these communities with food support and prayer.",
     currentSupportAreasLegend:
       "Municipalities and communities currently receiving home care support:",
     serviceCoverageEyebrow: "Service Coverage",
@@ -447,9 +447,9 @@ const homeCareTimelineByLanguage = {
     {
       period: "2021",
       title: "Comienzo del apoyo alimentario",
-      text: "Las visitas a domicilio comenzaron para llevar alimento y apoyo cercano a familias que lo necesitaban.",
+      text: "El programa comenzó entregando 12 despensas en Loma Bonita.",
       details: [
-        "Se comenzó con 12 familias apoyadas y entregas de despensa durante los primeros meses.",
+        "El ministerio comenzó entregando 12 despensas en Loma Bonita.",
         "Cada visita buscaba conocer la situación familiar, no solo entregar productos.",
         "El programa registró 72 despensas entregadas en esta primera etapa.",
       ],
@@ -493,9 +493,9 @@ const homeCareTimelineByLanguage = {
     {
       period: "2021",
       title: "Beginning of food support",
-      text: "Home care service began as a direct response to families who needed food, accompaniment, and a personal visit.",
+      text: "The program began by delivering 12 pantry packages in Loma Bonita.",
       details: [
-        "The program began by delivering food to 12 families.",
+        "The ministry began by delivering 12 pantry packages in Loma Bonita.",
         "Each visit sought to understand the family's situation, not only deliver products.",
         "The program recorded 72 pantry packages delivered during this first stage.",
       ],

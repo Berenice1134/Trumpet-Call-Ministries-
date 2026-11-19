@@ -24,7 +24,7 @@ export const translations = {
       heroEyebrow: "Faith in action",
       heroTitle: "Five years transforming Tlaxcala through service and hope.",
       heroText:
-        "Since July 2021, Trumpet Call Ministries Mexico has shared God's love through the Gospel, prayer, monthly food support, and close accompaniment for vulnerable families.",
+        "Since July 2021, Trumpet Call Ministries Mexico has shared God's love through the Gospel, prayer, and monthly food support for vulnerable families.",
       heroCta: "Explore ministries",
       aboutEyebrow: "About us",
       aboutTitle: "Ministry Objective and Story",
@@ -67,7 +67,7 @@ export const translations = {
       carousel: [
         {
           kicker: "Since 2021",
-          title: "From 12 families to a wider monthly reach",
+          title: "From 12 pantry packages to a wider monthly reach",
           text: "The ministry began in Loma Bonita and now serves families across multiple communities in Tlaxcala.",
           image: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`,
         },
@@ -176,7 +176,7 @@ export const translations = {
         homeFamily: "Family accompaniment inside the home",
         homeVisitElderlyWomanBag: "Pantry delivery during a home visit",
         homeVisitTableSupport: "Food support delivered at home",
-        homeVisitConversation: "Close accompaniment during the visit",
+        homeVisitConversation: "Conversation during the visit",
         homeVisitFamilyKitchen: "Family receiving support in their home",
         homeVisitPrayerCare: "Prayer and care during a home visit",
         homeVisitVolunteersBags: "Volunteers with support bags",
@@ -475,7 +475,7 @@ export const translations = {
       heroEyebrow: "Fe en acción",
       heroTitle: "5 años transformando Tlaxcala con servicio y esperanza.",
       heroText:
-        "Desde julio de 2021, Trumpet Call Ministries México comparte el amor de Dios por medio del Evangelio, oración, despensas mensuales y acompañamiento cercano a familias vulnerables.",
+        "Desde julio de 2021, Trumpet Call Ministries México comparte el amor de Dios por medio del Evangelio, oración y despensas mensuales para familias vulnerables.",
       heroCta: "Explorar ministerios",
       aboutEyebrow: "Sobre nosotros",
       aboutTitle: "Objetivo e Historia del Ministerio",
@@ -501,7 +501,7 @@ export const translations = {
       carousel: [
         {
           kicker: "Desde 2021",
-          title: "De 12 familias a un alcance mensual mayor",
+          title: "De 12 despensas a un alcance mensual mayor",
           text: "El ministerio inició en Loma Bonita y ahora sirve a familias en varias comunidades de Tlaxcala.",
           image: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`,
         },
@@ -582,7 +582,7 @@ export const translations = {
         homeFamily: "Acompañamiento familiar dentro del hogar",
         homeVisitElderlyWomanBag: "Entrega de despensa durante una visita a domicilio",
         homeVisitTableSupport: "Apoyo alimentario entregado en casa",
-        homeVisitConversation: "Acompañamiento cercano durante la visita",
+        homeVisitConversation: "Conversación durante la visita",
         homeVisitFamilyKitchen: "Familia recibiendo apoyo en su hogar",
         homeVisitPrayerCare: "Oración y cuidado durante una visita a domicilio",
         homeVisitVolunteersBags: "Voluntarias con bolsas de apoyo",

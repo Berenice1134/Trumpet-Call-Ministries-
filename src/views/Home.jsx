@@ -1208,9 +1208,9 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">{copy.ctaText}</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/voluntarios" className="btn-primary">
-                  <Users size={17} />
-                  {copy.volunteering}
+                <Link to="/donaciones#donaciones" className="btn-primary">
+                  <HandHeart size={17} />
+                  {copy.donations}
                 </Link>
                 <Link to="/misiones" className="btn-ghost-light">
                   {language === "en" ? "See community missions" : "Ver misiones comunitarias"}
@@ -1221,8 +1221,8 @@ export default function Home() {
 
             <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
-                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg")}
-                alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}
+                src={asset("home/ninos-reciben-despensa.jpeg")}
+                alt={language === "en" ? "Children receiving a food pantry bag" : "Niños recibiendo una despensa"}
                 loading="lazy"
                 className="h-full w-full object-cover object-center"
               />

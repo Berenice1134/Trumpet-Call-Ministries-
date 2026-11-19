@@ -11,7 +11,6 @@ import {
   MapPin,
   Heart,
   HelpingHand,
-  Quote,
   Sprout,
   BookOpen,
   GraduationCap,
@@ -27,7 +26,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -66,11 +64,6 @@ const dashboardItems = [
   },
 ];
 
-const homeHeroPhotos = [
-  { key: "pantry", src: `${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`, label: "Despensa del ministerio", labelEn: "Ministry food pantry" },
-  { key: "opening", src: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`, label: "Apertura del ministerio", labelEn: "Ministry opening" },
-];
-
 const homePageCopy = {
   es: {
     mission: "Misión",
@@ -87,7 +80,6 @@ const homePageCopy = {
     serviceTitle: "Área de servicio",
     serviceText:
       "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
-    storyTitle: "Detrás de cada despensa hay una familia con nombre e historia",
     storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
     workEyebrow: "Cómo trabajamos",
     workTitle: "Un ministerio construido alrededor de familias y necesidades reales",
@@ -114,7 +106,6 @@ const homePageCopy = {
     serviceTitle: "Service Area",
     serviceText:
       "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
-    storyTitle: "Behind every pantry bag is a family with a name and a story",
     storyCaption: "Every visit is an embrace, a prayer, and a table with food.",
     workEyebrow: "How we work",
     workTitle: "A ministry built around real families and real needs",
@@ -133,13 +124,14 @@ const ministryTimelineByLanguage = {
     {
       year: "Inicio",
       title: "Un comienzo pequeño con una carga grande en el corazón",
-      text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
+      text: "El ministerio comenzó entregando 12 despensas en Loma Bonita, con el apoyo de 3 voluntarias.",
+      video: "home/ministerio-inicio.mp4",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
         "Ese pequeño inicio marcó la identidad del ministerio: servir a Cristo sirviendo a las familias.",
       ],
-      stat: "12 familias",
+      stat: "12 despensas",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -147,6 +139,7 @@ const ministryTimelineByLanguage = {
       year: "Junio 2021",
       title: "Apertura de English Center",
       text: "English Center Tlaxcala abrió sus puertas y se convirtió en una de las primeras bases de sostenimiento para el ministerio.",
+      image: "home/ministerio-inicio.png",
       details: [
         "Las clases particulares de inglés comenzaron a generar recursos para apoyar despensas.",
         "La visión fue usar el trabajo diario como una forma concreta de sostener la misión.",
@@ -160,6 +153,7 @@ const ministryTimelineByLanguage = {
       year: "Julio 2021",
       title: "Inicio de visitas domiciliares mensuales",
       text: "Comenzaron las distribuciones mensuales en Loma Bonita, llevando despensas directamente a los hogares.",
+      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Las familias empezaron a recibir apoyo alimentario de manera constante.",
         "Cada visita incluyó reflexión bíblica y oración.",
@@ -317,13 +311,14 @@ const ministryTimelineByLanguage = {
     {
       year: "Beginning",
       title: "A small beginning with a great burden in the heart",
-      text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
+      text: "The ministry began by delivering 12 pantry packages in Loma Bonita, with the support of 3 volunteers.",
+      video: "home/ministerio-inicio.mp4",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
         "That small beginning shaped the ministry's identity: serving Christ by serving families.",
       ],
-      stat: "12 families",
+      stat: "12 pantry packages",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -331,6 +326,7 @@ const ministryTimelineByLanguage = {
       year: "June 2021",
       title: "English Center opens",
       text: "English Center Tlaxcala opened its doors and became one of the first support foundations for the ministry.",
+      image: "home/ministerio-inicio.png",
       details: [
         "Private English classes began generating resources for pantry support.",
         "The vision was to use daily work as a concrete way to sustain the mission.",
@@ -344,6 +340,7 @@ const ministryTimelineByLanguage = {
       year: "July 2021",
       title: "Monthly home visits begin",
       text: "Monthly distributions began in Loma Bonita, taking pantry support directly to homes.",
+      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Families began receiving food support consistently.",
         "Each visit included spiritual accompaniment, Bible reflection, and prayer.",
@@ -572,7 +569,7 @@ const ministryContextByLanguage = {
   ],
 };
 
-// Íconos representativos de cada hito (mismo orden que ministryTimelineByLanguage).
+// Íconos representativos de cada suceso relevante (mismo orden que ministryTimelineByLanguage).
 const timelineIcons = [
   Sprout, // Inicio
   BookOpen, // Apertura English Center
@@ -835,69 +832,6 @@ export default function Home() {
           document.body
         )}
 
-      <div id="sobre-nosotros" className="scroll-mt-28" />
-
-      {/* ========== MOSAICO VISUAL Y PROPÓSITO ========== */}
-      <section className="section-shell bg-cream">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="reveal grid grid-cols-12 gap-4">
-            <figure className="photo-frame col-span-12 h-[300px] w-full sm:col-span-7 sm:h-[420px]">
-              <img
-                src={asset("hospital-infantil/hospital-nuevo-06.jpeg")}
-                alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
-                loading="lazy"
-                className="h-full w-full object-cover object-top"
-              />
-              <div className="photo-overlay" />
-              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
-                {copy.storyCaption}
-              </figcaption>
-            </figure>
-
-            <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-5 sm:grid-cols-1">
-              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
-                <img
-                  src={asset("voluntarios/voluntarios-04.jpeg")}
-                  alt={language === "en" ? "Young volunteers preparing food bags" : "Jóvenes voluntarios preparando despensas"}
-                  loading="lazy"
-                  className="h-full w-full object-cover object-top"
-                />
-              </figure>
-              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
-                <img
-                  src={asset("misiones/dia-caridad-caritas-03.jpeg")}
-                  alt={language === "en" ? "Community mission in Tlaxcala" : "Misión comunitaria en Tlaxcala"}
-                  loading="lazy"
-                  className="h-full w-full object-cover object-top"
-                />
-              </figure>
-            </div>
-          </div>
-
-          <div className="reveal space-y-6">
-            <span className="kicker">{t("home.aboutEyebrow")}</span>
-            <h2 className="title-lg">{copy.storyTitle}</h2>
-            <p className="lead">{t("home.objectiveText")}</p>
-
-            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
-              <Quote size={22} className="mb-2 text-ember" />
-              <p className="font-display text-xl italic leading-snug text-ink">
-                {t("home.missionVisionTagline")}
-              </p>
-            </blockquote>
-
-            <div className="pt-2">
-              <AutoImageCarousel
-                photos={homeHeroPhotos}
-                getLabel={(photo) => (language === "en" ? photo.labelEn : photo.label)}
-                language={language}
-                heightClassName="h-60 sm:h-64"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ========== ÁREAS DEL MINISTERIO (TARJETAS FOTOGRÁFICAS) ========== */}
       <section id="areas-ministerio" className="section-shell scroll-mt-28 bg-white">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -1086,7 +1020,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={goToPreviousTimelineItem}
-                aria-label={language === "en" ? "Previous milestone" : "Hito anterior"}
+                aria-label={language === "en" ? "Previous key event" : "Suceso relevante anterior"}
                 className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-ink transition hover:border-ember hover:text-ember"
               >
                 <ChevronLeft size={20} />
@@ -1097,7 +1031,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={goToNextTimelineItem}
-                aria-label={language === "en" ? "Next milestone" : "Siguiente hito"}
+                aria-label={language === "en" ? "Next key event" : "Siguiente suceso relevante"}
                 className="grid h-11 w-11 place-items-center rounded-full bg-ember text-white transition hover:bg-ember-dark"
               >
                 <ChevronRight size={20} />
@@ -1139,63 +1073,51 @@ export default function Home() {
             />
           </div>
 
-          {/* Tarjeta del hito activo con ícono protagonista (sin fotografías) */}
+          {/* Tarjeta del suceso activo con fotografía o video */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[400px] sm:p-10 lg:col-span-7">
+            <div className="relative flex min-h-[340px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:min-h-[400px] sm:p-7 lg:col-span-7">
               <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
-              <ActiveTimelineIcon
-                aria-hidden="true"
-                strokeWidth={1}
-                className="pointer-events-none absolute -bottom-10 -right-8 h-64 w-64 text-white/[0.06] sm:h-80 sm:w-80"
-              />
 
-              <div className="relative z-10 flex items-start justify-between gap-4">
-                <span
-                  key={activeTimelineIndex}
-                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 shadow-lg shadow-ministry-blue/30 sm:h-24 sm:w-24"
-                >
-                  <ActiveTimelineIcon size={40} strokeWidth={1.75} />
-                </span>
+              <div className="relative z-10 flex items-center justify-between gap-4">
                 <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white ring-1 ring-white/15 backdrop-blur">
                   {activeTimelineItem.stat}
                 </span>
+                <span className="text-sm font-bold uppercase tracking-wider text-ember-light">
+                  {language === "en" ? "Key event" : "Suceso relevante"} {String(activeTimelineIndex + 1).padStart(2, "0")}
+                </span>
               </div>
 
-              <div className="relative z-10 mt-10">
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-ember-light">
-                  {language === "en" ? "Milestone" : "Hito"} {String(activeTimelineIndex + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-7xl">
+              <div className="relative z-10 grid flex-1 grid-cols-1 gap-3 sm:gap-5">
+                {activeTimelineItem.video ? (
+                  <video
+                    className="h-full min-h-40 w-full rounded-2xl bg-black object-contain sm:min-h-56"
+                    controls
+                    preload="metadata"
+                    playsInline
+                    aria-label={language === "en" ? "Ministry beginnings video" : "Video de los inicios del ministerio"}
+                  >
+                    <source src={asset(activeTimelineItem.video)} type="video/mp4" />
+                    {language === "en" ? "Your browser does not support video playback." : "Tu navegador no admite la reproducción de video."}
+                  </video>
+                ) : activeTimelineItem.image ? (
+                  <img
+                    src={asset(activeTimelineItem.image)}
+                    alt={language === "en" ? "Ministry community and service" : "Comunidad y servicio del ministerio"}
+                    className="h-full min-h-40 w-full rounded-2xl bg-white object-contain sm:min-h-56"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="flex min-h-40 items-center justify-center sm:min-h-56">
+                    <ActiveTimelineIcon aria-hidden="true" size={88} strokeWidth={1.25} className="text-white/70" />
+                  </div>
+                )}
+              </div>
+
+              <div className="relative z-10 flex items-end justify-between gap-4">
+                <p className="font-display text-4xl font-semibold leading-none text-white sm:text-6xl">
                   {activeTimelineItem.year}
                 </p>
-
-                {/* Mini recorrido de íconos de todos los hitos */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {ministryTimeline.map((item, index) => {
-                    const DotIcon = timelineIcons[index % timelineIcons.length];
-                    const isActive = index === activeTimelineIndex;
-                    const isPast = index < activeTimelineIndex;
-                    return (
-                      <button
-                        key={`dot-${item.year}`}
-                        type="button"
-                        onClick={() => setActiveTimelineIndex(index)}
-                        aria-label={item.year}
-                        title={item.year}
-                        className={`grid h-9 w-9 place-items-center rounded-xl transition ${
-                          isActive
-                            ? "scale-110 bg-white text-ember shadow-lg"
-                            : isPast
-                              ? "bg-ember/30 text-white hover:bg-ember/50"
-                              : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
-                        }`}
-                      >
-                        <DotIcon size={16} />
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
             </div>
 

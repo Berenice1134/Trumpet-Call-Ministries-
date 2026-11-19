@@ -218,7 +218,7 @@ export const translations = {
         "Add testimonies from doctors, families, caregivers, or volunteers who joined the hospital visit.",
       calendarText: "[Insert visit dates, frequency, hospital coordination, and responsible teams]",
       needsText:
-        "Children served in this area live with kidney failure and receive dialysis or hemodialysis care. Many families also face difficult economic situations, so the ministry supports them with encouragement, practical help, and hospital-approved needs.",
+        "Children with kidney failure.",
       carouselLabel: "Children's hospital moments",
       missionLabel: "Mission",
       upcomingDates: "Upcoming dates",
@@ -624,7 +624,7 @@ export const translations = {
         "Agrega testimonios de doctores, familias, cuidadores o voluntarios que participaron en la visita al hospital.",
       calendarText: "[Insertar fechas, frecuencia y equipos responsables]",
       needsText:
-        "Son niños con enfermedades de los riñones que reciben tratamiento. Muchas familias también enfrentan dificultades económicas, por eso el ministerio ofrece ánimo y ayuda práctica con artículos acordados con el hospital.",
+        "Niños con padecimiento de insuficiencia renal.",
       carouselLabel: "Momentos del Hospital Infantil",
       gallery: "Galería de visitas al hospital",
       galleryTitle: "Color, esperanza y cuidado para niños",

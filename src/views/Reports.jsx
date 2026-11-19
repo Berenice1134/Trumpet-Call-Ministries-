@@ -37,7 +37,7 @@ const yearlySupport = [
   { year: 2023, months: "12", beneficiaries: 13, foodKg: 1416, pantries: 130, cumulativePantries: 338, cumulativeFoodKg: 3934 },
   { year: 2024, months: "7", beneficiaries: 20, foodKg: 1177, pantries: 140, cumulativePantries: 478, cumulativeFoodKg: 5111 },
   { year: 2025, months: "12", beneficiaries: 38, foodKg: 3286, pantries: 456, cumulativePantries: 934, cumulativeFoodKg: 8397 },
-  { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 231, cumulativePantries: 1165, cumulativeFoodKg: 10097 },
+  { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 376, cumulativePantries: 1286, cumulativeFoodKg: 10097 },
 ];
 
 const reportPeriods = [

@@ -305,10 +305,10 @@ const hospitalMilestones = [
   {
     dateEs: "29 de mayo",
     dateEn: "May 29",
-    titleEs: "Pijamas especiales, chanclas y cintas para catéter",
+    titleEs: "Pijamas especiales, sandalias y cintas para catéter",
     titleEn: "Special pajamas, sandals, and catheter bands",
     textEs:
-      "Se repartieron pijamas especiales que cubren el cuerpo sin necesidad de quitar toda la ropa, permitiendo descubrir solo la zona del catéter; también se entregaron chanclas y cintas para sostener el catéter.",
+      "Se repartieron pijamas especiales que cubren el cuerpo sin necesidad de quitar toda la ropa, permitiendo descubrir solo la zona del catéter; también se entregaron sandalias y cintas para sostener el catéter.",
     textEn:
       "Special pajamas were distributed to cover the body without needing to remove all clothing, allowing only the catheter area to be uncovered; sandals and bands to hold the catheter were also delivered.",
     icon: HeartPulse,
@@ -317,12 +317,12 @@ const hospitalMilestones = [
   {
     dateEs: "2027",
     dateEn: "2027",
-    titleEs: "Meta: alcanzar a más de 100 familias",
-    titleEn: "Goal: reach more than 100 families",
+    titleEs: "Meta: cubrir las necesidades de los niños",
+    titleEn: "Goal: meet the children's needs",
     textEs:
-      "Con nuevos donadores y voluntarios, el ministerio desea alcanzar a más de 100 familias y continuar compartiendo el amor de Cristo con quienes más lo necesitan.",
+      "El ministerio busca cubrir las necesidades de los niños del área de nefrología del Hospital Infantil de Tlaxcala.",
     textEn:
-      "With new donors and volunteers, the ministry hopes to reach more than 100 families and continue sharing Christ's love with those who need it most.",
+      "The ministry seeks to meet the needs of children in the nephrology area of the Children's Hospital of Tlaxcala.",
     icon: Target,
     photoIndex: 20,
   },
@@ -333,7 +333,7 @@ const hospitalStoryByLanguage = {
     eyebrow: "Un acto de amor que transforma",
     title: "Acompañando a niños que luchan cada semana por su salud",
     paragraphs: [
-      "El Hospital Infantil de Tlaxcala abrió una puerta para que Trumpet Call Ministries México acompañara a niños vulnerables y a sus familias en el área de atención renal. Muchos de ellos reciben tratamiento para sus riñones, y cada tratamiento representa una carga económica y emocional muy fuerte para el hogar.",
+      "El Hospital Infantil de Tlaxcala pidió a Trumpet Call Ministries México apadrinar el área de nefrología, porque es un área olvidada. Desde entonces, el ministerio acompaña a niños con padecimiento de insuficiencia renal y a sus familias.",
       "El ministerio busca servir con sensibilidad: entregar articulos de higiene, ropa adaptada para sus tratamientos, calzado y actividades con fundamento en la fe. Más que llevar cosas, el objetivo es llevar amor, esperanza, ánimo y oración en un proceso que muchas familias enfrentan con cansancio y necesidad.",
       "El equipo permanece en comunicacion con el personal del hospital para entender mejor como servir a esta comunidad y preparar apoyos mensuales que respondan a necesidades reales y aprobadas.",
     ],
@@ -342,7 +342,7 @@ const hospitalStoryByLanguage = {
     eyebrow: "An act of love that transforms",
     title: "Accompanying children who fight for their health every week",
     paragraphs: [
-      "The Children's Hospital of Tlaxcala opened a door for Trumpet Call Ministries Mexico to accompany vulnerable children and their families in the kidney care unit. Many of them receive dialysis or hemodialysis, and each treatment brings a heavy financial and emotional burden to the home.",
+      "The Children's Hospital of Tlaxcala asked Trumpet Call Ministries Mexico to sponsor the nephrology area, which is often overlooked. The ministry now accompanies children with kidney failure and their families.",
       "The ministry seeks to serve with sensitivity: delivering hygiene items, adapted clothing for treatments, footwear, and faith-based activities. More than bringing supplies, the goal is to bring love, hope, encouragement, and prayer during a process many families face with exhaustion and need.",
       "The team remains in communication with hospital staff to better understand how to serve this community and prepare monthly support that responds to real, approved needs.",
     ],

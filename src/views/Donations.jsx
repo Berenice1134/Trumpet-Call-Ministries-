@@ -70,7 +70,6 @@ const donationPageCopy = {
     chooseAmount: "tú eliges el monto",
     transfers: "Transferencias",
     impact: "Impacto",
-    kermesNav: "Kermés",
     kermesEyebrow: "Evento de caridad",
     kermesTitle: "Kermés Invierno Mágico de Caridad",
     kermesIntro:
@@ -139,7 +138,6 @@ const donationPageCopy = {
     chooseAmount: "you choose the amount",
     transfers: "Transfers",
     impact: "Impact",
-    kermesNav: "Kermés",
     kermesEyebrow: "Charity event",
     kermesTitle: "Magical Winter Charity Kermés",
     kermesIntro:
@@ -455,12 +453,6 @@ export default function Donations() {
                   className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
                 >
                   {copy.bibleEyebrow}
-                </a>
-                <a
-                  href="#kermes-invierno-magico"
-                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm transition hover:bg-ember hover:border-ember"
-                >
-                  {copy.kermesNav}
                 </a>
               </div>
             </div>

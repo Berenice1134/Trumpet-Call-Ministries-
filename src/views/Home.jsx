@@ -9,6 +9,9 @@ import {
   ChevronLeft,
   ChevronRight,
   MapPin,
+  Heart,
+  HelpingHand,
+  Quote,
   Sprout,
   BookOpen,
   GraduationCap,
@@ -24,6 +27,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
+import AutoImageCarousel from "../components/AutoImageCarousel.jsx";
 import ImpactStats from "../components/ImpactStats.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
@@ -40,7 +44,7 @@ const dashboardItems = [
     to: "/misiones",
     key: "hospital",
     icon: HeartPulse,
-    image: asset("hospital-infantil/hit-visita-agosto-02.jpeg"),
+    image: asset("hospital-infantil/hospital-nuevo-06.jpeg"),
   },
   {
     to: "/voluntarios",
@@ -62,6 +66,11 @@ const dashboardItems = [
   },
 ];
 
+const homeHeroPhotos = [
+  { key: "pantry", src: `${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`, label: "Despensa del ministerio", labelEn: "Ministry food pantry" },
+  { key: "opening", src: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`, label: "Apertura del ministerio", labelEn: "Ministry opening" },
+];
+
 const homePageCopy = {
   es: {
     mission: "Misión",
@@ -77,17 +86,18 @@ const homePageCopy = {
     serviceEyebrow: "Navegación interna",
     serviceTitle: "Área de servicio",
     serviceText:
-      "Actualmente, el ministerio apoya a comunidades del Estado de Tlaxcala mediante visitas a domicilio y entrega de despensas mensuales.",
+      "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
+    storyTitle: "Detrás de cada despensa hay una familia con nombre e historia",
     storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
     workEyebrow: "Cómo trabajamos",
-    workTitle: "Cada gesto de ayuda puede devolver la esperanza",
-    workText: "Cada despensa y cada visita llevan un mensaje: ninguna familia tiene que enfrentar sus dificultades sola.",
+    workTitle: "Un ministerio construido alrededor de familias y necesidades reales",
+    workText: "El ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal.",
     areasEyebrow: "Lo que hacemos",
     readMore: "Ver más",
     readLess: "Ver menos",
     ctaTitle: "Tu ayuda llega a una mesa, a un hogar y a un corazón",
     ctaText:
-      "Con tu donativo o tu tiempo, una familia del Estado de Tlaxcala recibe alimento, compañía y la certeza de que no está sola.",
+      "Con tu donativo o tu tiempo, una familia de Tlaxcala recibe alimento, compañía y la certeza de que no está sola.",
   },
   en: {
     mission: "Mission",
@@ -103,17 +113,18 @@ const homePageCopy = {
     serviceEyebrow: "Internal Navigation",
     serviceTitle: "Service Area",
     serviceText:
-      "The ministry currently supports communities in the State of Tlaxcala through home visits, monthly pantry support, and personal support.",
+      "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
+    storyTitle: "Behind every pantry bag is a family with a name and a story",
     storyCaption: "Every visit is an embrace, a prayer, and a table with food.",
     workEyebrow: "How we work",
-    workTitle: "Every act of care can bring hope back",
-    workText: "Every pantry and every visit carries a message: no family has to face hardship alone.",
+    workTitle: "A ministry built around real families and real needs",
+    workText: "The ministry combines food support, spiritual care, and personal follow-up.",
     areasEyebrow: "What we do",
     readMore: "Read more",
     readLess: "Read less",
     ctaTitle: "Your help reaches a table, a home, and a heart",
     ctaText:
-      "With your gift or your time, a family in the State of Tlaxcala receives food, companionship, and the assurance that they are not alone.",
+      "With your gift or your time, a family in Tlaxcala receives food, companionship, and the assurance that they are not alone.",
   },
 };
 
@@ -122,14 +133,13 @@ const ministryTimelineByLanguage = {
     {
       year: "Inicio",
       title: "Un comienzo pequeño con una carga grande en el corazón",
-      text: "El ministerio comenzó entregando 12 despensas en Loma Bonita, con el apoyo de 3 voluntarias.",
-      video: "home/ministerio-inicio.mp4",
+      text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
         "Ese pequeño inicio marcó la identidad del ministerio: servir a Cristo sirviendo a las familias.",
       ],
-      stat: "12 despensas",
+      stat: "12 familias",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -137,7 +147,6 @@ const ministryTimelineByLanguage = {
       year: "Junio 2021",
       title: "Apertura de English Center",
       text: "English Center Tlaxcala abrió sus puertas y se convirtió en una de las primeras bases de sostenimiento para el ministerio.",
-      image: "home/ministerio-inicio.png",
       details: [
         "Las clases particulares de inglés comenzaron a generar recursos para apoyar despensas.",
         "La visión fue usar el trabajo diario como una forma concreta de sostener la misión.",
@@ -149,13 +158,12 @@ const ministryTimelineByLanguage = {
     },
     {
       year: "Julio 2021",
-      title: "Inicio de visitas a domicilio mensuales",
+      title: "Inicio de visitas domiciliares mensuales",
       text: "Comenzaron las distribuciones mensuales en Loma Bonita, llevando despensas directamente a los hogares.",
-      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Las familias empezaron a recibir apoyo alimentario de manera constante.",
-        "Cada visita incluyó escucha, reflexión bíblica y oración.",
-        "La relación con las familias comenzó a construirse desde la confianza, la fe y el amor.",
+        "Cada visita incluyó reflexión bíblica y oración.",
+        "La relación con los beneficiarios comenzó a construirse desde la confianza, la fe y el amor.",
       ],
       stat: "Loma Bonita",
       icon: "🏠",
@@ -167,7 +175,7 @@ const ministryTimelineByLanguage = {
       text: "La inauguración oficial del English Center fortaleció la base de apoyo al ministerio y dio mayor visibilidad al proyecto.",
       details: [
         "El trabajo educativo y el servicio social empezaron a caminar juntos.",
-        "La comunidad pudo ver que el ministerio no solo entregaba ayuda, sino que también buscaba sostenerla.",
+        "La comunidad pudo ver que el ministerio no solo entregaba ayuda, sino que también buscaba mantenerla.",
         "Este paso preparó el camino para nuevas personas dispuestas a sumarse.",
       ],
       stat: "English Center",
@@ -219,7 +227,7 @@ const ministryTimelineByLanguage = {
       text: "Se apoyó a 53 familias junto con Cáritas, teniendo como sede la Parroquia de San José.",
       details: [
         "La alianza permitió organizar mejor la entrega y la atención a familias de la comunidad.",
-        "El servicio combinó despensas, presencia y colaboración con una institución de ayuda reconocida.",
+        "El servicio combinó despensas, presencia del ministerio y apoyo de la comunidad.",
         "Este evento mostró el valor de trabajar en unidad por las familias vulnerables.",
       ],
       stat: "53 familias",
@@ -268,11 +276,11 @@ const ministryTimelineByLanguage = {
     {
       year: "Enero 2026",
       title: "Misión al Hospital Infantil de Tlaxcala",
-      text: "Inició el patrocinio mensual a niños con enfermedad renal en el Hospital Infantil de Tlaxcala.",
+      text: "Inició el patrocinio mensual a niños con insuficiencia renal en el Hospital Infantil de Tlaxcala.",
       details: [
-        "El ministerio comenzó a servir a niños que reciben tratamiento para sus riñones.",
+        "El ministerio comenzó a servir a niños que reciben diálisis o hemodiálisis.",
         "Se preparan kits, actividades y apoyos prácticos según necesidades aprobadas por el hospital.",
-        "La misión busca llevar amor, esperanza y ánimo a los niños y a sus familias.",
+        "La misión busca llevar amor, esperanza, fé y ánimo a los niños y a sus familias.",
       ],
       stat: "Hospital Infantil",
       icon: "🏥",
@@ -309,14 +317,13 @@ const ministryTimelineByLanguage = {
     {
       year: "Beginning",
       title: "A small beginning with a great burden in the heart",
-      text: "The ministry began by delivering 12 pantry packages in Loma Bonita, with the support of 3 volunteers.",
-      video: "home/ministerio-inicio.mp4",
+      text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
         "That small beginning shaped the ministry's identity: serving Christ by serving families.",
       ],
-      stat: "12 pantry packages",
+      stat: "12 beneficiaries",
       icon: "🌟",
       color: "from-ministry-teal to-ministry-blue",
     },
@@ -324,7 +331,6 @@ const ministryTimelineByLanguage = {
       year: "June 2021",
       title: "English Center opens",
       text: "English Center Tlaxcala opened its doors and became one of the first support foundations for the ministry.",
-      image: "home/ministerio-inicio.png",
       details: [
         "Private English classes began generating resources for pantry support.",
         "The vision was to use daily work as a concrete way to sustain the mission.",
@@ -338,10 +344,9 @@ const ministryTimelineByLanguage = {
       year: "July 2021",
       title: "Monthly home visits begin",
       text: "Monthly distributions began in Loma Bonita, taking pantry support directly to homes.",
-      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Families began receiving food support consistently.",
-        "Each visit included listening, Bible reflection, and prayer.",
+        "Each visit included spiritual accompaniment, Bible reflection, and prayer.",
         "Relationships with beneficiaries began to grow through trust, faith, and love.",
       ],
       stat: "Loma Bonita",
@@ -446,7 +451,7 @@ const ministryTimelineByLanguage = {
       details: [
         "The support responded to concrete food and warmth needs.",
         "The team served closely with people who needed accompaniment and provision.",
-        "This mission expanded the ministry's reach into new communities in the State of Tlaxcala.",
+        "This mission expanded the ministry's reach into new Tlaxcala communities.",
       ],
       stat: "75 kg • 50 blankets",
       icon: "🧥",
@@ -455,7 +460,7 @@ const ministryTimelineByLanguage = {
     {
       year: "January 2026",
       title: "Children's Hospital of Tlaxcala mission",
-      text: "Monthly sponsorship began for children with kidney disease at the Children's Hospital of Tlaxcala.",
+      text: "Monthly sponsorship began for children with kidney failure at the Children's Hospital of Tlaxcala.",
       details: [
         "The ministry began serving children receiving dialysis or hemodialysis.",
         "Kits, activities, and practical support are prepared according to hospital-approved needs.",
@@ -497,43 +502,77 @@ const ministryTimelineByLanguage = {
 const ministryContextByLanguage = {
   es: [
     {
-      title: "Cada historia merece ser escuchada",
+      title: "Organización y sostenimiento",
       text:
-        "Detrás de cada necesidad hay una familia con nombre, rostro e historia. Escuchamos con respeto, confirmamos cómo podemos ayudar y respondemos con alimento, esperanza y dignidad:",
+        "Trumpet Call Ministries México comenzó en Tlaxcala bajo la dirección de Lic.Andrea L. Byrn. Desde julio de 2021 inició la distribución mensual de despensas a familias necesitadas, uniendo apoyo alimentario con acompañamiento espiritual.",
       points: [
-        "Viudez",
-        "Huérfanos",
-        "Discapacidad",
-        "Adultos mayores abandonados",
-        "Familias de escasos recursos",
-        "Familias vulnerables",
-        "Padecimiento crónico",
-        "Indigentes",
+        "La primera distribución apoyó a 12 familias.",
+        "English Center Tlaxcala ayuda a sostener la compra de alimentos.",
+        "También se reciben donaciones de México y Estados Unidos.",
+      ],
+      icon: HelpingHand,
+    },
+    {
+      title: "Cómo se identifican las necesidades",
+      text:
+        "El ministerio trabaja con delegaciones, iglesias locales, vecinos y amigos para identificar familias que podrían beneficiarse del apoyo. Después se realiza una visita domiciliar para confirmar la necesidad y conocer mejor la situación familiar.",
+      points: [
+        "Se busca acompañar a quienes no siempre reciben apoyo gubernamental.",
+        "Las visitas permiten escuchar, orientar y conectar con recursos disponibles.",
+        "El proceso acerca al ministerio a las familias con mayor vulnerabilidad.",
       ],
       icon: MapPin,
+    },
+    {
+      title: "La realidad de muchas familias",
+      text:
+        " Muchas familias enfrentan enfermedades, abandono, pérdida de empleo, falta de apoyo familiar o crisis económicas que se han prolongado desde la pandemia.",
+      points: [
+        "Adultos mayores, viudas y personas con enfermedades graves.",
+        "Madres solteras y familias cuidando niños o familiares vulnerables.",
+        "Personas con discapacidad o crisis temporales sin apoyo suficiente.",
+      ],
+      icon: HeartPulse,
     },
   ],
   en: [
     {
-      title: "Every story deserves to be heard",
+      title: "Organization and support",
       text:
-        "Behind every need is a family with a name, a face, and a story. We listen with respect, learn how we can help, and respond with food, hope, and dignity:",
+        "Trumpet Call Ministries Mexico began in Tlaxcala under the direction of Lic. Andrea L. Byrn. Since July 2021, it has distributed monthly food pantry support to families in need, combining food assistance with spiritual care.",
       points: [
-        "Widows and widowers",
-        "Orphans",
-        "People with disabilities",
-        "Abandoned older adults",
-        "Low-income families",
-        "Vulnerable families",
-        "Chronic illness",
-        "Homeless individuals",
+        "The first distribution supported 12 families.",
+        "English Center Tlaxcala helps fund food purchases.",
+        "Donations are also received from Mexico and the United States.",
+      ],
+      icon: HelpingHand,
+    },
+    {
+      title: "How needs are identified",
+      text:
+        "The ministry works with neighborhood delegations, local churches, neighbors, and friends to identify families who may benefit from support. A home visit then helps confirm the need and understand each family's situation more personally.",
+      points: [
+        "The ministry seeks to support those who do not always receive government aid.",
+        "Visits create space to listen, guide, and connect families with available resources.",
+        "This process brings the ministry close to the most vulnerable families.",
       ],
       icon: MapPin,
+    },
+    {
+      title: "The reality many families face",
+      text:
+        "The institutional material describes a great need for food and hope in Tlaxcala. Many families face illness, abandonment, job loss, lack of family support, or economic crises that have continued since the pandemic.",
+      points: [
+        "Older adults, widows, and people with serious illnesses.",
+        "Single mothers and families caring for vulnerable children or relatives.",
+        "People with disabilities or temporary crises without enough support.",
+      ],
+      icon: HeartPulse,
     },
   ],
 };
 
-// Íconos representativos de cada suceso relevante (mismo orden que ministryTimelineByLanguage).
+// Íconos representativos de cada hito (mismo orden que ministryTimelineByLanguage).
 const timelineIcons = [
   Sprout, // Inicio
   BookOpen, // Apertura English Center
@@ -577,6 +616,7 @@ export default function Home() {
   }, [isMapFullscreen]);
 
   const activeTimelineItem = ministryTimeline[activeTimelineIndex] ?? ministryTimeline[0];
+  const ActiveTimelineIcon = timelineIcons[activeTimelineIndex % timelineIcons.length];
   const timelineProgress = ((activeTimelineIndex + 1) / ministryTimeline.length) * 100;
 
   useEffect(() => {
@@ -662,7 +702,7 @@ export default function Home() {
                 <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
                     src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-12.jpeg")}
-                    alt={language === "en" ? "Home visit in the State of Tlaxcala" : "Visita a domicilio en el Estado de Tlaxcala"}
+                    alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
                     className="h-full w-full object-cover object-top"
                   />
                 </figure>
@@ -688,15 +728,15 @@ export default function Home() {
           <div className="mx-auto max-w-3xl text-center">
             <span className="kicker kicker-light justify-center">
               <MapPin size={14} />
-              {language === "en" ? "Our reach across the State of Tlaxcala" : "Nuestro alcance en el Estado de Tlaxcala"}
+              {language === "en" ? "Our reach across Tlaxcala" : "Nuestro alcance en Tlaxcala"}
             </span>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               {language === "en" ? "Every community we support" : "Cada comunidad a la que llegamos"}
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">
               {language === "en"
-                ? "This map brings together all ministry support areas across the State of Tlaxcala, including home visits and mission communities."
-                : "Este mapa reúne todas las zonas de apoyo del ministerio en el Estado de Tlaxcala, incluidas las visitas a domicilio y las comunidades donde realizamos misiones."}
+                ? "This map brings together all ministry support areas across Tlaxcala, including home visits and mission communities."
+                : "Este mapa reúne todas las zonas de apoyo del ministerio en Tlaxcala, incluidas las visitas domiciliares y las comunidades donde realizamos misiones."}
             </p>
 
             <div className="mt-7 flex flex-wrap justify-center gap-2.5">
@@ -730,8 +770,8 @@ export default function Home() {
                 src={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
                 alt={
                   language === "en"
-                    ? "Map of all Trumpet Call Ministries support areas in the State of Tlaxcala, including mission communities"
-                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en el Estado de Tlaxcala, incluidas las comunidades de misión"
+                    ? "Map of all Trumpet Call Ministries support areas in Tlaxcala, including mission communities"
+                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala, incluidas las comunidades de misión"
                 }
                 className="h-auto w-full transition duration-700 group-hover:scale-[1.02]"
                 decoding="async"
@@ -744,8 +784,8 @@ export default function Home() {
             <figcaption className="flex flex-wrap items-center justify-center gap-2 px-3 pb-1 pt-4 text-center text-sm font-medium text-slate-500">
               <MapPin size={15} className="text-ember" />
               {language === "en"
-                ? "Support areas and mission communities throughout the State of Tlaxcala."
-                : "Zonas de apoyo y comunidades de misión en el Estado de Tlaxcala."}
+                ? "Support areas and mission communities throughout Tlaxcala."
+                : "Zonas de apoyo y comunidades de misión en Tlaxcala."}
             </figcaption>
           </figure>
         </div>
@@ -760,8 +800,8 @@ export default function Home() {
             aria-modal="true"
             aria-label={
               language === "en"
-                ? "Support areas map in the State of Tlaxcala"
-                : "Mapa de zonas de apoyo en el Estado de Tlaxcala"
+                ? "Support areas map in Tlaxcala"
+                : "Mapa de zonas de apoyo en Tlaxcala"
             }
           >
             <button
@@ -785,8 +825,8 @@ export default function Home() {
                 src={asset("home/mapa-zonas-apoyo-yauhquemehcan.png")}
                 alt={
                   language === "en"
-                    ? "Map of all Trumpet Call Ministries support areas in the State of Tlaxcala"
-                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en el Estado de Tlaxcala"
+                    ? "Map of all Trumpet Call Ministries support areas in Tlaxcala"
+                    : "Mapa de todas las zonas de apoyo de Trumpet Call Ministries en Tlaxcala"
                 }
                 className="max-h-[80vh] w-auto max-w-full rounded-xl object-contain"
               />
@@ -794,6 +834,69 @@ export default function Home() {
           </div>,
           document.body
         )}
+
+      <div id="sobre-nosotros" className="scroll-mt-28" />
+
+      {/* ========== MOSAICO VISUAL Y PROPÓSITO ========== */}
+      <section className="section-shell bg-cream">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="reveal grid grid-cols-12 gap-4">
+            <figure className="photo-frame col-span-12 h-[300px] w-full sm:col-span-7 sm:h-[420px]">
+              <img
+                src={asset("hospital-infantil/hospital-nuevo-06.jpeg")}
+                alt={language === "en" ? "Children's Hospital support" : "Apoyo en el Hospital Infantil"}
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+              <div className="photo-overlay" />
+              <figcaption className="absolute bottom-5 left-5 right-5 font-display text-lg font-medium text-white">
+                {copy.storyCaption}
+              </figcaption>
+            </figure>
+
+            <div className="col-span-12 grid grid-cols-2 gap-4 sm:col-span-5 sm:grid-cols-1">
+              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
+                <img
+                  src={asset("voluntarios/voluntarios-04.jpeg")}
+                  alt={language === "en" ? "Young volunteers preparing food bags" : "Jóvenes voluntarios preparando despensas"}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top"
+                />
+              </figure>
+              <figure className="photo-frame h-[180px] w-full sm:h-[202px]">
+                <img
+                  src={asset("misiones/dia-caridad-caritas-03.jpeg")}
+                  alt={language === "en" ? "Community mission in Tlaxcala" : "Misión comunitaria en Tlaxcala"}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top"
+                />
+              </figure>
+            </div>
+          </div>
+
+          <div className="reveal space-y-6">
+            <span className="kicker">{t("home.aboutEyebrow")}</span>
+            <h2 className="title-lg">{copy.storyTitle}</h2>
+            <p className="lead">{t("home.objectiveText")}</p>
+
+            <blockquote className="rounded-2xl border-l-4 border-ember bg-white p-6 shadow-soft">
+              <Quote size={22} className="mb-2 text-ember" />
+              <p className="font-display text-xl italic leading-snug text-ink">
+                {t("home.missionVisionTagline")}
+              </p>
+            </blockquote>
+
+            <div className="pt-2">
+              <AutoImageCarousel
+                photos={homeHeroPhotos}
+                getLabel={(photo) => (language === "en" ? photo.labelEn : photo.label)}
+                language={language}
+                heightClassName="h-60 sm:h-64"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ========== ÁREAS DEL MINISTERIO (TARJETAS FOTOGRÁFICAS) ========== */}
       <section id="areas-ministerio" className="section-shell scroll-mt-28 bg-white">
@@ -854,7 +957,7 @@ export default function Home() {
                 src={
                   activeObjectiveTab === "mission"
                     ? asset("misiones/cartolandia-03.jpeg")
-                    : asset("hospital-infantil/hit-visita-junio-02.jpeg")
+                    : asset("hospital-infantil/hospital-nuevo-06.jpeg")
                 }
                 alt={activeObjectiveTab === "mission" ? copy.mission : copy.vision}
                 loading="lazy"
@@ -914,13 +1017,13 @@ export default function Home() {
       {/* ========== CONTEXTO DEL MINISTERIO (DIVULGACIÓN PROGRESIVA) ========== */}
       <section id="como-se-sostiene" className="section-shell scroll-mt-28 bg-cream">
         <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="max-w-3xl">
             <span className="kicker">{copy.workEyebrow}</span>
             <h2 className="title-lg mt-3">{copy.workTitle}</h2>
-            <p className="lead mx-auto mt-4 max-w-3xl">{copy.workText}</p>
+            <p className="lead mt-4">{copy.workText}</p>
           </div>
 
-          <div className="mt-10 w-full">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {ministryContext.map((item, index) => {
               const Icon = item.icon;
               const isOpen = openContextIndex === index;
@@ -928,17 +1031,17 @@ export default function Home() {
               return (
                 <article key={item.title} className="soft-card flex flex-col justify-between">
                   <div>
-                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
                       <Icon size={22} />
                     </div>
-                    <h3 className="mt-5 text-center font-display text-2xl font-semibold text-ink">{item.title}</h3>
-                    <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-7 text-slate-600">{item.text}</p>
+                    <h3 className="mt-5 font-display text-2xl font-semibold text-ink">{item.title}</h3>
+                    <p className="mt-3 text-base leading-7 text-slate-600">{item.text}</p>
 
                     {isOpen && (
-                      <ul className="mt-5 grid justify-items-center gap-2.5 border-t border-slate-100 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+                      <ul className="mt-5 space-y-2.5 border-t border-slate-100 pt-4">
                         {item.points.map((point) => (
-                          <li key={point} className="flex items-center justify-center gap-3 text-center text-sm font-medium leading-6 text-slate-700">
-                            <span className="h-2 w-2 shrink-0 rounded-full bg-ember" />
+                          <li key={point} className="flex gap-3 text-sm leading-6 text-slate-700">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
                             <span>{point}</span>
                           </li>
                         ))}
@@ -949,7 +1052,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setOpenContextIndex(isOpen ? -1 : index)}
-                    className="mt-6 inline-flex items-center gap-1.5 self-center text-sm font-bold text-ember hover:text-ember-dark"
+                    className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-bold text-ember hover:text-ember-dark"
                   >
                     {isOpen ? copy.readLess : copy.readMore}
                     <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -962,8 +1065,8 @@ export default function Home() {
           <div className="mt-12 rounded-[1.75rem] bg-gradient-to-r from-ink via-[#0D2B52] to-ink px-6 py-10 text-center text-white shadow-soft sm:px-12">
             <p className="mx-auto max-w-3xl font-display text-2xl italic leading-snug text-white/95 sm:text-3xl">
               {language === "en"
-                ? "\u201cFor I was hungry and you gave me something to eat.\u201d \u2014 Matthew 25:35"
-                : "\u201cPorque tuve hambre, y me disteis de comer.\u201d \u2014 Mateo 25:35"}
+                ? "\u201cCarry each other\u2019s burdens, and in this way you will fulfill the law of Christ.\u201d \u2014 Galatians 6:2"
+                : "\u201cSobrellevad los unos las cargas de los otros, y cumplid as\u00ed la ley de Cristo.\u201d \u2014 G\u00e1latas 6:2"}
             </p>
           </div>
         </div>
@@ -983,7 +1086,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={goToPreviousTimelineItem}
-                aria-label={language === "en" ? "Previous key event" : "Suceso relevante anterior"}
+                aria-label={language === "en" ? "Previous milestone" : "Hito anterior"}
                 className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-ink transition hover:border-ember hover:text-ember"
               >
                 <ChevronLeft size={20} />
@@ -994,7 +1097,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={goToNextTimelineItem}
-                aria-label={language === "en" ? "Next key event" : "Siguiente suceso relevante"}
+                aria-label={language === "en" ? "Next milestone" : "Siguiente hito"}
                 className="grid h-11 w-11 place-items-center rounded-full bg-ember text-white transition hover:bg-ember-dark"
               >
                 <ChevronRight size={20} />
@@ -1036,47 +1139,63 @@ export default function Home() {
             />
           </div>
 
-          {/* Tarjeta del suceso relevante activo con sus medios */}
+          {/* Tarjeta del hito activo con ícono protagonista (sin fotografías) */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="relative flex min-h-[340px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:min-h-[400px] sm:p-7 lg:col-span-7">
+            <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[400px] sm:p-10 lg:col-span-7">
               <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
-              <div className="relative z-10 flex items-center justify-between gap-4">
+              <ActiveTimelineIcon
+                aria-hidden="true"
+                strokeWidth={1}
+                className="pointer-events-none absolute -bottom-10 -right-8 h-64 w-64 text-white/[0.06] sm:h-80 sm:w-80"
+              />
+
+              <div className="relative z-10 flex items-start justify-between gap-4">
+                <span
+                  key={activeTimelineIndex}
+                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 shadow-lg shadow-ministry-blue/30 sm:h-24 sm:w-24"
+                >
+                  <ActiveTimelineIcon size={40} strokeWidth={1.75} />
+                </span>
                 <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white ring-1 ring-white/15 backdrop-blur">
                   {activeTimelineItem.stat}
                 </span>
-                <span className="text-sm font-bold uppercase tracking-wider text-ember-light">
-                  {language === "en" ? "Key event" : "Suceso relevante"} {String(activeTimelineIndex + 1).padStart(2, "0")}
-                </span>
               </div>
 
-              <div className={`relative z-10 grid flex-1 gap-3 sm:gap-5 ${activeTimelineItem.video && activeTimelineItem.image ? "grid-cols-2" : "grid-cols-1"}`}>
-                {activeTimelineItem.video && (
-                  <video
-                    className="h-full min-h-40 w-full rounded-2xl bg-black object-contain sm:min-h-56"
-                    controls
-                    preload="metadata"
-                    playsInline
-                    aria-label={language === "en" ? "Ministry beginnings video" : "Video de los inicios del ministerio"}
-                  >
-                    <source src={asset(activeTimelineItem.video)} type="video/mp4" />
-                    {language === "en" ? "Your browser does not support video playback." : "Tu navegador no admite la reproducción de video."}
-                  </video>
-                )}
-                {activeTimelineItem.image && (
-                  <img
-                    src={asset(activeTimelineItem.image)}
-                    alt={language === "en" ? "English Center opening and ministry community" : "Apertura del English Center y comunidad del ministerio"}
-                    className="h-full min-h-40 w-full rounded-2xl bg-white object-contain sm:min-h-56"
-                    loading="lazy"
-                  />
-                )}
-              </div>
-
-              <div className="relative z-10 flex items-end justify-between gap-4">
-                <p className="font-display text-4xl font-semibold leading-none text-white sm:text-6xl">
+              <div className="relative z-10 mt-10">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-ember-light">
+                  {language === "en" ? "Milestone" : "Hito"} {String(activeTimelineIndex + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-7xl">
                   {activeTimelineItem.year}
                 </p>
+
+                {/* Mini recorrido de íconos de todos los hitos */}
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {ministryTimeline.map((item, index) => {
+                    const DotIcon = timelineIcons[index % timelineIcons.length];
+                    const isActive = index === activeTimelineIndex;
+                    const isPast = index < activeTimelineIndex;
+                    return (
+                      <button
+                        key={`dot-${item.year}`}
+                        type="button"
+                        onClick={() => setActiveTimelineIndex(index)}
+                        aria-label={item.year}
+                        title={item.year}
+                        className={`grid h-9 w-9 place-items-center rounded-xl transition ${
+                          isActive
+                            ? "scale-110 bg-white text-ember shadow-lg"
+                            : isPast
+                              ? "bg-ember/30 text-white hover:bg-ember/50"
+                              : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
+                        }`}
+                      >
+                        <DotIcon size={16} />
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -1136,9 +1255,9 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">{copy.ctaText}</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/donaciones#donaciones" className="btn-primary">
-                  <HandHeart size={17} />
-                  {copy.donations}
+                <Link to="/voluntarios" className="btn-primary">
+                  <Users size={17} />
+                  {copy.volunteering}
                 </Link>
                 <Link to="/misiones" className="btn-ghost-light">
                   {language === "en" ? "See community missions" : "Ver misiones comunitarias"}
@@ -1149,8 +1268,8 @@ export default function Home() {
 
             <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
-                src={asset("home/ninos-reciben-despensa.jpeg")}
-                alt={language === "en" ? "Children receiving a food pantry bag" : "Niños recibiendo una despensa"}
+                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg")}
+                alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}
                 loading="lazy"
                 className="h-full w-full object-cover object-center"
               />

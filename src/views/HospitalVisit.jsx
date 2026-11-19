@@ -248,7 +248,7 @@ const hospitalMilestones = [
     titleEs: "Inicio de la misión al Hospital Infantil",
     titleEn: "Beginning of the Children's Hospital mission",
     textEs:
-      "El ministerio recibió una nueva llamada para acompañar a niños vulnerables y sus familias en el área de atención renal del Hospital Infantil de Tlaxcala.",
+      "El Hospital Infantil de Tlaxcala pidió que el ministerio apadrinara al área de Nefrologia, porque es un área olvidada.",
     textEn:
       "The ministry received a new calling to accompany vulnerable children and their families in the kidney care unit of the Children's Hospital of Tlaxcala.",
     icon: Star,
@@ -257,7 +257,7 @@ const hospitalMilestones = [
   {
     dateEs: "27 de febrero",
     dateEn: "February 27",
-    titleEs: "Primera visita a niños que reciben tratamiento renal",
+    titleEs: "Primera visita a niños del nefrología",
     titleEn: "First visit with children receiving kidney treatment",
     textEs:
       "El ministerio sirvió por primera vez a niños con enfermedad renal, compartió el plan de salvación con sus familias y entregó kits de aseo personal con una reflexión bíblica.",
@@ -281,7 +281,7 @@ const hospitalMilestones = [
   {
     dateEs: "22 de marzo",
     dateEn: "March 22",
-    titleEs: "Kermés de Trumpet Call Ministries",
+    titleEs: "Kermés a los niños del área de Nefrología HIT",
     titleEn: "Trumpet Call Ministries kermes",
     textEs:
       "Trumpet Call Ministries realizó una kermés para recaudar apoyo y destinarlo a los niños del Hospital Infantil de Tlaxcala.",
@@ -293,10 +293,10 @@ const hospitalMilestones = [
   {
     dateEs: "30 de abril",
     dateEn: "April 30",
-    titleEs: "Evento por el Día del Niño",
+    titleEs: "Invitación para participar en el evento del Día del Niño",
     titleEn: "Children's Day event",
     textEs:
-      "El ministerio realizó un pequeño evento por el Día del Niño, creando un espacio de alegría, juego y ánimo para los pacientes.",
+      "El ministerio participó en un pequeño evento por el Día del Niño, creando un espacio de alegría, juego y ánimo para los pacientes.",
     textEn:
       "The ministry held a small Children's Day event, creating a space of joy, play, and encouragement for the patients.",
     icon: Heart,
@@ -305,7 +305,7 @@ const hospitalMilestones = [
   {
     dateEs: "29 de mayo",
     dateEn: "May 29",
-    titleEs: "Pijamas especiales, sandalias y cintas para catéter",
+    titleEs: "Pijamas especiales, sandalias y cintas Hypafix",
     titleEn: "Special pajamas, sandals, and catheter bands",
     textEs:
       "Se repartieron pijamas especiales que cubren el cuerpo sin necesidad de quitar toda la ropa, permitiendo descubrir solo la zona del catéter; también se entregaron sandalias y cintas para sostener el catéter.",

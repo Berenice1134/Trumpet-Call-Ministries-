@@ -133,7 +133,6 @@ const ministryTimelineByLanguage = {
       title: "Un comienzo pequeño con una carga grande en el corazón",
       text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
       video: "home/ministerio-inicio.mp4",
-      image: "home/ministerio-inicio.png",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
@@ -147,6 +146,7 @@ const ministryTimelineByLanguage = {
       year: "Junio 2021",
       title: "Apertura de English Center",
       text: "English Center Tlaxcala abrió sus puertas y se convirtió en una de las primeras bases de sostenimiento para el ministerio.",
+      image: "home/ministerio-inicio.png",
       details: [
         "Las clases particulares de inglés comenzaron a generar recursos para apoyar despensas.",
         "La visión fue usar el trabajo diario como una forma concreta de sostener la misión.",
@@ -320,7 +320,6 @@ const ministryTimelineByLanguage = {
       title: "A small beginning with a great burden in the heart",
       text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
       video: "home/ministerio-inicio.mp4",
-      image: "home/ministerio-inicio.png",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
@@ -334,6 +333,7 @@ const ministryTimelineByLanguage = {
       year: "June 2021",
       title: "English Center opens",
       text: "English Center Tlaxcala opened its doors and became one of the first support foundations for the ministry.",
+      image: "home/ministerio-inicio.png",
       details: [
         "Private English classes began generating resources for pantry support.",
         "The vision was to use daily work as a concrete way to sustain the mission.",
@@ -1122,7 +1122,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="relative z-10 grid flex-1 grid-cols-2 gap-3 sm:gap-5">
+              <div className={`relative z-10 grid flex-1 gap-3 sm:gap-5 ${activeTimelineItem.video && activeTimelineItem.image ? "grid-cols-2" : "grid-cols-1"}`}>
                 {activeTimelineItem.video && (
                   <video
                     className="h-full min-h-40 w-full rounded-2xl bg-black object-contain sm:min-h-56"

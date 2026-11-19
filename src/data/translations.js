@@ -87,7 +87,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Ministry founded in July" },
         { value: "80+", label: "Families reached" },
-        { value: "+10 tons", label: "Food distributed" },
+        { value: "+11 tons", label: "Food distributed" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Ministry areas",
@@ -232,7 +232,7 @@ export const translations = {
       stats: [
         { value: "HIT", label: "Hospital Infantil de Tlaxcala" },
         { value: "Joy", label: "Activities and encouragement" },
-        { value: "Prayer", label: "Emotional care" },
+        { value: "Prayer", label: "Hope, love, and faith" },
       ],
       photoLabels: {
         hospitalNew01: "Group photo during the HIT visit",
@@ -521,7 +521,7 @@ export const translations = {
       stats: [
         { value: "2021", label: "Fundación del ministerio en julio" },
         { value: "80+", label: "Familias alcanzadas" },
-        { value: "+10 toneladas", label: "Alimentos distribuidos" },
+        { value: "+11 toneladas", label: "Alimentos distribuidos" },
       ],
       gridEyebrow: "Dashboards",
       gridTitle: "Áreas del ministerio",
@@ -633,7 +633,7 @@ export const translations = {
       stats: [
         { value: "HIT", label: "Hospital Infantil de Tlaxcala" },
         { value: "Alegría", label: "Actividades y ánimo" },
-        { value: "Oración", label: "Cuidado emocional" },
+        { value: "Oración", label: "Esperanza, amor y fe" },
       ],
       photoLabels: {
         hospitalNew01: "Foto de grupo durante la visita al HIT",

@@ -664,7 +664,7 @@ export default function HomeCare() {
                 icon: TrendingUp,
               },
               {
-                value: "1x",
+                value: "1",
                 label: t("homeCare.monthlyVisit"),
                 icon: Calendar,
               },
@@ -1050,12 +1050,12 @@ export default function HomeCare() {
           <div className="reveal mt-12 grid gap-6 sm:grid-cols-3">
             {[
               {
-                value: "500+",
+                value: "+300",
                 label: copy.familiesHelped,
                 icon: Heart,
               },
               {
-                value: language === "en" ? "+10 tons" : "+10 toneladas",
+                value: language === "en" ? "+11 tons" : "+11 toneladas",
                 label: copy.tonsDistributed,
                 icon: PackageCheck,
               },

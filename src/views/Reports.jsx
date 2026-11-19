@@ -36,8 +36,8 @@ const yearlySupport = [
   { year: 2022, months: "12", beneficiaries: 17, foodKg: 1799, pantries: 136, cumulativePantries: 208, cumulativeFoodKg: 2518 },
   { year: 2023, months: "12", beneficiaries: 13, foodKg: 1416, pantries: 130, cumulativePantries: 338, cumulativeFoodKg: 3934 },
   { year: 2024, months: "7", beneficiaries: 20, foodKg: 1177, pantries: 140, cumulativePantries: 478, cumulativeFoodKg: 5111 },
-  { year: 2025, months: "12", beneficiaries: 38, foodKg: 3286, pantries: 456, cumulativePantries: 934, cumulativeFoodKg: 8397 },
-  { year: 2026, months: "7", beneficiaries: 33, foodKg: 1700, pantries: 376, cumulativePantries: 1286, cumulativeFoodKg: 10097 },
+  { year: 2025, months: "12", beneficiaries: 38, foodKg: 3285.68, pantries: 456, cumulativePantries: 934, cumulativeFoodKg: 8396.68 },
+  { year: 2026, months: "7", beneficiaries: 33, foodKg: 3462.68, pantries: 376, cumulativePantries: 1286, cumulativeFoodKg: 11859.36 },
 ];
 
 const reportPeriods = [
@@ -197,7 +197,7 @@ const reportsCopy = {
     heroCtaCharts: "Explorar impacto",
     heroCtaPdfs: "Ver resúmenes visuales",
     humanNoteEyebrow: "Transparencia con rostro humano",
-    humanNoteTitle: "+10 toneladas de alimento convertidas en abrazos y esperanza",
+    humanNoteTitle: "Casi 12 toneladas de alimento convertidas en abrazos y esperanza",
     humanNoteText: "Cada despensa entregada desde 2021 representa visitas mensuales a hogares vulnerables y escucha atenta.",
     stats: {
       pantries: "Despensas donadas",
@@ -215,7 +215,7 @@ const reportsCopy = {
     timelineTitle: "5 años transformando el Estado de Tlaxcala",
     timelineText: "Conoce algunos momentos clave en la historia del ministerio.",
     tonsDelivered: "toneladas de alimentos entregadas",
-    tenTons: "+10 toneladas",
+    tenTons: "Casi 12 toneladas",
     archiveEyebrow: "Documentos institucionales",
     archiveText: "Consulta los tres periodos más recientes: cada uno incluye un resumen visual en español y otro en inglés.",
     spanish: "Español",
@@ -261,7 +261,7 @@ const reportsCopy = {
     heroCtaCharts: "Explore impact",
     heroCtaPdfs: "View visual summaries",
     humanNoteEyebrow: "Transparency with a human heart",
-    humanNoteTitle: "+10 tons of food turned into embraces and hope",
+    humanNoteTitle: "Almost 12 tons of food turned into embraces and hope",
     humanNoteText: "Every pantry bag delivered since 2021 represents monthly visits to vulnerable homes and attentive listening.",
     stats: {
       pantries: "Pantries donated",
@@ -279,7 +279,7 @@ const reportsCopy = {
     timelineTitle: "Five years transforming the State of Tlaxcala",
     timelineText: "Explore key moments in the ministry's history.",
     tonsDelivered: "tons of food delivered",
-    tenTons: "+10 tons",
+    tenTons: "Almost 12 tons",
     archiveEyebrow: "Institutional documents",
     archiveText: "Browse the three most recent periods. Each includes a visual summary in Spanish and one in English.",
     spanish: "Spanish",

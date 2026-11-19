@@ -449,11 +449,11 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
   }, [isFullscreen]);
 
   const goToSlide = (index) => {
-    setCurrentIndex((index + totalSlides) % totalSlides);
+    setCurrentIndex(((index % totalSlides) + totalSlides) % totalSlides);
   };
 
-  const nextSlide = () => goToSlide(currentIndex + 1);
-  const prevSlide = () => goToSlide(currentIndex - 1);
+  const nextSlide = () => setCurrentIndex((index) => (index + 1) % totalSlides);
+  const prevSlide = () => setCurrentIndex((index) => (index - 1 + totalSlides) % totalSlides);
 
   if (!currentPhoto) return null;
 
@@ -493,7 +493,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
           <button
             type="button"
             onClick={prevSlide}
-            className="absolute left-3.5 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+            className="absolute left-3.5 top-1/2 z-30 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
             aria-label={language === "en" ? "Previous photo" : "Foto anterior"}
           >
             <ChevronLeft size={22} />
@@ -501,7 +501,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
           <button
             type="button"
             onClick={nextSlide}
-            className="absolute right-3.5 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+            className="absolute right-3.5 top-1/2 z-30 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
             aria-label={language === "en" ? "Next photo" : "Siguiente foto"}
           >
             <ChevronRight size={22} />
@@ -509,7 +509,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
           <button
             type="button"
             onClick={() => setIsFullscreen(true)}
-            className="absolute right-3.5 top-3.5 grid h-10 w-10 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
+            className="absolute right-3.5 top-3.5 z-30 grid h-10 w-10 place-items-center rounded-full bg-ink/60 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-ink/85"
             aria-label={language === "en" ? "View fullscreen" : "Ver en pantalla completa"}
           >
             <Maximize2 size={18} />

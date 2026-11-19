@@ -10,7 +10,6 @@ import {
   ChevronRight,
   MapPin,
   Heart,
-  HelpingHand,
   Sprout,
   BookOpen,
   GraduationCap,
@@ -79,11 +78,11 @@ const homePageCopy = {
     serviceEyebrow: "Navegación interna",
     serviceTitle: "Área de servicio",
     serviceText:
-      "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias, despensas mensuales y acompañamiento espiritual.",
+      "Actualmente, el ministerio apoya a comunidades de Tlaxcala mediante visitas domiciliarias y despensas mensuales.",
     storyCaption: "Cada visita es un abrazo, una oración y una mesa con alimento.",
     workEyebrow: "Cómo trabajamos",
     workTitle: "Un ministerio construido alrededor de familias y necesidades reales",
-    workText: "El ministerio une apoyo alimentario, cuidado espiritual y seguimiento personal.",
+    workText: "Cada despensa y cada visita llevan un mensaje: ninguna familia tiene que enfrentar sus dificultades sola.",
     areasEyebrow: "Lo que hacemos",
     readMore: "Ver más",
     readLess: "Ver menos",
@@ -105,11 +104,11 @@ const homePageCopy = {
     serviceEyebrow: "Internal Navigation",
     serviceTitle: "Service Area",
     serviceText:
-      "The ministry currently supports communities in Tlaxcala through home visits, monthly pantry support, and spiritual accompaniment.",
+      "The ministry currently supports communities in Tlaxcala through home visits and monthly pantry support.",
     storyCaption: "Every visit is an embrace, a prayer, and a table with food.",
     workEyebrow: "How we work",
     workTitle: "A ministry built around real families and real needs",
-    workText: "The ministry combines food support, spiritual care, and personal follow-up.",
+    workText: "Every pantry and every visit carries a message: no family has to face hardship alone.",
     areasEyebrow: "What we do",
     readMore: "Read more",
     readLess: "Read less",
@@ -343,7 +342,7 @@ const ministryTimelineByLanguage = {
       image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Families began receiving food support consistently.",
-        "Each visit included spiritual accompaniment, Bible reflection, and prayer.",
+        "Each visit offered families a space to share, reflect, and receive support.",
         "Relationships with beneficiaries began to grow through trust, faith, and love.",
       ],
       stat: "Loma Bonita",
@@ -499,76 +498,41 @@ const ministryTimelineByLanguage = {
 const ministryContextByLanguage = {
   es: [
     {
-      title: "Organización y sostenimiento",
-      text:
-        "Trumpet Call Ministries México comenzó en Tlaxcala bajo la dirección de Lic.Andrea L. Byrn. Desde julio de 2021 inició la distribución mensual de despensas a familias necesitadas, uniendo apoyo alimentario con acompañamiento espiritual.",
-      points: [
-        "La primera distribución apoyó a 12 familias.",
-        "English Center Tlaxcala ayuda a sostener la compra de alimentos.",
-        "También se reciben donaciones de México y Estados Unidos.",
-      ],
-      icon: HelpingHand,
-    },
-    {
       title: "Cómo se identifican las necesidades",
       text:
-        "El ministerio trabaja con delegaciones, iglesias locales, vecinos y amigos para identificar familias que podrían beneficiarse del apoyo. Después se realiza una visita domiciliar para confirmar la necesidad y conocer mejor la situación familiar.",
+        "Cada familia tiene una historia que merece ser escuchada. Nos acercamos con respeto para conocer su situación y brindar apoyo con alimento, esperanza y dignidad:",
       points: [
-        "Se busca acompañar a quienes no siempre reciben apoyo gubernamental.",
-        "Las visitas permiten escuchar, orientar y conectar con recursos disponibles.",
-        "El proceso acerca al ministerio a las familias con mayor vulnerabilidad.",
+        "Viudez",
+        "Huérfanos",
+        "Discapacidad",
+        "Adultos mayores abandonados",
+        "Familias de escasos recursos",
+        "Familias vulnerables",
+        "Padecimiento crónico",
+        "Indigentes",
       ],
       icon: MapPin,
-    },
-    {
-      title: "La realidad de muchas familias",
-      text:
-        " Muchas familias enfrentan enfermedades, abandono, pérdida de empleo, falta de apoyo familiar o crisis económicas que se han prolongado desde la pandemia.",
-      points: [
-        "Adultos mayores, viudas y personas con enfermedades graves.",
-        "Madres solteras y familias cuidando niños o familiares vulnerables.",
-        "Personas con discapacidad o crisis temporales sin apoyo suficiente.",
-      ],
-      icon: HeartPulse,
     },
   ],
   en: [
     {
-      title: "Organization and support",
-      text:
-        "Trumpet Call Ministries Mexico began in Tlaxcala under the direction of Lic. Andrea L. Byrn. Since July 2021, it has distributed monthly food pantry support to families in need, combining food assistance with spiritual care.",
-      points: [
-        "The first distribution supported 12 families.",
-        "English Center Tlaxcala helps fund food purchases.",
-        "Donations are also received from Mexico and the United States.",
-      ],
-      icon: HelpingHand,
-    },
-    {
       title: "How needs are identified",
       text:
-        "The ministry works with neighborhood delegations, local churches, neighbors, and friends to identify families who may benefit from support. A home visit then helps confirm the need and understand each family's situation more personally.",
+        "Every family has a story that deserves to be heard. We approach each one with respect, learn about its situation, and offer support with food, hope, and dignity:",
       points: [
-        "The ministry seeks to support those who do not always receive government aid.",
-        "Visits create space to listen, guide, and connect families with available resources.",
-        "This process brings the ministry close to the most vulnerable families.",
+        "Widowhood",
+        "Orphaned children",
+        "Disability",
+        "Abandoned older adults",
+        "Families with limited resources",
+        "Vulnerable families",
+        "Chronic illness",
+        "People experiencing homelessness",
       ],
       icon: MapPin,
     },
-    {
-      title: "The reality many families face",
-      text:
-        "Many families face illness, abandonment, job loss, lack of family support, or economic crises that have continued since the pandemic.",
-      points: [
-        "Older adults, widows, and people with serious illnesses.",
-        "Single mothers and families caring for vulnerable children or relatives.",
-        "People with disabilities or temporary crises without enough support.",
-      ],
-      icon: HeartPulse,
-    },
   ],
 };
-
 // Íconos representativos de cada suceso relevante (mismo orden que ministryTimelineByLanguage).
 const timelineIcons = [
   Sprout, // Inicio
@@ -678,8 +642,8 @@ export default function Home() {
             <div className="grid grid-cols-12 items-center gap-4">
               <figure className="photo-frame col-span-7 h-[320px] w-full ring-2 ring-white/15 sm:h-[420px]">
                 <img
-                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
-                  alt={language === "en" ? "Warm embrace during pantry delivery" : "Abrazo cálido durante entrega de despensa"}
+                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-13.jpeg")}
+                  alt={language === "en" ? "Family receiving support from the ministry" : "Familia recibe apoyo del ministerio"}
                   className="h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
@@ -951,30 +915,30 @@ export default function Home() {
       {/* ========== CONTEXTO DEL MINISTERIO (DIVULGACIÓN PROGRESIVA) ========== */}
       <section id="como-se-sostiene" className="section-shell scroll-mt-28 bg-cream">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
+          <div className="mx-auto max-w-4xl text-center">
             <span className="kicker">{copy.workEyebrow}</span>
             <h2 className="title-lg mt-3">{copy.workTitle}</h2>
             <p className="lead mt-4">{copy.workText}</p>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="mx-auto mt-10 w-full max-w-6xl">
             {ministryContext.map((item, index) => {
               const Icon = item.icon;
               const isOpen = openContextIndex === index;
 
               return (
-                <article key={item.title} className="soft-card flex flex-col justify-between">
+                <article key={item.title} className="soft-card mx-auto w-full text-center">
                   <div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-ember/10 text-ember">
                       <Icon size={22} />
                     </div>
                     <h3 className="mt-5 font-display text-2xl font-semibold text-ink">{item.title}</h3>
                     <p className="mt-3 text-base leading-7 text-slate-600">{item.text}</p>
 
                     {isOpen && (
-                      <ul className="mt-5 space-y-2.5 border-t border-slate-100 pt-4">
+                      <ul className="mt-5 grid gap-x-8 gap-y-2.5 border-t border-slate-100 pt-4 sm:grid-cols-2 lg:grid-cols-4">
                         {item.points.map((point) => (
-                          <li key={point} className="flex gap-3 text-sm leading-6 text-slate-700">
+                          <li key={point} className="flex items-center justify-center gap-3 text-center text-sm leading-6 text-slate-700">
                             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
                             <span>{point}</span>
                           </li>
@@ -986,7 +950,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setOpenContextIndex(isOpen ? -1 : index)}
-                    className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-bold text-ember hover:text-ember-dark"
+                    className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-ember hover:text-ember-dark"
                   >
                     {isOpen ? copy.readLess : copy.readMore}
                     <ChevronDown size={16} className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -1177,9 +1141,9 @@ export default function Home() {
               </h2>
               <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">{copy.ctaText}</p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/voluntarios" className="btn-primary">
-                  <Users size={17} />
-                  {copy.volunteering}
+                <Link to="/donaciones" className="btn-primary">
+                  <HandHeart size={17} />
+                  {language === "en" ? "Donate" : "Donar"}
                 </Link>
                 <Link to="/misiones" className="btn-ghost-light">
                   {language === "en" ? "See community missions" : "Ver misiones comunitarias"}
@@ -1190,8 +1154,8 @@ export default function Home() {
 
             <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
               <img
-                src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-06.jpeg")}
-                alt={language === "en" ? "Family home visit" : "Visita familiar en casa"}
+                src={asset("home/ninos-reciben-despensa.jpeg")}
+                alt={language === "en" ? "Children receiving a food pantry donation" : "Niños reciben una despensa"}
                 loading="lazy"
                 className="h-full w-full object-cover object-center"
               />

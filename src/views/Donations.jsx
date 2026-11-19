@@ -450,7 +450,7 @@ export default function Donations() {
             <div className="mx-auto w-full max-w-md lg:max-w-none">
               <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
-                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-02.jpeg")}
+                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg")}
                   alt={
                     language === "en"
                       ? "Warm embrace during a ministry food delivery in the State of Tlaxcala"

@@ -257,7 +257,7 @@ const hospitalMilestones = [
   {
     dateEs: "27 de febrero",
     dateEn: "February 27",
-    titleEs: "Primera visita a niños del nefrología",
+    titleEs: "Primera visita a niños del área de Nefrología",
     titleEn: "First visit with children receiving kidney treatment",
     textEs:
       "El ministerio sirvió por primera vez a niños con enfermedad renal, compartió el plan de salvación con sus familias y entregó kits de aseo personal con una reflexión bíblica.",

@@ -19,7 +19,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useLanguage } from "../context/useLanguage.js";
 
 const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
@@ -117,11 +116,6 @@ const donationPageCopy = {
       { value: "12 kg", label: "De alimento básico en cada despensa" },
       { value: "HIT", label: "Kits, artículos y apoyo para tratamientos renales" },
     ],
-    ctaEyebrow: "Tu generosidad transforma vidas",
-    ctaTitle: "Hoy puedes poner alimento en una mesa y esperanza en un corazón",
-    ctaText:
-      "Cada transferencia se convierte en despensas, insumos médicos para niños con enfermedad renal y visitas llenas de fe en el Estado de Tlaxcala.",
-    ctaVolunteer: "Quiero ser voluntario",
   },
   en: {
     badge: "Donations",
@@ -185,11 +179,6 @@ const donationPageCopy = {
       { value: "12 kg", label: "Of staple food in every pantry bag" },
       { value: "HIT", label: "Kits, supplies & kidney treatment support" },
     ],
-    ctaEyebrow: "Your generosity transforms lives",
-    ctaTitle: "Today you can place food on a table and hope in a heart",
-    ctaText:
-      "Every transfer becomes food pantries, medical supplies for children with kidney disease, and faith-filled visits in the State of Tlaxcala.",
-    ctaVolunteer: "Become a volunteer",
   },
 };
 
@@ -986,40 +975,6 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* ========== CIERRE EMOCIONAL (SIN IMAGEN CORTADA Y SIN REPETIR "DONAR AHORA") ========== */}
-      <section className="section-shell bg-cream">
-        <div className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#0D2B52] to-ink text-white shadow-photo">
-          <div className="grid items-center gap-8 p-6 sm:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:p-16">
-            <div>
-              <span className="kicker kicker-light">{copy.ctaEyebrow}</span>
-              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-5xl">
-                {copy.ctaTitle}
-              </h2>
-              <p className="mt-4 text-base leading-7 text-white/85 sm:text-lg">
-                {copy.ctaText}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/voluntarios" className="btn-primary">
-                  {copy.ctaVolunteer}
-                  <ArrowRight size={16} />
-                </Link>
-                <Link to="/reportes" className="btn-ghost-light">
-                  {language === "en" ? "View impact reports" : "Ver reportes de impacto"}
-                </Link>
-              </div>
-            </div>
-
-            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
-              <img
-                src={asset("donaciones/kermes-invierno-magico/kermes-invierno-magico-02.jpeg")}
-                alt={copy.kermesTitle}
-                loading="lazy"
-                className="h-full w-full object-cover object-top"
-              />
-            </figure>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

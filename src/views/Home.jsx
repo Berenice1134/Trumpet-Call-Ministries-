@@ -132,6 +132,7 @@ const ministryTimelineByLanguage = {
       year: "Inicio",
       title: "Un comienzo pequeño con una carga grande en el corazón",
       text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
+      video: "home/ministerio-inicio.mp4",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
@@ -316,6 +317,7 @@ const ministryTimelineByLanguage = {
       year: "Beginning",
       title: "A small beginning with a great burden in the heart",
       text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
+      video: "home/ministerio-inicio.mp4",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
@@ -1172,6 +1174,19 @@ export default function Home() {
                   {activeTimelineItem.title}
                 </h3>
                 <p className="mt-4 text-base leading-7 text-slate-600">{activeTimelineItem.text}</p>
+
+                {activeTimelineItem.video && (
+                  <video
+                    className="mt-6 aspect-video w-full rounded-2xl bg-ink object-contain"
+                    controls
+                    preload="metadata"
+                    playsInline
+                    aria-label={language === "en" ? "Ministry beginnings video" : "Video de los inicios del ministerio"}
+                  >
+                    <source src={asset(activeTimelineItem.video)} type="video/mp4" />
+                    {language === "en" ? "Your browser does not support video playback." : "Tu navegador no admite la reproducción de video."}
+                  </video>
+                )}
 
                 <ul className="mt-6 space-y-3 border-t border-slate-100 pt-5">
                   {activeTimelineItem.details.map((detail) => (

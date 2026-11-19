@@ -133,6 +133,7 @@ const ministryTimelineByLanguage = {
       title: "Un comienzo pequeño con una carga grande en el corazón",
       text: "El ministerio inició con 12 familias, una colonia y 3 voluntarias dispuestas a servir con constancia.",
       video: "home/ministerio-inicio.mp4",
+      image: "home/ministerio-inicio.png",
       details: [
         "El primer enfoque fue acompañar familias vulnerables de Loma Bonita.",
         "Cada entrega comenzó a unir alimento, oración, escucha y seguimiento personal.",
@@ -159,6 +160,7 @@ const ministryTimelineByLanguage = {
       year: "Julio 2021",
       title: "Inicio de visitas a domicilio mensuales",
       text: "Comenzaron las distribuciones mensuales en Loma Bonita, llevando despensas directamente a los hogares.",
+      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Las familias empezaron a recibir apoyo alimentario de manera constante.",
         "Cada visita incluyó escucha, reflexión bíblica y oración.",
@@ -318,6 +320,7 @@ const ministryTimelineByLanguage = {
       title: "A small beginning with a great burden in the heart",
       text: "The ministry began with 12 families, one neighborhood, and 3 volunteers willing to serve faithfully.",
       video: "home/ministerio-inicio.mp4",
+      image: "home/ministerio-inicio.png",
       details: [
         "The first focus was accompanying vulnerable families in Loma Bonita.",
         "Each delivery began to combine food, prayer, listening, and personal follow-up.",
@@ -344,6 +347,7 @@ const ministryTimelineByLanguage = {
       year: "July 2021",
       title: "Monthly home visits begin",
       text: "Monthly distributions began in Loma Bonita, taking pantry support directly to homes.",
+      image: "home/visitas-inicio-2021.jpeg",
       details: [
         "Families began receiving food support consistently.",
         "Each visit included listening, Bible reflection, and prayer.",
@@ -582,7 +586,6 @@ export default function Home() {
   }, [isMapFullscreen]);
 
   const activeTimelineItem = ministryTimeline[activeTimelineIndex] ?? ministryTimeline[0];
-  const ActiveTimelineIcon = timelineIcons[activeTimelineIndex % timelineIcons.length];
   const timelineProgress = ((activeTimelineIndex + 1) / ministryTimeline.length) * 100;
 
   useEffect(() => {
@@ -1105,63 +1108,47 @@ export default function Home() {
             />
           </div>
 
-          {/* Tarjeta del suceso relevante activo con ícono protagonista (sin fotografías) */}
+          {/* Tarjeta del suceso relevante activo con sus medios */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-7 text-white shadow-photo sm:min-h-[400px] sm:p-10 lg:col-span-7">
+            <div className="relative flex min-h-[340px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:min-h-[400px] sm:p-7 lg:col-span-7">
               <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
-              <ActiveTimelineIcon
-                aria-hidden="true"
-                strokeWidth={1}
-                className="pointer-events-none absolute -bottom-10 -right-8 h-64 w-64 text-white/[0.06] sm:h-80 sm:w-80"
-              />
-
-              <div className="relative z-10 flex items-start justify-between gap-4">
-                <span
-                  key={activeTimelineIndex}
-                  className="gallery-photo-enter grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-ministry-blue via-ministry-teal to-sky-400 shadow-lg shadow-ministry-blue/30 sm:h-24 sm:w-24"
-                >
-                  <ActiveTimelineIcon size={40} strokeWidth={1.75} />
-                </span>
+              <div className="relative z-10 flex items-center justify-between gap-4">
                 <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white ring-1 ring-white/15 backdrop-blur">
                   {activeTimelineItem.stat}
                 </span>
+                <span className="text-sm font-bold uppercase tracking-wider text-ember-light">
+                  {language === "en" ? "Key event" : "Suceso relevante"} {String(activeTimelineIndex + 1).padStart(2, "0")}
+                </span>
               </div>
 
-              <div className="relative z-10 mt-10">
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-ember-light">
-                  {language === "en" ? "Key event" : "Suceso relevante"} {String(activeTimelineIndex + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-7xl">
+              <div className="relative z-10 grid flex-1 grid-cols-2 gap-3 sm:gap-5">
+                {activeTimelineItem.video && (
+                  <video
+                    className="h-full min-h-40 w-full rounded-2xl bg-black object-contain sm:min-h-56"
+                    controls
+                    preload="metadata"
+                    playsInline
+                    aria-label={language === "en" ? "Ministry beginnings video" : "Video de los inicios del ministerio"}
+                  >
+                    <source src={asset(activeTimelineItem.video)} type="video/mp4" />
+                    {language === "en" ? "Your browser does not support video playback." : "Tu navegador no admite la reproducción de video."}
+                  </video>
+                )}
+                {activeTimelineItem.image && (
+                  <img
+                    src={asset(activeTimelineItem.image)}
+                    alt={language === "en" ? "English Center opening and ministry community" : "Apertura del English Center y comunidad del ministerio"}
+                    className="h-full min-h-40 w-full rounded-2xl bg-white object-contain sm:min-h-56"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+
+              <div className="relative z-10 flex items-end justify-between gap-4">
+                <p className="font-display text-4xl font-semibold leading-none text-white sm:text-6xl">
                   {activeTimelineItem.year}
                 </p>
-
-                {/* Mini recorrido de íconos de todos los sucesos relevantes */}
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {ministryTimeline.map((item, index) => {
-                    const DotIcon = timelineIcons[index % timelineIcons.length];
-                    const isActive = index === activeTimelineIndex;
-                    const isPast = index < activeTimelineIndex;
-                    return (
-                      <button
-                        key={`dot-${item.year}`}
-                        type="button"
-                        onClick={() => setActiveTimelineIndex(index)}
-                        aria-label={item.year}
-                        title={item.year}
-                        className={`grid h-9 w-9 place-items-center rounded-xl transition ${
-                          isActive
-                            ? "scale-110 bg-white text-ember shadow-lg"
-                            : isPast
-                              ? "bg-ember/30 text-white hover:bg-ember/50"
-                              : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
-                        }`}
-                      >
-                        <DotIcon size={16} />
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
             </div>
 
@@ -1174,19 +1161,6 @@ export default function Home() {
                   {activeTimelineItem.title}
                 </h3>
                 <p className="mt-4 text-base leading-7 text-slate-600">{activeTimelineItem.text}</p>
-
-                {activeTimelineItem.video && (
-                  <video
-                    className="mt-6 aspect-video w-full rounded-2xl bg-ink object-contain"
-                    controls
-                    preload="metadata"
-                    playsInline
-                    aria-label={language === "en" ? "Ministry beginnings video" : "Video de los inicios del ministerio"}
-                  >
-                    <source src={asset(activeTimelineItem.video)} type="video/mp4" />
-                    {language === "en" ? "Your browser does not support video playback." : "Tu navegador no admite la reproducción de video."}
-                  </video>
-                )}
 
                 <ul className="mt-6 space-y-3 border-t border-slate-100 pt-5">
                   {activeTimelineItem.details.map((detail) => (

@@ -152,7 +152,7 @@ const ministryTimelineByLanguage = {
       year: "Julio 2021",
       title: "Inicio de visitas domiciliares mensuales",
       text: "Comenzaron las distribuciones mensuales en Loma Bonita, llevando despensas directamente a los hogares.",
-      image: "home/visitas-inicio-2021.jpeg",
+      image: "home/visitas-domiciliares-inicio-julio-2021.jpeg",
       details: [
         "Las familias empezaron a recibir apoyo alimentario de manera constante.",
         "Cada visita incluyó reflexión bíblica y oración.",
@@ -166,6 +166,7 @@ const ministryTimelineByLanguage = {
       year: "Agosto 2021",
       title: "Inauguración oficial del English Center",
       text: "La inauguración oficial del English Center fortaleció la base de apoyo al ministerio y dio mayor visibilidad al proyecto.",
+      image: "voluntarios/english-center/english-center-inauguracion-agosto-2021.jpeg",
       details: [
         "El trabajo educativo y el servicio social empezaron a caminar juntos.",
         "La comunidad pudo ver que el ministerio no solo entregaba ayuda, sino que también buscaba mantenerla.",
@@ -179,6 +180,7 @@ const ministryTimelineByLanguage = {
       year: "Octubre 2021",
       title: "Se incorporan las primeras voluntarias",
       text: "Tres voluntarias se integraron formalmente al servicio, ayudando a preparar y repartir las despensas.",
+      image: "voluntarios/primeras-voluntarias-octubre-2021.jpeg",
       details: [
         "El equipo dejó de ser un esfuerzo aislado y comenzó a tomar forma comunitaria.",
         "La preparación de alimentos se hizo con más orden, cuidado y colaboración.",
@@ -192,6 +194,7 @@ const ministryTimelineByLanguage = {
       year: "Enero 2022",
       title: "Primeras donaciones de Estados Unidos",
       text: "Llegaron las primeras donaciones provenientes de Estados Unidos, abriendo una nueva etapa de apoyo internacional.",
+      image: "home/corazon-estados-unidos-mexico.png",
       details: [
         "El ministerio comenzó a ser sostenido por personas de distintos lugares unidas por una misma misión.",
         "Cada donación ayudó a convertir generosidad en despensas reales para familias vulnerables.",
@@ -205,6 +208,7 @@ const ministryTimelineByLanguage = {
       year: "Julio 2023",
       title: "Primera misión a Cartolandia",
       text: "Se realizó la primera misión a Cartolandia, apoyando a 47 familias en colaboración con la Iglesia de la Inmaculada Concepción.",
+      image: "misiones/cartolandia-primera-22.jpeg",
       details: [
         "El ministerio salió a servir fuera de su ruta inicial.",
         "La colaboración con iglesias permitió llegar a familias con necesidades muy visibles.",
@@ -218,6 +222,7 @@ const ministryTimelineByLanguage = {
       year: "Agosto 2023",
       title: "Misión con Cáritas en San José",
       text: "Se apoyó a 53 familias junto con Cáritas, teniendo como sede la Parroquia de San José.",
+      image: "misiones/caritas-san-jose-2023.png",
       details: [
         "La alianza permitió organizar mejor la entrega y la atención a familias de la comunidad.",
         "El servicio combinó despensas, presencia del ministerio y apoyo de la comunidad.",
@@ -231,6 +236,7 @@ const ministryTimelineByLanguage = {
       year: "Diciembre 2024",
       title: "Evento Mágico de Caridad",
       text: "Se realizó un evento de caridad y se recibió la primera donación mensual proveniente de México.",
+      image: "misiones/evento-magico-caridad-diciembre-2024.jpeg",
       details: [
         "El ministerio comenzó a fortalecer también su red de donadores mexicanos.",
         "La generosidad local se sumó al trabajo mensual de despensas y acompañamiento.",
@@ -244,6 +250,7 @@ const ministryTimelineByLanguage = {
       year: "Febrero 2025",
       title: "Misión a Cartolandia con Mensaje de Vida",
       text: "Se regresó a Cartolandia para apoyar a 35 familias en colaboración con la Iglesia Mensaje de Vida.",
+      image: "misiones/cartolandia-mensaje-de-vida-febrero-2025.jpeg",
       details: [
         "La misión confirmó la necesidad de volver a comunidades que requieren seguimiento.",
         "La colaboración con iglesias locales ayudó a identificar y acompañar mejor a las familias.",
@@ -257,6 +264,7 @@ const ministryTimelineByLanguage = {
       year: "Marzo 2025",
       title: "Misión a San Judas Tadeo en Españita",
       text: "En Españita se entregaron 75 kg de alimento y 50 cobijas como apoyo directo a la comunidad.",
+      image: "misiones/san-judas-espanita-marzo-2025.jpeg",
       details: [
         "La ayuda respondió a necesidades concretas de alimento y abrigo.",
         "El equipo sirvió con cercanía a personas que necesitaban acompañamiento y provisión.",
@@ -339,7 +347,7 @@ const ministryTimelineByLanguage = {
       year: "July 2021",
       title: "Monthly home visits begin",
       text: "Monthly distributions began in Loma Bonita, taking pantry support directly to homes.",
-      image: "home/visitas-inicio-2021.jpeg",
+      image: "home/visitas-domiciliares-inicio-julio-2021.jpeg",
       details: [
         "Families began receiving food support consistently.",
         "Each visit offered families a space to share, reflect, and receive support.",
@@ -353,6 +361,7 @@ const ministryTimelineByLanguage = {
       year: "August 2021",
       title: "Official opening of the English Center",
       text: "The official opening of the English Center strengthened the ministry's support base and brought greater visibility to the project.",
+      image: "voluntarios/english-center/english-center-inauguracion-agosto-2021.jpeg",
       details: [
         "Education work and social service began walking together.",
         "The community could see that the ministry did not only give help; it wanted to sustain it.",
@@ -366,6 +375,7 @@ const ministryTimelineByLanguage = {
       year: "October 2021",
       title: "First volunteers join",
       text: "Three volunteers formally joined the service, helping prepare and distribute pantry packages.",
+      image: "voluntarios/primeras-voluntarias-octubre-2021.jpeg",
       details: [
         "The team began to move from an individual effort into a community-shaped ministry.",
         "Food preparation became more organized, careful, and collaborative.",
@@ -379,6 +389,7 @@ const ministryTimelineByLanguage = {
       year: "January 2022",
       title: "First donations from the United States",
       text: "The first donations from the United States arrived, opening a new stage of international support.",
+      image: "home/corazon-estados-unidos-mexico.png",
       details: [
         "The ministry began to be supported by people from different places united by one mission.",
         "Each donation helped turn generosity into real pantry packages for vulnerable families.",
@@ -392,6 +403,7 @@ const ministryTimelineByLanguage = {
       year: "July 2023",
       title: "First mission to Cartolandia",
       text: "The first Cartolandia mission served 47 families in collaboration with Iglesia de la Inmaculada Concepción.",
+      image: "misiones/cartolandia-primera-22.jpeg",
       details: [
         "The ministry stepped beyond its first home visit route.",
         "Church collaboration made it possible to reach families with very visible needs.",
@@ -405,6 +417,7 @@ const ministryTimelineByLanguage = {
       year: "August 2023",
       title: "Mission with Cáritas at San José",
       text: "The ministry supported 53 families together with Cáritas, hosted at San José Parish.",
+      image: "misiones/caritas-san-jose-2023.png",
       details: [
         "The partnership helped organize delivery and care for families in the community.",
         "The service combined pantry support, presence, and collaboration with a recognized aid institution.",
@@ -418,6 +431,7 @@ const ministryTimelineByLanguage = {
       year: "December 2024",
       title: "Magical Charity Event",
       text: "A charity event was held, and the first monthly donation from Mexico was received.",
+      image: "misiones/evento-magico-caridad-diciembre-2024.jpeg",
       details: [
         "The ministry began strengthening its Mexican donor network.",
         "Local generosity joined the monthly work of pantry support and accompaniment.",
@@ -431,6 +445,7 @@ const ministryTimelineByLanguage = {
       year: "February 2025",
       title: "Mission to Cartolandia with Mensaje de Vida",
       text: "The ministry returned to Cartolandia to support 35 families in collaboration with Mensaje de Vida Church.",
+      image: "misiones/cartolandia-mensaje-de-vida-febrero-2025.jpeg",
       details: [
         "The mission confirmed the need to return to communities that need follow-up.",
         "Collaboration with local churches helped identify and accompany families more closely.",
@@ -444,6 +459,7 @@ const ministryTimelineByLanguage = {
       year: "March 2025",
       title: "Mission to San Judas Tadeo in Españita",
       text: "In Españita, 75 kg of food and 50 blankets were delivered as direct community support.",
+      image: "misiones/san-judas-espanita-marzo-2025.jpeg",
       details: [
         "The support responded to concrete food and warmth needs.",
         "The team served closely with people who needed accompaniment and provision.",

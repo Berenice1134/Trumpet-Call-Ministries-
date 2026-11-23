@@ -278,6 +278,7 @@ const ministryTimelineByLanguage = {
       year: "Enero 2026",
       title: "Misión al Hospital Infantil de Tlaxcala",
       text: "Inició el patrocinio mensual a niños con insuficiencia renal en el Hospital Infantil de Tlaxcala.",
+      image: "hospital-infantil/mision-hospital-enero-2026.jpeg",
       details: [
         "El ministerio comenzó a servir a niños que reciben diálisis o hemodiálisis.",
         "Se preparan kits, actividades y apoyos prácticos según necesidades aprobadas por el hospital.",
@@ -291,6 +292,7 @@ const ministryTimelineByLanguage = {
       year: "Marzo 2026",
       title: "Primera recaudación con venta de comida",
       text: "Se realizó una recaudación de fondos mediante venta de comida en Loma Bonita para sostener la misión.",
+      image: "misiones/marzo-2026-evento.jpeg",
       details: [
         "La comunidad participó comprando alimentos y apoyando el trabajo del ministerio.",
         "La recaudación ayudó a preparar nuevos apoyos para familias y misiones.",
@@ -304,6 +306,7 @@ const ministryTimelineByLanguage = {
       year: "Julio 2026",
       title: "5 años transformando con servicio",
       text: "El ministerio celebró cinco años de servicio con nuevas recaudaciones y atención mensual a familias.",
+      image: "misiones/julio-2026-aniversario.jpeg",
       details: [
         "Se realizó una recaudación mediante venta de comida en Ocotlán.",
         "El programa domiciliar mantuvo su atención mensual a las familias.",
@@ -473,6 +476,7 @@ const ministryTimelineByLanguage = {
       year: "January 2026",
       title: "Children's Hospital of Tlaxcala mission",
       text: "Monthly sponsorship began for children with kidney failure at the Children's Hospital of Tlaxcala.",
+      image: "hospital-infantil/mision-hospital-enero-2026.jpeg",
       details: [
         "The ministry began serving children receiving dialysis or hemodialysis.",
         "Kits, activities, and practical support are prepared according to hospital-approved needs.",
@@ -486,6 +490,7 @@ const ministryTimelineByLanguage = {
       year: "March 2026",
       title: "First food-sale fundraiser",
       text: "A food-sale fundraiser was held in Loma Bonita to sustain the mission.",
+      image: "misiones/marzo-2026-evento.jpeg",
       details: [
         "The community participated by buying food and supporting the ministry's work.",
         "The fundraiser helped prepare new support for families and missions.",
@@ -499,6 +504,7 @@ const ministryTimelineByLanguage = {
       year: "July 2026",
       title: "5 years transforming through service",
       text: "The ministry celebrated five years of service with new fundraisers and monthly family support.",
+      image: "misiones/julio-2026-aniversario.jpeg",
       details: [
         "A food-sale fundraiser was held in Ocotlán.",
         "The home visit program continued its monthly support for families.",

@@ -1090,7 +1090,7 @@ export default function Home() {
                   <img
                     src={asset(activeTimelineItem.image)}
                     alt={language === "en" ? "Ministry community and service" : "Comunidad y servicio del ministerio"}
-                    className="h-full min-h-40 w-full rounded-2xl bg-white object-contain sm:min-h-56"
+                    className="h-56 w-full rounded-2xl bg-white object-cover sm:h-72"
                     loading="lazy"
                   />
                 ) : (

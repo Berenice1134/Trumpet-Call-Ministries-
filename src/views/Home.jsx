@@ -890,8 +890,8 @@ export default function Home() {
               <img
                 src={
                   activeObjectiveTab === "mission"
-                    ? asset("misiones/cartolandia-03.jpeg")
-                    : asset("hospital-infantil/hospital-nuevo-06.jpeg")
+                    ? asset("home/objective-mission.jpeg")
+                    : asset("home/objective-vision.jpeg")
                 }
                 alt={activeObjectiveTab === "mission" ? copy.mission : copy.vision}
                 loading="lazy"

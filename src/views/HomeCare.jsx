@@ -115,7 +115,7 @@ const homeCarePhotos = [
   },
   {
     key: "homeVisitPantryTable",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`,
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/portada-servicio-domiciliar.jpeg`,
   },
   {
     key: "homeVisitDoorwayCare",
@@ -636,7 +636,7 @@ export default function HomeCare() {
                 <img
                   src={
                     findPhoto("homeVisitPantryTable")?.src ??
-                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`
+                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/portada-servicio-domiciliar.jpeg`
                   }
                   alt={t("homeCare.photoLabels.homeVisitPantryTable")}
                   className="h-full w-full object-cover object-top"

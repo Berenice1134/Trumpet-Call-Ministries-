@@ -38,7 +38,7 @@ const dashboardItems = [
     to: "/servicio-domiciliar",
     key: "homeCare",
     icon: HomeIcon,
-    image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-nueva-2025-01.jpeg"),
+    image: asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg"),
   },
   {
     to: "/misiones",

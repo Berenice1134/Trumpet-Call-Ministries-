@@ -128,7 +128,7 @@ export default function FeaturedPhotoGallery({
           })}
         </div>
       ) : (
-      <div className="relative mx-auto h-[430px] max-w-6xl sm:h-[500px]">
+      <div className="relative mx-auto h-[470px] max-w-6xl sm:h-[540px]">
         {visiblePhotos.map(({ photo, index, offset }) => {
           const isActive = offset === 0;
           const absOffset = Math.abs(offset);
@@ -141,8 +141,8 @@ export default function FeaturedPhotoGallery({
                 "absolute left-1/2 top-1/2 overflow-hidden rounded-3xl border bg-white p-2 text-left shadow-2xl transition-all duration-700 ease-out",
                 "focus:outline-none focus:ring-4 focus:ring-ministry-gold/40",
                 isActive
-                  ? "z-30 h-[390px] w-[96%] max-w-5xl -translate-x-1/2 -translate-y-1/2 scale-100 border-white shadow-ministry-blue/20 sm:h-[460px]"
-                  : "z-20 h-[315px] w-[52%] max-w-[340px] -translate-y-1/2 border-white/80 opacity-80 hover:opacity-100 sm:h-[380px]",
+                  ? "z-30 h-[430px] w-[96%] max-w-5xl -translate-x-1/2 -translate-y-1/2 scale-100 border-white shadow-ministry-blue/20 sm:h-[500px]"
+                  : "z-20 h-[350px] w-[52%] max-w-[370px] -translate-y-1/2 border-white/80 opacity-80 hover:opacity-100 sm:h-[420px]",
                 offset === -2 ? "-translate-x-[118%] scale-75 opacity-45" : "",
                 offset === -1 ? "-translate-x-[92%] scale-90" : "",
                 offset === 1 ? "-translate-x-[8%] scale-90" : "",

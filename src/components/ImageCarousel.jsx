@@ -24,7 +24,7 @@ export default function ImageCarousel({ items, label }) {
 
   return (
     <section aria-label={label} className="card overflow-hidden">
-      <div className="relative min-h-[360px] bg-ministry-blue text-white">
+      <div className="relative min-h-[400px] bg-ministry-blue text-white">
         <div
           className={[
             "absolute inset-0 bg-cover bg-center opacity-95 transition duration-700",
@@ -37,7 +37,7 @@ export default function ImageCarousel({ items, label }) {
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,212,0,0.28),transparent_26%)]" />
-        <div className="relative grid min-h-[360px] content-end p-6 sm:p-8">
+        <div className="relative grid min-h-[400px] content-end p-6 sm:p-8">
           <p className="text-sm font-bold uppercase tracking-[0.14em] text-ministry-gold">
             {activeItem.kicker}
           </p>

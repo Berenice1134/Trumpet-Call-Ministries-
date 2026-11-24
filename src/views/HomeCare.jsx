@@ -301,7 +301,7 @@ function PhotoGrid({
   photos,
   getLabel,
   gridClassName = "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3",
-  itemClassName = "h-64 sm:h-72",
+  itemClassName = "h-72 sm:h-80",
   spanPattern = [],
   contain = false,
   language = "es",
@@ -632,7 +632,7 @@ export default function HomeCare() {
             </div>
 
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
+              <figure className="photo-frame h-[370px] w-full ring-2 ring-white/15 sm:h-[460px] lg:h-[500px]">
                 <img
                   src={
                     findPhoto("homeVisitPantryTable")?.src ??
@@ -713,7 +713,7 @@ export default function HomeCare() {
               <AutoImageCarousel
                 photos={heroPhotos}
                 language={language}
-                heightClassName="h-[320px] sm:h-[400px] lg:h-[440px]"
+                heightClassName="h-[350px] sm:h-[440px] lg:h-[480px]"
               />
             </div>
           </div>
@@ -772,7 +772,7 @@ export default function HomeCare() {
                   language={language}
                   getLabel={(photo) => (language === "en" ? photo.labelEn : photo.labelEs)}
                   className="mt-0"
-                  heightClassName="h-[280px] sm:h-[320px]"
+                  heightClassName="h-[320px] sm:h-[360px]"
                 />
               </div>
             </div>
@@ -1083,7 +1083,7 @@ export default function HomeCare() {
                 photos={impactPhotos}
                 language={language}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
-                itemClassName="h-[280px] sm:h-[320px] w-full"
+                itemClassName="h-[310px] sm:h-[350px] w-full"
               />
             </div>
 
@@ -1146,7 +1146,7 @@ export default function HomeCare() {
                 photos={activityPhotos}
                 language={language}
                 gridClassName="grid grid-cols-1 gap-5 sm:grid-cols-2"
-                itemClassName="h-[280px] sm:h-[320px] w-full"
+                itemClassName="h-[310px] sm:h-[350px] w-full"
               />
             </div>
           </div>

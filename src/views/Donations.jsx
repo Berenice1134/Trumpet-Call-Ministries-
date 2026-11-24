@@ -206,7 +206,7 @@ function KermesPhotoCarousel({ photos, copy, language }) {
 
   return (
     <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink/80 shadow-photo">
-      <div className="relative h-[360px] w-full overflow-hidden bg-ink sm:h-[440px] lg:h-[500px]">
+      <div className="relative h-[400px] w-full overflow-hidden bg-ink sm:h-[480px] lg:h-[540px]">
         <img
           src={currentPhoto.src}
           alt=""
@@ -448,7 +448,7 @@ export default function Donations() {
 
             {/* Fotografía vertical completa, sin recortar las cabezas */}
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
+              <figure className="photo-frame h-[370px] w-full ring-2 ring-white/15 sm:h-[460px] lg:h-[500px]">
                 <img
                   src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-04.jpeg")}
                   alt={
@@ -502,7 +502,7 @@ export default function Donations() {
                     : "border border-slate-200/80 shadow-soft"
                 }`}
               >
-                <figure className="photo-frame relative h-64 w-full rounded-none">
+              <figure className="photo-frame relative h-72 w-full rounded-none">
                   <img
                     src={plan.image}
                     alt={plan.imageAlt}
@@ -771,7 +771,7 @@ export default function Donations() {
 
             {/* Columna derecha: Impacto visual de la donación (#impacto) */}
             <div id="impacto" className="scroll-mt-28 space-y-6">
-              <figure className="photo-frame h-[280px] w-full sm:h-[320px]">
+              <figure className="photo-frame h-[310px] w-full sm:h-[350px]">
                 <img
                   src={asset("home/home-pantry-display.png")}
                   alt={
@@ -823,7 +823,7 @@ export default function Donations() {
           <div className="mt-12 grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr]">
             {/* Retrato de la directora */}
             <aside className="reveal space-y-6">
-              <figure className="photo-frame h-[360px] w-full sm:h-[420px]">
+              <figure className="photo-frame h-[400px] w-full sm:h-[460px]">
                 <img
                   src={asset("directora/andrea-byrn.png")}
                   alt={

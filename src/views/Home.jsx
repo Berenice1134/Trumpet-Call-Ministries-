@@ -673,7 +673,7 @@ export default function Home() {
 
             {/* Collage fotográfico con dimensiones uniformes */}
             <div className="grid grid-cols-12 items-center gap-4">
-              <figure className="photo-frame col-span-7 h-[320px] w-full ring-2 ring-white/15 sm:h-[420px]">
+              <figure className="photo-frame col-span-7 h-[350px] w-full ring-2 ring-white/15 sm:h-[460px]">
                 <img
                   key={heroGalleryPhotos[activeHeroPhotoIndex]}
                   src={asset(heroGalleryPhotos[activeHeroPhotoIndex])}
@@ -687,7 +687,7 @@ export default function Home() {
               </figure>
 
               <div className="col-span-5 grid gap-4">
-                <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
+                <figure className="photo-frame h-[167px] w-full ring-2 ring-white/15 sm:h-[222px]">
                   <img
                     key={heroGalleryPhotos[(activeHeroPhotoIndex + 1) % heroGalleryPhotos.length]}
                     src={asset(heroGalleryPhotos[(activeHeroPhotoIndex + 1) % heroGalleryPhotos.length])}
@@ -695,7 +695,7 @@ export default function Home() {
                     className="gallery-photo-enter h-full w-full object-cover object-top"
                   />
                 </figure>
-                <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
+                <figure className="photo-frame h-[167px] w-full ring-2 ring-white/15 sm:h-[222px]">
                   <img
                     key={heroGalleryPhotos[(activeHeroPhotoIndex + 2) % heroGalleryPhotos.length]}
                     src={asset(heroGalleryPhotos[(activeHeroPhotoIndex + 2) % heroGalleryPhotos.length])}
@@ -845,7 +845,7 @@ export default function Home() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
           {dashboardItems.map((item, index) => {
             const Icon = item.icon;
-            const spanClass = index < 2 ? "lg:col-span-3 h-[380px] sm:h-[420px]" : "lg:col-span-2 h-[340px] sm:h-[380px]";
+            const spanClass = index < 2 ? "lg:col-span-3 h-[420px] sm:h-[460px]" : "lg:col-span-2 h-[380px] sm:h-[420px]";
 
             return (
               <Link
@@ -886,7 +886,7 @@ export default function Home() {
       <section id="objetivo" className="section-shell scroll-mt-28 bg-sand">
         <div className="mx-auto max-w-6xl">
           <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-            <figure className="photo-frame h-[320px] w-full sm:h-[420px]">
+            <figure className="photo-frame h-[350px] w-full sm:h-[460px]">
               <img
                 src={
                   activeObjectiveTab === "mission"
@@ -1075,7 +1075,7 @@ export default function Home() {
 
           {/* Tarjeta del suceso activo con fotografía o video */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="relative flex h-[500px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:h-[640px] sm:p-7 lg:col-span-7">
+            <div className="relative flex h-[520px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:h-[680px] sm:p-7 lg:col-span-7">
               <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
 
@@ -1088,7 +1088,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="relative z-10 h-[240px] w-full sm:h-[400px]">
+              <div className="relative z-10 h-[260px] w-full sm:h-[440px]">
                 {activeTimelineItem.video ? (
                   <video
                     className="h-full w-full rounded-2xl bg-black object-contain"
@@ -1188,7 +1188,7 @@ export default function Home() {
               </div>
             </div>
 
-            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
+            <figure className="photo-frame h-[310px] w-full ring-2 ring-white/15 sm:h-[380px]">
               <img
                 src={asset("home/ninos-reciben-despensa.jpeg")}
                 alt={language === "en" ? "Children receiving a food pantry donation" : "Niños reciben una despensa"}

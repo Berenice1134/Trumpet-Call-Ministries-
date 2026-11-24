@@ -460,7 +460,7 @@ const GroupPhotoCarousel = ({ photos, title, language }) => {
   return (
     <>
       <div className="space-y-3">
-        <figure className="photo-frame relative h-[320px] w-full overflow-hidden bg-ink sm:h-[400px] lg:h-[440px]">
+        <figure className="photo-frame relative h-[350px] w-full overflow-hidden bg-ink sm:h-[440px] lg:h-[480px]">
           <img
             src={currentPhoto.src}
             alt=""
@@ -1256,7 +1256,7 @@ export default function Volunteers() {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <figure className="photo-frame h-[280px] w-full ring-1 ring-white/15 sm:h-[340px]">
+              <figure className="photo-frame h-[310px] w-full ring-1 ring-white/15 sm:h-[380px]">
                 <img
                   src={`${import.meta.env.BASE_URL}assets/voluntarios/beneficiarios-voluntarios/beneficiarios-voluntarios-13.jpeg`}
                   alt={copy.ctaTitle}

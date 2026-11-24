@@ -6,7 +6,7 @@ export default function AutoImageCarousel({
   getLabel = (photo) => photo.alt ?? photo.label ?? "",
   language = "es",
   className = "",
-  heightClassName = "h-[360px] sm:h-[440px]",
+  heightClassName = "h-[400px] sm:h-[480px]",
   imageFit = "cover",
 }) {
   const [activeIndex, setActiveIndex] = useState(0);

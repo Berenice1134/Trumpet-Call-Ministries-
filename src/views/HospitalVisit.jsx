@@ -517,7 +517,7 @@ function InteractiveGallery({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative h-[320px] w-full overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[400px] lg:h-[440px]">
+      <div className="relative h-[350px] w-full overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[440px] lg:h-[480px]">
         <img
           src={activePhoto.src}
           alt=""
@@ -824,7 +824,7 @@ export default function HospitalVisit() {
             </div>
 
             <div className="mx-auto w-full max-w-md lg:max-w-none">
-              <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
+              <figure className="photo-frame h-[370px] w-full ring-2 ring-white/15 sm:h-[460px] lg:h-[500px]">
                 <img
                   src={hospitalPhotos[5].src}
                   alt={t("hospital.photoLabels.hit-visita-agosto-01")}
@@ -1042,7 +1042,7 @@ export default function HospitalVisit() {
               onClick={() =>
                 openLightbox(milestonePhotosDisplay, activeMilestoneIndex)
               }
-              className="group relative h-[320px] w-full cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[400px] lg:col-span-7 lg:h-[440px]"
+              className="group relative h-[350px] w-full cursor-zoom-in overflow-hidden rounded-[1.75rem] bg-ink shadow-photo sm:h-[440px] lg:col-span-7 lg:h-[480px]"
             >
               <img
                 src={activeMilestonePhoto.src}
@@ -1282,7 +1282,7 @@ export default function HospitalVisit() {
               </div>
             </div>
 
-            <figure className="photo-frame h-[280px] w-full ring-2 ring-white/15 sm:h-[340px]">
+            <figure className="photo-frame h-[310px] w-full ring-2 ring-white/15 sm:h-[380px]">
               <img
                 src={`${import.meta.env.BASE_URL}assets/misiones/dia-caridad-caritas-03.jpeg`}
                 alt={copy.ctaTitle}

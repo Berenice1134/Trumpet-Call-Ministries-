@@ -10,7 +10,7 @@ const footerCopy = {
     email: "MxTCMinistries@gmail.com",
     explore: "Explorar el ministerio",
     links: [
-      { label: "Visitas a domicilio", to: "/servicio-domiciliar" },
+      { label: "Servicio domiciliar", to: "/servicio-domiciliar" },
       { label: "Misiones y Hospital Infantil", to: "/misiones" },
       { label: "Voluntariado", to: "/voluntarios" },
       { label: "Donaciones", to: "/donaciones" },

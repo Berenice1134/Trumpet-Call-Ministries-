@@ -15,7 +15,7 @@ const menuGroupsByLanguage = {
       ],
     },
     {
-      label: "Visitas a domicilio",
+      label: "Servicio domiciliar",
       path: "/servicio-domiciliar",
       items: [
         { label: "Zonas con apoyo actual", id: "area-servicio-domiciliar" },

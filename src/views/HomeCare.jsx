@@ -94,6 +94,14 @@ const homeCarePhotos = [
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg`,
   },
   {
+    key: "homeVisitChildMilkNew",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-nino-leche.jpeg`,
+  },
+  {
+    key: "homeVisitFamilyDoorwayNew",
+    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-acompanamiento-familiar.jpeg`,
+  },
+  {
     key: "zonesVisitApril2025",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-nueva-2025-04.jpeg`,
     labelEs: "Visita domiciliar y apoyo alimentario",
@@ -131,6 +139,8 @@ const heroPhotoKeys = [
   "homeFamily",
   "homeVisitElderlyWomanBag",
   "homeVisitChildMilk",
+  "homeVisitChildMilkNew",
+  "homeVisitFamilyDoorwayNew",
 ];
 
 const homeCareTimelineIcons = [
@@ -342,7 +352,7 @@ const homeCarePageCopy = {
       "Municipios y comunidades donde actualmente se brinda apoyo domiciliar:",
     serviceCoverageEyebrow: "Zonas donde ayudamos",
     historyEyebrow: "Nuestra Trayectoria",
-    historyServiceTitle: "Historia de las visitas a domicilio",
+    historyServiceTitle: "Historia del servicio domiciliar",
     historyServiceText:
       "Las visitas a domicilio han crecido paso a paso: comenzaron con las primeras familias y ahora llegan cada mes a varias comunidades del Estado de Tlaxcala.",
     impactMetricsEyebrow: "Resultados",
@@ -478,7 +488,7 @@ const homeCareTimelineByLanguage = {
     },
     {
       period: "2026",
-      title: "Visitas a domicilio en el Estado de Tlaxcala",
+      title: "Servicio domiciliar en el Estado de Tlaxcala",
       text: "Hoy las visitas a domicilio llegan cada mes a comunidades del Estado de Tlaxcala y llevan alimentos y apoyo a las familias.",
       details: [
         "Las visitas llegan a distintas comunidades y municipios del Estado de Tlaxcala.",

@@ -86,7 +86,7 @@ const donationPageCopy = {
     transferShared: "Datos de transferencia copiados",
     impactTitle: "Impacto de tu donación",
     supportOptions: [
-      { value: "home", label: "Visitas a domicilio", concept: "VISITAS A DOMICILIO" },
+      { value: "home", label: "Servicio domiciliar", concept: "SERVICIO DOMICILIAR" },
       { value: "hospital", label: "Hospital Infantil de Tlaxcala", concept: "HOSPITAL INFANTIL DE TLAXCALA" },
       { value: "general", label: "General / personalizado", concept: "GENERAL" },
     ],

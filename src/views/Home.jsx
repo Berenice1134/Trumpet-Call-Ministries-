@@ -647,7 +647,7 @@ export default function Home() {
         <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-ministry-blue/30 blur-3xl" />
 
         <div className="section-shell relative z-10 py-14 lg:py-20">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="motion-rise">
               <span className="kicker kicker-light">{t("home.heroEyebrow")}</span>
 
@@ -1075,7 +1075,7 @@ export default function Home() {
 
           {/* Tarjeta del suceso activo con fotografía o video */}
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-12">
-            <div className="relative flex min-h-[340px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:min-h-[400px] sm:p-7 lg:col-span-7">
+            <div className="relative flex h-[500px] flex-col gap-5 overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-ink via-[#0D2B52] to-[#0A1E3C] p-5 text-white shadow-photo sm:h-[640px] sm:p-7 lg:col-span-7">
               <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-ember/25 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-ministry-teal/20 blur-3xl" />
 
@@ -1088,10 +1088,10 @@ export default function Home() {
                 </span>
               </div>
 
-              <div className="relative z-10 grid flex-1 grid-cols-1 gap-3 sm:gap-5">
+              <div className="relative z-10 h-[240px] w-full sm:h-[400px]">
                 {activeTimelineItem.video ? (
                   <video
-                    className="h-full min-h-40 w-full rounded-2xl bg-black object-contain sm:min-h-56"
+                    className="h-full w-full rounded-2xl bg-black object-contain"
                     controls
                     preload="metadata"
                     playsInline
@@ -1104,11 +1104,11 @@ export default function Home() {
                   <img
                     src={asset(activeTimelineItem.image)}
                     alt={language === "en" ? "Ministry community and service" : "Comunidad y servicio del ministerio"}
-                    className="h-56 w-full rounded-2xl bg-white object-cover sm:h-72"
+                    className="h-full w-full rounded-2xl bg-white object-cover"
                     loading="lazy"
                   />
                 ) : (
-                  <div className="flex min-h-40 items-center justify-center sm:min-h-56">
+                  <div className="flex h-full items-center justify-center rounded-2xl">
                     <ActiveTimelineIcon aria-hidden="true" size={88} strokeWidth={1.25} className="text-white/70" />
                   </div>
                 )}

@@ -162,7 +162,6 @@ export const translations = {
       activeCommunities: "Active communities",
       tonsPlaceholder: "[Insert tons / kilograms distributed]",
       photoLabels: {
-        carTeam: "Home visit team ready for delivery",
         carBags: "Pantry bags loaded for distribution",
         pantryDisplay: "Food pantry package prepared for families",
         coupleVisit: "Home visit with older adults",
@@ -181,6 +180,8 @@ export const translations = {
         homeVisitPrayerCare: "Prayer and care during a home visit",
         homeVisitVolunteersBags: "Volunteers with support bags",
         homeVisitChildMilk: "A child receiving food at home",
+        homeVisitChildMilkNew: "A child receiving milk during a home visit",
+        homeVisitFamilyDoorwayNew: "Family receiving support at home",
         homeVisitFamilyBag: "Beneficiary family with a pantry bag",
         homeVisitFlorDelivery: "Volunteer carrying pantry bags",
         homeVisitPantryTable: "Food pantry delivered with care at home",
@@ -192,7 +193,7 @@ export const translations = {
           kicker: "Monthly rhythm",
           title: "One visit per month",
           text: "Each home visit is designed to know the family personally and follow their needs over time.",
-          image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`,
+          image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-02.png`,
         },
         {
           kicker: "12 kilos",
@@ -454,7 +455,7 @@ export const translations = {
     brand: "Trumpet Call Ministries",
     nav: {
       home: "Inicio",
-      homeCare: "Visitas a domicilio",
+      homeCare: "Servicio domiciliar",
       hospital: "Hospital Infantil",
       volunteers: "Voluntarios",
       donations: "Donaciones",
@@ -506,7 +507,7 @@ export const translations = {
           image: `${import.meta.env.BASE_URL}assets/home/home-hero-opening.jpeg`,
         },
         {
-          kicker: "Visitas al hogar",
+          kicker: "Servicio domiciliar",
           title: "Despensa, oración y presencia constante",
           text: "Los voluntarios entregan despensas, comparten el Evangelio y oran por las necesidades de cada familia.",
           image: `${import.meta.env.BASE_URL}assets/home/home-pantry-display.png`,
@@ -530,7 +531,7 @@ export const translations = {
     },
     cards: {
       homeCare: {
-        title: "Visitas a domicilio",
+        title: "Servicio domiciliar",
         text: "Actividades de asistencia para familias y personas atendidas en casa.",
       },
       hospital: {
@@ -551,7 +552,7 @@ export const translations = {
       },
     },
     homeCare: {
-      title: "Visitas a domicilio",
+      title: "Servicio domiciliar",
       text: "El equipo de voluntarios visita el hogar del beneficiario una vez al mes con despensas, comparte el Evangelio, ora por sus necesidades y conoce a la familia a largo plazo.",
       activities: "Actividades",
       activityItems: [
@@ -560,15 +561,14 @@ export const translations = {
         "Mensaje del Evangelio, oración y seguimiento personal",
         "Entrevistas para identificar situaciones de viudez u orfandad, discapacidad, abandono de adultos mayores, enfermedades crónicas, indigencia y crisis familiares.",
       ],
-      carouselLabel: "Galería de visitas a domicilio",
-      gallery: "Galería de visitas a domicilio",
-      galleryTitle: "Visitas al hogar, despensas y familias reales",
+      carouselLabel: "Galería de servicio domiciliar",
+      gallery: "Galería de servicio domiciliar",
+      galleryTitle: "Acompañamiento, despensas y familias reales",
       galleryIntro:
         "Un recorrido visual por la preparación, entrega y acompañamiento personal en hogares.",
       monthlyCost: "Costo mensual por familia",
       monthlyVisit: "Visita mensual al hogar",
       photoLabels: {
-        carTeam: "Equipo listo para la visita a domicilio",
         carBags: "Despensas cargadas para distribución",
         pantryDisplay: "Despensa preparada para familias",
         coupleVisit: "Visita al hogar con adultos mayores",
@@ -587,6 +587,8 @@ export const translations = {
         homeVisitPrayerCare: "Oración y cuidado durante una visita a domicilio",
         homeVisitVolunteersBags: "Voluntarias con bolsas de apoyo",
         homeVisitChildMilk: "Niña recibiendo alimento en casa",
+        homeVisitChildMilkNew: "Niño recibiendo leche durante una visita a domicilio",
+        homeVisitFamilyDoorwayNew: "Familia recibiendo apoyo en su hogar",
         homeVisitFamilyBag: "Familia beneficiaria con despensa",
         homeVisitFlorDelivery: "Voluntaria llevando despensas",
         homeVisitPantryTable: "Entrega de despensa y acompañamiento en el hogar",
@@ -598,7 +600,7 @@ export const translations = {
           kicker: "Ritmo mensual",
           title: "Una visita cada mes",
           text: "Cada visita a domicilio permite conocer mejor a la familia y sus necesidades.",
-          image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-01.png`,
+          image: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/domiciliar-02.png`,
         },
         {
           kicker: "12 kilos",
@@ -796,10 +798,10 @@ export const translations = {
     donations: {
       title: "Donaciones e Impacto",
       text: "Elige el área que quieres apoyar y usa el concepto correspondiente al realizar tu transferencia.",
-      monthlyHome: "Apoyo mensual para visitas a domicilio",
+      monthlyHome: "Apoyo mensual para servicio domiciliar",
       monthlyHospital: "Opción Mensual Hospital",
       gift: "Opción Regalo",
-      homeText: "Contribución mensual fija para visitas a domicilio.",
+      homeText: "Contribución mensual fija para el servicio domiciliar.",
       hospitalText: "Contribución mensual fija para visitas al hospital.",
       giftText: "Ingresa un monto voluntario.",
       impactNote:

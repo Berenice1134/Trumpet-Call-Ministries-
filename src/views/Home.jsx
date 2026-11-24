@@ -29,6 +29,9 @@ import ImpactStats from "../components/ImpactStats.jsx";
 import { useLanguage } from "../context/useLanguage.js";
 
 const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
+const heroGalleryPhotos = Array.from({ length: 10 }, (_, index) =>
+  `home/hero/hero-visitas-${String(index + 1).padStart(2, "0")}.jpeg`
+);
 
 const dashboardItems = [
   {
@@ -122,7 +125,7 @@ const ministryTimelineByLanguage = {
   es: [
     {
       year: "Inicio",
-      title: "Un comienzo pequeño con una carga grande en el corazón",
+      title: "Un comienzo pequeño con un gran deseo de servir",
       text: "El ministerio comenzó entregando 12 despensas en Loma Bonita, con el apoyo de 3 voluntarias.",
       video: "home/ministerio-inicio.mp4",
       details: [
@@ -320,7 +323,7 @@ const ministryTimelineByLanguage = {
   en: [
     {
       year: "Beginning",
-      title: "A small beginning with a great burden in the heart",
+      title: "A small beginning with a great desire to serve",
       text: "The ministry began by delivering 12 pantry packages in Loma Bonita, with the support of 3 volunteers.",
       video: "home/ministerio-inicio.mp4",
       details: [
@@ -582,7 +585,15 @@ export default function Home() {
   const [activeObjectiveTab, setActiveObjectiveTab] = useState("mission");
   const [openContextIndex, setOpenContextIndex] = useState(0);
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
+  const [activeHeroPhotoIndex, setActiveHeroPhotoIndex] = useState(0);
   const timelinePillRefs = useRef([]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroPhotoIndex((index) => (index + 1) % heroGalleryPhotos.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!isMapFullscreen) return undefined;
@@ -664,9 +675,10 @@ export default function Home() {
             <div className="grid grid-cols-12 items-center gap-4">
               <figure className="photo-frame col-span-7 h-[320px] w-full ring-2 ring-white/15 sm:h-[420px]">
                 <img
-                  src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-13.jpeg")}
+                  key={heroGalleryPhotos[activeHeroPhotoIndex]}
+                  src={asset(heroGalleryPhotos[activeHeroPhotoIndex])}
                   alt={language === "en" ? "Family receiving support from the ministry" : "Familia recibe apoyo del ministerio"}
-                  className="h-full w-full object-cover object-top"
+                  className="gallery-photo-enter h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
                 <figcaption className="absolute bottom-4 left-4 right-4 text-xs font-semibold text-white/95 sm:text-sm">
@@ -677,16 +689,18 @@ export default function Home() {
               <div className="col-span-5 grid gap-4">
                 <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
-                    src={asset("misiones/espanita-02.jpeg")}
+                    key={heroGalleryPhotos[(activeHeroPhotoIndex + 1) % heroGalleryPhotos.length]}
+                    src={asset(heroGalleryPhotos[(activeHeroPhotoIndex + 1) % heroGalleryPhotos.length])}
                     alt={language === "en" ? "Sharing with older adults" : "Compartiendo con adultos mayores"}
-                    className="h-full w-full object-cover object-top"
+                    className="gallery-photo-enter h-full w-full object-cover object-top"
                   />
                 </figure>
                 <figure className="photo-frame h-[152px] w-full ring-2 ring-white/15 sm:h-[202px]">
                   <img
-                    src={asset("servicio-domiciliar/visita-domiciliar/visita-domiciliar-12.jpeg")}
+                    key={heroGalleryPhotos[(activeHeroPhotoIndex + 2) % heroGalleryPhotos.length]}
+                    src={asset(heroGalleryPhotos[(activeHeroPhotoIndex + 2) % heroGalleryPhotos.length])}
                     alt={language === "en" ? "Home visit in Tlaxcala" : "Visita domiciliar en Tlaxcala"}
-                    className="h-full w-full object-cover object-top"
+                    className="gallery-photo-enter h-full w-full object-cover object-top"
                   />
                 </figure>
               </div>

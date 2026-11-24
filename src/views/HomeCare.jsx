@@ -98,10 +98,6 @@ const homeCarePhotos = [
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-09.jpeg`,
   },
   {
-    key: "homeVisitPantryTable",
-    src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`,
-  },
-  {
     key: "homeVisitDoorwayCare",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-12.jpeg`,
   },
@@ -109,6 +105,11 @@ const homeCarePhotos = [
     key: "homeVisitWheelchairCare",
     src: `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-13.jpeg`,
   },
+];
+
+const homeCareCoverPhotos = [
+  `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-nueva-2025-04.jpeg`,
+  `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-nueva-2025-01.jpeg`,
 ];
 
 const findPhoto = (key) => homeCarePhotos.find((p) => p.key === key);
@@ -556,6 +557,14 @@ export default function HomeCare() {
   const [activeTimelineIndex, setActiveTimelineIndex] = useState(0);
   const [showTimelineDetails, setShowTimelineDetails] = useState(false);
   const [showAllCommunities, setShowAllCommunities] = useState(false);
+  const [activeCoverPhotoIndex, setActiveCoverPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveCoverPhotoIndex((index) => (index + 1) % homeCareCoverPhotos.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const activeTimelineItem =
     homeCareTimeline[activeTimelineIndex] ?? homeCareTimeline[0];
@@ -617,12 +626,10 @@ export default function HomeCare() {
             <div className="mx-auto w-full max-w-md lg:max-w-none">
               <figure className="photo-frame h-[340px] w-full ring-2 ring-white/15 sm:h-[420px] lg:h-[460px]">
                 <img
-                  src={
-                    findPhoto("homeVisitPantryTable")?.src ??
-                    `${import.meta.env.BASE_URL}assets/servicio-domiciliar/visita-domiciliar/visita-domiciliar-10.jpeg`
-                  }
+                  key={homeCareCoverPhotos[activeCoverPhotoIndex]}
+                  src={homeCareCoverPhotos[activeCoverPhotoIndex]}
                   alt={t("homeCare.photoLabels.homeVisitPantryTable")}
-                  className="h-full w-full object-cover object-top"
+                  className="gallery-photo-enter h-full w-full object-cover object-top"
                 />
                 <div className="photo-overlay" />
                 <figcaption className="absolute bottom-4 left-5 right-5 text-sm font-semibold text-white/95">
